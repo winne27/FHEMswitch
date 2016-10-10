@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\release\\layout-mdpi-v4\\config.xml",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout-mdpi\\config.xml"
+    },
+    {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\release\\layout-mdpi-v4\\config_lightscene_row.xml",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout-mdpi\\config_lightscene_row.xml"
+    },
+    {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\release\\layout-mdpi-v4\\config_switch_row.xml",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout-mdpi\\config_switch_row.xml"
+    },
+    {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\release\\layout-mdpi-v4\\config_value_row.xml",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout-mdpi\\config_value_row.xml"
+    },
+    {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\release\\layout-mdpi-v4\\config_command_row.xml",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout-mdpi\\config_command_row.xml"
+    }
+]

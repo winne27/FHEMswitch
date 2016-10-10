@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="conf_bg_header_1">#FF224422</color>
+    <color name="conf_bg_header_2">#FF557755</color>
+    <color name="conf_bg_header_3">#FF99BB99</color>
+    <color name="conf_text_header_1">#ffdddddd</color>
+    <color name="conf_text_header_2">#ffdddddd</color>
+    <color name="conf_bg_handle_pressed">#FFAEDEB1</color>
+    <color name="conf_bg_line">#FFFFF4BD</color>
+    
+</resources>

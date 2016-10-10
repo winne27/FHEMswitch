@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/configshape"
+        android:orientation="vertical"
+        android:padding="2dp">
+
+        <Button
+            android:id="@+id/callDonateButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="180dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/configbutton"
+            android:text="@string/donate_string_call" />
+
+        <!-- URL for node.js +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="57dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/urljs_label"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:text="@string/url_fhem_js"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/urljs"
+                android:layout_width="405dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <!-- URL for node.pl ++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/urlpl_label"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:text="@string/url_fhem_pl"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/urlpl"
+                android:layout_width="405dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textUri" />
+        </LinearLayout>
+
+        <!-- connection password +++++++++++++++++++++++++++++++++++++++++++++++++++++++++- -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/password_label"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:text="@string/conn_pw"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/connection_pw"
+                android:layout_width="405dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/okconfig"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="180dp"
+            android:background="@drawable/configbutton"
+            android:text="@string/getConfig" />
+
+        <!-- Layout menu +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+        <LinearLayout
+            android:id="@+id/layout_block"
+            android:layout_width="594dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="297dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="297dp"
+                    android:layout_height="40dp"
+                    android:background="@color/conf_bg_header_1"
+                    android:paddingLeft="10dp"
+                    android:text="@string/portrait"
+                    android:textColor="@color/conf_text_header_1"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/layout_portrait"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/layout_portrait_0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:tag="@string/LAYOUT_HORIZONTAL"
+                        android:text="@string/horizontal" />
+
+                    <RadioButton
+                        android:id="@+id/layout_portrait_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="@string/LAYOUT_VERTICAL"
+                        android:text="@string/vertical" />
+
+                    <RadioButton
+                        android:id="@+id/layout_portrait_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="@string/LAYOUT_MIXED"
+                        android:text="@string/mixed" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="297dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="297dp"
+                    android:layout_height="40dp"
+                    android:background="@color/conf_bg_header_1"
+                    android:paddingLeft="10dp"
+                    android:text="@string/landscape"
+                    android:textColor="@color/conf_text_header_1"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/layout_landscape"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/layout_landscape_0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:tag="@string/LAYOUT_HORIZONTAL"
+                        android:text="@string/horizontal" />
+
+                    <RadioButton
+                        android:id="@+id/layout_landscape_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="@string/LAYOUT_VERTICAL"
+                        android:text="@string/vertical" />
+
+                    <RadioButton
+                        android:id="@+id/layout_landscape_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="@string/LAYOUT_MIXED"
+                        android:text="@string/mixed" />
+                </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Block of switches +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+        <LinearLayout
+            android:id="@+id/switches_header1"
+            android:layout_width="594dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="394dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/conf_bg_header_1"
+                android:paddingLeft="10dp"
+                android:paddingTop="4dp"
+                android:text="@string/switches"
+                android:textColor="@color/conf_text_header_1"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="fill_parent"
+                android:background="@color/conf_bg_header_1"
+                android:gravity="right"
+                android:paddingTop="12dp"
+                android:text="@string/columns"
+                android:textColor="@color/conf_text_header_1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/config_switch_cols"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@color/conf_bg_header_1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/switches_header2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:gravity="center_horizontal"
+                android:text="@string/sel"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="222dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:text="@string/unit"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:paddingLeft="12dp"
+                android:text="@string/name"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="92dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:paddingLeft="12dp"
+                android:text="@string/command"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.mobeta.android.dslv.DragSortListView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:dslv="com.mobeta.android.dslv"
+            android:id="@+id/switches"
+            android:layout_width="594dp"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dp"
+            android:dividerHeight="1px"
+            android:padding="0dp"
+            dslv:collapsed_height="1px"
+            dslv:drag_enabled="true"
+            dslv:drag_handle_id="@+id/drag_handle"
+            dslv:drag_scroll_start="0.33"
+            dslv:drag_start_mode="onDown"
+            dslv:float_alpha="0.3"
+            dslv:float_background_color="#FF666666"
+            dslv:slide_shuffle_speed="0.3" />
+
+        <!-- Block of lightscenes +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+        <TextView
+            android:id="@+id/lightscenes_header1"
+            android:layout_width="594dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/conf_bg_header_1"
+            android:paddingLeft="10dp"
+            android:paddingTop="4dp"
+            android:text="@string/lightscenes"
+            android:textColor="@color/conf_text_header_1"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/lightscenes_header2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:gravity="center_horizontal"
+                android:text="@string/sel"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="222dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:text="@string/unit"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="222dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:paddingLeft="12dp"
+                android:text="@string/name"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:paddingLeft="12dp"
+                android:text="@string/header"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.mobeta.android.dslv.DragSortListView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:dslv="com.mobeta.android.dslv"
+            android:id="@+id/lightscenes"
+            android:layout_width="594dp"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dp"
+            android:dividerHeight="1px"
+            android:padding="0dp"
+            dslv:collapsed_height="1px"
+            dslv:drag_enabled="true"
+            dslv:drag_handle_id="@+id/drag_handle"
+            dslv:drag_scroll_start="0.33"
+            dslv:drag_start_mode="onDown"
+            dslv:float_alpha="0.3"
+            dslv:float_background_color="#FF666666"
+            dslv:slide_shuffle_speed="0.3" />
+
+        <!-- Block of values +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+        <LinearLayout
+            android:id="@+id/values_header1"
+            android:layout_width="594dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="394dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/conf_bg_header_1"
+                android:paddingLeft="10dp"
+                android:paddingTop="4dp"
+                android:text="@string/values"
+                android:textColor="@color/conf_text_header_1"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="fill_parent"
+                android:background="@color/conf_bg_header_1"
+                android:gravity="right"
+                android:paddingTop="12dp"
+                android:text="@string/columns"
+                android:textColor="@color/conf_text_header_1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/config_value_cols"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@color/conf_bg_header_1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/values_header2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:gravity="center_horizontal"
+                android:text="@string/sel"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="202dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:text="@string/unit"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="192dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:paddingLeft="12dp"
+                android:text="@string/name"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:text="@string/values2"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.mobeta.android.dslv.DragSortListView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:dslv="com.mobeta.android.dslv"
+            android:id="@+id/values"
+            android:layout_width="594dp"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dp"
+            android:dividerHeight="1px"
+            android:padding="0dp"
+            dslv:collapsed_height="1px"
+            dslv:drag_enabled="true"
+            dslv:drag_handle_id="@+id/drag_handle"
+            dslv:drag_scroll_start="0.33"
+            dslv:drag_start_mode="onDown"
+            dslv:float_alpha="0.3"
+            dslv:float_background_color="#FF666666"
+            dslv:slide_shuffle_speed="0.3" />
+
+        <!-- Block of commands +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+        <LinearLayout
+            android:id="@+id/commands_header1"
+            android:layout_width="594dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="394dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/conf_bg_header_1"
+                android:paddingLeft="10dp"
+                android:paddingTop="4dp"
+                android:text="@string/commands"
+                android:textColor="@color/conf_text_header_1"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="fill_parent"
+                android:background="@color/conf_bg_header_1"
+                android:gravity="right"
+                android:paddingTop="12dp"
+                android:text="@string/columns"
+                android:textColor="@color/conf_text_header_1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/config_command_cols"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@color/conf_bg_header_1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/commands_header2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:gravity="center_horizontal"
+                android:text="@string/sel"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="182dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:paddingLeft="12dp"
+                android:text="@string/name"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="362dp"
+                android:layout_height="wrap_content"
+                android:background="@color/conf_bg_header_2"
+                android:text="@string/commands2"
+                android:textColor="@color/conf_text_header_2"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.mobeta.android.dslv.DragSortListView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:dslv="com.mobeta.android.dslv"
+            android:id="@+id/commands"
+            android:layout_width="594dp"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dp"
+            android:dividerHeight="1px"
+            android:padding="0dp"
+            dslv:collapsed_height="1px"
+            dslv:drag_enabled="true"
+            dslv:drag_handle_id="@+id/drag_handle"
+            dslv:drag_scroll_start="0.33"
+            dslv:drag_start_mode="onDown"
+            dslv:float_alpha="0.3"
+            dslv:float_background_color="#FF666666"
+            dslv:slide_shuffle_speed="0.3" />
+
+        <Button
+            android:id="@+id/newcommandline"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/newline"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/okconfig2"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="180dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/configbutton"
+            android:text="@string/save"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</ScrollView>

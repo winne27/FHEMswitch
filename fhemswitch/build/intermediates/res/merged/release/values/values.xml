@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="colnum">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="commands">
+        <item>toggle</item>
+        <item>on</item>
+        <item>off</item>
+    </string-array>
+    <color name="conf_bg_handle_pressed">#FFAEDEB1</color>
+    <color name="conf_bg_header_1">#FF224422</color>
+    <color name="conf_bg_header_2">#FF557755</color>
+    <color name="conf_bg_header_3">#FF99BB99</color>
+    <color name="conf_bg_line">#FFFFF4BD</color>
+    <color name="conf_text_header_1">#ffdddddd</color>
+    <color name="conf_text_header_2">#ffdddddd</color>
+    <declare-styleable name="DragSortListView"><attr format="dimension" name="collapsed_height"/><attr format="float" name="drag_scroll_start"/><attr format="float" name="max_drag_scroll_speed"/><attr format="color" name="float_background_color"/><attr name="remove_mode">
+            <enum name="clickRemove" value="0"/>
+            <enum name="flingRemove" value="1"/>
+        </attr><attr format="boolean" name="track_drag_sort"/><attr format="float" name="float_alpha"/><attr format="float" name="slide_shuffle_speed"/><attr format="integer" name="remove_animation_duration"/><attr format="integer" name="drop_animation_duration"/><attr format="boolean" name="drag_enabled"/><attr format="boolean" name="sort_enabled"/><attr format="boolean" name="remove_enabled"/><attr name="drag_start_mode">
+            <enum name="onDown" value="0"/>
+            <enum name="onMove" value="1"/>
+            <enum name="onLongPress" value="2"/>
+        </attr><attr format="integer" name="drag_handle_id"/><attr format="integer" name="fling_handle_id"/><attr format="integer" name="click_remove_id"/><attr format="boolean" name="use_default_controller"/></declare-styleable>
+    <dimen format="dimension" name="colwidth">170dp</dimen>
+    <integer name="socketsConnectionTimeout">15000</integer>
+    <integer name="waitCyclesShort">15</integer>
+    <integer name="waitIntervalLong">91000</integer>
+    <integer name="waitIntervalShort">4000</integer>
+    <string name="LAYOUT_HORIZONTAL">0</string>
+    <string name="LAYOUT_MIXED">2</string>
+    <string name="LAYOUT_VERTICAL">1</string>
+    <string name="account0">1 Euro</string>
+    <string name="account1">2 Euro</string>
+    <string name="account2">5 Euro</string>
+    <string name="account3">10 Euro</string>
+    <string name="checkpw">Please check password</string>
+    <string name="columns">Columns:</string>
+    <string name="command">Command</string>
+    <string name="commands">Custom commands</string>
+    <string name="commands2">FHEM command</string>
+    <string name="conn_pw">FHEM server password (optional):</string>
+    <string name="donate_back">Go</string>
+    <string name="donate_cancel">Cancel</string>
+    <string name="donate_google">Donate</string>
+    <string name="donate_string_call">optional donation</string>
+    <string name="donate_text">For this app I will donate</string>
+    <string name="error_header">An error has occurred</string>
+    <string name="fileerr">Error at saving configuration:</string>
+    <string name="getConfig">get FHEM units</string>
+    <string name="header">Header</string>
+    <string name="horizontal">horizontal</string>
+    <string name="initruns">Initialising runs</string>
+    <string name="landscape">Layout Landscape</string>
+    <string name="licenceKey" translatable="false">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh7D+DlsyIr/qs/nzYQHHITVBXoDn8eSsFKGUgjvlJhINvjFUTwiHBmwrTKBIXye6WozJ4QM7Ov3cUXqeDlIz4m8bHCibXzQsra2kWSZagRhHLcrBwVBy1a3JXB74E1VQO0LbPPgnfeL2Uzv4IIS3QvyAJ2Uo5lHJBoTA+jxUIe/YFPovNvhWhZna2oHZlptc07rNydcTShdMzk/Ujv881jJB0GJMUol5OM5/WG+dHpfyplxlolpS/AXX9312VeU7LkRdOUikQ+bPQMT5gbYyWPXoDAKRkJiU6F5LR+xQqxHxNyedy3yZnlkmXDq0l7u1HYkJaY3Pr2hxOo3hAjX2pQIDAQAB</string>
+    <string name="lightscenes">Scenarios</string>
+    <string name="mixed">two columns</string>
+    <string name="name">Displayed Name</string>
+    <string name="newline">+</string>
+    <string name="noconn">No connection to FHEM server. Tip for reconnection attempt.</string>
+    <string name="ok">OK</string>
+    <string name="onlinecheck">is this device online</string>
+    <string name="portrait">Layout Portrait</string>
+    <string name="save">Save</string>
+    <string name="sel">Sel</string>
+    <string name="switches">Switches</string>
+    <string name="switchicon">Lamp</string>
+    <string name="thanks_text">Thank you very much for your donation!</string>
+    <string name="unit">Name - order by d&amp;d</string>
+    <string name="url_fhem_js">URL FHEM node.js server:</string>
+    <string name="url_fhem_pl">URL FHEM webserver (optional):</string>
+    <string name="urlcheck">please check URL</string>
+    <string name="urlerr">The typed URL is invalid</string>
+    <string name="value0">1</string>
+    <string name="value1">2</string>
+    <string name="value2">5</string>
+    <string name="value3">10</string>
+    <string name="values">Values</string>
+    <string name="values2">Values</string>
+    <string name="vertical">vertical</string>
+    <string name="widget_name">FHEMswitch</string>
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    <style name="lightimg">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:contentDescription">light</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingTop">0dp</item>
+    </style>
+</resources>

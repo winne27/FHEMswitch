@@ -1,0 +1,2 @@
+-dontwarn com.squareup.**
+-dontwarn okio.**

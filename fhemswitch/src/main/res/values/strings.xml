@@ -1,0 +1,70 @@
+<resources>
+
+    <string name="widget_name">FHEMswitch</string>
+    <string name="url_fhem_pl">URL FHEM webserver (optional):</string>
+    <string name="url_fhem_js">URL FHEM node.js server:</string>
+    <string name="conn_pw">FHEM server password (optional):</string>
+    <string name="ok">OK</string>
+    <string name="switchicon">Lamp</string>
+    <string name="save">Save</string>
+    <string name="error_header">An error has occurred</string>
+    <string name="getConfig">get FHEM units</string>
+
+    <string name="switches">Switches</string>
+    <string name="columns">Columns:</string>
+    <string name="lightscenes">Scenarios</string>
+    <string name="values">Values</string>
+    <string name="values2">Values</string>
+    <string name="sel">Sel</string>
+    <string name="unit">Name - order by d&#038;d</string>
+    <string name="name">Displayed Name</string>
+    <string name="header">Header</string>
+    <string name="command">Command</string>
+    <string name="noconn">No connection to FHEM server. Tip for reconnection attempt.</string>
+    <string name="checkpw">Please check password</string>
+    <string name="initruns">Initialising runs</string>
+    <string name="urlerr">The typed URL is invalid</string>
+    <string name="urlcheck">please check URL</string>
+    <string name="fileerr">Error at saving configuration:</string>
+    <string name="onlinecheck">is this device online</string>
+	<string name="commands">Custom commands</string>
+    <string name="commands2">FHEM command</string>
+    <string name="newline">+</string>
+    
+    <string name="landscape">Layout Landscape</string>
+    <string name="portrait">Layout Portrait</string>
+    <string name="horizontal">horizontal</string>
+    <string name="vertical">vertical</string>
+    <string name="mixed">two columns</string>
+    <string name="LAYOUT_HORIZONTAL">0</string>
+    <string name="LAYOUT_VERTICAL">1</string>
+    <string name="LAYOUT_MIXED">2</string>
+ 
+    <string-array name="commands">
+        <item>toggle</item>
+        <item>on</item>
+        <item>off</item>
+    </string-array>
+
+    <string-array name="colnum">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string name="donate_cancel">Cancel</string>
+    <string name="donate_text">For this app I will donate</string>
+    <string name="thanks_text">Thank you very much for your donation!</string>
+    <string name="donate_google">Donate</string>
+    <string name="donate_string_call">optional donation</string>
+
+    <string name="value0">1</string>
+    <string name="value1">2</string>
+    <string name="value2">5</string>
+    <string name="value3">10</string>
+    <string name="account0">1 Euro</string>
+    <string name="account1">2 Euro</string>
+    <string name="account2">5 Euro</string>
+    <string name="account3">10 Euro</string>
+    <string name="donate_back">Go</string>
+</resources>

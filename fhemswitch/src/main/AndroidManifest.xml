@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.fehngarten.fhemswitch">
+    <!--    android:versionCode="216"
+            android:versionName="2.1.6" >
+    -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@drawable/icon2"
+        android:label="@string/widget_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="de.fehngarten.fhemswitch.ConfigMain"
+            android:icon="@drawable/icon2"
+            android:label="@string/widget_name" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- ATTENTION: This intent was auto-generated. Follow instructions at
+            https://g.co/AppIndexing/AndroidStudio to publish your URLs. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- ATTENTION: This data URL was auto-generated. We recommend that you use the HTTP scheme.
+                  TODO: Change the host or pathPrefix as necessary. -->
+                <data
+                    android:host="github.com"
+                    android:pathPrefix="/winne27/FHEMswitch"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="de.fehngarten.fhemswitch.Donate"
+            android:label="@string/widget_name" >
+        </activity>
+
+        <receiver
+            android:name="de.fehngarten.fhemswitch.WidgetProvider"
+            android:icon="@drawable/widget_icon"
+            android:label="@string/widget_name" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
+
+        <!--
+
+        <receiver android:name="de.fehngarten.fhemswitch.NetworkStateReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+  -->
+        <service android:name="de.fehngarten.fhemswitch.WidgetService" >
+        </service>
+        <service
+            android:name="de.fehngarten.fhemswitch.SwitchesService0"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
+        <service
+            android:name="de.fehngarten.fhemswitch.SwitchesService1"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
+        <service
+            android:name="de.fehngarten.fhemswitch.SwitchesService2"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
+        <service
+            android:name="de.fehngarten.fhemswitch.LightScenesService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
+        <service
+            android:name="de.fehngarten.fhemswitch.ValuesService0"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
+        <service
+            android:name="de.fehngarten.fhemswitch.ValuesService1"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
+        <service
+            android:name="de.fehngarten.fhemswitch.ValuesService2"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
+        <service
+            android:name="de.fehngarten.fhemswitch.CommandsService0"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
+        <service
+            android:name="de.fehngarten.fhemswitch.CommandsService1"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
+        <service
+            android:name="de.fehngarten.fhemswitch.CommandsService2"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
+    </application>
+
+</manifest>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="top|center">
+
+    <RelativeLayout
+        android:id="@+id/main_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/myshape"
+        android:orientation="vertical"
+        android:paddingBottom="4dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="4dp"
+        android:paddingTop="4dp">
+
+        <TextView
+            android:id="@+id/noconn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            android:text="@string/initruns"
+            android:textColor="#ffcc4343"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/switches0"
+            android:layout_width="@dimen/colwidth"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/lightscenes"
+            android:layout_width="@dimen/colwidth"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/switches0"
+            android:layout_marginLeft="2dp"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/values0"
+            android:layout_width="@dimen/colwidth"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lightscenes"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/commands0"
+            android:layout_width="@dimen/colwidth"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/values0"
+            android:layout_marginLeft="2dp"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</LinearLayout>
