@@ -2,6 +2,7 @@ package de.fehngarten.fhemswitch;
 
 import java.io.FileInputStream;
 //import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import java.util.Map.Entry;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
 
 import android.annotation.TargetApi;
 import android.app.PendingIntent;
@@ -31,6 +33,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.os.StrictMode;
 import android.view.View;
 import android.view.Display;
 import android.hardware.display.DisplayManager;
@@ -43,9 +46,11 @@ import de.fehngarten.fhemswitch.MyLightScenes.Item;
 import de.fehngarten.fhemswitch.MyLightScenes.MyLightScene;
 
 import android.util.Log;
+import android.widget.Toast;
 
 public class WidgetService extends Service {
     public static final String CONFIGFILE = "config.data";
+    public static final String VERSIONFILE = "version.data";
 
     public static MySocket mySocket = null;
 
@@ -79,6 +84,7 @@ public class WidgetService extends Service {
 
     public void onCreate() {
         Log.d("WidgetService", "onCreate fired");
+
         super.onCreate();
 
         serviceRunning = true;
@@ -93,6 +99,11 @@ public class WidgetService extends Service {
         icons.put("set_toggle", R.drawable.set_toggle);
         icons.put("undefined", R.drawable.undefined);
         icons.put("toggle", R.drawable.undefined);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        handler.postDelayed(checkVersionTimer, 10000);
 
         // Intent conn changed
         BroadcastReceiver connChangeReceiver = new BroadcastReceiver() {
@@ -279,6 +290,7 @@ public class WidgetService extends Service {
         if (configDataOnly.switchRows != null) {
             for (ConfigSwitchRow switchRow : configDataOnly.switchRows) {
                 if (switchRow.enabled) {
+                    //Log.d("WidgetService","unit: " + switchRow.unit + " cmd: " + switchRow.cmd);
                     configData.switches.add(new MySwitch(switchRow.name, switchRow.unit, switchRow.cmd));
                 }
             }
@@ -471,7 +483,7 @@ public class WidgetService extends Service {
     }
 
     private void initListview(int widgetId, RemoteViews mView, int listviewId, int actCol, String type) {
-        Log.d("WidgetService", "initListview started with " + type + " " + Integer.toString(actCol));
+        //Log.d("WidgetService", "initListview started with " + type + " " + Integer.toString(actCol));
         mView.setPendingIntentTemplate(listviewId, onClickPendingIntent);
         Intent switchIntent = new Intent(context, listViewServices.get(type).get(actCol));
         switchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
@@ -563,7 +575,7 @@ public class WidgetService extends Service {
         return screenOn;
     }
 
-    private void setVisibility(String type) {
+    private void setVisibility(String type, String text) {
         //Log.i("type of setVisibility",type);
         Context context = getApplicationContext();
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
@@ -576,7 +588,7 @@ public class WidgetService extends Service {
                 }
             }
         } else {
-            mView.setTextViewText(R.id.noconn, getString(R.string.noconn));
+            mView.setTextViewText(R.id.noconn, text);
             mView.setViewVisibility(R.id.noconn, View.VISIBLE);
 
             for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
@@ -619,7 +631,7 @@ public class WidgetService extends Service {
 
             try {
                 requestValues("initSocket");
-                setVisibility("connected");
+                setVisibility("connected", "");
             } catch (NullPointerException e) {
                 //ignore this exception
             }
@@ -628,7 +640,7 @@ public class WidgetService extends Service {
         mySocket.socket.on(Socket.EVENT_DISCONNECT, args -> {
             ////Log.i("socket", "disconnected");
             try {
-                setVisibility("disconnected");
+                setVisibility("disconnected", getString(R.string.noconn));
             } catch (NullPointerException e) {
                 //ignore this exception
             }
@@ -637,7 +649,7 @@ public class WidgetService extends Service {
         mySocket.socket.on(Socket.EVENT_RECONNECT_FAILED, args -> {
             //Log.i("socket", "reconnect failed");
             try {
-                setVisibility("disconnected");
+                setVisibility("disconnected", getString(R.string.noconn));
             } catch (NullPointerException e) {
                 //ignore this exception
             }
@@ -649,7 +661,7 @@ public class WidgetService extends Service {
                 mySocket.socket.close();
                 mySocket.socket.off();
                 mySocket = null;
-                setVisibility("disconnected");
+                setVisibility("disconnected", getString(R.string.noconn));
             } catch (NullPointerException e) {
                 //ignore this exception
             }
@@ -689,16 +701,91 @@ public class WidgetService extends Service {
         mySocket.socket.off("fhemError");
         mySocket.socket.on("fhemError", args -> {
             ////Log.i("socket", "disconnected");
-            setVisibility("fhemError");
+            setVisibility("fhemError",  getString(R.string.noconn));
         });
 
         mySocket.socket.off("fhemConn");
         mySocket.socket.on("fhemConn", args -> {
             ////Log.i("socket", "disconnected");
-            setVisibility("connected");
+            setVisibility("connected",  getString(R.string.noconn));
         });
 
     }
+
+     Runnable checkVersionTimer = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                checkVersion(); //this function can change value of mInterval.
+            } finally {
+                handler.postDelayed(checkVersionTimer, 3600000);
+            }
+        }
+    };
+
+    private void checkVersion() {
+        Log.d("WidgetService", "checkVersion started");
+
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        boolean isWiFi = networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+        if (isWiFi) {
+            getStoreVersion();
+        }
+    }
+
+    private void getStoreVersion() {
+        String url = getResources().getString(R.string.googleStoreUrl);
+        String storeVersion = "";
+
+        try {
+            storeVersion = Jsoup.connect(url)
+                    .timeout(30000)
+                    .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                    .referrer("http://www.google.com")
+                    .get()
+                    .select("div[itemprop=softwareVersion]")
+                    .first()
+                    .ownText();
+
+        } catch (IOException e) {
+            //e.printStackTrace();
+        } finally {
+            String localVersion = BuildConfig.VERSION_NAME;
+            if (localVersion != storeVersion) {
+                setVisibility("newVersion", getString(R.string.newVersionApp));
+                Log.d("localVersion", localVersion);
+                Log.d("storeVersion", storeVersion);
+            }
+        }
+    }
+
+    /*
+    public class VersionChecker extends AsyncTask<String, String, String>{
+
+String newVersion;
+
+@Override
+protected String doInBackground(String... params) {
+
+    try {
+        newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + "package name" + "&hl=en")
+                .timeout(30000)
+                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                .referrer("http://www.google.com")
+                .get()
+                .select("div[itemprop=softwareVersion]")
+                .first()
+                .ownText();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    return newVersion;
+}
+
+    */
 
     @Override
     public IBinder onBind(Intent intent) {

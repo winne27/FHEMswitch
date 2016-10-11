@@ -10,15 +10,15 @@ import android.view.View;
 import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;
 
-public class LightscenesSectionController extends DragSortController
+class LightscenesSectionController extends DragSortController
 {
    private int mPos;
    private Boolean curViewIsHeader = false;
    private ConfigLightsceneAdapter configLightsceneAdapter;
-   DragSortListView mDslv;
+   private DragSortListView mDslv;
    Context mContext;
 
-   public LightscenesSectionController(DragSortListView dslv, ConfigLightsceneAdapter adapter, Context mContext)
+   LightscenesSectionController(DragSortListView dslv, ConfigLightsceneAdapter adapter, Context mContext)
    {
       super(dslv, R.id.config_lightscene_unit, DragSortController.ON_DOWN, 0);
       setRemoveEnabled(false);

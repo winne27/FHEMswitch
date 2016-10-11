@@ -10,7 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
+//import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -24,24 +24,23 @@ import android.widget.TextView;
 class ConfigSwitchAdapter extends BaseAdapter
 {
    Context mContext;
-   int layoutResourceId;
-   ArrayList<ConfigSwitchRow> switchRows = null;
+   //private int layoutResourceId;
+   private ArrayList<ConfigSwitchRow> switchRows = null;
 
-   public ConfigSwitchAdapter(Context mContext, int layoutResourceId)
+   ConfigSwitchAdapter(Context mContext)
    {
-
       //super(mContext, layoutResourceId, data);
-      this.layoutResourceId = layoutResourceId;
+      //this.layoutResourceId = layoutResourceId;
       this.mContext = mContext;
-      switchRows = new ArrayList<ConfigSwitchRow>();
+      switchRows = new ArrayList<>();
    }
 
-   public void initData(JSONArray JSONswitches, List<MySwitch> switches, List<MySwitch> switchesDisabled)
+   void initData(JSONArray JSONswitches, List<MySwitch> switches, List<MySwitch> switchesDisabled)
    {
-      switchRows = new ArrayList<ConfigSwitchRow>();
+      switchRows = new ArrayList<>();
       ArrayList<String> switchesFHEM = ConfigMain.convertJSONarray(JSONswitches);
-      ArrayList<String> switchesConfig = new ArrayList<String>();
-      ArrayList<String> allUnits = new ArrayList<String>();
+      ArrayList<String> switchesConfig = new ArrayList<>();
+      ArrayList<String> allUnits = new ArrayList<>();
 
       for (MySwitch mySwitch : switches)
       {
@@ -123,14 +122,7 @@ class ConfigSwitchAdapter extends BaseAdapter
 
       //private method of your class     
 
-      switchHolder.switch_enabled.setOnClickListener(new OnClickListener()
-      {
-         @Override
-         public void onClick(View arg0)
-         {
-            getItem(switchHolder.ref).enabled = switchHolder.switch_enabled.isChecked();
-         }
-      });
+      switchHolder.switch_enabled.setOnClickListener(arg0 -> getItem(switchHolder.ref).enabled = switchHolder.switch_enabled.isChecked());
 
       switchHolder.switch_name.addTextChangedListener(new TextWatcher()
       {
@@ -175,10 +167,10 @@ class ConfigSwitchAdapter extends BaseAdapter
       return rowView;
    }
 
-   public void changeItems(int from, int to)
+   void changeItems(int from, int to)
    {
       //Log.i("change switch", Integer.toString(from) + " " + Integer.toString(to));
-      final ArrayList<ConfigSwitchRow> switchRowsTemp = new ArrayList<ConfigSwitchRow>();
+      final ArrayList<ConfigSwitchRow> switchRowsTemp = new ArrayList<>();
       if (from > to)
       {
          for (int i = 0; i < switchRows.size(); i++)

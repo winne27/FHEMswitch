@@ -21,7 +21,7 @@ class ConfigCommandAdapter extends BaseAdapter
    //private int layoutResourceId;
    private ArrayList<ConfigCommandRow> commandRows = null;
 
-   ConfigCommandAdapter(Context mContext, int layoutResourceId)
+   ConfigCommandAdapter(Context mContext)
    {
 
       //super(mContext, layoutResourceId, data);
@@ -37,7 +37,7 @@ class ConfigCommandAdapter extends BaseAdapter
       notifyDataSetChanged();
    }
 
-   public void newLine()
+   void newLine()
    {
       //Log.i("newLine adapter","schoen");
       commandRows.add(new ConfigCommandRow("","",false));

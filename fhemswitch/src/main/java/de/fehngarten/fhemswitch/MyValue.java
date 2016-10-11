@@ -1,12 +1,12 @@
 package de.fehngarten.fhemswitch;
 
-public class MyValue
+class MyValue
 {
    public String name;
    public String unit;
    public String value;
 
-   public MyValue(String name, String unit)
+   MyValue(String name, String unit)
    {
       this.name = name;
       this.unit = unit;

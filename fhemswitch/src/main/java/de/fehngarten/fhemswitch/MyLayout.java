@@ -38,7 +38,7 @@ class MyLayout
    {
       if (switchCount > 0)
       {
-         ArrayList<Integer> listViewIds = new ArrayList<Integer>();
+         ArrayList<Integer> listViewIds = new ArrayList<>();
          listViewIds.add(R.id.switches0);
          layout.put("switch", listViewIds);
       }
@@ -49,7 +49,7 @@ class MyLayout
       
       if (valueCount > 0)
       {
-         ArrayList<Integer> listViewIds = new ArrayList<Integer>();
+         ArrayList<Integer> listViewIds = new ArrayList<>();
          listViewIds.add(R.id.values0);
          layout.put("value", listViewIds);
       }
@@ -60,7 +60,7 @@ class MyLayout
       
       if (commandCount > 0)
       {
-         ArrayList<Integer> listViewIds = new ArrayList<Integer>();
+         ArrayList<Integer> listViewIds = new ArrayList<>();
          listViewIds.add(R.id.commands0);
          layout.put("command", listViewIds);
       }
@@ -71,7 +71,7 @@ class MyLayout
       
       if (lightsceneCount > 0)
       {
-         ArrayList<Integer> listViewIds = new ArrayList<Integer>();
+         ArrayList<Integer> listViewIds = new ArrayList<>();
          listViewIds.add(R.id.lightscenes);
          layout.put("lightscene", listViewIds);
       }
@@ -83,7 +83,7 @@ class MyLayout
 
    private void buildLayoutMixed(int switchCount, int lightsceneCount, int valueCount, int commandCount)
    {
-      ArrayList<MyCounter> counter = new ArrayList<MyCounter>();
+      ArrayList<MyCounter> counter = new ArrayList<>();
       counter.add(new MyCounter("switch",switchCount));
       counter.add(new MyCounter("lightscene",lightsceneCount));
       counter.add(new MyCounter("value",valueCount));
@@ -92,14 +92,14 @@ class MyLayout
       
       if (counter.get(0).count >= counter.get(1).count + counter.get(2).count + counter.get(3).count)
       {
-         ArrayList<Integer> listViewIds0 = new ArrayList<Integer>();
+         ArrayList<Integer> listViewIds0 = new ArrayList<>();
          listViewIds0.add(R.id.mixed00);
          layout.put(counter.get(0).type, listViewIds0);         
          goneViews.add(R.id.mixed01);
 
          if (counter.get(1).count > 0)
          {
-            ArrayList<Integer> listViewIds1 = new ArrayList<Integer>();
+            ArrayList<Integer> listViewIds1 = new ArrayList<>();
             listViewIds1.add(R.id.mixed10);
             layout.put(counter.get(1).type, listViewIds1);         
          }
@@ -110,7 +110,7 @@ class MyLayout
          
          if (counter.get(2).count > 0)
          {
-            ArrayList<Integer> listViewIds2 = new ArrayList<Integer>();
+            ArrayList<Integer> listViewIds2 = new ArrayList<>();
             listViewIds2.add(R.id.mixed11);
             layout.put(counter.get(2).type, listViewIds2);         
          }
@@ -121,7 +121,7 @@ class MyLayout
          
          if (counter.get(3).count > 0)
          {
-            ArrayList<Integer> listViewIds3 = new ArrayList<Integer>();
+            ArrayList<Integer> listViewIds3 = new ArrayList<>();
             listViewIds3.add(R.id.mixed12);
             layout.put(counter.get(3).type, listViewIds3); 
          }
@@ -132,13 +132,13 @@ class MyLayout
       }
       else
       {
-         ArrayList<Integer> listViewIds0 = new ArrayList<Integer>();
+         ArrayList<Integer> listViewIds0 = new ArrayList<>();
          listViewIds0.add(R.id.mixed00);
          layout.put(counter.get(0).type, listViewIds0);         
  
          if (counter.get(3).count > 0)
          {         
-            ArrayList<Integer> listViewIds3 = new ArrayList<Integer>();
+            ArrayList<Integer> listViewIds3 = new ArrayList<>();
             listViewIds3.add(R.id.mixed01);
             layout.put(counter.get(3).type, listViewIds3);         
          }
@@ -149,7 +149,7 @@ class MyLayout
 
          if (counter.get(1).count > 0)
          { 
-            ArrayList<Integer> listViewIds1 = new ArrayList<Integer>();
+            ArrayList<Integer> listViewIds1 = new ArrayList<>();
             listViewIds1.add(R.id.mixed10);
             layout.put(counter.get(1).type, listViewIds1);         
          }
@@ -160,7 +160,7 @@ class MyLayout
 
          if (counter.get(2).count > 0)
          {        
-            ArrayList<Integer> listViewIds2 = new ArrayList<Integer>();
+            ArrayList<Integer> listViewIds2 = new ArrayList<>();
             listViewIds2.add(R.id.mixed11);
             layout.put(counter.get(2).type, listViewIds2);  
          }
@@ -179,7 +179,7 @@ class MyLayout
       {
          rowsPerCol.put("switch", (int) Math.ceil((double) switchCount / (double) (switchCols + 1)));
 
-         ArrayList<Integer> listViewIds = new ArrayList<Integer>();
+         ArrayList<Integer> listViewIds = new ArrayList<>();
          listViewIds.add(R.id.switches0);
          if (switchCols > 0)
          {
@@ -212,7 +212,7 @@ class MyLayout
       {
          rowsPerCol.put("value", (int) Math.ceil((double) valueCount / (double) (valueCols + 1)));
 
-         ArrayList<Integer> listViewIds = new ArrayList<Integer>();
+         ArrayList<Integer> listViewIds = new ArrayList<>();
          listViewIds.add(R.id.values0);
          if (valueCols > 0)
          {
@@ -245,7 +245,7 @@ class MyLayout
       {
          rowsPerCol.put("command", (int) Math.ceil((double) commandCount / (double) (commandCols + 1)));
 
-         ArrayList<Integer> listViewIds = new ArrayList<Integer>();
+         ArrayList<Integer> listViewIds = new ArrayList<>();
          listViewIds.add(R.id.commands0);
          if (commandCols > 0)
          {
@@ -276,7 +276,7 @@ class MyLayout
 
       if (lightsceneCount > 0)
       {
-         ArrayList<Integer> listViewIds = new ArrayList<Integer>();
+         ArrayList<Integer> listViewIds = new ArrayList<>();
          listViewIds.add(R.id.lightscenes);
          layout.put("lightscene", listViewIds);
       }

@@ -66,4 +66,5 @@
     <string name="account1">2 Euro</string>
     <string name="account2">5 Euro</string>
     <string name="account3">10 Euro</string>
+    <string name="newVersionApp">Es gibt eine neue Version dieser App im Google Play Store. Anklicken um dieses Hinweis auszublenden.</string>
 </resources>

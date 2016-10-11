@@ -60,6 +60,7 @@ public class ConfigMain extends Activity {
     private EditText urlpl, urljs, connectionPW;
     public static ConfigData configData;
     private ConfigDataOnly configDataOnly;
+    private VersionData versionData;
     public static MySocket mySocket;
 
     public ConfigSwitchAdapter configSwitchAdapter;
@@ -116,6 +117,24 @@ public class ConfigMain extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        try {
+            FileInputStream f_in = openFileInput(WidgetService.VERSIONFILE);
+            ObjectInputStream obj_in = new ObjectInputStream(f_in);
+
+            Object obj = obj_in.readObject();
+            obj_in.close();
+
+            //Log.i("config", "config.data found");
+            if (obj instanceof VersionData) {
+                versionData = (VersionData) obj;
+            }
+        } catch (FileNotFoundException e) {
+            versionData = new VersionData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // Read object using ObjectInputStream
 
         urljs.setText(configDataOnly.urljs, TextView.BufferType.EDITABLE);
@@ -281,8 +300,7 @@ public class ConfigMain extends Activity {
         }
     };
 
-    private Emitter.Listener authListener = args -> runOnUiThread(() ->
-            buildOutput()
+    private Emitter.Listener authListener = args -> runOnUiThread(this::buildOutput
     );
 
     public void buildOutput() {
@@ -306,7 +324,7 @@ public class ConfigMain extends Activity {
         configOkButton.setText(R.string.save);
 
         DragSortListView l = (DragSortListView) findViewById(R.id.commands);
-        configCommandAdapter = new ConfigCommandAdapter(mContext, R.layout.config_command_row);
+        configCommandAdapter = new ConfigCommandAdapter(mContext);
         l.setAdapter(configCommandAdapter);
         l.setDropListener(onDropSwitch);
         l.setFloatViewManager(switchFloatViewManager);
@@ -332,7 +350,7 @@ public class ConfigMain extends Activity {
 
     private void getAllSwitches(MySocket mySocket) {
         DragSortListView l = (DragSortListView) findViewById(R.id.switches);
-        configSwitchAdapter = new ConfigSwitchAdapter(this, R.layout.config_switch_row);
+        configSwitchAdapter = new ConfigSwitchAdapter(this);
         l.setAdapter(configSwitchAdapter);
         l.setDropListener(onDropSwitch);
         l.setFloatViewManager(switchFloatViewManager);
@@ -357,7 +375,7 @@ public class ConfigMain extends Activity {
         final ArrayList<ConfigLightsceneRow> lightsceneRowsTemp = new ArrayList<>();
 
         DragSortListView l = (DragSortListView) findViewById(R.id.lightscenes);
-        configLightsceneAdapter = new ConfigLightsceneAdapter(this, R.layout.config_lightscene_row);
+        configLightsceneAdapter = new ConfigLightsceneAdapter(this);
         l.setAdapter(configLightsceneAdapter);
         l.setDropListener(onDropLightscene);
         LightscenesSectionController c = new LightscenesSectionController(l, configLightsceneAdapter, this);
@@ -395,7 +413,7 @@ public class ConfigMain extends Activity {
 
     private void getAllValues(final MySocket mySocket) {
         DragSortListView l = (DragSortListView) findViewById(R.id.values);
-        configValueAdapter = new ConfigValueAdapter(this, R.layout.config_value_row);
+        configValueAdapter = new ConfigValueAdapter(this);
         l.setAdapter(configValueAdapter);
         l.setDropListener(onDropValue);
         l.setFloatViewManager(valueFloatViewManager);

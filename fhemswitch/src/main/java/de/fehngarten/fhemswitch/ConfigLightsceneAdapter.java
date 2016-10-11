@@ -9,7 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
+//import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
@@ -19,23 +19,21 @@ import android.support.v4.content.ContextCompat;
 
 //import android.util.Log;
 
-public class ConfigLightsceneAdapter extends BaseAdapter
+class ConfigLightsceneAdapter extends BaseAdapter
 {
    Context mContext;
-   int layoutResourceId;
-   public static ArrayList<ConfigLightsceneRow> lightsceneRows;
+   private static ArrayList<ConfigLightsceneRow> lightsceneRows;
 
-   public ConfigLightsceneAdapter(Context mContext, int layoutResourceId)
+   ConfigLightsceneAdapter(Context mContext)
    {
       //super(mContext, layoutResourceId, data);
-      this.layoutResourceId = layoutResourceId;
       this.mContext = mContext;
-      lightsceneRows = new ArrayList<ConfigLightsceneRow>();
+      lightsceneRows = new ArrayList<>();
    }
 
-   public void initData(ConfigData configData, ArrayList<ConfigLightsceneRow> FHEMlightsceneRows)
+   void initData(ConfigData configData, ArrayList<ConfigLightsceneRow> FHEMlightsceneRows)
    {
-      lightsceneRows = new ArrayList<ConfigLightsceneRow>();
+      lightsceneRows = new ArrayList<>();
       for (MyLightScene lightScene : configData.lightScenes.lightScenes)
       {
          if (isInFhem(FHEMlightsceneRows, lightScene.unit,true))
@@ -54,7 +52,7 @@ public class ConfigLightsceneAdapter extends BaseAdapter
             {
                if (lightsceneRow.isHeader)
                {
-                  isCurrent = lightsceneRow.unit.equals(lightScene.unit) ? true : false;
+                  isCurrent = lightsceneRow.unit.equals(lightScene.unit);
                }
                else if (isCurrent)
                {
@@ -121,20 +119,13 @@ public class ConfigLightsceneAdapter extends BaseAdapter
       return (long) position;
    }
 
-   public Boolean isDragable(int res)
+   Boolean isDragable(int res)
    {
       //Log.d("isDragable res", Integer.toString(res));
-      if (getItem(res).isHeader)
-      {
-         return false;
-      }
-      else
-      {
-         return true;
-      }
+      return !getItem(res).isHeader;
    }
  
-   public int[] getBounds(int pos)
+   int[] getBounds(int pos)
    {
       int[] bounds = new int[2];
       
@@ -203,23 +194,11 @@ public class ConfigLightsceneAdapter extends BaseAdapter
 
       //private method of your class     
 
-      lightsceneHolder.lightscene_enabled.setOnClickListener(new OnClickListener()
-      {
-         @Override
-         public void onClick(View arg0)
-         {
-            getItem(lightsceneHolder.ref).enabled = lightsceneHolder.lightscene_enabled.isChecked();
-         }
-      });
+      lightsceneHolder.lightscene_enabled.setOnClickListener(arg0 -> getItem(lightsceneHolder.ref).enabled = lightsceneHolder.lightscene_enabled.isChecked());
 
-      lightsceneHolder.lightscene_header.setOnClickListener(new OnClickListener()
-      {
-         @Override
-         public void onClick(View arg0)
-         {
-            //Log.i("isChecked",Boolean.toString(lightsceneHolder.lightscene_header.isChecked()));
-            getItem(lightsceneHolder.ref).showHeader = lightsceneHolder.lightscene_header.isChecked();
-         }
+      lightsceneHolder.lightscene_header.setOnClickListener(arg0 -> {
+         //Log.i("isChecked",Boolean.toString(lightsceneHolder.lightscene_header.isChecked()));
+         getItem(lightsceneHolder.ref).showHeader = lightsceneHolder.lightscene_header.isChecked();
       });
       
       lightsceneHolder.lightscene_name.addTextChangedListener(new TextWatcher()
@@ -249,10 +228,10 @@ public class ConfigLightsceneAdapter extends BaseAdapter
       return rowView;
    }
 
-   public void changeItems(int from, int to)
+   void changeItems(int from, int to)
    {
       //Log.i("change switch", Integer.toString(from) + " " + Integer.toString(to));
-      final ArrayList<ConfigLightsceneRow> lightsceneRowsTemp = new ArrayList<ConfigLightsceneRow>();
+      final ArrayList<ConfigLightsceneRow> lightsceneRowsTemp = new ArrayList<>();
       if (from > to)
       {
          for (int i = 0; i < lightsceneRows.size(); i++)

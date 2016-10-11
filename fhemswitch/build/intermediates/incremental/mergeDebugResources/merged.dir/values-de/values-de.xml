@@ -38,6 +38,7 @@
     <string name="lightscenes">Szenarios</string>
     <string name="mixed">zweispaltig</string>
     <string name="name">Angezeigter Name</string>
+    <string name="newVersionApp">Es gibt eine neue Version dieser App im Google Play Store. Anklicken um dieses Hinweis auszublenden.</string>
     <string name="newline">+</string>
     <string name="noconn">Keine Verbindung zum FHEM Server. Antippen um Neuverbindung zu versuchen.</string>
     <string name="ok">OK</string>

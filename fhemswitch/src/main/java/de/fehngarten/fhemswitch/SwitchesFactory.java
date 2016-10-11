@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
-//import android.util.Log; 
+//import android.util.Log;
 
 class SwitchesFactory implements RemoteViewsFactory {
     //private static final String CLASSNAME = "SwitchesFactory.";
@@ -72,6 +72,7 @@ class SwitchesFactory implements RemoteViewsFactory {
         fillInIntent.setAction(WidgetProvider.SEND_FHEM_COMMAND);
         final Bundle bundle = new Bundle();
         bundle.putString(WidgetProvider.COMMAND, WidgetService.configData.switchesCols.get(colnum).get(position).activateCmd());
+        //Log.d("SwitchesFactory","cmd: " + WidgetService.configData.switchesCols.get(colnum).get(position).activateCmd());
         bundle.putString(WidgetProvider.TYPE, "switch");
         bundle.putString(WidgetProvider.POS, Integer.toString(position));
         bundle.putString(WidgetProvider.COL, Integer.toString(colnum));

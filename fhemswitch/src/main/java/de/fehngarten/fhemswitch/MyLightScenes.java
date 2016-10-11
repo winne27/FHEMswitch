@@ -2,29 +2,29 @@ package de.fehngarten.fhemswitch;
 
 import java.util.ArrayList;
 
-public class MyLightScenes 
+class MyLightScenes
 {
-   public ArrayList<MyLightScene> lightScenes = null;
-   public ArrayList<Item> items = new ArrayList<Item>();
-   public int itemsCount = 0;
+   ArrayList<MyLightScene> lightScenes = null;
+   ArrayList<Item> items = new ArrayList<>();
+   int itemsCount = 0;
 
-   public MyLightScenes()
+   MyLightScenes()
    {
-      lightScenes = new ArrayList<MyLightScene>();
-      items = new ArrayList<Item>();
+      lightScenes = new ArrayList<>();
+      items = new ArrayList<>();
       itemsCount = 0;
    }
 
-   public MyLightScene newLightScene(String name, String unit, Boolean showHeader)
+   MyLightScene newLightScene(String name, String unit, Boolean showHeader)
    {
       MyLightScene myLightScene = new MyLightScene(name, unit, false, showHeader);
       lightScenes.add(myLightScene);
       return myLightScene;
    }
 
-   public void aggregate()
+   private void aggregate()
    {
-      items = new ArrayList<Item>();
+      items = new ArrayList<>();
       itemsCount = 0;
       for (MyLightScene lightScene : lightScenes)
       {
@@ -33,7 +33,7 @@ public class MyLightScenes
             String lightSceneUnit = lightScene.unit;
             if (lightScene.showHeader)
             {
-               items.add(new Item(lightScene.unit, lightScene.name, lightScene.unit, true, false, lightScene.showHeader));
+               items.add(new Item(lightScene.unit, lightScene.name, lightScene.unit, true, false, true));
                itemsCount++;
             }
             for (MyLightScene.Member member : lightScene.members)
@@ -48,17 +48,17 @@ public class MyLightScenes
          }
       }
    }
-
+/*
    public ArrayList<String> unitsList()
    {
-      ArrayList<String> unitsList = new ArrayList<String>();
+      ArrayList<String> unitsList = new ArrayList<>();
       for (MyLightScene myLightScene : lightScenes)
       {
          unitsList.add(myLightScene.unit);
       }
       return unitsList;   
    }
-   
+*/
    class Item
    {
       String lightSceneName;
@@ -68,7 +68,7 @@ public class MyLightScenes
       Boolean activ;
       Boolean showHeader;
 
-      public Item(String lightSceneName, String name, String unit, Boolean header, Boolean activ, Boolean showHeader)
+      Item(String lightSceneName, String name, String unit, Boolean header, Boolean activ, Boolean showHeader)
       {
          this.lightSceneName = lightSceneName;
          this.name = name;
@@ -79,13 +79,12 @@ public class MyLightScenes
       }
    }
 
-   public String activateCmd(int pos)
+   String activateCmd(int pos)
    {
-      String cmd = "set " + items.get(pos).lightSceneName + " scene " + items.get(pos).unit;
-      return cmd;
+      return "set " + items.get(pos).lightSceneName + " scene " + items.get(pos).unit;
    }
 
-   public Boolean isLightScene(String unit)
+   Boolean isLightScene(String unit)
    {
       for (MyLightScene lightScene : lightScenes)
       {
@@ -102,11 +101,11 @@ public class MyLightScenes
       public String name;
       public String unit;
       public Boolean enabled;
-      public Boolean showHeader;
+      Boolean showHeader;
 
-      public ArrayList<Member> members = new ArrayList<Member>();
+      ArrayList<Member> members = new ArrayList<>();
 
-      public MyLightScene(String name, String unit, Boolean enabled, Boolean showHeader)
+      MyLightScene(String name, String unit, Boolean enabled, Boolean showHeader)
       {
          this.name = name;
          this.unit = unit;
@@ -114,7 +113,7 @@ public class MyLightScenes
          this.showHeader = showHeader;
       }
 
-      public void addMember(String name, String unit, Boolean enabled)
+      void addMember(String name, String unit, Boolean enabled)
       {
          members.add(new Member(name, unit, enabled));
          if (enabled)
@@ -124,7 +123,7 @@ public class MyLightScenes
          aggregate();
       } 
 
-      public Boolean isMember(String unit)
+      Boolean isMember(String unit)
       {
          for (Member member : members)
          {
@@ -135,6 +134,7 @@ public class MyLightScenes
          }
          return false;
       }
+/*
       public void setActiv(String unit)
       {
          String lightSceneName = "";
@@ -150,25 +150,18 @@ public class MyLightScenes
          {
             if (item.lightSceneName.equals(lightSceneName))
             {
-               if (item.unit.equals(unit))
-               {
-                  item.activ = true;
-               }
-               else
-               {
-                  item.activ = false;
-               }
+               item.activ = item.unit.equals(unit);
             }
          }
       }
-
+*/
       class Member
       {
          public String name;
          public String unit;
          public Boolean enabled;
          
-         public Member(String name, String unit, Boolean enabled)
+         Member(String name, String unit, Boolean enabled)
          {
             this.name = name;
             this.unit = unit;
