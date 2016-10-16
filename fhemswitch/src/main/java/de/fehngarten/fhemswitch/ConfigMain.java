@@ -2,6 +2,7 @@ package de.fehngarten.fhemswitch;
 
 import java.io.File;
 
+import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 
@@ -16,6 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import android.widget.ArrayAdapter;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import org.json.JSONArray;
@@ -25,7 +27,6 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
@@ -50,11 +51,12 @@ import com.mobeta.android.dslv.DragSortListView;
 
 import de.fehngarten.fhemswitch.MyLightScenes.MyLightScene;
 
+
 //import android.util.Log;
 
 public class ConfigMain extends Activity {
-    Button configOkButton;
-    Button configOkButton2;
+    Button getConfigButton;
+    Button saveConfigButton;
     Button newCommandButton;
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private EditText urlpl, urljs, connectionPW;
@@ -63,10 +65,10 @@ public class ConfigMain extends Activity {
     private VersionData versionData;
     public static MySocket mySocket;
 
-    public ConfigSwitchAdapter configSwitchAdapter;
-    public ConfigLightsceneAdapter configLightsceneAdapter;
-    public ConfigValueAdapter configValueAdapter;
-    public ConfigCommandAdapter configCommandAdapter;
+    public ConfigSwitchesAdapter configSwitchesAdapter;
+    public ConfigLightscenesAdapter configLightscenesAdapter;
+    public ConfigValuesAdapter configValuesAdapter;
+    public ConfigCommandsAdapter configCommandsAdapter;
 
     public int lsCounter = 0;
     public int lsSize = 0;
@@ -94,7 +96,7 @@ public class ConfigMain extends Activity {
         if (dpWidth < 596) {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
-        setContentView(R.layout.config);
+        setContentView(R.layout.config_body);
 
         urlpl = (EditText) findViewById(R.id.urlpl);
         urljs = (EditText) findViewById(R.id.urljs);
@@ -144,11 +146,11 @@ public class ConfigMain extends Activity {
         Button callDonateButton = (Button) findViewById(R.id.callDonateButton);
         callDonateButton.setOnClickListener(callDonateButtonOnClickListener);
 
-        configOkButton = (Button) findViewById(R.id.okconfig);
-        configOkButton.setOnClickListener(configOkButtonOnClickListener);
+        getConfigButton = (Button) findViewById(R.id.get_config);
+        getConfigButton.setOnClickListener(getConfigButtonOnClickListener);
 
-        configOkButton2 = (Button) findViewById(R.id.okconfig2);
-        configOkButton2.setOnClickListener(configOkButtonOnClickListener);
+        saveConfigButton = (Button) findViewById(R.id.save_config);
+        saveConfigButton.setOnClickListener(saveConfigButtonOnClickListener);
 
         spinnerSwitchCols = (Spinner) this.findViewById(R.id.config_switch_cols);
         ArrayAdapter<CharSequence> adapterSwitchCols = ArrayAdapter.createFromResource(this, R.array.colnum, R.layout.spinner_item);
@@ -207,10 +209,6 @@ public class ConfigMain extends Activity {
             mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         }
 
-        // If they gave us an intent without the widget id, just bail.
-        //if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
-            //finish();
-        //}
         radioLayoutLandscape = (RadioGroup) findViewById(R.id.layout_landscape);
         radioLayoutPortrait = (RadioGroup) findViewById(R.id.layout_portrait);
 
@@ -231,23 +229,35 @@ public class ConfigMain extends Activity {
         @Override
         public void onClick(View arg0) {
             //Log.i("onclick new line", newCommandButton.getText().toString());
-            configCommandAdapter.newLine();
+            configCommandsAdapter.newLine();
             setListViewHeightBasedOnChildren((ListView) findViewById(R.id.commands));
         }
     };
-    private Button.OnClickListener configOkButtonOnClickListener = new Button.OnClickListener() {
+    private Button.OnClickListener getConfigButtonOnClickListener = new Button.OnClickListener() {
         @Override
         public void onClick(View arg0) {
             //Log.i("text button", configOkButton.getText().toString());
-            if (configOkButton.getText().toString().equals(getText(R.string.getConfig))) {
-                showFHEMunits();
-            } else {
-                saveConfig();
-            }
+            showFHEMunits();
+        }
+    };
+
+    private Button.OnClickListener saveConfigButtonOnClickListener = new Button.OnClickListener() {
+        @Override
+        public void onClick(View arg0) {
+            //Log.i("text button", configOkButton.getText().toString());
+            saveConfig();
         }
     };
 
     private void showFHEMunits() {
+
+        // hide soft keyboard
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
         try {
             URL url = new URL(urljs.getText().toString());
             url.toURI();
@@ -305,38 +315,26 @@ public class ConfigMain extends Activity {
 
     public void buildOutput() {
         waitAuth.removeCallbacks(runnableWaitAuth);
+
         getAllSwitches(mySocket);
         getAllLightscenes(mySocket);
         getAllValues(mySocket);
+        allCommands();
 
-        findViewById(R.id.layout_block).setVisibility(View.VISIBLE);
-        findViewById(R.id.switches_header1).setVisibility(View.VISIBLE);
-        findViewById(R.id.switches_header2).setVisibility(View.VISIBLE);
-        findViewById(R.id.lightscenes_header1).setVisibility(View.VISIBLE);
-        findViewById(R.id.lightscenes_header2).setVisibility(View.VISIBLE);
-        findViewById(R.id.values_header1).setVisibility(View.VISIBLE);
-        findViewById(R.id.values_header2).setVisibility(View.VISIBLE);
-        findViewById(R.id.commands_header1).setVisibility(View.VISIBLE);
-        findViewById(R.id.commands_header2).setVisibility(View.VISIBLE);
-        findViewById(R.id.okconfig2).setVisibility(View.VISIBLE);
-        findViewById(R.id.newcommandline).setVisibility(View.VISIBLE);
+        findViewById(R.id.url_block).setVisibility(View.GONE);
+        findViewById(R.id.config_layout_block).setVisibility(View.VISIBLE);
 
-        configOkButton.setText(R.string.save);
+        // hide soft keyboard
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
 
-        DragSortListView l = (DragSortListView) findViewById(R.id.commands);
-        configCommandAdapter = new ConfigCommandAdapter(mContext);
-        l.setAdapter(configCommandAdapter);
-        l.setDropListener(onDropSwitch);
-        l.setFloatViewManager(switchFloatViewManager);
-        l.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        //l.setDragHandleId(R.id.config_command_enabled);
-
-        configCommandAdapter.initData(configDataOnly.commandRows);
-        configCommandAdapter.notifyDataSetChanged();
-        setListViewHeightBasedOnChildren((ListView) findViewById(R.id.commands));
-
-        newCommandButton = (Button) findViewById(R.id.newcommandline);
-        newCommandButton.setOnClickListener(newCommandButtonOnClickListener);
+        // scroll nach oben
+        ScrollView mainScrollView = (ScrollView) findViewById(R.id.config_scroll_block);
+        mainScrollView.fullScroll(ScrollView.FOCUS_UP);
+        mainScrollView.smoothScrollTo(0,0);
     }
 
     public void sendAlertMessage(final String msg) {
@@ -348,23 +346,40 @@ public class ConfigMain extends Activity {
         dialog.create().show();
     }
 
+    private void allCommands() {
+        DragSortListView l = (DragSortListView) findViewById(R.id.commands);
+        configCommandsAdapter = new ConfigCommandsAdapter(mContext);
+        l.setAdapter(configCommandsAdapter);
+        ConfigCommandsController c = new ConfigCommandsController(l, configCommandsAdapter, mContext);
+        l.setFloatViewManager(c);
+        l.setOnTouchListener(c);
+        l.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+        configCommandsAdapter.initData(configDataOnly.commandRows);
+        configCommandsAdapter.notifyDataSetChanged();
+        setListViewHeightBasedOnChildren((ListView) findViewById(R.id.commands));
+
+        newCommandButton = (Button) findViewById(R.id.newcommandline);
+        newCommandButton.setOnClickListener(newCommandButtonOnClickListener);
+
+    }
     private void getAllSwitches(MySocket mySocket) {
         DragSortListView l = (DragSortListView) findViewById(R.id.switches);
-        configSwitchAdapter = new ConfigSwitchAdapter(this);
-        l.setAdapter(configSwitchAdapter);
-        l.setDropListener(onDropSwitch);
-        l.setFloatViewManager(switchFloatViewManager);
+        configSwitchesAdapter = new ConfigSwitchesAdapter(this);
+        l.setAdapter(configSwitchesAdapter);
+        ConfigSwitchesController c = new ConfigSwitchesController(l, configSwitchesAdapter, mContext);
+        l.setFloatViewManager(c);
+        l.setOnTouchListener(c);
         l.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        //l.setDragHandleId(R.id.config_switch_unit);
 
         // read switches from FHEM server
         mySocket.socket.emit("getAllSwitches", new Ack() {
             @Override
             public void call(Object... args) {
                 //Log.i("get allSwitches", args[0].toString());
-                configSwitchAdapter.initData((JSONArray) args[0], configData.switches, configData.switchesDisabled);
+                configSwitchesAdapter.initData((JSONArray) args[0], configData.switches, configData.switchesDisabled);
                 runOnUiThread(() -> {
-                    configSwitchAdapter.notifyDataSetChanged();
+                    configSwitchesAdapter.notifyDataSetChanged();
                     setListViewHeightBasedOnChildren((ListView) findViewById(R.id.switches));
                 });
             }
@@ -375,12 +390,10 @@ public class ConfigMain extends Activity {
         final ArrayList<ConfigLightsceneRow> lightsceneRowsTemp = new ArrayList<>();
 
         DragSortListView l = (DragSortListView) findViewById(R.id.lightscenes);
-        configLightsceneAdapter = new ConfigLightsceneAdapter(this);
-        l.setAdapter(configLightsceneAdapter);
-        l.setDropListener(onDropLightscene);
-        LightscenesSectionController c = new LightscenesSectionController(l, configLightsceneAdapter, this);
+        configLightscenesAdapter = new ConfigLightscenesAdapter(this);
+        l.setAdapter(configLightscenesAdapter);
+        ConfigLightscenesController c = new ConfigLightscenesController(l, configLightscenesAdapter, mContext);
         l.setFloatViewManager(c);
-        //l.setOnTouchListener(c);
 
         mySocket.socket.emit("getAllUnitsOf", "LightScene", (Ack) args -> {
             ArrayList<String> lightscenesFHEM = convertJSONarray((JSONArray) args[0]);
@@ -400,10 +413,10 @@ public class ConfigMain extends Activity {
                     }
                     lsCounter++;
                     if (lsCounter == lsSize) {
-                        configLightsceneAdapter.initData(configData, lightsceneRowsTemp);
+                        configLightscenesAdapter.initData(configData, lightsceneRowsTemp);
                         runOnUiThread(() -> {
-                                configLightsceneAdapter.notifyDataSetChanged();
-                                setListViewHeightBasedOnChildren((ListView) findViewById(R.id.lightscenes));
+                            configLightscenesAdapter.notifyDataSetChanged();
+                            setListViewHeightBasedOnChildren((ListView) findViewById(R.id.lightscenes));
                         });
                     }
                 });
@@ -413,22 +426,21 @@ public class ConfigMain extends Activity {
 
     private void getAllValues(final MySocket mySocket) {
         DragSortListView l = (DragSortListView) findViewById(R.id.values);
-        configValueAdapter = new ConfigValueAdapter(this);
-        l.setAdapter(configValueAdapter);
-        l.setDropListener(onDropValue);
-        l.setFloatViewManager(valueFloatViewManager);
+        configValuesAdapter = new ConfigValuesAdapter(this);
+        l.setAdapter(configValuesAdapter);
+        ConfigValuesController c = new ConfigValuesController(l, configValuesAdapter, mContext);
+        l.setFloatViewManager(c);
         l.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        //l.setDragHandleId(R.id.config_value_unit);
 
         // read values from FHEM server
         mySocket.socket.emit("getAllValues", new Ack() {
             @Override
             public void call(Object... args) {
-                configValueAdapter.initData((JSONObject) args[0], configData.values, configData.valuesDisabled);
+                configValuesAdapter.initData((JSONObject) args[0], configData.values, configData.valuesDisabled);
 
                 runOnUiThread(() -> {
-                        configValueAdapter.notifyDataSetChanged();
-                        setListViewHeightBasedOnChildren((ListView) findViewById(R.id.values));
+                    configValuesAdapter.notifyDataSetChanged();
+                    setListViewHeightBasedOnChildren((ListView) findViewById(R.id.values));
                 });
             }
         });
@@ -439,20 +451,14 @@ public class ConfigMain extends Activity {
             mySocket.socket.close();
         }
 
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
-
-        //RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.hellowidget_layout);
-        //appWidgetManager.updateAppWidget(mAppWidgetId, views);
-        //WidgetService.updateAppWidget(context, appWidgetManager, mAppWidgetId);
-
         configDataOnly = new ConfigDataOnly();
         configDataOnly.urljs = urljs.getText().toString();
         configDataOnly.urlpl = urlpl.getText().toString();
         configDataOnly.connectionPW = connectionPW.getText().toString();
-        configDataOnly.switchRows = configSwitchAdapter.getData();
-        configDataOnly.lightsceneRows = configLightsceneAdapter.getData();
-        configDataOnly.valueRows = configValueAdapter.getData();
-        configDataOnly.commandRows = configCommandAdapter.getData();
+        configDataOnly.switchRows = configSwitchesAdapter.getData();
+        configDataOnly.lightsceneRows = configLightscenesAdapter.getData();
+        configDataOnly.valueRows = configValuesAdapter.getData();
+        configDataOnly.commandRows = configCommandsAdapter.getData();
         configDataOnly.switchCols = spinnerSwitchCols.getSelectedItemPosition();
         configDataOnly.valueCols = spinnerValueCols.getSelectedItemPosition();
         configDataOnly.commandCols = spinnerCommandCols.getSelectedItemPosition();
@@ -475,17 +481,11 @@ public class ConfigMain extends Activity {
             sendAlertMessage(getString(R.string.fileerr) + ":\n " + e);
         }
 
-        //WidgetService.startup();
-
         Intent resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
         setResult(RESULT_OK, resultValue);
-        ComponentName thisAppWidget = new ComponentName(mContext.getPackageName(), WidgetProvider.class.getName());
-        Intent updateIntent = new Intent(mContext, WidgetProvider.class);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
-        updateIntent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
-        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-        updateIntent.putExtra("newConfig", "1");
+        Intent updateIntent = new Intent();
+        updateIntent.setAction(WidgetService.NEW_CONFIG);
         mContext.sendBroadcast(updateIntent);
         finish();
     }
@@ -509,68 +509,6 @@ public class ConfigMain extends Activity {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
-
-    private DragSortListView.FloatViewManager switchFloatViewManager = new DragSortListView.FloatViewManager() {
-        @Override
-        public View onCreateFloatView(int position) {
-            DragSortListView l = (DragSortListView) findViewById(R.id.switches);
-            View v = configSwitchAdapter.getView(position, null, l);
-            //v.setBackgroundColor(mContext.getResources().getColor(R.color.conf_bg_handle_pressed));
-            v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.conf_bg_handle_pressed));
-            return v;
-        }
-
-        @Override
-        public void onDragFloatView(View floatView, Point floatPoint, Point touchPoint) {
-
-        }
-
-        @Override
-        public void onDestroyFloatView(View floatView) {
-            //do nothing; block super from crashing
-        }
-    };
-    private DragSortListView.FloatViewManager valueFloatViewManager = new DragSortListView.FloatViewManager() {
-        @Override
-        public View onCreateFloatView(int position) {
-            DragSortListView l = (DragSortListView) findViewById(R.id.values);
-            View v = configValueAdapter.getView(position, null, l);
-            //v.setBackgroundColor(mContext.getResources().getColor(R.color.conf_bg_handle_pressed));
-            v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.conf_bg_handle_pressed));
-            return v;
-        }
-
-        @Override
-        public void onDragFloatView(View floatView, Point floatPoint, Point touchPoint) {
-
-        }
-
-        @Override
-        public void onDestroyFloatView(View floatView) {
-            //do nothing; block super from crashing
-        }
-    };
-
-    private DragSortListView.DropListener onDropSwitch = new DragSortListView.DropListener() {
-        @Override
-        public void drop(int from, int to) {
-            configSwitchAdapter.changeItems(from, to);
-        }
-    };
-
-    private DragSortListView.DropListener onDropLightscene = new DragSortListView.DropListener() {
-        @Override
-        public void drop(int from, int to) {
-            configLightsceneAdapter.changeItems(from, to);
-        }
-    };
-
-    private DragSortListView.DropListener onDropValue = new DragSortListView.DropListener() {
-        @Override
-        public void drop(int from, int to) {
-            configValueAdapter.changeItems(from, to);
-        }
-    };
 
     public static ArrayList<String> convertJSONarray(JSONArray jsonArray) {
         ArrayList<String> arrayList = new ArrayList<>();

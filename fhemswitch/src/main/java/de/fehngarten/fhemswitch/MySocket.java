@@ -51,7 +51,7 @@ class MySocket {
 
     void sendCommand(String cmd) {
         //Log.d("mySocket command",cmd);
-        if (socket != null) {
+        if (socket != null && cmd != null) {
             socket.emit("commandNoResp", cmd);
         }
     }

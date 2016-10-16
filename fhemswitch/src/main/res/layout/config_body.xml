@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/configBody"
+    android:layout_width="596dp"
+    android:layout_height="match_parent"
+
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/configshape"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/conf_bg_header_1"
+        android:gravity="center_horizontal"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:text="@string/config_header"
+        android:textColor="@color/conf_text_header_1"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <include layout="@layout/config_url_block"></include>
+    <include layout="@layout/config_layout_block"></include>
 
 </LinearLayout>
+

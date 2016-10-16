@@ -10,7 +10,7 @@ import android.widget.RemoteViewsService.RemoteViewsFactory;
 class SwitchesFactory implements RemoteViewsFactory {
     //private static final String CLASSNAME = "SwitchesFactory.";
     private Context mContext = null;
-    private int colnum;
+    int colnum;
     //private List<MySwitch> switches = new ArrayList<MySwitch>();
 
     SwitchesFactory(Context context, Intent intent, int colnum) {
@@ -49,13 +49,11 @@ class SwitchesFactory implements RemoteViewsFactory {
         //String methodname = "getCount";
         //Log.d(CLASSNAME + methodname, "switches size: " + Integer.toString(switches.size()));
 
-        try {
-            return WidgetService.configData.switchesCols.get(colnum).size();
-        } catch (Exception e) {
+        if (WidgetService.configData == null || WidgetService.configData.switchesCols == null || WidgetService.configData.switchesCols.size() == 0) {
             return (0);
+        } else {
+            return WidgetService.configData.switchesCols.get(colnum).size();
         }
-
-
     }
 
     @Override

@@ -42,12 +42,14 @@
     <string name="command">Command</string>
     <string name="commands">Custom commands</string>
     <string name="commands2">FHEM command</string>
+    <string name="config_header">FHEMswitch configuration</string>
     <string name="conn_pw">FHEM server password (optional):</string>
     <string name="donate_back">Go</string>
     <string name="donate_cancel">Cancel</string>
     <string name="donate_google">Donate</string>
     <string name="donate_string_call">optional donation</string>
     <string name="donate_text">For this app I will donate</string>
+    <string name="donotshow">Don\'t show again</string>
     <string name="error_header">An error has occurred</string>
     <string name="fileerr">Error at saving configuration:</string>
     <string name="getConfig">get FHEM units</string>
@@ -60,12 +62,14 @@
     <string name="lightscenes">Scenarios</string>
     <string name="mixed">two columns</string>
     <string name="name">Displayed Name</string>
-    <string name="newVersionApp">There is a new version of this App in the Google Play Store. Click for hide this hint.</string>
+    <string name="newVersionApp">There is a new version of this App in the Google Play Store.</string>
     <string name="newline">+</string>
     <string name="noconn">No connection to FHEM server. Tip for reconnection attempt.</string>
     <string name="ok">OK</string>
     <string name="onlinecheck">is this device online</string>
+    <string name="openstore">Open Play Store for Update</string>
     <string name="portrait">Layout Portrait</string>
+    <string name="rememberlater">Remember me later</string>
     <string name="save">Save</string>
     <string name="sel">Sel</string>
     <string name="switches">Switches</string>
@@ -84,11 +88,20 @@
     <string name="values2">Values</string>
     <string name="vertical">vertical</string>
     <string name="widget_name">FHEMswitch</string>
-    <style name="AppBaseTheme" parent="android:Theme.Light">
-        
+    <style name="AppBaseTheme" parent="android:Theme.Holo.NoActionBar">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
     </style>
     <style name="AppTheme" parent="AppBaseTheme">
-        
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    <style name="Widget.Button" parent="android:Widget">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="lightimg">
         <item name="android:layout_width">wrap_content</item>

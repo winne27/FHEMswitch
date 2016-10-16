@@ -49,11 +49,10 @@ class CommandsFactory implements RemoteViewsFactory {
         //String methodname = "getCount";
         //Log.d(CLASSNAME + methodname, "values size: " + Integer.toString(values.size()));
 
-        try {
-            return WidgetService.configData.commandsCols.get(colnum).size();
-        } catch (Exception e) {
-            //Log.d("CommandsFactory", "error getCount");
+        if (WidgetService.configData == null || WidgetService.configData.commandsCols == null || WidgetService.configData.commandsCols.size() == 0) {
             return (0);
+        } else {
+            return WidgetService.configData.commandsCols.get(colnum).size();
         }
     }
 

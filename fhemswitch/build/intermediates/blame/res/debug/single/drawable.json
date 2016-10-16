@@ -16,6 +16,10 @@
         "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\drawable\\set_toggle.png"
     },
     {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\drawable\\header3.xml",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\drawable\\header3.xml"
+    },
+    {
         "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\drawable\\command.xml",
         "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\drawable\\command.xml"
     },

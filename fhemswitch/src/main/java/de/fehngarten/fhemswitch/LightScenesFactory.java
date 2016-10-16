@@ -47,12 +47,10 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
     public int getCount() {
         //String methodname = "getCount";
         //Log.d(CLASSNAME + methodname, "lightscenes size: " + Integer.toString(WidgetService.configData.lightScenes.itemsCount));
-
-        try {
-            return WidgetService.configData.lightScenes.itemsCount;
-        } catch (Exception e) {
-            //Log.d("CommandsFactory", "error getCount");
+        if (WidgetService.configData == null || WidgetService.configData.lightScenes == null) {
             return (0);
+        } else {
+            return WidgetService.configData.lightScenes.itemsCount;
         }
     }
 

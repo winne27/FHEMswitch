@@ -1,38 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="30dp">
 
     <TextView
-        android:layout_height="wrap_content"
         android:background="@color/conf_bg_header_2"
-        android:gravity="center_horizontal"
-        android:textColor="@color/conf_text_header_2"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:id="@+id/config_switch_enqbled"
+        android:text=" "/>
 
     <TextView
-        android:layout_height="wrap_content"
         android:background="@color/conf_bg_header_2"
+        android:id="@+id/config_switch_unit"
         android:text="@string/unit"
         android:textColor="@color/conf_text_header_2"
         android:textSize="16sp"
         android:textStyle="bold" />
 
     <TextView
-        android:layout_height="wrap_content"
         android:background="@color/conf_bg_header_2"
-        android:paddingLeft="12dp"
-        android:text="@string/name"
+        android:id="@+id/config_switch_name"
         android:textColor="@color/conf_text_header_2"
+        android:text="@string/name"
         android:textSize="16sp"
         android:textStyle="bold" />
 
     <TextView
-        android:layout_height="wrap_content"
         android:background="@color/conf_bg_header_2"
-        android:paddingLeft="12dp"
+        android:id="@+id/config_switch_cmd"
         android:text="@string/command"
         android:textColor="@color/conf_text_header_2"
         android:textSize="16sp"

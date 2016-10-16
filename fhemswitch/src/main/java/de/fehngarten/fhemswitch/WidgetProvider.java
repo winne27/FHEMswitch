@@ -1,12 +1,17 @@
 package de.fehngarten.fhemswitch;
 
 //import android.appwidget.AppWidgetManager;
+
 import android.appwidget.AppWidgetProvider;
 //import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
+
+import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
+import static android.content.ContentValues.TAG;
 
 public class WidgetProvider extends AppWidgetProvider {
 
@@ -19,33 +24,16 @@ public class WidgetProvider extends AppWidgetProvider {
     public static final String COL = "de.fehngarten.fhemswitch.COL";
     public static final String URL = "de.fehngarten.fhemswitch.URL";
     public static final String OPEN_URL = "de.fehngarten.fhemswitch.OPEN_URL";
-    public static final String NEW_CONFIG = "de.fehngarten.fhemswitch.NEW_CONFIG";
+    //public static final String USER_INTENT = "de.fehngarten.fhemswitch.USER_INTENT";
     //private static Boolean startService = true;
 
     public void onReceive(Context context, Intent intent) {
         Log.d("WidgetProvider", "onReiceive startet by " + intent.getAction());
-        //Log.d("trace", "extra newConfig " + intent.getStringExtra("newConfig"));
         // super.onReceive(context, intent);
-        // make sure the user has actually installed a widget
-        // before starting the update service
-        //if (widgetsInstalledLength(context) != 0 && intent.getAction().equals("android.appwidget.action.APPWIDGET_UPDATE"))
-        if (intent.getAction().equals("android.appwidget.action.APPWIDGET_UPDATE")) {
-            //if (startService)
-            //{
-            ////Log.d("trace", "starten Service");
 
-            if (!WidgetService.serviceRunning) {
-                Intent serviceIntent = new Intent(context.getApplicationContext(), WidgetService.class);
-                context.startService(serviceIntent);
-            } else if (intent.getExtras() != null && intent.getExtras().containsKey("newConfig") && intent.getStringExtra("newConfig").equals("1")) {
-                Intent newConfig = new Intent(NEW_CONFIG);
-                context.sendBroadcast(newConfig);
-            }
-            //}
-            //else
-            //{
-            //   startService = true;
-            //}
+        if (intent.getAction().equals(ACTION_APPWIDGET_UPDATE)) {
+            Intent serviceIntent = new Intent(context.getApplicationContext(), WidgetService.class);
+            context.startService(serviceIntent);
         } else if (intent.getAction().equals("android.appwidget.action.APPWIDGET_DELETED")) {
             ////Log.i("trace", "stop service");
             Intent serviceIntent = new Intent(context.getApplicationContext(), WidgetService.class);

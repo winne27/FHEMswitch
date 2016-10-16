@@ -61,6 +61,7 @@
 
         <Button
             android:id="@+id/googleButton"
+            style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/configbutton"
@@ -68,6 +69,7 @@
 
          <Button
             android:id="@+id/cancelButton"
+             style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -94,6 +96,7 @@
             android:textStyle="bold" />
         <Button
             android:id="@+id/backButton"
+            style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

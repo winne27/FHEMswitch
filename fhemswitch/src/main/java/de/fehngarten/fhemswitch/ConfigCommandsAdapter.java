@@ -153,7 +153,7 @@ class ConfigCommandsAdapter extends BaseAdapter
 
       return rowView;
    }
-/*
+
    public void changeItems(int from, int to)
    {
       final ArrayList<ConfigCommandRow> commandRowsTemp = new ArrayList<>();
@@ -207,7 +207,7 @@ class ConfigCommandsAdapter extends BaseAdapter
          notifyDataSetChanged();
       }
    }
-*/
+
    private class CommandHolder
    {
       CheckBox command_enabled;

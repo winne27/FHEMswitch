@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetBottom="-2dp" >
 
-</selector>
+    <shape android:shape="rectangle" >
+        <stroke
+            android:width="2dp"
+            android:color="@color/conf_bg_header_1" />
+
+        <solid android:color="@color/conf_bg_header_3" />
+    </shape>
+
+</inset>

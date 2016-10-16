@@ -1,1 +1,5 @@
-/.project
+.project
+.gradle
+.idea/*
+build/*
+fhemswitch/build/*

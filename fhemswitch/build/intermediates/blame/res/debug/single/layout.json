@@ -16,6 +16,14 @@
         "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout\\value_row.xml"
     },
     {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\layout\\config_layout_block.xml",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout\\config_layout_block.xml"
+    },
+    {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\layout\\config_orient_block.xml",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout\\config_orient_block.xml"
+    },
+    {
         "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\layout\\command_row.xml",
         "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout\\command_row.xml"
     },
@@ -24,8 +32,28 @@
         "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout\\main_layout_horizontal.xml"
     },
     {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\layout\\noconn.xml",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout\\noconn.xml"
+    },
+    {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\layout\\new_version.xml",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout\\new_version.xml"
+    },
+    {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\layout\\config_switches_block.xml",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout\\config_switches_block.xml"
+    },
+    {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\layout\\config_body.xml",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout\\config_body.xml"
+    },
+    {
         "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\layout\\main_layout_mixed.xml",
         "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout\\main_layout_mixed.xml"
+    },
+    {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\layout\\config_switch_row_header.xml",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout\\config_switch_row_header.xml"
     },
     {
         "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\layout\\main_layout_vertical.xml",
@@ -34,6 +62,10 @@
     {
         "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\layout\\lightscene_row.xml",
         "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout\\lightscene_row.xml"
+    },
+    {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\layout\\config_url_block.xml",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\layout\\config_url_block.xml"
     },
     {
         "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\layout\\switch_row.xml",

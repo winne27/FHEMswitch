@@ -66,5 +66,9 @@
     <string name="account1">2 Euro</string>
     <string name="account2">5 Euro</string>
     <string name="account3">10 Euro</string>
-    <string name="newVersionApp">Es gibt eine neue Version dieser App im Google Play Store. Anklicken um dieses Hinweis auszublenden.</string>
+    <string name="newVersionApp">Es gibt eine neue Version dieser App im Google Play Store.</string>
+    <string name="openstore">Öffne Play Store für Update</string>
+    <string name="donotshow">Nicht mehr anzeigen</string>
+    <string name="rememberlater">Später nochmals erinnern</string>
+    <string name="config_header">FHEMswitch Konfiguration</string>
 </resources>

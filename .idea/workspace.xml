@@ -26,271 +26,213 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9d3a4cd-be32-485e-844b-d5097b240fbc" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/drag_sort_listview_1_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/engine_io_client_0_8_1.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jsoup_1_7_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/VersionData.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v11/values-v11.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v14/values-v14.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/56/2A9C69AE15CBB4B228114A109DF1AE319E9FCD" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/62/3DD6D7AFB5D9065D62F123ADEFEEBEFAB79A30" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/87/021E59E2E40A75718A1A3065ACE5DAC498C83A" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/8F/8C4388DA48B42FE7E146CB7BFD5DDD92E3F0F6" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/96/ECF5770ECDA0142CD07D419F6C202E5E12DED3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/99/067DA83C3DDA06B82611D6F219C9021C3B2429" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9A/F089E27699AE37B69E860CD6885039E14D561F" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C1/645BF7830D6A3A11B9B298E538DA5ECE3D1BDC" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/okhttp_3_4_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/okhttp_ws_3_4_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/okio_1_9_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/socket_io_client_0_8_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_annotations_24_2_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_compat_24_2_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_core_ui_24_2_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_core_utils_24_2_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_fragment_24_2_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_media_compat_24_2_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_24_2_1.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/mergeDebugResources/merged.dir/values-de/values-de.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/01/FD588C2AF2522F967B28FDA603AB9EEEDFE297" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/07/E36F9600B830AE6C0ABA8CFDB751751AB2D607" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/09/F58A996EA44B5F245D48E8A6E8D705F4153F28" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/12/14004B4C8145991823A44477D3777E2CB5BE79" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/16/7B4F60B0F6B7FC2C668EE467FBC4ED8220D117" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/25/7527F97C83CEC2DAFD9B18D8D73BC6BFCCD419" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/2C/7FB036120CE5FBA26B091B368EA785F5FF0898" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/36/131CE0BE50331B0631B5563B2E97CC140E2646" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/47/3CAB56B4ACBC6967855468C172E342004F06E7" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/48/54EC13C3355545F15B49E5ABB4C4E736EC6A47" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/4E/93886D38D2FAAD5F4E5D22D51049E450CF95D7" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/4F/D6D72681F759D3B0A674FD4CCD734A7D0A9394" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/59/387D7F17C57988C82AF21F48B2AEC6A80BCDF0" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/59/572C72ECE1F7F50D11BF1A159D43926CAC109D" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/64/F2DB4BD3AB7314DAE4A68D5E080FC7A701A7DD" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/69/B0992405D54B209F95A12C287BFF6D00AC01A6" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/6A/59E8E6DE657A337714E3B0C9D5830E582D8F92" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/6D/EB11B9CD0C9B01D7CFCB06E7E349A5F7C9ADFB" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/6E/43B8DF373484DEB148E227BDB44BAB503580AB" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/78/5D9E17F7985ACA80678AEA9F6E3818A4158BC0" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/7A/BC61FDF767AE41D1BB146509A6ADF9ADF24ADD" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/7C/CB43CEEB6ED13831DA60760838540591AF54D1" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/84/1064C3609154B1CCEB0CD5F3E7CF672169E9BC" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/84/A87CAFCF19EEDEE0D1BF99190BF1BA5C323F2D" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/91/06109D512C89748914FC5F913627E389A330A5" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/94/297506A4A5C948F2241801B741C653F1BEABEA" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/94/58C19527DF92595204571B6ECA04F0E4CB490D" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9F/C9BA33A8871881F6FF5E7917610BCA3D6C22D9" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A3/0A6C0295307D6F6BEB5A2725F1343891C7DE58" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/B4/C1B2C76087DF40F6D083D6BC099D7ACDC178CE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/B8/3667C7B9C321588CC231C0B92FFE9F2AA4949A" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C3/F8371F29AA20F22B5ABBC943E03B8BB09BA67F" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C6/2F7A2760BF89B644211052763C832B3A0BA6E0" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C7/6B87ABCB217B189041EBC3A49ECF9111B77A95" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D1/49E687AF903511DDB440C6F698952AF96D5C7D" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D3/4113B37BCBDC9D4DB2D23C8AC4A49F03B9FAD6" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F0/1840645CF602D92617D28AFD4DECF1E384B36F" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/FA/34F2A5DE13680C998BD8A0022EBF789FA58C8A" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/FA/B5A7C1B0FA59AAA022515ABEE0939110F0F629" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/FE/832EEDA488899ACD6555282E97ABA1818787B7" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/packageDebug/zip-cache/yJQnMEG4c_G67SuV+ITv0yMIxX8=" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/packageDebug/zip-cache/yJQnMEG4c_G67SuV+ITv0yMIxX8=" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/00/5FBDAB2D10459161E23BF648B03DB6E9E9358E" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/00/5FBDAB2D10459161E23BF648B03DB6E9E9358E" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/01/E0BCD14E3AFCC7606DCEEEF72334AD3B045D29" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/01/E0BCD14E3AFCC7606DCEEEF72334AD3B045D29" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/01/FD588C2AF2522F967B28FDA603AB9EEEDFE297" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/01/FD588C2AF2522F967B28FDA603AB9EEEDFE297" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/02/D3ED5F919B6C2DFD5924E389054A60DE7736EE" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/02/D3ED5F919B6C2DFD5924E389054A60DE7736EE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/06/1299C7869B076FF149312A3D3CDCDE900FA209" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/06/1299C7869B076FF149312A3D3CDCDE900FA209" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/07/E36F9600B830AE6C0ABA8CFDB751751AB2D607" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/07/E36F9600B830AE6C0ABA8CFDB751751AB2D607" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/08/16F5BEAB4A5DD9918EF100BA208C866CF24D7A" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/08/16F5BEAB4A5DD9918EF100BA208C866CF24D7A" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/09/F58A996EA44B5F245D48E8A6E8D705F4153F28" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/09/F58A996EA44B5F245D48E8A6E8D705F4153F28" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/0A/4F238DEBCCFE2A1EB82A89B93395C53F9CF431" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/0A/4F238DEBCCFE2A1EB82A89B93395C53F9CF431" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/0C/739530923E80CB338685EC462A74D42FEFF9EB" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/0C/739530923E80CB338685EC462A74D42FEFF9EB" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/0D/DC64D925C515486B20D54F086C8E96A3E8D812" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/0D/DC64D925C515486B20D54F086C8E96A3E8D812" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/10/0758EB7FC35DCCE523CEECA9123EF06EFB3C01" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/10/0758EB7FC35DCCE523CEECA9123EF06EFB3C01" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/13/C25A4850D5911CCB6908089F1ADB1B9467A493" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/13/C25A4850D5911CCB6908089F1ADB1B9467A493" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/14/5436D38DED9F715C49B8F91AA58738E52B0DA3" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/14/5436D38DED9F715C49B8F91AA58738E52B0DA3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/16/6387E7C2F118117086AA807AC5DCB5404EBA9A" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/16/6387E7C2F118117086AA807AC5DCB5404EBA9A" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/16/7B4F60B0F6B7FC2C668EE467FBC4ED8220D117" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/16/7B4F60B0F6B7FC2C668EE467FBC4ED8220D117" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/16/E653A36920BFF938615FD18C1B0402C2D3466A" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/16/E653A36920BFF938615FD18C1B0402C2D3466A" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/17/D1D2C0817C90687140B9023E9CEC9CFE52CD3B" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/17/D1D2C0817C90687140B9023E9CEC9CFE52CD3B" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/18/3C198577B431BB9EA5B3ADBFA5402C6FAC21D4" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/18/3C198577B431BB9EA5B3ADBFA5402C6FAC21D4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/18/55895476083EBEA022CF2BB1C6706191D1A652" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/18/55895476083EBEA022CF2BB1C6706191D1A652" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/19/FECC970D6612E81E8F102BAC81268C685A16B6" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/19/FECC970D6612E81E8F102BAC81268C685A16B6" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/1B/03802DB341A33BF0F39F21718882262B726672" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/1B/03802DB341A33BF0F39F21718882262B726672" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/1B/572BA81EC1CDA848D680713FA4CD84368720D4" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/1B/572BA81EC1CDA848D680713FA4CD84368720D4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/1D/F4FEF5C727A6298C1944643AE837DE140A3C38" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/1D/F4FEF5C727A6298C1944643AE837DE140A3C38" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/1F/CDB58E45F4B3DF3E836A97DC76C87BEDF8E66D" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/1F/CDB58E45F4B3DF3E836A97DC76C87BEDF8E66D" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/22/5296FC2025C858DE9E36604A5E341CD92316B7" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/22/5296FC2025C858DE9E36604A5E341CD92316B7" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/23/5268E47B7AC792E7F16BC026ACD870A38FE1A4" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/23/5268E47B7AC792E7F16BC026ACD870A38FE1A4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/25/45AC7ADDB0F57254170F18C95258A4FF6DEEA5" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/25/45AC7ADDB0F57254170F18C95258A4FF6DEEA5" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/25/7527F97C83CEC2DAFD9B18D8D73BC6BFCCD419" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/25/7527F97C83CEC2DAFD9B18D8D73BC6BFCCD419" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/29/91BC4D2D841B064684BE55BD1E65E6103298E3" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/29/91BC4D2D841B064684BE55BD1E65E6103298E3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/2A/DFC742403497324187E180BA6D5B84FF052664" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/2A/DFC742403497324187E180BA6D5B84FF052664" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/2B/E551D889B0062DFC6A8C8C21D4CB349F70E2A8" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/2B/E551D889B0062DFC6A8C8C21D4CB349F70E2A8" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/2C/7FB036120CE5FBA26B091B368EA785F5FF0898" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/2C/7FB036120CE5FBA26B091B368EA785F5FF0898" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/2D/9C953F66CD9F90337B34A035E61C0EC79722CD" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/2D/9C953F66CD9F90337B34A035E61C0EC79722CD" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/2E/6447F267B5989F4AA9962FC29903B85A417185" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/2E/6447F267B5989F4AA9962FC29903B85A417185" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/31/7D39B02D34AEC3A00907B124D718D8678FABF2" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/31/7D39B02D34AEC3A00907B124D718D8678FABF2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/36/131CE0BE50331B0631B5563B2E97CC140E2646" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/36/131CE0BE50331B0631B5563B2E97CC140E2646" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/38/3DD116687A989B8251B52BDB3BC4214CAC6196" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/38/3DD116687A989B8251B52BDB3BC4214CAC6196" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/3C/15689639B13C5AC84783523C2F4027D18FE12E" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/3C/15689639B13C5AC84783523C2F4027D18FE12E" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/3C/E1F1E26B82AED9F94B88DCA23471EC8F9A9208" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/3C/E1F1E26B82AED9F94B88DCA23471EC8F9A9208" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/2E/27EE79C4758B27EC74258B1848A6D13D72C84E" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/2E/27EE79C4758B27EC74258B1848A6D13D72C84E" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/3D/904B84EBCE6DB94933E7E84EB29FE61F7B1F03" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/3D/904B84EBCE6DB94933E7E84EB29FE61F7B1F03" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/3D/9A107B0CACD71B373A01E4765D78BD76A57C9F" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/3D/9A107B0CACD71B373A01E4765D78BD76A57C9F" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/3E/FD1B6AF0C96AB94F4AAD1F8B7ECF7063324D58" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/3E/FD1B6AF0C96AB94F4AAD1F8B7ECF7063324D58" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/40/AAF42213930B95B798750416A76DF4BE683810" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/40/AAF42213930B95B798750416A76DF4BE683810" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/41/6B0019DFB7ED8416DC6BA39DA183418651E199" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/41/6B0019DFB7ED8416DC6BA39DA183418651E199" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/41/7351EABD08B290D18D36B04C80A7C5217A6AA9" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/41/7351EABD08B290D18D36B04C80A7C5217A6AA9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/41/E71939BDD3FED42D3513C451409414ECC84CC6" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/41/E71939BDD3FED42D3513C451409414ECC84CC6" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/43/0639BEB97AB960D78E264762D236D021CEF1D3" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/43/0639BEB97AB960D78E264762D236D021CEF1D3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/43/9D89F0B3E2652DC7F5064405CC5BE5DC0E6024" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/43/9D89F0B3E2652DC7F5064405CC5BE5DC0E6024" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/43/C6500F69E18248B1914E657A8617122F5C73C4" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/43/C6500F69E18248B1914E657A8617122F5C73C4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/44/DF3040AF60DD14E52F8FF897FB31C5610491D5" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/44/DF3040AF60DD14E52F8FF897FB31C5610491D5" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/47/3CAB56B4ACBC6967855468C172E342004F06E7" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/47/3CAB56B4ACBC6967855468C172E342004F06E7" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/47/EFB5E3ACD7F5C191D4600B9CEB4BC4CD722B72" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/47/EFB5E3ACD7F5C191D4600B9CEB4BC4CD722B72" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/48/54EC13C3355545F15B49E5ABB4C4E736EC6A47" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/48/54EC13C3355545F15B49E5ABB4C4E736EC6A47" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/48/C750893CE23FB525F2FF15CFBE6928AC31641E" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/48/C750893CE23FB525F2FF15CFBE6928AC31641E" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/4A/57708E95230E7D52511EC617DA37FDB556DB67" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/4A/57708E95230E7D52511EC617DA37FDB556DB67" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/4A/6D8DC71D1E0CD38CD67C9359FF5215E7AED773" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/4A/6D8DC71D1E0CD38CD67C9359FF5215E7AED773" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/4B/23A7E732C1228D75E6AB55586F563E4439D114" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/4B/23A7E732C1228D75E6AB55586F563E4439D114" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/4E/93886D38D2FAAD5F4E5D22D51049E450CF95D7" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/4E/93886D38D2FAAD5F4E5D22D51049E450CF95D7" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/4F/D6D72681F759D3B0A674FD4CCD734A7D0A9394" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/4F/D6D72681F759D3B0A674FD4CCD734A7D0A9394" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/50/D14CCE78A14B978E8A8B7862B69ED20EDF5A56" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/50/D14CCE78A14B978E8A8B7862B69ED20EDF5A56" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/51/68DC33CEC1B338A98511AFD775A39761B33D12" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/51/68DC33CEC1B338A98511AFD775A39761B33D12" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/54/53B637BD58FFF0DDC77924BBBBF5B922185530" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/54/53B637BD58FFF0DDC77924BBBBF5B922185530" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/56/AAF75E70BD73AE87C1D33DD38677CFE35687DF" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/56/AAF75E70BD73AE87C1D33DD38677CFE35687DF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/59/387D7F17C57988C82AF21F48B2AEC6A80BCDF0" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/59/387D7F17C57988C82AF21F48B2AEC6A80BCDF0" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/5B/6651C92593047FBF919B221F1BA73DE115B150" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/5B/6651C92593047FBF919B221F1BA73DE115B150" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/55/CC57E996DABD55A050AA978A383ECF0AB09951" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/55/CC57E996DABD55A050AA978A383ECF0AB09951" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/5D/C9FD6FED812C83EA60C9449B4E27494BEFD686" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/5D/C9FD6FED812C83EA60C9449B4E27494BEFD686" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/5F/C34C5E1222991DB7C3350419CA28313D436F06" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/5F/C34C5E1222991DB7C3350419CA28313D436F06" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/63/99C4D47F96721BDD6A48D926183F608AAA0850" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/63/99C4D47F96721BDD6A48D926183F608AAA0850" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/64/F2DB4BD3AB7314DAE4A68D5E080FC7A701A7DD" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/64/F2DB4BD3AB7314DAE4A68D5E080FC7A701A7DD" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/65/6C2A421850DC05E417E9E81A98EA79141E7665" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/65/6C2A421850DC05E417E9E81A98EA79141E7665" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/66/9F9DAC62BBC6FD06611FEB48650F319D2F8220" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/66/9F9DAC62BBC6FD06611FEB48650F319D2F8220" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/68/9AB05D46DDBA1A95B7E84EC843546CABEEE61C" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/68/9AB05D46DDBA1A95B7E84EC843546CABEEE61C" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/68/FA40E72FF47A919C552752A79918266AE62E97" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/68/FA40E72FF47A919C552752A79918266AE62E97" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/69/A4356D9A02EA9074BBF92FF8205DC8F2E56BBE" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/69/A4356D9A02EA9074BBF92FF8205DC8F2E56BBE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/69/B0992405D54B209F95A12C287BFF6D00AC01A6" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/69/B0992405D54B209F95A12C287BFF6D00AC01A6" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/6A/59E8E6DE657A337714E3B0C9D5830E582D8F92" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/6A/59E8E6DE657A337714E3B0C9D5830E582D8F92" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/6D/EB11B9CD0C9B01D7CFCB06E7E349A5F7C9ADFB" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/6D/EB11B9CD0C9B01D7CFCB06E7E349A5F7C9ADFB" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/6E/43B8DF373484DEB148E227BDB44BAB503580AB" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/6E/43B8DF373484DEB148E227BDB44BAB503580AB" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/6F/0ED578ADB1A08A3C81976E16988A40F135824A" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/6F/0ED578ADB1A08A3C81976E16988A40F135824A" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/72/A8B1214B1ABB4CE7F8B68C2C708B9D19B0FB73" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/72/A8B1214B1ABB4CE7F8B68C2C708B9D19B0FB73" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/75/81FF48D68230FCCAB653F156D09A7C9840CACC" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/75/81FF48D68230FCCAB653F156D09A7C9840CACC" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/76/49DC4D73CE6B74B101F737FC9A39634C7FAFBA" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/76/49DC4D73CE6B74B101F737FC9A39634C7FAFBA" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/76/5B833956FFB3B7AACBA92F6DDB802BD093440C" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/76/5B833956FFB3B7AACBA92F6DDB802BD093440C" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/77/F6C43C5547BEFE585BE7A014082C06A46B4C95" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/77/F6C43C5547BEFE585BE7A014082C06A46B4C95" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/78/031E0E498FFD7BEB65BA28AB7B5847BA4ED68B" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/78/031E0E498FFD7BEB65BA28AB7B5847BA4ED68B" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/78/5D9E17F7985ACA80678AEA9F6E3818A4158BC0" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/78/5D9E17F7985ACA80678AEA9F6E3818A4158BC0" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/79/8CAEE80E8788795633F83345FB8D8D057AC7AF" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/79/8CAEE80E8788795633F83345FB8D8D057AC7AF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/7A/BC61FDF767AE41D1BB146509A6ADF9ADF24ADD" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/7A/BC61FDF767AE41D1BB146509A6ADF9ADF24ADD" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/7B/645E64711CE286F852FF4BE525CDC0B2C6ECBC" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/7B/645E64711CE286F852FF4BE525CDC0B2C6ECBC" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/7C/CB43CEEB6ED13831DA60760838540591AF54D1" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/7C/CB43CEEB6ED13831DA60760838540591AF54D1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/7E/EB237AA67318DEA28BE6C3176AE9C6EEC466C7" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/7E/EB237AA67318DEA28BE6C3176AE9C6EEC466C7" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/7F/BD70374EAE3E9688FB3F1580D8AF64247B49E0" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/7F/BD70374EAE3E9688FB3F1580D8AF64247B49E0" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/81/6A6F51C9D5BCDF467C0128043116E2C1B6033D" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/81/6A6F51C9D5BCDF467C0128043116E2C1B6033D" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/84/1064C3609154B1CCEB0CD5F3E7CF672169E9BC" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/84/1064C3609154B1CCEB0CD5F3E7CF672169E9BC" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/84/A87CAFCF19EEDEE0D1BF99190BF1BA5C323F2D" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/84/A87CAFCF19EEDEE0D1BF99190BF1BA5C323F2D" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/87/1D6543F380320FDBF665CF170B29634A560591" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/87/1D6543F380320FDBF665CF170B29634A560591" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/89/EDB0274781F58882DBF96254CFA6F3E735DAC7" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/89/EDB0274781F58882DBF96254CFA6F3E735DAC7" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/8E/9C7857D38AE67C1AE6E881F1185622AD236648" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/8E/9C7857D38AE67C1AE6E881F1185622AD236648" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/8F/01C5CBEE168C7A213903EEC358D7689F1645B4" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/8F/01C5CBEE168C7A213903EEC358D7689F1645B4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/8F/B70275B6D866E171D750A61715CDA449F7AA57" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/8F/B70275B6D866E171D750A61715CDA449F7AA57" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/90/B753A026255165899BEEBFC45D510373FC290A" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/90/B753A026255165899BEEBFC45D510373FC290A" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/91/06109D512C89748914FC5F913627E389A330A5" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/91/06109D512C89748914FC5F913627E389A330A5" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/94/297506A4A5C948F2241801B741C653F1BEABEA" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/94/297506A4A5C948F2241801B741C653F1BEABEA" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/94/58C19527DF92595204571B6ECA04F0E4CB490D" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/94/58C19527DF92595204571B6ECA04F0E4CB490D" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/95/4155AD1F59C417419EAAA7FBFFEAB3C9402EC7" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/95/4155AD1F59C417419EAAA7FBFFEAB3C9402EC7" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/95/DD6C4154B9947086E6EE9E65FA348F2B4011C8" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/95/DD6C4154B9947086E6EE9E65FA348F2B4011C8" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/96/2255F51FB41A4CF74E235969885606B2D63B04" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/96/2255F51FB41A4CF74E235969885606B2D63B04" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/98/57706C24EAD033EDF1466A237E9BFA95392C73" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/98/57706C24EAD033EDF1466A237E9BFA95392C73" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/98/2F7B3C593A1D9379A91C1E73CDAD123408CCAC" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/98/2F7B3C593A1D9379A91C1E73CDAD123408CCAC" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9A/502862F681C5B0883FE6F001F594B95E66C747" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9A/502862F681C5B0883FE6F001F594B95E66C747" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9A/69060EB458FE036B52E77EC989BD94C4616889" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9A/69060EB458FE036B52E77EC989BD94C4616889" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9A/E9556857B8B51B5E41E7930864725359647414" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9A/E9556857B8B51B5E41E7930864725359647414" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9B/83B5A8D7EA5A35CED415B531067963506DAD48" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9B/83B5A8D7EA5A35CED415B531067963506DAD48" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9F/908C2BE09ADC22595F1ED818B49CCD8BAD88D2" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9F/908C2BE09ADC22595F1ED818B49CCD8BAD88D2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9F/C9BA33A8871881F6FF5E7917610BCA3D6C22D9" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9F/C9BA33A8871881F6FF5E7917610BCA3D6C22D9" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A0/0960E4937A5AC6A35AA4698CF5BCD43B56B7E1" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A0/0960E4937A5AC6A35AA4698CF5BCD43B56B7E1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A2/43CAB748B82663EF2319FCA5426CC8B08BB874" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A2/43CAB748B82663EF2319FCA5426CC8B08BB874" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A3/0A6C0295307D6F6BEB5A2725F1343891C7DE58" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A3/0A6C0295307D6F6BEB5A2725F1343891C7DE58" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A7/448DD6B0DE8DD24DA1FA1A8976612B3FE6EC2C" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A7/448DD6B0DE8DD24DA1FA1A8976612B3FE6EC2C" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A1/56F6411C07923E02C69D4A6066A692709F48E9" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A1/56F6411C07923E02C69D4A6066A692709F48E9" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A7/9E2505AF684C0B813A7A72A7150A7E4B2E0888" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A7/9E2505AF684C0B813A7A72A7150A7E4B2E0888" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A9/1D5EA3B13BD5D704C87A3A5BD95C2213D8B944" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/A9/1D5EA3B13BD5D704C87A3A5BD95C2213D8B944" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/AD/60EA68B5D84E354D7E15CD414A84394CB474E6" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/AD/60EA68B5D84E354D7E15CD414A84394CB474E6" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/AE/B294EA3FB5CE9D3C93D4C08A6031A5A4A1B561" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/AE/B294EA3FB5CE9D3C93D4C08A6031A5A4A1B561" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/AF/2AD4403A6F72301035AF490543A98ACD13AC99" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/AF/2AD4403A6F72301035AF490543A98ACD13AC99" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/B4/088EC612E538ED9D9416E844CF262043D0A201" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/B4/088EC612E538ED9D9416E844CF262043D0A201" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/B4/AC614652B6FCA0BB209577AE99DC4541A21CF4" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/B4/AC614652B6FCA0BB209577AE99DC4541A21CF4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/B4/C1B2C76087DF40F6D083D6BC099D7ACDC178CE" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/B4/C1B2C76087DF40F6D083D6BC099D7ACDC178CE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/B5/166D28ACBAEAE582A4A8E97C057095D767C581" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/B5/166D28ACBAEAE582A4A8E97C057095D767C581" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/B8/3667C7B9C321588CC231C0B92FFE9F2AA4949A" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/B8/3667C7B9C321588CC231C0B92FFE9F2AA4949A" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/B8/BEA9307513CA78E060FDE5130DA7D4848048A8" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/B8/BEA9307513CA78E060FDE5130DA7D4848048A8" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/BE/61487FFB2AE31166B657BDE9F9A3C1A8F2690C" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/BE/61487FFB2AE31166B657BDE9F9A3C1A8F2690C" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C0/A6EDC68E7AEE5C0BFCA219CAE2470A97095E59" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C0/A6EDC68E7AEE5C0BFCA219CAE2470A97095E59" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C3/F8371F29AA20F22B5ABBC943E03B8BB09BA67F" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C3/F8371F29AA20F22B5ABBC943E03B8BB09BA67F" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C1/B5893924837EDE13DE594B4262F6EAC897A7BA" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C1/B5893924837EDE13DE594B4262F6EAC897A7BA" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C5/7ECA48CFCB238061291ECFE28AC7423AA7E9E3" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C5/7ECA48CFCB238061291ECFE28AC7423AA7E9E3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C6/2F7A2760BF89B644211052763C832B3A0BA6E0" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C6/2F7A2760BF89B644211052763C832B3A0BA6E0" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C7/6B87ABCB217B189041EBC3A49ECF9111B77A95" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/C7/6B87ABCB217B189041EBC3A49ECF9111B77A95" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/CC/26EC3014FAA9B557E5CC6A489FDA4BD084F297" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/CC/26EC3014FAA9B557E5CC6A489FDA4BD084F297" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/CC/EBB21A358B404D1D4EE50BA60B28FAFD4BAA6B" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/CC/EBB21A358B404D1D4EE50BA60B28FAFD4BAA6B" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/CE/BF64A89915ABFA1252B4F72E7427586795267E" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/CE/BF64A89915ABFA1252B4F72E7427586795267E" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D1/BE995D0F02F52C7860C2515C953558052F9955" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D1/BE995D0F02F52C7860C2515C953558052F9955" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D2/6E2787AD9E210E752FE6E1C5CD7F817B202D4C" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D2/6E2787AD9E210E752FE6E1C5CD7F817B202D4C" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D3/24093136C536FFACB6531CFD19ACCA2BBCC6C8" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D3/24093136C536FFACB6531CFD19ACCA2BBCC6C8" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D3/4113B37BCBDC9D4DB2D23C8AC4A49F03B9FAD6" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D3/4113B37BCBDC9D4DB2D23C8AC4A49F03B9FAD6" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D3/CAD8BF053F2025023EFBF48661E9CC16255472" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D3/CAD8BF053F2025023EFBF48661E9CC16255472" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D7/1DBBEA986CDF156C860858CE2C5650FDDA5A38" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D7/1DBBEA986CDF156C860858CE2C5650FDDA5A38" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D7/83FB2627F61CBA6FC1A6C41F3556EFB5127DE0" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D7/83FB2627F61CBA6FC1A6C41F3556EFB5127DE0" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D7/F45EBB9742E09D16D2B26965D83F5F9ACDBD18" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D7/F45EBB9742E09D16D2B26965D83F5F9ACDBD18" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D9/9262243F949E578262828F83294955B86E4A73" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/D9/9262243F949E578262828F83294955B86E4A73" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/DD/CE1341F1C9226D77B7F8228E81ED5B7B4666C6" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/DD/CE1341F1C9226D77B7F8228E81ED5B7B4666C6" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/DE/261E1C0E5CB3D22B993E72BFC0A671CEBA1FED" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/DE/261E1C0E5CB3D22B993E72BFC0A671CEBA1FED" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/E1/018EE975BD6492D7763B9B0D16412609284853" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/E1/018EE975BD6492D7763B9B0D16412609284853" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/E2/36A8E85C3D860F7DC851CA60BB36E779CDA7D0" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/E2/36A8E85C3D860F7DC851CA60BB36E779CDA7D0" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/E3/72A0160A55441A1A8B72D7BB02603DC6BD93DD" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/E3/72A0160A55441A1A8B72D7BB02603DC6BD93DD" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/E3/9157D14E6380E8207FF41D8E75057E03482049" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/E3/9157D14E6380E8207FF41D8E75057E03482049" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/E6/68F34C6AE04BD90030F8DDE5099B98CF6FD78D" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/E6/68F34C6AE04BD90030F8DDE5099B98CF6FD78D" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/E9/50A952C2CF94F157AF80F5A3D6296C18E8E007" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/E9/50A952C2CF94F157AF80F5A3D6296C18E8E007" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/EA/3B2F7E5F78E55DB75DBF4177773105CB169F52" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/EA/3B2F7E5F78E55DB75DBF4177773105CB169F52" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/EB/46BB3A35374F6A03172D4F520B5589C82B86A0" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/EB/46BB3A35374F6A03172D4F520B5589C82B86A0" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/EE/8D171EC44A5810B32040D14EE4F4A34D231644" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/EE/8D171EC44A5810B32040D14EE4F4A34D231644" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/EB/540A48D90C5A8D55B1013038628EA9EB15E669" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/EB/540A48D90C5A8D55B1013038628EA9EB15E669" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/EE/BE35471DB6155E6124296364753F524711F9BB" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/EE/BE35471DB6155E6124296364753F524711F9BB" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/EF/3882D2FA1CFE82D94CE03487CAE83B96C57F71" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/EF/3882D2FA1CFE82D94CE03487CAE83B96C57F71" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F0/1840645CF602D92617D28AFD4DECF1E384B36F" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F0/1840645CF602D92617D28AFD4DECF1E384B36F" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F1/A17739187444C9E2D1459B86A111D294376228" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F1/A17739187444C9E2D1459B86A111D294376228" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F2/99E40571F76C15B842A3DC6E1243C9CB5B2AF3" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F2/99E40571F76C15B842A3DC6E1243C9CB5B2AF3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F4/F5E33B1F068B77958478D5CFCBD1CA6BCD2BED" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F4/F5E33B1F068B77958478D5CFCBD1CA6BCD2BED" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F6/874A0C7A4C7EF681335E00F68D618F0202DC4B" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F6/874A0C7A4C7EF681335E00F68D618F0202DC4B" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F7/BC8723F83FC892F91A4DAE6A6B184388D9357F" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F7/BC8723F83FC892F91A4DAE6A6B184388D9357F" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F8/55F4449CB9ABF8CCBD473B139DFF1E7C96877A" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F8/55F4449CB9ABF8CCBD473B139DFF1E7C96877A" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F8/5E505618EC2676760D3F80FC662B398452A0DA" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F8/5E505618EC2676760D3F80FC662B398452A0DA" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F9/2C8569BB82742150644A406B3E67447359F869" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/F9/2C8569BB82742150644A406B3E67447359F869" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/FA/34F2A5DE13680C998BD8A0022EBF789FA58C8A" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/FA/34F2A5DE13680C998BD8A0022EBF789FA58C8A" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/FA/B5A7C1B0FA59AAA022515ABEE0939110F0F629" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/FA/B5A7C1B0FA59AAA022515ABEE0939110F0F629" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/FD/B36D5719DA7BB0E39C5CD532564AE917936A0F" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/FD/B36D5719DA7BB0E39C5CD532564AE917936A0F" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/FE/832EEDA488899ACD6555282E97ABA1818787B7" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/FE/832EEDA488899ACD6555282E97ABA1818787B7" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/FF/C9785A8364216305576E3175AB53CE25969732" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/FF/C9785A8364216305576E3175AB53CE25969732" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/packaged/debug/classes.zip" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/packaged/debug/classes.zip" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/resources-debug.ap_" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/resources-debug.ap_" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/jack/debug/folders/1000/1f/main/classes.dex" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/jack/debug/folders/1000/1f/main/classes.dex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-36eae203195f3a0c86f0dc0ba5a6b3525c207c56.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-36eae203195f3a0c86f0dc0ba5a6b3525c207c56.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-3a4f33624d9012b51a3ce276f348ac5fca0d612b.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-3a4f33624d9012b51a3ce276f348ac5fca0d612b.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-3c086e2cc08ea7efe83fd2d65b61fec2db474a52.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-3c086e2cc08ea7efe83fd2d65b61fec2db474a52.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-60ac8b2b51a78ad5d990ff0e69bc51acfdce039e.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-60ac8b2b51a78ad5d990ff0e69bc51acfdce039e.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-8c31d850c8a2affb767e3ab9e22450c180cc75a1.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-8c31d850c8a2affb767e3ab9e22450c180cc75a1.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-dd3235b42c91418efc6b8795a7a1ea641459ea3f.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-dd3235b42c91418efc6b8795a7a1ea641459ea3f.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-dee9edfd7d6405f547523f07b64fd22246bac7db.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-dee9edfd7d6405f547523f07b64fd22246bac7db.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/engine.io-client-0.8.1-edc8f5654aff6760f05a5c9a50d2625a8231cf50.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/engine.io-client-0.8.1-edc8f5654aff6760f05a5c9a50d2625a8231cf50.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-24.2.1-10a188ecc249a6209460ef8b43257e7d9896f1c1.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-24.2.1-10a188ecc249a6209460ef8b43257e7d9896f1c1.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-24.2.1-81e7ef0aa4ece1a3c3511e8e4ca103bc149ae76c.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-24.2.1-81e7ef0aa4ece1a3c3511e8e4ca103bc149ae76c.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-24.2.1-c82a6544284ba48e4b63fb00204da9c1d9d4e5c9.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-24.2.1-c82a6544284ba48e4b63fb00204da9c1d9d4e5c9.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-24.2.1-e85748cb3a16b70f19fdce906a532780adfb190c.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-24.2.1-e85748cb3a16b70f19fdce906a532780adfb190c.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-24.2.1-ff20b54f53ba7a8627843838b3d7cbd75cffa24b.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-24.2.1-ff20b54f53ba7a8627843838b3d7cbd75cffa24b.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/okhttp-3.4.1-4ffadd1d044e9f85a4aeb9e19a0bf8bb77541c6a.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/okhttp-3.4.1-4ffadd1d044e9f85a4aeb9e19a0bf8bb77541c6a.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/okhttp-ws-3.4.1-e6b13c37a7fccb790c24c620322366f01a1951bc.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/okhttp-ws-3.4.1-e6b13c37a7fccb790c24c620322366f01a1951bc.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/okio-1.9.0-51a16c8b212dd118ca1ecc6ddd242b869bac5062.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/okio-1.9.0-51a16c8b212dd118ca1ecc6ddd242b869bac5062.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/socket.io-client-0.8.1-3fb0b7457ea97b7d16b3ba7cdfc4e7454e9ad1dc.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/socket.io-client-0.8.1-3fb0b7457ea97b7d16b3ba7cdfc4e7454e9ad1dc.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/support-annotations-24.2.1-fac4fa7a5257fbb4eb3dc13200645698fd1391e7.jar" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/support-annotations-24.2.1-fac4fa7a5257fbb4eb3dc13200645698fd1391e7.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/outputs/apk/fhemswitch-2.2.1-debug.apk" afterPath="$PROJECT_DIR$/fhemswitch/build/outputs/apk/fhemswitch-2.2.1-debug.apk" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/drag_sort_listview_1_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/drag_sort_listview_1_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/engine_io_client_0_8_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/engine_io_client_0_8_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/okhttp_3_4_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/okhttp_3_4_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/okhttp_ws_3_4_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/okhttp_ws_3_4_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/okio_1_9_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/okio_1_9_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/socket_io_client_0_8_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/socket_io_client_0_8_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_annotations_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_annotations_24_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_compat_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_compat_24_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_core_ui_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_core_ui_24_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_core_utils_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_core_utils_24_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_fragment_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_fragment_24_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_media_compat_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_media_compat_24_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_24_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_24_2_1.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/jack-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/jack-cache/cache.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build.gradle" afterPath="$PROJECT_DIR$/fhemswitch/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/generated/source/r/debug/de/fehngarten/fhemswitch/R.java" afterPath="$PROJECT_DIR$/fhemswitch/build/generated/source/r/debug/de/fehngarten/fhemswitch/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/blame/res/debug/multi/values-de.json" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/blame/res/debug/multi/values-de.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/blame/res/debug/multi/values-v14.json" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/blame/res/debug/multi/values-v14.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/blame/res/debug/multi/values.json" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/blame/res/debug/multi/values.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/blame/res/debug/single/drawable.json" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/blame/res/debug/single/drawable.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/blame/res/debug/single/layout.json" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/blame/res/debug/single/layout.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/mergeDebugResources/merged.dir/values-de/values-de.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/mergeDebugResources/merged.dir/values-de/values-de.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/mergeDebugResources/merger.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/mergeDebugResources/merger.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/packageDebug/dex-renamer-state.txt" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/packageDebug/dex-renamer-state.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/packageDebug/file-input-save-data.txt" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/packageDebug/file-input-save-data.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/31/6356057C36CEC8C942566213B72D0B7769E5C1" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/31/6356057C36CEC8C942566213B72D0B7769E5C1" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9A/D5CB5EF6C907C4469ED32B6AAB70AAAE41AE42" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/9A/D5CB5EF6C907C4469ED32B6AAB70AAAE41AE42" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/index" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/incremental/transformJackWithJackForDebug/index" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/drawable/configbutton.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/drawable/configbutton.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout-hdpi-v4/config.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout-hdpi-v4/config.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout-hdpi-v4/config_switch_row.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout-hdpi-v4/config_switch_row.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout-mdpi-v4/config.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout-mdpi-v4/config.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout-xhdpi-v4/config.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout-xhdpi-v4/config.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout-xxhdpi-v4/config.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout-xxhdpi-v4/config.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout-xxhdpi-v4/config_switch_row.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout-xxhdpi-v4/config_switch_row.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout/donate.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout/donate.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout/main_layout_horizontal.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout/main_layout_horizontal.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout/main_layout_mixed.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout/main_layout_mixed.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout/main_layout_vertical.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/layout/main_layout_vertical.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/values-de/values-de.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/values-de/values-de.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/values-v14/values-v14.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/values-v14/values-v14.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/values/values.xml" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/values/values.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/build/intermediates/symbols/debug/R.txt" afterPath="$PROJECT_DIR$/fhemswitch/build/intermediates/symbols/debug/R.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/fhemswitch.iml" afterPath="$PROJECT_DIR$/fhemswitch/fhemswitch.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandAdapter.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandRow.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandRow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigData.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigDataOnly.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigDataOnly.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightsceneAdapter.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightsceneAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightsceneRow.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightsceneRow.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/CommandsFactory.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/CommandsFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandsAdapter.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandsAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandsController.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandsController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightscenesController.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightscenesController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigMain.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigMain.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchAdapter.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchRow.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchRow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValueAdapter.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValueAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValueRow.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValueRow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/LightscenesSectionController.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/LightscenesSectionController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyCommand.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyCounter.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyCounter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchesAdapter.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchesAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchesController.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchesController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValuesController.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValuesController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/LightScenesFactory.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/LightScenesFactory.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyLayout.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyLightScenes.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyLightScenes.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MySocket.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MySocket.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MySwitch.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MySwitch.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyValue.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyValue.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/SwitchesFactory.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/SwitchesFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ValuesFactory.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ValuesFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/WidgetProvider.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/WidgetProvider.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/WidgetService.java" afterPath="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/WidgetService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/drawable/configbutton.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/drawable/configbutton.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/drawable/header3.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/drawable/header3.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout-hdpi/config.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout-hdpi/config.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout-hdpi/config_switch_row.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout-hdpi/config_switch_row.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout-mdpi/config.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout-mdpi/config.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xhdpi/config.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xhdpi/config.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xxhdpi/config.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xxhdpi/config.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xxhdpi/config_switch_row.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xxhdpi/config_switch_row.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_body.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_body.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_layout_block.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_layout_block.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_orient_block.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_orient_block.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_switch_row_header.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_switch_row_header.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_switches_block.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_switches_block.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_url_block.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_url_block.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/donate.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/donate.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/main_layout_horizontal.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/main_layout_horizontal.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/main_layout_mixed.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/main_layout_mixed.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/main_layout_vertical.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/main_layout_vertical.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/new_version.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/new_version.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/noconn.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/layout/noconn.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/values-de/strings.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/values-de/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/values/config.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/values/config.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/values-v14/styles.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/values-v14/styles.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/values-v21/styles.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/values-v21/styles.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fhemswitch/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/fhemswitch/src/main/res/values/styles.xml" />
     </list>
     <ignored path="de.fehngarten.fhemswitch.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -331,97 +273,77 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="WidgetService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/WidgetService.java">
+      <file leaf-file-name="config_switches_block.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_switches_block.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="52" column="42" selection-start-line="52" selection-start-column="31" selection-end-line="52" selection-end-column="42" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#20074#20127#0" expanded="true" />
-                <element signature="e#24650#24676#0" expanded="true" />
-                <element signature="e#25035#25061#0" expanded="true" />
-                <element signature="e#25524#25550#0" expanded="true" />
-                <element signature="e#27058#27084#0" expanded="true" />
-                <element signature="e#27279#27305#0" expanded="true" />
-                <element signature="e#28141#28190#0" expanded="true" />
-                <element signature="e#28892#28925#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/values/strings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="400">
+              <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
               <folding />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Translations Editor" pinned="false" current-in-tab="false">
-        <entry file="android-dummy://C:/Users/Werner/libs/apps/de.fehngarten.fhemswitch/fhemswitch/Translations Editor">
-          <provider selected="true" editor-type-id="string-resource-editor">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConfigMain.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigMain.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6885">
-              <caret line="465" column="44" selection-start-line="465" selection-start-column="44" selection-end-line="465" selection-end-column="44" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConfigData.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConfigDataOnly.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigDataOnly.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="52" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="52" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VersionData.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/VersionData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main_layout_vertical.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout/main_layout_vertical.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConfigSwitchesController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchesController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-204">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="102">
+              <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1756#1757#0" expanded="true" />
+                <element signature="e#1810#1811#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConfigLightscenesController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightscenesController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="854">
+              <caret line="89" column="52" selection-start-line="89" selection-start-column="52" selection-end-line="89" selection-end-column="52" />
+              <folding>
+                <element signature="e#3012#3013#0" expanded="true" />
+                <element signature="e#3066#3067#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConfigValuesController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValuesController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="726">
+              <caret line="55" column="6" selection-start-line="48" selection-start-column="1" selection-end-line="55" selection-end-column="6" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConfigCommandsController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandsController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="726">
+              <caret line="50" column="12" selection-start-line="50" selection-start-column="12" selection-end-line="50" selection-end-column="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1532#1533#0" expanded="true" />
+                <element signature="e#1586#1587#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConfigCommandsAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandsAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1990">
+              <caret line="187" column="55" selection-start-line="187" selection-start-column="55" selection-end-line="187" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -432,6 +354,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="valueResourceFile" />
+        <option value="resourceFile" />
+        <option value="layoutResourceFile_vertical" />
         <option value="ASClass" />
       </list>
     </option>
@@ -1808,7 +1733,7 @@
     <option name="modificationStamps">
       <map>
         <entry key="$PROJECT_DIR$" value="4406468942889" />
-        <entry key="C:\Users\Werner\libs\apps\de.fehngarten.fhemswitch" value="4406540323397" />
+        <entry key="C:\Users\Werner\libs\apps\de.fehngarten.fhemswitch" value="4406882617220" />
         <entry key="L:\apps\de.fehngarten.fhemswitch" value="4405696382690" />
       </map>
     </option>
@@ -2075,63 +2000,63 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/main_layout_horizontal.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/LightScenesFactory.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ValuesFactory.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/CommandsFactory.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/main_layout_vertical.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/donate.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/values-de/strings.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-hdpi/config_command_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-mdpi/config_command_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xhdpi/config_command_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xxhdpi/config_command_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-hdpi/config_switch_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-mdpi/config_switch_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xhdpi/config_switch_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xxhdpi/config_switch_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xxhdpi/config_value_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xhdpi/config_value_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-mdpi/config_value_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-hdpi/config_value_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xxhdpi/config_lightscene_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xhdpi/config_lightscene_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-mdpi/config_lightscene_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-hdpi/config_lightscene_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/value_row.xml" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyLayout.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyValue.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyLightScenes.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyCounter.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyCommand.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/LightscenesSectionController.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValueRow.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValueAdapter.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchRow.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchAdapter.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightsceneRow.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightsceneAdapter.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigDataOnly.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandRow.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandAdapter.java" />
         <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigData.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/SwitchesFactory.java" />
         <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MySwitch.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/WidgetProvider.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MySocket.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/fhemswitch/src/main/res/values/config.xml" />
         <option value="$PROJECT_DIR$/fhemswitch/build.gradle" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/WidgetService.java" />
-        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigMain.java" />
         <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/VersionData.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/noconn.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/main_layout_horizontal.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/main_layout_vertical.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/new_version.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/main_layout_mixed.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MySocket.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/WidgetProvider.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/LightScenesFactory.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyLayout.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ValuesFactory.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/SwitchesFactory.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/CommandsFactory.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/WidgetService.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xxhdpi/config.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-mdpi/config.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-hdpi/config.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xhdpi/config.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/values-v14/styles.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_orient_block.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_body.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/drawable/header3.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/button.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/drawable/configbutton.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/values-v21/styles.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_url_block.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/donate.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_layout_block.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-hdpi/config_switch_row.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout-xxhdpi/config_switch_row.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_switches_row_header.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandAdapter.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightsceneAdapter.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchAdapter.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchesSectionController.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_switch_row_header.xml" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigMain.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchesAdapter.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_switches_block.xml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValuesController.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchesController.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightscenesController.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandsAdapter.java" />
+        <option value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandsController.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="103" />
-    <option name="y" value="43" />
+    <option name="x" value="28" />
+    <option name="y" value="33" />
     <option name="width" value="1751" />
     <option name="height" value="1013" />
   </component>
@@ -2180,24 +2105,7 @@
     </navigator>
     <panes>
       <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="de.fehngarten.fhemswitch" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="de.fehngarten.fhemswitch" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
+        <subPane />
       </pane>
       <pane id="AndroidView">
         <subPane>
@@ -2205,82 +2113,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="de.fehngarten.fhemswitch" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gradle Scripts" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="de.fehngarten.fhemswitch" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fhemswitch" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="de.fehngarten.fhemswitch" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fhemswitch" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="de.fehngarten.fhemswitch" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fhemswitch" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="strings.xml" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="de.fehngarten.fhemswitch" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fhemswitch" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2327,7 +2159,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -2335,17 +2166,36 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="fhemswitch">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="fhemswitch">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="de.fehngarten.fhemswitch">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch" />
     <property name="device.picker.selection" value="R32D100NBRW" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Font" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="ExportApk.ApkPath" value="C:\Users\Werner\libs\packages" />
     <property name="ExportApk.Flavors" value="" />
@@ -2780,17 +2630,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="103" y="43" width="1751" height="1013" extended-state="0" />
+    <frame x="28" y="33" width="1751" height="1013" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27643237" sideWeight="0.54384017" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27643237" sideWeight="0.5479452" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39886364" sideWeight="0.50915533" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.38636363" sideWeight="0.4844479" order="7" side_tool="false" content_ui="tabs" x="889" y="384" width="626" height="379" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.51931816" sideWeight="0.4844479" order="7" side_tool="false" content_ui="tabs" x="873" y="322" width="658" height="457" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24985233" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959244" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2798,25 +2648,62 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39886364" sideWeight="0.49084467" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959244" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33636364" sideWeight="0.46249261" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32852387" sideWeight="0.46721795" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24985233" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33740288" sideWeight="0.5516834" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27643237" sideWeight="0.45615983" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3284091" sideWeight="0.46367395" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27643237" sideWeight="0.4520548" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959244" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27643237" sideWeight="0.5404959" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27643237" sideWeight="0.5479452" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32963374" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find Sample Code" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959244" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39886364" sideWeight="0.49084467" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3284091" sideWeight="0.46367395" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27643237" sideWeight="0.5479452" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39886364" sideWeight="0.50915533" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.475" sideWeight="0.4844479" order="8" side_tool="false" content_ui="tabs" x="881" y="353" width="642" height="418" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32963374" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959244" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3284091" sideWeight="0.4282339" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39886364" sideWeight="0.49084467" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959244" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33636364" sideWeight="0.46249261" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32852387" sideWeight="0.46721795" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24985233" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33740288" sideWeight="0.5516834" order="12" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27643237" sideWeight="0.4520548" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3284091" sideWeight="0.46367395" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959244" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27643237" sideWeight="0.5479452" order="8" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -2836,72 +2723,131 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout-xhdpi/config_lightscene_row.xml">
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout-mdpi/config_lightscene_row.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout-xhdpi/config_lightscene_row.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="38" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout-xxhdpi/config_lightscene_row.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/values/config.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+        <state relative-caret-position="0">
+          <caret line="0" column="38" selection-start-line="0" selection-start-column="38" selection-end-line="0" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/drawable-xxhdpi/icon2.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/drawable-xhdpi/icon2.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/drawable-mdpi/icon2.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/drawable-hdpi/icon2.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout/value_row.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/values/styleables.xml">
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/xml/widget_info.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/values-v14/styles.xml">
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout-mdpi/config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout-xhdpi/config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="2" column="32" selection-start-line="1" selection-start-column="70" selection-end-line="2" selection-end-column="32" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout-xxhdpi/config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="5" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/drawable/header.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/drawable/myshape.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/drawable/header2.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="21" column="8" selection-start-line="0" selection-start-column="0" selection-end-line="21" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/drawable/configshape.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="8" column="49" selection-start-line="4" selection-start-column="0" selection-end-line="8" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/drawable/header3.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="38" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
         </state>
       </provider>
     </entry>
@@ -2912,264 +2858,94 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/values/styles.xml">
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/values-v14/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="5" column="53" selection-start-line="5" selection-start-column="53" selection-end-line="5" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/values/styleables.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout/switch_row.xml">
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout/button.xml" />
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/values-v21/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/build/intermediates/res/merged/debug/values/values.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="103" column="31" selection-start-line="103" selection-start-column="31" selection-end-line="103" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="21" column="49" selection-start-line="21" selection-start-column="49" selection-end-line="21" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout/donate.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="482">
+          <caret line="71" column="41" selection-start-line="71" selection-start-column="41" selection-end-line="71" selection-end-column="41" />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_body.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
+        <state relative-caret-position="16">
+          <caret line="1" column="72" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="72" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/drawable/button.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/fhemswitch/build/intermediates/exploded-aar/asia.ivity.android/drag-sort-listview/1.0/jars/classes.jar!/com/mobeta/android/dslv/DragSortListView.class">
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/drawable/configbutton.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="1060" column="26" selection-start-line="1060" selection-start-column="19" selection-end-line="1060" selection-end-column="26" />
+        <state relative-caret-position="48">
+          <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ValuesService0.java">
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_url_block.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="54" selection-start-line="6" selection-start-column="54" selection-end-line="6" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="578">
+          <caret line="100" column="36" selection-start-line="100" selection-start-column="8" selection-end-line="100" selection-end-column="36" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ValuesFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="64" column="9" selection-start-line="64" selection-start-column="9" selection-end-line="64" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/NetworkStateReceiver.java">
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_orient_block.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
+        <state relative-caret-position="64">
+          <caret line="4" column="30" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="30" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyValue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="3" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="278" column="56" selection-start-line="278" selection-start-column="56" selection-end-line="278" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyCounter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/LightScenesService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/LightscenesSectionController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/LightScenesFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/Donate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValueRow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="1" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValueAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
-          <folding>
-            <element signature="e#7147#7148#0" expanded="true" />
-            <element signature="e#7187#7188#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightsceneRow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandRow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-445">
-          <caret line="39" column="3" selection-start-line="39" selection-start-column="3" selection-end-line="39" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/CommandsService2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/CommandsFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/CommandsService0.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="44" column="31" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchRow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MySwitch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="22" column="36" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
-          <folding>
-            <element signature="e#631#632#0" expanded="true" />
-            <element signature="e#689#690#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/SwitchesFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="74" column="123" selection-start-line="74" selection-start-column="10" selection-end-line="74" selection-end-column="123" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/WidgetProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="55" column="23" selection-start-line="55" selection-start-column="23" selection-end-line="55" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MySocket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/MyLightScenes.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="107" column="45" selection-start-line="107" selection-start-column="45" selection-end-line="107" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightsceneAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="23" column="11" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/AndroidManifest.xml">
@@ -3177,104 +2953,212 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="53" selection-start-line="8" selection-start-column="53" selection-end-line="8" selection-end-column="53" />
+        <state relative-caret-position="176">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/values/config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="32" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="64" column="33" selection-start-line="64" selection-start-column="33" selection-end-line="64" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout/main_layout_vertical.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-204">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/values/strings.xml">
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout-hdpi/config_command_row.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="android-dummy://C:/Users/Werner/libs/apps/de.fehngarten.fhemswitch/fhemswitch/Translations Editor">
-      <provider selected="true" editor-type-id="string-resource-editor">
+      <provider editor-type-id="android-designer2">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigDataOnly.java">
+    <entry file="file://C:/develkits/Android/sdk/sources/android-24/android/view/View.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="52" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="52" />
+        <state relative-caret-position="188">
+          <caret line="15670" column="0" selection-start-line="15670" selection-start-column="0" selection-end-line="15670" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/WidgetService.java">
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchRow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="52" column="42" selection-start-line="52" selection-start-column="31" selection-end-line="52" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#20074#20127#0" expanded="true" />
-            <element signature="e#24650#24676#0" expanded="true" />
-            <element signature="e#25035#25061#0" expanded="true" />
-            <element signature="e#25524#25550#0" expanded="true" />
-            <element signature="e#27058#27084#0" expanded="true" />
-            <element signature="e#27279#27305#0" expanded="true" />
-            <element signature="e#28141#28190#0" expanded="true" />
-            <element signature="e#28892#28925#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="32">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigData.java">
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValueRow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="32">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_layout_block.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1280">
+          <caret line="106" column="47" selection-start-line="106" selection-start-column="47" selection-end-line="106" selection-end-column="47" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandRow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightsceneRow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout-hdpi/config_lightscene_row.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightscenesAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="123" column="25" selection-start-line="123" selection-start-column="15" selection-end-line="123" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout-xxhdpi/config_switch_row.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="27" column="23" selection-start-line="27" selection-start-column="23" selection-end-line="27" selection-end-column="23" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_switch_row_header.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="15" column="31" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout-hdpi/config_switch_row.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="7" column="39" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="39" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValuesAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="84" column="38" selection-start-line="84" selection-start-column="38" selection-end-line="84" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6885">
-          <caret line="465" column="44" selection-start-line="465" selection-start-column="44" selection-end-line="465" selection-end-column="44" />
+        <state relative-caret-position="822">
+          <caret line="259" column="0" selection-start-line="259" selection-start-column="0" selection-end-line="259" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/VersionData.java">
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchesAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
+        <state relative-caret-position="-714">
+          <caret line="85" column="8" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/res/layout/config_switches_block.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigSwitchesController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1756#1757#0" expanded="true" />
+            <element signature="e#1810#1811#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigLightscenesController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="854">
+          <caret line="89" column="52" selection-start-line="89" selection-start-column="52" selection-end-line="89" selection-end-column="52" />
+          <folding>
+            <element signature="e#3012#3013#0" expanded="true" />
+            <element signature="e#3066#3067#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandsAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1990">
+          <caret line="187" column="55" selection-start-line="187" selection-start-column="55" selection-end-line="187" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigValuesController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="726">
+          <caret line="55" column="6" selection-start-line="48" selection-start-column="1" selection-end-line="55" selection-end-column="6" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fhemswitch/src/main/java/de/fehngarten/fhemswitch/ConfigCommandsController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="726">
+          <caret line="50" column="12" selection-start-line="50" selection-start-column="12" selection-end-line="50" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1532#1533#0" expanded="true" />
+            <element signature="e#1586#1587#0" expanded="true" />
           </folding>
         </state>
       </provider>

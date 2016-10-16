@@ -321,8 +321,8 @@
                     "startLine": 44,
                     "startColumn": 4,
                     "startOffset": 2693,
-                    "endColumn": 68,
-                    "endOffset": 2757
+                    "endColumn": 66,
+                    "endOffset": 2755
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -332,9 +332,9 @@
                 "to": {
                     "startLine": 45,
                     "startColumn": 4,
-                    "startOffset": 2762,
-                    "endColumn": 42,
-                    "endOffset": 2800
+                    "startOffset": 2760,
+                    "endColumn": 68,
+                    "endOffset": 2824
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -344,9 +344,9 @@
                 "to": {
                     "startLine": 46,
                     "startColumn": 4,
-                    "startOffset": 2805,
-                    "endColumn": 48,
-                    "endOffset": 2849
+                    "startOffset": 2829,
+                    "endColumn": 42,
+                    "endOffset": 2867
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -356,9 +356,9 @@
                 "to": {
                     "startLine": 47,
                     "startColumn": 4,
-                    "startOffset": 2854,
+                    "startOffset": 2872,
                     "endColumn": 48,
-                    "endOffset": 2898
+                    "endOffset": 2916
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -368,9 +368,9 @@
                 "to": {
                     "startLine": 48,
                     "startColumn": 4,
-                    "startOffset": 2903,
-                    "endColumn": 64,
-                    "endOffset": 2963
+                    "startOffset": 2921,
+                    "endColumn": 48,
+                    "endOffset": 2965
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -380,8 +380,8 @@
                 "to": {
                     "startLine": 49,
                     "startColumn": 4,
-                    "startOffset": 2968,
-                    "endColumn": 66,
+                    "startOffset": 2970,
+                    "endColumn": 64,
                     "endOffset": 3030
                 },
                 "from": {
@@ -393,8 +393,8 @@
                     "startLine": 50,
                     "startColumn": 4,
                     "startOffset": 3035,
-                    "endColumn": 62,
-                    "endOffset": 3093
+                    "endColumn": 66,
+                    "endOffset": 3097
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -404,9 +404,9 @@
                 "to": {
                     "startLine": 51,
                     "startColumn": 4,
-                    "startOffset": 3098,
-                    "endColumn": 66,
-                    "endOffset": 3160
+                    "startOffset": 3102,
+                    "endColumn": 55,
+                    "endOffset": 3153
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -416,9 +416,9 @@
                 "to": {
                     "startLine": 52,
                     "startColumn": 4,
-                    "startOffset": 3165,
-                    "endColumn": 52,
-                    "endOffset": 3213
+                    "startOffset": 3158,
+                    "endColumn": 62,
+                    "endOffset": 3216
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -428,21 +428,21 @@
                 "to": {
                     "startLine": 53,
                     "startColumn": 4,
-                    "startOffset": 3218,
-                    "endColumn": 134,
-                    "endOffset": 3348
+                    "startOffset": 3221,
+                    "endColumn": 66,
+                    "endOffset": 3283
                 },
                 "from": {
-                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\config.xml"
+                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
                 }
             },
             {
                 "to": {
                     "startLine": 54,
                     "startColumn": 4,
-                    "startOffset": 3353,
-                    "endColumn": 41,
-                    "endOffset": 3390
+                    "startOffset": 3288,
+                    "endColumn": 52,
+                    "endOffset": 3336
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -452,21 +452,21 @@
                 "to": {
                     "startLine": 55,
                     "startColumn": 4,
-                    "startOffset": 3395,
-                    "endColumn": 49,
-                    "endOffset": 3440
+                    "startOffset": 3341,
+                    "endColumn": 134,
+                    "endOffset": 3471
                 },
                 "from": {
-                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
+                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\config.xml"
                 }
             },
             {
                 "to": {
                     "startLine": 56,
                     "startColumn": 4,
-                    "startOffset": 3445,
-                    "endColumn": 54,
-                    "endOffset": 3495
+                    "startOffset": 3476,
+                    "endColumn": 41,
+                    "endOffset": 3513
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -476,9 +476,9 @@
                 "to": {
                     "startLine": 57,
                     "startColumn": 4,
-                    "startOffset": 3500,
-                    "endColumn": 54,
-                    "endOffset": 3550
+                    "startOffset": 3518,
+                    "endColumn": 49,
+                    "endOffset": 3563
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -488,21 +488,21 @@
                 "to": {
                     "startLine": 58,
                     "startColumn": 4,
-                    "startOffset": 3555,
-                    "endColumn": 452,
-                    "endOffset": 4003
+                    "startOffset": 3568,
+                    "endColumn": 54,
+                    "endOffset": 3618
                 },
                 "from": {
-                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\config.xml"
+                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
                 }
             },
             {
                 "to": {
                     "startLine": 59,
                     "startColumn": 4,
-                    "startOffset": 4008,
-                    "endColumn": 49,
-                    "endOffset": 4053
+                    "startOffset": 3623,
+                    "endColumn": 54,
+                    "endOffset": 3673
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -512,21 +512,21 @@
                 "to": {
                     "startLine": 60,
                     "startColumn": 4,
-                    "startOffset": 4058,
-                    "endColumn": 45,
-                    "endOffset": 4099
+                    "startOffset": 3678,
+                    "endColumn": 452,
+                    "endOffset": 4126
                 },
                 "from": {
-                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
+                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\config.xml"
                 }
             },
             {
                 "to": {
                     "startLine": 61,
                     "startColumn": 4,
-                    "startOffset": 4104,
-                    "endColumn": 47,
-                    "endOffset": 4147
+                    "startOffset": 4131,
+                    "endColumn": 49,
+                    "endOffset": 4176
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -536,28 +536,21 @@
                 "to": {
                     "startLine": 62,
                     "startColumn": 4,
-                    "startOffset": 4152,
-                    "endColumn": 128,
-                    "endOffset": 4276
+                    "startOffset": 4181,
+                    "endColumn": 45,
+                    "endOffset": 4222
                 },
                 "from": {
-                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 69,
-                        "startColumn": 4,
-                        "startOffset": 2948,
-                        "endColumn": 128,
-                        "endOffset": 3072
-                    }
+                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
                 }
             },
             {
                 "to": {
                     "startLine": 63,
                     "startColumn": 4,
-                    "startOffset": 4281,
-                    "endColumn": 37,
-                    "endOffset": 4314
+                    "startOffset": 4227,
+                    "endColumn": 47,
+                    "endOffset": 4270
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -567,9 +560,9 @@
                 "to": {
                     "startLine": 64,
                     "startColumn": 4,
-                    "startOffset": 4319,
-                    "endColumn": 94,
-                    "endOffset": 4409
+                    "startOffset": 4275,
+                    "endColumn": 102,
+                    "endOffset": 4373
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -579,9 +572,9 @@
                 "to": {
                     "startLine": 65,
                     "startColumn": 4,
-                    "startOffset": 4414,
-                    "endColumn": 33,
-                    "endOffset": 4443
+                    "startOffset": 4378,
+                    "endColumn": 37,
+                    "endOffset": 4411
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -591,9 +584,9 @@
                 "to": {
                     "startLine": 66,
                     "startColumn": 4,
-                    "startOffset": 4448,
-                    "endColumn": 61,
-                    "endOffset": 4505
+                    "startOffset": 4416,
+                    "endColumn": 94,
+                    "endOffset": 4506
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -603,9 +596,9 @@
                 "to": {
                     "startLine": 67,
                     "startColumn": 4,
-                    "startOffset": 4510,
-                    "endColumn": 52,
-                    "endOffset": 4558
+                    "startOffset": 4511,
+                    "endColumn": 33,
+                    "endOffset": 4540
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -615,9 +608,9 @@
                 "to": {
                     "startLine": 68,
                     "startColumn": 4,
-                    "startOffset": 4563,
-                    "endColumn": 37,
-                    "endOffset": 4596
+                    "startOffset": 4545,
+                    "endColumn": 61,
+                    "endOffset": 4602
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -627,9 +620,9 @@
                 "to": {
                     "startLine": 69,
                     "startColumn": 4,
-                    "startOffset": 4601,
-                    "endColumn": 35,
-                    "endOffset": 4632
+                    "startOffset": 4607,
+                    "endColumn": 64,
+                    "endOffset": 4667
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -639,9 +632,9 @@
                 "to": {
                     "startLine": 70,
                     "startColumn": 4,
-                    "startOffset": 4637,
-                    "endColumn": 45,
-                    "endOffset": 4678
+                    "startOffset": 4672,
+                    "endColumn": 52,
+                    "endOffset": 4720
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -651,9 +644,9 @@
                 "to": {
                     "startLine": 71,
                     "startColumn": 4,
-                    "startOffset": 4683,
-                    "endColumn": 43,
-                    "endOffset": 4722
+                    "startOffset": 4725,
+                    "endColumn": 59,
+                    "endOffset": 4780
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -663,9 +656,9 @@
                 "to": {
                     "startLine": 72,
                     "startColumn": 4,
-                    "startOffset": 4727,
-                    "endColumn": 78,
-                    "endOffset": 4801
+                    "startOffset": 4785,
+                    "endColumn": 37,
+                    "endOffset": 4818
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -675,9 +668,9 @@
                 "to": {
                     "startLine": 73,
                     "startColumn": 4,
-                    "startOffset": 4806,
-                    "endColumn": 56,
-                    "endOffset": 4858
+                    "startOffset": 4823,
+                    "endColumn": 35,
+                    "endOffset": 4854
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -687,9 +680,9 @@
                 "to": {
                     "startLine": 74,
                     "startColumn": 4,
-                    "startOffset": 4863,
-                    "endColumn": 64,
-                    "endOffset": 4923
+                    "startOffset": 4859,
+                    "endColumn": 45,
+                    "endOffset": 4900
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -699,9 +692,9 @@
                 "to": {
                     "startLine": 75,
                     "startColumn": 4,
-                    "startOffset": 4928,
-                    "endColumn": 70,
-                    "endOffset": 4994
+                    "startOffset": 4905,
+                    "endColumn": 43,
+                    "endOffset": 4944
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -711,9 +704,9 @@
                 "to": {
                     "startLine": 76,
                     "startColumn": 4,
-                    "startOffset": 4999,
-                    "endColumn": 53,
-                    "endOffset": 5048
+                    "startOffset": 4949,
+                    "endColumn": 78,
+                    "endOffset": 5023
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -723,9 +716,9 @@
                 "to": {
                     "startLine": 77,
                     "startColumn": 4,
-                    "startOffset": 5053,
-                    "endColumn": 59,
-                    "endOffset": 5108
+                    "startOffset": 5028,
+                    "endColumn": 56,
+                    "endOffset": 5080
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -735,8 +728,8 @@
                 "to": {
                     "startLine": 78,
                     "startColumn": 4,
-                    "startOffset": 5113,
-                    "endColumn": 36,
+                    "startOffset": 5085,
+                    "endColumn": 64,
                     "endOffset": 5145
                 },
                 "from": {
@@ -748,8 +741,8 @@
                     "startLine": 79,
                     "startColumn": 4,
                     "startOffset": 5150,
-                    "endColumn": 36,
-                    "endOffset": 5182
+                    "endColumn": 70,
+                    "endOffset": 5216
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -759,9 +752,9 @@
                 "to": {
                     "startLine": 80,
                     "startColumn": 4,
-                    "startOffset": 5187,
-                    "endColumn": 36,
-                    "endOffset": 5219
+                    "startOffset": 5221,
+                    "endColumn": 53,
+                    "endOffset": 5270
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -771,9 +764,9 @@
                 "to": {
                     "startLine": 81,
                     "startColumn": 4,
-                    "startOffset": 5224,
-                    "endColumn": 37,
-                    "endOffset": 5257
+                    "startOffset": 5275,
+                    "endColumn": 59,
+                    "endOffset": 5330
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -783,9 +776,9 @@
                 "to": {
                     "startLine": 82,
                     "startColumn": 4,
-                    "startOffset": 5262,
-                    "endColumn": 41,
-                    "endOffset": 5299
+                    "startOffset": 5335,
+                    "endColumn": 36,
+                    "endOffset": 5367
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -795,9 +788,9 @@
                 "to": {
                     "startLine": 83,
                     "startColumn": 4,
-                    "startOffset": 5304,
-                    "endColumn": 42,
-                    "endOffset": 5342
+                    "startOffset": 5372,
+                    "endColumn": 36,
+                    "endOffset": 5404
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -807,9 +800,9 @@
                 "to": {
                     "startLine": 84,
                     "startColumn": 4,
-                    "startOffset": 5347,
-                    "endColumn": 45,
-                    "endOffset": 5388
+                    "startOffset": 5409,
+                    "endColumn": 36,
+                    "endOffset": 5441
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -819,9 +812,9 @@
                 "to": {
                     "startLine": 85,
                     "startColumn": 4,
-                    "startOffset": 5393,
-                    "endColumn": 50,
-                    "endOffset": 5439
+                    "startOffset": 5446,
+                    "endColumn": 37,
+                    "endOffset": 5479
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
@@ -831,36 +824,121 @@
                 "to": {
                     "startLine": 86,
                     "startColumn": 4,
-                    "startOffset": 5444,
-                    "endLine": 88,
-                    "endColumn": 12,
-                    "endOffset": 5522
+                    "startOffset": 5484,
+                    "endColumn": 41,
+                    "endOffset": 5521
                 },
                 "from": {
-                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\styles.xml"
+                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 87,
+                    "startColumn": 4,
+                    "startOffset": 5526,
+                    "endColumn": 42,
+                    "endOffset": 5564
+                },
+                "from": {
+                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 88,
+                    "startColumn": 4,
+                    "startOffset": 5569,
+                    "endColumn": 45,
+                    "endOffset": 5610
+                },
+                "from": {
+                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
                 }
             },
             {
                 "to": {
                     "startLine": 89,
                     "startColumn": 4,
-                    "startOffset": 5527,
-                    "endLine": 91,
-                    "endColumn": 12,
-                    "endOffset": 5594
+                    "startOffset": 5615,
+                    "endColumn": 50,
+                    "endOffset": 5661
                 },
                 "from": {
-                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\styles.xml"
+                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\strings.xml"
                 }
             },
             {
                 "to": {
-                    "startLine": 92,
+                    "startLine": 90,
                     "startColumn": 4,
-                    "startOffset": 5599,
-                    "endLine": 98,
+                    "startOffset": 5666,
+                    "endLine": 96,
                     "endColumn": 12,
-                    "endOffset": 5924
+                    "endOffset": 5963
+                },
+                "from": {
+                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\styles.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 192,
+                        "endLine": 12,
+                        "endColumn": 12,
+                        "endOffset": 495
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 97,
+                    "startColumn": 4,
+                    "startOffset": 5968,
+                    "endLine": 99,
+                    "endColumn": 12,
+                    "endOffset": 6123
+                },
+                "from": {
+                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\styles.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 536,
+                        "endLine": 17,
+                        "endColumn": 12,
+                        "endOffset": 693
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 100,
+                    "startColumn": 4,
+                    "startOffset": 6128,
+                    "endLine": 104,
+                    "endColumn": 12,
+                    "endOffset": 6348
+                },
+                "from": {
+                    "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\styles.xml",
+                    "position": {
+                        "startLine": 19,
+                        "startColumn": 4,
+                        "startOffset": 701,
+                        "endLine": 23,
+                        "endColumn": 12,
+                        "endOffset": 925
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 105,
+                    "startColumn": 4,
+                    "startOffset": 6353,
+                    "endLine": 111,
+                    "endColumn": 12,
+                    "endOffset": 6678
                 },
                 "from": {
                     "file": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\values\\lightimg.xml"

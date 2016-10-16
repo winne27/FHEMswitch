@@ -86,17 +86,15 @@ class ConfigSwitchesAdapter extends BaseAdapter {
         View rowView = convertView;
 
         final SwitchHolder switchHolder;
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (position == 0) {
             if (rowView == null) {
-                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 rowView = inflater.inflate(R.layout.config_switch_row_header, null);
-
             }
         } else {
             ConfigSwitchRow switchRow = getItem(position - 1);
             if (rowView == null) {
                 switchHolder = new SwitchHolder();
-                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 rowView = inflater.inflate(R.layout.config_switch_row, parent, false);
                 rowView.setTag(switchHolder);
                 switchHolder.switch_unit = (TextView) rowView.findViewById(R.id.config_switch_unit);
