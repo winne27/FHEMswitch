@@ -65,10 +65,10 @@ class MyLayout {
 
     private void buildLayoutMixed(int switchCount, int lightsceneCount, int valueCount, int commandCount) {
         ArrayList<MyCounter> counter = new ArrayList<>();
-        counter.add(new MyCounter("switch", switchCount));
-        counter.add(new MyCounter("lightscene", lightsceneCount));
-        counter.add(new MyCounter("value", valueCount));
-        counter.add(new MyCounter("command", commandCount));
+        counter.add(new MyCounter("switch", switchCount * 10));
+        counter.add(new MyCounter("lightscene", lightsceneCount * 8));
+        counter.add(new MyCounter("value", valueCount * 7));
+        counter.add(new MyCounter("command", commandCount * 10));
         Collections.sort(counter);
 
         if (counter.get(0).count >= counter.get(1).count + counter.get(2).count + counter.get(3).count) {

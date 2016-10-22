@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <CheckBox
+        android:id="@+id/config_lightscene_enabled"
+        android:layout_height="wrap_content"
+        android:layout_width="40dp" />
+
+    <TextView
+        android:id="@+id/config_lightscene_unit"
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:textColor="#008"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/config_lightscene_name"
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text" />
+
+    <CheckBox
+        android:id="@+id/config_lightscene_header"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+
+</LinearLayout>

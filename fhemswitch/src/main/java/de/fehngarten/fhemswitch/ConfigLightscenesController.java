@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Point;
 //import android.util.Log;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -89,6 +90,8 @@ class ConfigLightscenesController extends DragSortController {
     @Override
     public void onDestroyFloatView(View floatView) {
         //do nothing; block super from crashing
+        //Log.d("ConfigLightscenesContro","******* destroyed");
+        //mAdapter.notifyDataSetChanged();
     }
 
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {

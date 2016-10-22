@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/switch_row"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/button"
     android:orientation="horizontal">
@@ -12,6 +12,7 @@
         style="@style/lightimg"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
+        android:layout_gravity="center_vertical"
         android:contentDescription="@string/switchicon" />
 
     <TextView
@@ -19,9 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="27dp"
-        android:layout_marginTop="5dp"
-        android:textColor="#008"
+        android:layout_marginLeft="6dp"
+        android:textColor="@color/text_standard"
         android:textSize="16sp"
         android:textStyle="bold" />
-</RelativeLayout>
+</LinearLayout>

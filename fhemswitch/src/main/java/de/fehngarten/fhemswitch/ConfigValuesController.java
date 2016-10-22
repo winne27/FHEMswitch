@@ -2,6 +2,7 @@ package de.fehngarten.fhemswitch;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -21,7 +22,6 @@ public class ConfigValuesController extends DragSortController {
         mDslv = dslv;
         mDslv.setDropListener(onDrop);
         setRemoveEnabled(false);
-
      }
 
     @Override
@@ -43,7 +43,8 @@ public class ConfigValuesController extends DragSortController {
 
     @Override
     public void onDestroyFloatView(View floatView) {
-        //do nothing; block super from crashing
+        //Log.d("ConfigValuesContro","******* destroyed");
+        //mAdapter.notifyDataSetChanged();
     }
 
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener()

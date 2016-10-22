@@ -67,9 +67,9 @@
     <string name="account2">5 Euro</string>
     <string name="account3">10 Euro</string>
     <string name="donate_back">Go</string>
-    <string name="newVersionApp">There is a new version of this App in the Google Play Store.</string>
     <string name="openstore">Open Play Store for Update</string>
     <string name="donotshow">Don\'t show again</string>
     <string name="rememberlater">Remember me later</string>
     <string name="config_header">FHEMswitch configuration</string>
+    <string name="newVersionApp">Version %1$s of this App is installed.\nIn Google Play Store the newest Version %2$s is available.</string>
 </resources>

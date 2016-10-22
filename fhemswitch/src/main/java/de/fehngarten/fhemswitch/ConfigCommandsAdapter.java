@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.util.Log;
 
 class ConfigCommandsAdapter extends BaseAdapter
 {
@@ -23,9 +22,6 @@ class ConfigCommandsAdapter extends BaseAdapter
 
    ConfigCommandsAdapter(Context mContext)
    {
-
-      //super(mContext, layoutResourceId, data);
-      //this.layoutResourceId = layoutResourceId;
       this.mContext = mContext;
       commandRows = new ArrayList<>();
    }
@@ -39,7 +35,6 @@ class ConfigCommandsAdapter extends BaseAdapter
 
    void newLine()
    {
-      //Log.i("newLine adapter","schoen");
       commandRows.add(new ConfigCommandRow("","",false));
       notifyDataSetChanged();
    }
@@ -84,7 +79,7 @@ class ConfigCommandsAdapter extends BaseAdapter
       {
          commandHolder = new CommandHolder();
          LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-         rowView = inflater.inflate(R.layout.config_command_row, parent, false);
+         rowView = inflater.inflate(R.layout.config_row_command, parent, false);
          rowView.setTag(commandHolder);
          commandHolder.command_name = (EditText) rowView.findViewById(R.id.config_command_name);
          commandHolder.command_command = (EditText) rowView.findViewById(R.id.config_command_command);

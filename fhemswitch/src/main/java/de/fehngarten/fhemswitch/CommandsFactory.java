@@ -9,33 +9,27 @@ import android.widget.RemoteViewsService.RemoteViewsFactory;
 //import android.util.Log;
 
 class CommandsFactory implements RemoteViewsFactory {
-    private static final String CLASSNAME = "CommandsFactory.";
+    private static final String TAG = "CommandsFactory.";
     private Context mContext = null;
     private int colnum;
 
     CommandsFactory(Context context, Intent intent, int colnum) {
-        //Log.d(CLASSNAME, "started");
+        //Log.d(TAG, "started");
         mContext = context;
         this.colnum = colnum;
     }
 
     public void initData() {
-        //String methodname = "initData";
-        //Log.d(CLASSNAME + methodname, "started");
     }
 
     @Override
     public void onCreate() {
-        //String methodname = "onCreate";
-        //Log.d(CLASSNAME + methodname, "started");
-        //initData();
+
     }
 
     @Override
     public void onDataSetChanged() {
-        //String methodname = "onDataSetChanged";
-        //Log.d(CLASSNAME + methodname, "started");
-        //initData();
+
     }
 
     @Override
@@ -46,10 +40,8 @@ class CommandsFactory implements RemoteViewsFactory {
 
     @Override
     public int getCount() {
-        //String methodname = "getCount";
-        //Log.d(CLASSNAME + methodname, "values size: " + Integer.toString(values.size()));
-
-        if (WidgetService.configData == null || WidgetService.configData.commandsCols == null || WidgetService.configData.commandsCols.size() == 0) {
+        //Log.d(TAG, "values size: " + Integer.toString(values.size()));
+        if (WidgetService.configData == null || WidgetService.configData.commandsCols == null || WidgetService.configData.commandsCols.size() <= colnum) {
             return (0);
         } else {
             return WidgetService.configData.commandsCols.get(colnum).size();

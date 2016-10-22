@@ -4,12 +4,12 @@
 
     <TextView
         android:id="@+id/noconn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:padding="10dp"
         android:gravity="center"
         android:text="@string/initruns"
-        android:textColor="#ffcc4343"
+        android:textColor="@color/text_hinweis"
         android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="gone" />

@@ -16,7 +16,7 @@
     <string name="values">Messwerte</string>
     <string name="values2">Werte</string>
     <string name="sel">Aktiv</string>
-    <string name="unit">Name - order by d&#038;d</string>
+    <string name="unit">Name - sortiere mit d&#038;d</string>
     <string name="name">Angezeigter Name</string>
     <string name="header">Header</string>
     <string name="command">Befehl</string>
@@ -66,7 +66,7 @@
     <string name="account1">2 Euro</string>
     <string name="account2">5 Euro</string>
     <string name="account3">10 Euro</string>
-    <string name="newVersionApp">Es gibt eine neue Version dieser App im Google Play Store.</string>
+    <string name="newVersionApp">Die Version %1$s dieser App ist installiert. \nIm Google Play Store ist die aktuelle Version %2$s verfügbar.</string>
     <string name="openstore">Öffne Play Store für Update</string>
     <string name="donotshow">Nicht mehr anzeigen</string>
     <string name="rememberlater">Später nochmals erinnern</string>

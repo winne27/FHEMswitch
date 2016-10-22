@@ -2,7 +2,7 @@ package de.fehngarten.fhemswitch;
 
 //import android.util.Log; 
 
-class MySwitch {
+class MySwitch implements Comparable<MySwitch> {
     String name;
     String unit;
     String cmd;
@@ -22,11 +22,14 @@ class MySwitch {
         } else {
             this.icon = "undefined";
         }
-
     }
 
     String activateCmd() {
         return "set " + this.unit + " " + this.cmd;
     }
 
+    @Override
+    public int compareTo(MySwitch compSwitch) {
+        return this.unit.compareTo(compSwitch.unit);
+    }
 }

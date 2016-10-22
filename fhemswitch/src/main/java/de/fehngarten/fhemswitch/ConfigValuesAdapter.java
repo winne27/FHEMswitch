@@ -87,7 +87,7 @@ class ConfigValuesAdapter extends BaseAdapter {
         if (rowView == null) {
             valueHolder = new ValueHolder();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            rowView = inflater.inflate(R.layout.config_value_row, parent, false);
+            rowView = inflater.inflate(R.layout.config_row_value, parent, false);
             rowView.setTag(valueHolder);
             valueHolder.value_unit = (TextView) rowView.findViewById(R.id.config_value_unit);
             valueHolder.value_name = (EditText) rowView.findViewById(R.id.config_value_name);

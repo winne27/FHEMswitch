@@ -15,7 +15,7 @@ class MySocket {
     public String url;
 
     MySocket(String url, Context context) {
-        Log.d("MySocket", "started");
+        //Log.d("MySocket", "started");
 
         try {
             socket = null;

@@ -2,6 +2,7 @@ package de.fehngarten.fhemswitch;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -49,7 +50,7 @@ class SwitchesFactory implements RemoteViewsFactory {
         //String methodname = "getCount";
         //Log.d(CLASSNAME + methodname, "switches size: " + Integer.toString(switches.size()));
 
-        if (WidgetService.configData == null || WidgetService.configData.switchesCols == null || WidgetService.configData.switchesCols.size() == 0) {
+        if (WidgetService.configData == null || WidgetService.configData.switchesCols == null || WidgetService.configData.switchesCols.size() <= colnum) {
             return (0);
         } else {
             return WidgetService.configData.switchesCols.get(colnum).size();
@@ -65,7 +66,6 @@ class SwitchesFactory implements RemoteViewsFactory {
         }
         mView.setTextViewText(R.id.switch_name, WidgetService.configData.switchesCols.get(colnum).get(position).name);
         mView.setImageViewResource(R.id.switch_icon, WidgetService.icons.get(WidgetService.configData.switchesCols.get(colnum).get(position).icon));
-
         final Intent fillInIntent = new Intent();
         fillInIntent.setAction(WidgetProvider.SEND_FHEM_COMMAND);
         final Bundle bundle = new Bundle();

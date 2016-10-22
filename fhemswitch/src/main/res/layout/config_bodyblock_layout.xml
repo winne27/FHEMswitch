@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/config_layout_block"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="6dp"
+    android:layout_marginTop="0dp"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <LinearLayout
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/conf_bg_header_3">
+
+        <Button
+            android:id="@+id/save_config"
+            style="@style/Widget.Button"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/save" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/config_scroll_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fadeScrollbars="true"
+        android:layout_marginTop="0dp"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Block of orientation +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+            <include layout="@layout/config_block_orient"></include>
+
+            <!-- Block of switches +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+            <include layout="@layout/config_block_switches"></include>
+
+            <!-- Block of lightscenes +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+            <include layout="@layout/config_block_lightscenes"></include>
+
+            <!-- Block of values +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+            <include layout="@layout/config_block_values"></include>
+
+            <!-- Block of commands +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+            <include layout="@layout/config_block_commands"></include>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

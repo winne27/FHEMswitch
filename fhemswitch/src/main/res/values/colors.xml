@@ -5,7 +5,10 @@
     <color name="conf_bg_header_3">#FF99BB99</color>
     <color name="conf_text_header_1">#ffdddddd</color>
     <color name="conf_text_header_2">#ffdddddd</color>
+    <color name="text_dunkel">#ff333333</color>
+    <color name="text_standard">#ff000088</color>
+    <color name="text_hinweis">#224322</color>
     <color name="conf_bg_handle_pressed">#FFAEDEB1</color>
     <color name="conf_bg_line">#FFFFF4BD</color>
-    
+
 </resources>

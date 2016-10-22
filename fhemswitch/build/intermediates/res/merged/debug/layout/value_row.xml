@@ -16,7 +16,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textSize="15sp"
-        android:textColor="#008"
+        android:textColor="@color/text_standard"
         android:textStyle="normal"
         android:textAllCaps="false" />
 
@@ -28,10 +28,10 @@
         android:layout_marginEnd="6dp"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_alignParentRight="true"       
+        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textSize="15sp"
-        android:textColor="#008"
+        android:textColor="@color/text_standard"
         android:textStyle="normal"
         android:textAllCaps="false" />
 

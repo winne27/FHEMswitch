@@ -40,7 +40,7 @@
     <string name="lightscenes">Szenarios</string>
     <string name="mixed">zweispaltig</string>
     <string name="name">Angezeigter Name</string>
-    <string name="newVersionApp">Es gibt eine neue Version dieser App im Google Play Store.</string>
+    <string name="newVersionApp">Die Version %1$s dieser App ist installiert. \nIm Google Play Store ist die aktuelle Version %2$s verfügbar.</string>
     <string name="newline">+</string>
     <string name="noconn">Keine Verbindung zum FHEM Server. Antippen um Neuverbindung zu versuchen.</string>
     <string name="ok">OK</string>
@@ -53,7 +53,7 @@
     <string name="switches">Schalter</string>
     <string name="switchicon">Lampe</string>
     <string name="thanks_text">Vielen Dank für Ihre Spende!</string>
-    <string name="unit">Name - order by d&amp;d</string>
+    <string name="unit">Name - sortiere mit d&amp;d</string>
     <string name="url_fhem_js">URL FHEM node.js Server:</string>
     <string name="url_fhem_pl">URL FHEM Webserver (optional):</string>
     <string name="urlcheck">bitte URL prüfen</string>

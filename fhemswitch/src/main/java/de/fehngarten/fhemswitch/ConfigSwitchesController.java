@@ -3,6 +3,7 @@ package de.fehngarten.fhemswitch;
 import android.content.Context;
 import android.graphics.Point;
 import android.support.v4.content.ContextCompat;
+//import android.util.Log;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,17 +26,18 @@ public class ConfigSwitchesController extends DragSortController {
         setRemoveEnabled(false);
     }
 
+    /*
     @Override
     public int startDragPosition(MotionEvent ev) {
         int res = super.dragHandleHitPosition(ev);
-        Log.d("position", String.valueOf(res));
+        //Log.d("position", String.valueOf(res));
         if (res == 0) {
             return DragSortController.MISS;
         } else {
             return res;
         }
     }
-
+*/
     @Override
     public View onCreateFloatView(int position) {
         View v = mAdapter.getView(position, null, mDslv);
@@ -51,6 +53,8 @@ public class ConfigSwitchesController extends DragSortController {
     @Override
     public void onDestroyFloatView(View floatView) {
         //do nothing; block super from crashing
+        //Log.d("ConfigSwitchesControl","******* destroyed");
+        //mAdapter.notifyDataSetChanged();
     }
 
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener()

@@ -19,9 +19,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.util.Log;
-
-import com.mobeta.android.dslv.DragSortListView;
 
 class ConfigSwitchesAdapter extends BaseAdapter {
     Context mContext;
@@ -85,101 +82,95 @@ class ConfigSwitchesAdapter extends BaseAdapter {
 
         View rowView = convertView;
 
-        final SwitchHolder switchHolder;
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (position == 0) {
-            if (rowView == null) {
-                rowView = inflater.inflate(R.layout.config_switch_row_header, null);
-            }
+
+        final SwitchHolder switchHolder;
+        ConfigSwitchRow switchRow = getItem(position);
+        if (rowView == null) {
+            switchHolder = new SwitchHolder();
+            rowView = inflater.inflate(R.layout.config_row_switch, parent, false);
+            rowView.setTag(switchHolder);
+            switchHolder.switch_unit = (TextView) rowView.findViewById(R.id.config_switch_unit);
+            switchHolder.switch_name = (EditText) rowView.findViewById(R.id.config_switch_name);
+            switchHolder.switch_enabled = (CheckBox) rowView.findViewById(R.id.config_switch_enabled);
+            switchHolder.switch_cmd = (Spinner) rowView.findViewById(R.id.config_switch_cmd);
         } else {
-            ConfigSwitchRow switchRow = getItem(position - 1);
-            if (rowView == null) {
-                switchHolder = new SwitchHolder();
-                rowView = inflater.inflate(R.layout.config_switch_row, parent, false);
-                rowView.setTag(switchHolder);
-                switchHolder.switch_unit = (TextView) rowView.findViewById(R.id.config_switch_unit);
-                //switchHolder.switch_unit = (TextView) rowView.findViewById(R.id.drag_handle);
-                switchHolder.switch_name = (EditText) rowView.findViewById(R.id.config_switch_name);
-                switchHolder.switch_enabled = (CheckBox) rowView.findViewById(R.id.config_switch_enabled);
-                switchHolder.switch_cmd = (Spinner) rowView.findViewById(R.id.config_switch_cmd);
-            } else {
-                switchHolder = (SwitchHolder) rowView.getTag();
+            switchHolder = (SwitchHolder) rowView.getTag();
+        }
+
+        switchHolder.ref = position;
+        switchHolder.switch_unit.setText(switchRow.unit);
+        switchHolder.switch_name.setText(switchRow.name);
+        switchHolder.switch_enabled.setChecked(switchRow.enabled);
+
+        //Log.d("switchRow.cmd", switchRow.cmd + " in Pos " + getSpinnerIndex(switchHolder.switch_cmd, switchRow.cmd));
+        switchHolder.switch_cmd.setSelection(getSpinnerIndex(switchHolder.switch_cmd, switchRow.cmd));
+
+        //private method of your class
+
+        switchHolder.switch_enabled.setOnClickListener(arg0 -> getItem(switchHolder.ref).enabled = switchHolder.switch_enabled.isChecked());
+
+        switchHolder.switch_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                // TODO Auto-generated method stub
+
             }
 
-            switchHolder.ref = position - 1;
-            switchHolder.switch_unit.setText(switchRow.unit);
-            switchHolder.switch_name.setText(switchRow.name);
-            switchHolder.switch_enabled.setChecked(switchRow.enabled);
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                // TODO Auto-generated method stub
 
-            switchHolder.switch_cmd.setSelection(getSpinnerIndex(switchHolder.switch_cmd, switchRow.cmd));
+            }
 
-            //private method of your class
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+                getItem(switchHolder.ref).name = arg0.toString();
+            }
+        });
 
-            switchHolder.switch_enabled.setOnClickListener(arg0 -> getItem(switchHolder.ref).enabled = switchHolder.switch_enabled.isChecked());
+        switchHolder.switch_cmd.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int selPos, long id) {
+                getItem(switchHolder.ref).cmd = parentView.getItemAtPosition(selPos).toString();
+            }
 
-            switchHolder.switch_name.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                    // TODO Auto-generated method stub
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
 
-                }
-
-                @Override
-                public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                    // TODO Auto-generated method stub
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable arg0) {
-                    // TODO Auto-generated method stub
-                    getItem(switchHolder.ref).name = arg0.toString();
-                }
-            });
-
-            switchHolder.switch_cmd.setOnItemSelectedListener(new OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    getItem(switchHolder.ref).cmd = parentView.getItemAtPosition(position).toString();
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView) {
-                    // your code here
-                }
-
-            });
-        }
 
         return rowView;
     }
 
     void changeItems(int from, int to) {
-        Log.i("change switch", Integer.toString(from) + " " + Integer.toString(to));
-        if (from == 0 || to == 0) return;
+        //Log.i("change switch", Integer.toString(from) + " " + Integer.toString(to));
         final ArrayList<ConfigSwitchRow> switchRowsTemp = new ArrayList<>();
         if (from > to) {
-            for (int i = 1; i <= switchRows.size(); i++) {
+            for (int i = 0; i < switchRows.size(); i++) {
                 if (i < to) {
-                    switchRowsTemp.add(switchRows.get(i - 1));
+                    switchRowsTemp.add(switchRows.get(i));
                 } else if (i == to) {
-                    switchRowsTemp.add(switchRows.get(from - 1));
+                    switchRowsTemp.add(switchRows.get(from));
                 } else if (i <= from) {
-                    switchRowsTemp.add(switchRows.get(i - 2));
-                } else {
                     switchRowsTemp.add(switchRows.get(i - 1));
+                } else {
+                    switchRowsTemp.add(switchRows.get(i));
                 }
             }
         } else if (from < to) {
-            for (int i = 1; i <= switchRows.size(); i++) {
+            for (int i = 0; i < switchRows.size(); i++) {
                 if (i < from) {
-                    switchRowsTemp.add(switchRows.get(i - 1));
-                } else if (i < to) {
                     switchRowsTemp.add(switchRows.get(i));
+                } else if (i < to) {
+                    switchRowsTemp.add(switchRows.get(i + 1));
                 } else if (i == to) {
-                    switchRowsTemp.add(switchRows.get(from - 1));
+                    switchRowsTemp.add(switchRows.get(from));
                 } else {
-                    switchRowsTemp.add(switchRows.get(i - 1));
+                    switchRowsTemp.add(switchRows.get(i));
                 }
             }
         }

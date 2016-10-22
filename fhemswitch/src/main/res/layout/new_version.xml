@@ -4,35 +4,35 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="10dp"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center_horizontal"
     android:visibility="gone">
 
     <TextView
         android:id="@+id/new_version_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:gravity="center"
         android:text="@string/initruns"
-        android:textColor="#ffcc4343"
-        android:textSize="20sp"
+        android:textColor="@color/text_hinweis"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"
         android:textStyle="bold" />
 
     <Button
         android:id="@+id/new_version_store_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        style="@style/Widget.Button"
         android:text="@string/openstore" />
 
     <Button
         android:id="@+id/new_version_remember_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        style="@style/Widget.Button"
         android:text="@string/rememberlater" />
 
     <Button
         android:id="@+id/new_version_show_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        style="@style/Widget.Button"
         android:text="@string/donotshow" />
 
 </LinearLayout>

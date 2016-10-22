@@ -1,14 +1,10 @@
 package de.fehngarten.fhemswitch;
 
-import java.io.FileInputStream;
-//import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-//import java.util.Set;
 
 import java.util.Map.Entry;
 
@@ -17,7 +13,6 @@ import org.json.JSONObject;
 import org.jsoup.Jsoup;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -38,28 +33,22 @@ import android.os.StrictMode;
 import android.view.View;
 import android.view.Display;
 import android.hardware.display.DisplayManager;
-import android.widget.Adapter;
 import android.widget.RemoteViews;
 
-//import io.socket.emitter.Emitter;
 import io.socket.client.Socket;
 
 import de.fehngarten.fhemswitch.MyLightScenes.Item;
 import de.fehngarten.fhemswitch.MyLightScenes.MyLightScene;
 
 import android.util.Log;
-import android.widget.Toast;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class WidgetService extends Service {
-    public static final String CONFIGFILE = "config.data";
-    public static final String VERSIONFILE = "version.data";
-
     static final String NEW_CONFIG = "de.fehngarten.fhemswitch.NEW_CONFIG";
     static final String NEW_VERSION_STORE = "de.fehngarten.fhemswitch.NEW_VERSION_STORE";
     static final String NEW_VERSION_SHOW = "de.fehngarten.fhemswitch.NEW_VERSION_SHOW";
     static final String NEW_VERSION_REMEMBER = "de.fehngarten.fhemswitch.NEW_VERSION_REMEMBER";
+    static final String TAG = "WidgetService";
     public static MySocket mySocket = null;
 
     public static String websocketUrl;
@@ -74,10 +63,12 @@ public class WidgetService extends Service {
     private static int[] allWidgetIds;
     private static int[] layouts = new int[3];
     private static Handler handler = new Handler();
-    private Context context;
+    private Context mContext;
+    private RemoteViews mView;
 
     public static ConfigData configData;
     private ConfigDataOnly configDataOnly;
+    private ConfigDataOnlyIO configDataOnlyIO;
 
     public static PowerManager pm;
     private int layoutId;
@@ -88,16 +79,20 @@ public class WidgetService extends Service {
     public Boolean valuesRequested = false;
     public static Boolean serviceRunning = false;
     private int waitCount = 0;
-    //private Boolean ListviewsInitialized = false;
+    private String storeVersion;
+    private BroadcastReceiver newConfigReceiver;
+    private BroadcastReceiver connChangeReceiver;
+    private BroadcastReceiver userIntentReceiver;
+    private BroadcastReceiver screenReceiver;
 
     public void onCreate() {
-        Log.d("WidgetService", "onCreate fired");
+        Log.d(TAG, "onCreate fired");
 
         super.onCreate();
 
         serviceRunning = true;
-        context = getApplicationContext();
-        appWidgetManager = AppWidgetManager.getInstance(context);
+        mContext = getApplicationContext();
+        appWidgetManager = AppWidgetManager.getInstance(mContext);
         pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
         icons.put("on", R.drawable.on);
@@ -114,10 +109,10 @@ public class WidgetService extends Service {
         handler.postDelayed(checkVersionTimer, 10000);
 
         // Intent conn changed
-        BroadcastReceiver connChangeReceiver = new BroadcastReceiver() {
+        connChangeReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d("WidgetService", "connchanged " + intent.getAction());
+                Log.d(TAG, "connchanged " + intent.getAction());
                 ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
                 if (networkInfo != null) {
@@ -133,12 +128,12 @@ public class WidgetService extends Service {
         IntentFilter connChangeFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(connChangeReceiver, connChangeFilter);
 
-        // Intent user
-        BroadcastReceiver userIntentReceiver = new BroadcastReceiver() {
+        // --- Intent user --------------------------------------------------------------------------------
+        userIntentReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
-                Log.d("WidgetService", "userIntent fired by " + action ) ;
+                Log.d(TAG, "userIntent fired by " + action);
                 switch (action) {
                     case NEW_VERSION_STORE:
                         final String appPackageName = getPackageName();
@@ -154,6 +149,8 @@ public class WidgetService extends Service {
                         setVisibility("closeversion", null);
                         break;
                     case NEW_VERSION_SHOW:
+                        stopVersionRemember();
+                        setVisibility("closeversion", null);
                         break;
                     case NEW_VERSION_REMEMBER:
                         setVisibility("closeversion", null);
@@ -162,39 +159,34 @@ public class WidgetService extends Service {
             }
         };
 
-        IntentFilter newVersionStoreFilter = new IntentFilter(NEW_VERSION_STORE);
+        IntentFilter newVersionStoreFilter = new IntentFilter();
+        newVersionStoreFilter.addAction(NEW_VERSION_STORE);
+        newVersionStoreFilter.addAction(NEW_VERSION_SHOW);
+        newVersionStoreFilter.addAction(NEW_VERSION_REMEMBER);
         registerReceiver(userIntentReceiver, newVersionStoreFilter);
 
-        IntentFilter newVersionShowFilter = new IntentFilter(NEW_VERSION_SHOW);
-        registerReceiver(userIntentReceiver, newVersionShowFilter);
-
-        IntentFilter newVersionStoreRemember = new IntentFilter(NEW_VERSION_REMEMBER);
-        registerReceiver(userIntentReceiver, newVersionStoreRemember);
-
-        // intent configuration changed (orientation)
-        BroadcastReceiver newConfigReceiver = new BroadcastReceiver() {
+        // --- intent configuration changed (orientation) -------------------------------------------------
+        newConfigReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d("WidgetService", "orientchange fired");
+                Log.d(TAG, "orientchange fired");
                 readConfig();
             }
         };
 
-        IntentFilter orientFilter = new IntentFilter(Intent.ACTION_CONFIGURATION_CHANGED);
+        IntentFilter orientFilter = new IntentFilter();
+        orientFilter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
+        orientFilter.addAction(NEW_CONFIG);
         registerReceiver(newConfigReceiver, orientFilter);
 
-        IntentFilter newConfigFilter = new IntentFilter(NEW_CONFIG);
-        registerReceiver(newConfigReceiver, newConfigFilter);
-
         // intent screen on/off
-        BroadcastReceiver screenReceiver = new BroadcastReceiver() {
-
+        screenReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 //do something you need when broadcast received
-                Log.d("WidgetService", "screenaction " + intent.getAction());
+                Log.d(TAG, "screenaction " + intent.getAction());
 
-                if (intent.getAction().equals("android.intent.action.SCREEN_ON")) {
+                if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
                     waitCount = 0;
                 }
 
@@ -207,53 +199,45 @@ public class WidgetService extends Service {
         screenFilter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(screenReceiver, screenFilter);
 
+        // ---------------------------------------
+
         readConfig();
-        //doStart(1);
     }
 
     @Override
     public void onDestroy() {
-        Log.d("WidgetService", "onDestroy fired");
+        Log.d(TAG, "onDestroy fired");
         mySocket.socket.disconnect();
         mySocket.socket.close();
         mySocket = null;
         handler.removeCallbacks(checkSocketTimer);
         serviceRunning = false;
+        unregisterReceiver(newConfigReceiver);
+        unregisterReceiver(connChangeReceiver);
+        unregisterReceiver(userIntentReceiver);
+        unregisterReceiver(screenReceiver);
+
         super.onDestroy();
     }
 
     public void readConfig() {
-        Log.d("WidgetService", "readConfig started");
+        Log.d(TAG, "readConfig started");
         valuesRequested = false;
-        try {
-            FileInputStream f_in = openFileInput(WidgetService.CONFIGFILE);
-            ObjectInputStream obj_in = new ObjectInputStream(f_in);
+        configDataOnlyIO = new ConfigDataOnlyIO(mContext);
+        configDataOnly = configDataOnlyIO.read();
 
-            Object obj = obj_in.readObject();
-            obj_in.close();
+        websocketUrl = configDataOnly.urljs;
+        fhemUrl = configDataOnly.urlpl;
+        switchCols = configDataOnly.switchCols;
+        valueCols = configDataOnly.valueCols;
+        commandCols = configDataOnly.commandCols;
+        layouts[Integer.valueOf(getString(R.string.LAYOUT_HORIZONTAL))] = R.layout.main_layout_horizontal;
+        layouts[Integer.valueOf(getString(R.string.LAYOUT_VERTICAL))] = R.layout.main_layout_vertical;
+        layouts[Integer.valueOf(getString(R.string.LAYOUT_MIXED))] = R.layout.main_layout_mixed;
 
-            ////Log.i("config", "config.data found");
-
-            if (obj instanceof ConfigDataOnly) {
-                configDataOnly = (ConfigDataOnly) obj;
-                websocketUrl = configDataOnly.urljs;
-                fhemUrl = configDataOnly.urlpl;
-                switchCols = configDataOnly.switchCols;
-                valueCols = configDataOnly.valueCols;
-                commandCols = configDataOnly.commandCols;
-                layouts[Integer.valueOf(getString(R.string.LAYOUT_HORIZONTAL))] = R.layout.main_layout_horizontal;
-                layouts[Integer.valueOf(getString(R.string.LAYOUT_VERTICAL))] = R.layout.main_layout_vertical;
-                layouts[Integer.valueOf(getString(R.string.LAYOUT_MIXED))] = R.layout.main_layout_mixed;
-
-                setOrientation();
-                doStart(5);
-                initListviews();
-            } else {
-                throw new Exception("Config data corrupted");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        setOrientation();
+        doStart(5);
+        initListviews();
     }
 
     public void setOrientation() {
@@ -270,13 +254,12 @@ public class WidgetService extends Service {
             valueCols = 0;
             commandCols = 0;
         }
-
     }
 
     public void doStart(int nr) {
-        Log.d("WidgetService", "doStart started with " + Integer.toString(nr));
+        Log.d(TAG, "doStart started with " + Integer.toString(nr));
 
-        allWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
+        allWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, WidgetProvider.class));
 
         listViewServices = new HashMap<>();
 
@@ -317,7 +300,7 @@ public class WidgetService extends Service {
         if (configDataOnly.switchRows != null) {
             for (ConfigSwitchRow switchRow : configDataOnly.switchRows) {
                 if (switchRow.enabled) {
-                    //Log.d("WidgetService","unit: " + switchRow.unit + " cmd: " + switchRow.cmd);
+                    //Log.d(TAG,"unit: " + switchRow.unit + " cmd: " + switchRow.cmd);
                     configData.switches.add(new MySwitch(switchRow.name, switchRow.unit, switchRow.cmd));
                 }
             }
@@ -405,37 +388,60 @@ public class WidgetService extends Service {
         // -------------------------------------------------------------------------------
 
         layoutId = layouts[iLayout];
-        handler.postDelayed(checkSocketTimer, 1000);
 
-        RemoteViews mView = new RemoteViews(context.getPackageName(), layoutId);
+        handler.postDelayed(checkSocketTimer, 1000);
+        mView = new RemoteViews(mContext.getPackageName(), layoutId);
+
         Intent clickIntent = new Intent();
         clickIntent.setAction(NEW_CONFIG);
         clickIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 0, clickIntent, 0);
+        PendingIntent pendingIntent1 = PendingIntent.getBroadcast(mContext, 0, clickIntent, 0);
         mView.setOnClickPendingIntent(R.id.noconn, pendingIntent1);
 
         Intent newVersionStore = new Intent();
         newVersionStore.setAction(NEW_VERSION_STORE);
         newVersionStore.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 0, newVersionStore, 0);
+        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(mContext, 0, newVersionStore, 0);
         mView.setOnClickPendingIntent(R.id.new_version_store_button, pendingIntent2);
 
         Intent newVersionShow = new Intent();
         newVersionShow.setAction(NEW_VERSION_SHOW);
         newVersionShow.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingIntent3 = PendingIntent.getBroadcast(context, 0, newVersionShow, 0);
+        PendingIntent pendingIntent3 = PendingIntent.getBroadcast(mContext, 0, newVersionShow, 0);
         mView.setOnClickPendingIntent(R.id.new_version_show_button, pendingIntent3);
 
         Intent newVersionRemember = new Intent();
         newVersionRemember.setAction(NEW_VERSION_REMEMBER);
         newVersionRemember.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingIntent4 = PendingIntent.getBroadcast(context, 0, newVersionRemember, 0);
+        PendingIntent pendingIntent4 = PendingIntent.getBroadcast(mContext, 0, newVersionRemember, 0);
         mView.setOnClickPendingIntent(R.id.new_version_remember_button, pendingIntent4);
     }
 
-    public static void sendCommand(String cmd, int position, String type, int actCol) {
-        //Log.i("sendCommand", cmd);
+    public static void sendCommand(Intent intent) {
+
+        String type = intent.getExtras().getString(WidgetProvider.TYPE);
+        String cmd = intent.getExtras().getString(WidgetProvider.COMMAND);
+
+        int actCol = 0;
+        int position = -1;
+        if (type != null) {
+            switch (type) {
+                case "switch":
+                    position = Integer.parseInt(intent.getExtras().getString(WidgetProvider.POS));
+                    actCol = Integer.parseInt(intent.getExtras().getString(WidgetProvider.COL));
+                    break;
+                case "lightscene":
+                    position = Integer.parseInt(intent.getExtras().getString(WidgetProvider.POS));
+                    break;
+                case "command":
+                    position = Integer.parseInt(intent.getExtras().getString(WidgetProvider.POS));
+                    actCol = Integer.parseInt(intent.getExtras().getString(WidgetProvider.COL));
+                    break;
+            }
+        }
+
         mySocket.sendCommand(cmd);
+
         switch (type) {
             case "switch":
                 configData.switchesCols.get(actCol).get(position).setIcon("set_toggle");
@@ -498,11 +504,11 @@ public class WidgetService extends Service {
     }
 
     private void initListviews() {
-        Log.d("WidgetService", "initListviews started");
-        final Intent onItemClick = new Intent(context, WidgetProvider.class);
+        Log.d(TAG, "initListviews started");
+        final Intent onItemClick = new Intent(mContext, WidgetProvider.class);
         onItemClick.setData(Uri.parse(onItemClick.toUri(Intent.URI_INTENT_SCHEME)));
-        onClickPendingIntent = PendingIntent.getBroadcast(context, 0, onItemClick, PendingIntent.FLAG_UPDATE_CURRENT);
-        RemoteViews mView = new RemoteViews(context.getPackageName(), layoutId);
+        onClickPendingIntent = PendingIntent.getBroadcast(mContext, 0, onItemClick, PendingIntent.FLAG_UPDATE_CURRENT);
+        mView = new RemoteViews(mContext.getPackageName(), layoutId);
 
         mView.setViewVisibility(R.id.noconn, View.GONE);
         mView.setViewVisibility(R.id.new_version, View.GONE);
@@ -517,7 +523,8 @@ public class WidgetService extends Service {
                 int actCol = 0;
                 for (int listviewId : entry.getValue()) {
                     ////Log.i("initListview",type + " " + Integer.toString(actCol));
-                    initListview(widgetId, mView, listviewId, actCol, type);
+                    initListview(widgetId, listviewId, actCol, type);
+
                     mView.setViewVisibility(listviewId, View.VISIBLE);
                     actCol++;
                 }
@@ -528,10 +535,10 @@ public class WidgetService extends Service {
         }
     }
 
-    private void initListview(int widgetId, RemoteViews mView, int listviewId, int actCol, String type) {
-        //Log.d("WidgetService", "initListview started with " + type + " " + Integer.toString(actCol));
+    private void initListview(int widgetId, int listviewId, int actCol, String type) {
+        //Log.d(TAG, "initListview started with " + type + " " + Integer.toString(actCol));
         mView.setPendingIntentTemplate(listviewId, onClickPendingIntent);
-        Intent switchIntent = new Intent(context, listViewServices.get(type).get(actCol));
+        Intent switchIntent = new Intent(mContext, listViewServices.get(type).get(actCol));
         switchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         switchIntent.setData(Uri.parse(switchIntent.toUri(Intent.URI_INTENT_SCHEME)));
 
@@ -545,7 +552,7 @@ public class WidgetService extends Service {
         @Override
         public void run() {
             //String methodname = "checkSocketTimer";
-            //Log.d("WidgetService", methodname + " started");
+            //Log.d(TAG, methodname + " started");
             checkSocket();
 
             Integer wait;
@@ -567,7 +574,7 @@ public class WidgetService extends Service {
 
     public void checkSocket() {
         //Boolean callInitSocket = false;
-        Log.d("WidgetService", "checkSocket started");
+        //Log.d(TAG, "checkSocket started");
         //Log.d("trace screen is on", String.valueOf(isScreenOn()));
         if (mySocket == null || !mySocket.socket.connected()) {
             if (isScreenOn()) {
@@ -597,13 +604,13 @@ public class WidgetService extends Service {
 
     @SuppressWarnings("deprecation")
     public boolean isScreenOnOld() {
-        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         return pm.isScreenOn();
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
     public boolean isScreenOnNew() {
-        DisplayManager dm = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
+        DisplayManager dm = (DisplayManager) mContext.getSystemService(Context.DISPLAY_SERVICE);
         boolean screenOn = false;
         for (Display display : dm.getDisplays()) {
             if (display.getState() != Display.STATE_OFF) {
@@ -615,42 +622,45 @@ public class WidgetService extends Service {
 
     private void setVisibility(String type, String text) {
         //Log.i("type of setVisibility",type);
-        Context context = getApplicationContext();
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        RemoteViews mView = new RemoteViews(context.getPackageName(), layoutId);
-        if (type.equals("newVersion")) {
-            mView.setTextViewText(R.id.new_version_text, text);
-            mView.setViewVisibility(R.id.new_version, View.VISIBLE);
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
+        switch (type) {
+            case "newVersion":
+                mView.setTextViewText(R.id.new_version_text, text);
+                mView.setViewVisibility(R.id.new_version, View.VISIBLE);
 
-            for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
-                for (int listviewId : entry.getValue()) {
-                    mView.setViewVisibility(listviewId, View.GONE);
+                for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
+                    for (int listviewId : entry.getValue()) {
+                        mView.setViewVisibility(listviewId, View.GONE);
+                    }
                 }
-            }
-        } else if (type.equals("connected")) {
-            mView.setViewVisibility(R.id.noconn, View.GONE);
-            mView.setViewVisibility(R.id.new_version, View.GONE);
-            for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
-                for (int listviewId : entry.getValue()) {
-                    mView.setViewVisibility(listviewId, View.VISIBLE);
+                break;
+            case "connected":
+                mView.setViewVisibility(R.id.noconn, View.GONE);
+                mView.setViewVisibility(R.id.new_version, View.GONE);
+                for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
+                    for (int listviewId : entry.getValue()) {
+                        mView.setViewVisibility(listviewId, View.VISIBLE);
+                    }
                 }
-            }
-        } else if (type.equals("closeversion")) {
-            mView.setViewVisibility(R.id.new_version, View.GONE);
-            for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
-                for (int listviewId : entry.getValue()) {
-                    mView.setViewVisibility(listviewId, View.VISIBLE);
+                break;
+            case "closeversion":
+                mView.setViewVisibility(R.id.new_version, View.GONE);
+                for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
+                    for (int listviewId : entry.getValue()) {
+                        mView.setViewVisibility(listviewId, View.VISIBLE);
+                    }
                 }
-            }
-        } else {
-            mView.setTextViewText(R.id.noconn, text);
-            mView.setViewVisibility(R.id.noconn, View.VISIBLE);
+                break;
+            default:
+                mView.setTextViewText(R.id.noconn, text);
+                mView.setViewVisibility(R.id.noconn, View.VISIBLE);
 
-            for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
-                for (int listviewId : entry.getValue()) {
-                    mView.setViewVisibility(listviewId, View.GONE);
+                for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
+                    for (int listviewId : entry.getValue()) {
+                        mView.setViewVisibility(listviewId, View.GONE);
+                    }
                 }
-            }
+                break;
         }
 
         for (int widgetId : allWidgetIds) {
@@ -659,7 +669,7 @@ public class WidgetService extends Service {
     }
 
     private void requestValues(String from) {
-        Log.d("WidgetService", "requestValues started by " + from);
+        Log.d(TAG, "requestValues started by " + from);
 
         //initListviews();
         //handler.postDelayed(initListviewsTimer, 2000);
@@ -673,16 +683,16 @@ public class WidgetService extends Service {
     }
 
     private void initSocket() {
-        Log.d("WidgetService", "initSocket started");
+        Log.d(TAG, "initSocket started");
 
-        mySocket = new MySocket(websocketUrl, context);
+        mySocket = new MySocket(websocketUrl, mContext);
         mySocket.socket.off(Socket.EVENT_CONNECT);
         mySocket.socket.on(Socket.EVENT_CONNECT, args -> {
             String pw = configDataOnly.connectionPW;
             if (!pw.equals("")) {
                 mySocket.socket.emit("authentication", pw);
             }
-            //Log.i("WidgetService", "socket connected");
+            //Log.i(TAG, "socket connected");
 
             try {
                 requestValues("initSocket");
@@ -752,7 +762,24 @@ public class WidgetService extends Service {
                 }
             }
         });
-
+/*
+        mySocket.socket.off("version");
+        mySocket.socket.on("version", args -> {
+            //Log.i("get value", args[0].toString());
+            JSONObject obj = (JSONObject) args[0];
+            Iterator<String> iterator = obj.keys();
+            String unit = null;
+            while (iterator.hasNext()) {
+                unit = iterator.next();
+                String value = null;
+                try {
+                    value = obj.getString(unit);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+*/
         mySocket.socket.off("fhemError");
         mySocket.socket.on("fhemError", args -> {
             ////Log.i("socket", "disconnected");
@@ -774,12 +801,13 @@ public class WidgetService extends Service {
                 checkVersion(); //this function can change value of mInterval.
             } finally {
                 handler.postDelayed(checkVersionTimer, 3600000);
+                //handler.postDelayed(checkVersionTimer, 3600000);
             }
         }
     };
 
     private void checkVersion() {
-        Log.d("WidgetService", "checkVersion started");
+        Log.d(TAG, "checkVersion started");
 
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -792,7 +820,7 @@ public class WidgetService extends Service {
 
     private void getStoreVersion() {
         String url = getResources().getString(R.string.googleStoreUrl);
-        String storeVersion = "";
+        storeVersion = "";
 
         try {
             storeVersion = Jsoup.connect(url)
@@ -803,44 +831,22 @@ public class WidgetService extends Service {
                     .select("div[itemprop=softwareVersion]")
                     .first()
                     .ownText();
-
-        } catch (IOException e) {
-            //e.printStackTrace();
-        } finally {
             String localVersion = BuildConfig.VERSION_NAME;
-            if (localVersion != storeVersion) {
-                setVisibility("newVersion", getString(R.string.newVersionApp));
+            if (!localVersion.equals(storeVersion) && !configDataOnly.suppressNewAppVersion.equals(storeVersion)) {
+                setVisibility("newVersion", getString(R.string.newVersionApp, localVersion, storeVersion));
                 Log.d("localVersion", localVersion);
                 Log.d("storeVersion", storeVersion);
             }
+
+        } catch (IOException e) {
+            Log.d(TAG, "read app version failed");
         }
     }
 
-    /*
-    public class VersionChecker extends AsyncTask<String, String, String>{
-
-String newVersion;
-
-@Override
-protected String doInBackground(String... params) {
-
-    try {
-        newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + "package name" + "&hl=en")
-                .timeout(30000)
-                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                .referrer("http://www.google.com")
-                .get()
-                .select("div[itemprop=softwareVersion]")
-                .first()
-                .ownText();
-    } catch (IOException e) {
-        e.printStackTrace();
+    private void stopVersionRemember() {
+        configDataOnly.suppressNewAppVersion = storeVersion;
+        configDataOnlyIO.save(configDataOnly);
     }
-
-    return newVersion;
-}
-
-    */
 
     @Override
     public IBinder onBind(Intent intent) {

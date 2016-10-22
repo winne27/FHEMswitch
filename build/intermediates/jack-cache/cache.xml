@@ -86,6 +86,12 @@
         <dex dex="C:\Users\Werner\libs\apps\de.fehngarten.fhemswitch\fhemswitch\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\jsoup-1.7.2-70749c8e37836f6aea4739391f036ac9ccdc5a74.jar" />
     </item>
     <item
+        jar="C:\develkits\Android\sdk\platforms\android-24\optional\org.apache.http.legacy.jar"
+        revision="24.0.3"
+        sha1="fb7023e781abb70ed1b0442eb611fbed295cae84">
+        <dex dex="C:\Users\Werner\libs\apps\de.fehngarten.fhemswitch\fhemswitch\build\intermediates\transforms\preJackRuntimeLibraries\debug\jars\8000\40\org.apache.http.legacy-f3d52cf21318ece9fcd4881b019b2a4aa4c38828.jar" />
+    </item>
+    <item
         jar="C:\Users\Werner\libs\apps\de.fehngarten.fhemswitch\fhemswitch\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         revision="24.0.3"
         sha1="867dad63c33388ff8c7644b236579355036d075f">
@@ -108,6 +114,12 @@
         revision="24.0.3"
         sha1="f0f5d962142c0c1c3296cbe178ee6438ebfbeedb">
         <dex dex="C:\Users\Werner\libs\apps\de.fehngarten.fhemswitch\fhemswitch\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-36eae203195f3a0c86f0dc0ba5a6b3525c207c56.jar" />
+    </item>
+    <item
+        jar="C:\develkits\Android\sdk\platforms\android-24\android.jar"
+        revision="24.0.3"
+        sha1="d49cc0972df7adf495d3ad3d0cf71c0ec517ace4">
+        <dex dex="C:\Users\Werner\libs\apps\de.fehngarten.fhemswitch\fhemswitch\build\intermediates\transforms\preJackRuntimeLibraries\debug\jars\8000\40\android-359427600817926bb7cfc1a4916e794cddaf1643.jar" />
     </item>
     <item
         jar="C:\Users\Werner\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.9.0\f824591a0016efbaeddb8300bee54832a1398cfa\okio-1.9.0.jar"

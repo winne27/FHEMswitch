@@ -1,6 +1,6 @@
 package de.fehngarten.fhemswitch;
 
-class MyValue
+class MyValue  implements Comparable<MyValue>
 {
    public String name;
    public String unit;
@@ -18,5 +18,8 @@ class MyValue
       this.value = value;
    }
 
-
+   @Override
+   public int compareTo(MyValue compSwitch) {
+      return this.unit.compareTo(compSwitch.unit);
+   }
 }

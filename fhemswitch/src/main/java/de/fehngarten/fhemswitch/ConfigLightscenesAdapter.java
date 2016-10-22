@@ -163,7 +163,7 @@ class ConfigLightscenesAdapter extends BaseAdapter
       {
          lightsceneHolder = new LightsceneHolder();
          LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-         rowView = inflater.inflate(R.layout.config_lightscene_row, parent, false);
+         rowView = inflater.inflate(R.layout.config_row_lightscene, parent, false);
          rowView.setTag(lightsceneHolder);
          lightsceneHolder.lightscene_unit = (TextView) rowView.findViewById(R.id.config_lightscene_unit);
          lightsceneHolder.lightscene_name = (EditText) rowView.findViewById(R.id.config_lightscene_name);

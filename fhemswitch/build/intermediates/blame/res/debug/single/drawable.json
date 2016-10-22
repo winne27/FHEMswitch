@@ -100,11 +100,11 @@
         "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\drawable\\off.png"
     },
     {
-        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\drawable\\undefined.png",
-        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\drawable\\undefined.png"
-    },
-    {
         "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\drawable\\activefirst.xml",
         "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\drawable\\activefirst.xml"
+    },
+    {
+        "merged": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\build\\intermediates\\res\\merged\\debug\\drawable\\undefined.png",
+        "source": "C:\\Users\\Werner\\libs\\apps\\de.fehngarten.fhemswitch\\fhemswitch\\src\\main\\res\\drawable\\undefined.png"
     }
 ]

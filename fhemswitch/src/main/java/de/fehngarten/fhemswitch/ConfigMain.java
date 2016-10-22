@@ -1,20 +1,14 @@
 package de.fehngarten.fhemswitch;
 
-import java.io.File;
-
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import android.widget.ArrayAdapter;
 import android.widget.ScrollView;
@@ -29,8 +23,6 @@ import android.app.AlertDialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -52,7 +44,7 @@ import com.mobeta.android.dslv.DragSortListView;
 import de.fehngarten.fhemswitch.MyLightScenes.MyLightScene;
 
 
-//import android.util.Log;
+import android.util.Log;
 
 public class ConfigMain extends Activity {
     Button getConfigButton;
@@ -62,14 +54,12 @@ public class ConfigMain extends Activity {
     private EditText urlpl, urljs, connectionPW;
     public static ConfigData configData;
     private ConfigDataOnly configDataOnly;
-    private VersionData versionData;
     public static MySocket mySocket;
 
     public ConfigSwitchesAdapter configSwitchesAdapter;
     public ConfigLightscenesAdapter configLightscenesAdapter;
     public ConfigValuesAdapter configValuesAdapter;
     public ConfigCommandsAdapter configCommandsAdapter;
-
     public int lsCounter = 0;
     public int lsSize = 0;
     public Context mContext;
@@ -79,10 +69,11 @@ public class ConfigMain extends Activity {
     public Spinner spinnerCommandCols;
     public RadioGroup radioLayoutLandscape;
     public RadioGroup radioLayoutPortrait;
-    public Boolean ownSocketStarted = false;
+    public ConfigDataOnlyIO configDataOnlyIO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("ConfigMain", "onCreate fired");
         super.onCreate(savedInstanceState);
 
         mContext = this;
@@ -96,46 +87,14 @@ public class ConfigMain extends Activity {
         if (dpWidth < 596) {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
-        setContentView(R.layout.config_body);
+        setContentView(R.layout.config);
 
         urlpl = (EditText) findViewById(R.id.urlpl);
         urljs = (EditText) findViewById(R.id.urljs);
         connectionPW = (EditText) findViewById(R.id.connection_pw);
 
-        try {
-            FileInputStream f_in = openFileInput(WidgetService.CONFIGFILE);
-            ObjectInputStream obj_in = new ObjectInputStream(f_in);
-
-            Object obj = obj_in.readObject();
-            obj_in.close();
-
-            //Log.i("config", "config.data found");
-            if (obj instanceof ConfigDataOnly) {
-                configDataOnly = (ConfigDataOnly) obj;
-            }
-        } catch (FileNotFoundException e) {
-            //Log.i("config", "config.data not found");
-            configDataOnly = new ConfigDataOnly();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            FileInputStream f_in = openFileInput(WidgetService.VERSIONFILE);
-            ObjectInputStream obj_in = new ObjectInputStream(f_in);
-
-            Object obj = obj_in.readObject();
-            obj_in.close();
-
-            //Log.i("config", "config.data found");
-            if (obj instanceof VersionData) {
-                versionData = (VersionData) obj;
-            }
-        } catch (FileNotFoundException e) {
-            versionData = new VersionData();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        configDataOnlyIO = new ConfigDataOnlyIO(mContext);
+        configDataOnly = configDataOnlyIO.read();
 
         // Read object using ObjectInputStream
 
@@ -179,6 +138,7 @@ public class ConfigMain extends Activity {
                     configData.switchesDisabled.add(new MySwitch(switchRow.name, switchRow.unit, switchRow.cmd));
                 }
             }
+            Collections.sort(configData.switchesDisabled);
         }
 
         MyLightScene newLightScene = null;
@@ -201,6 +161,7 @@ public class ConfigMain extends Activity {
                     configData.valuesDisabled.add(new MyValue(valueRow.name, valueRow.unit));
                 }
             }
+            Collections.sort(configData.valuesDisabled);
         }
 
         Intent intent = getIntent();
@@ -219,7 +180,6 @@ public class ConfigMain extends Activity {
     private Button.OnClickListener callDonateButtonOnClickListener = new Button.OnClickListener() {
         @Override
         public void onClick(View arg0) {
-            //Log.i("onclick", "donate starten");
             Intent donateIntent = new Intent(mContext, Donate.class);
             startActivity(donateIntent);
         }
@@ -228,29 +188,16 @@ public class ConfigMain extends Activity {
     private Button.OnClickListener newCommandButtonOnClickListener = new Button.OnClickListener() {
         @Override
         public void onClick(View arg0) {
-            //Log.i("onclick new line", newCommandButton.getText().toString());
             configCommandsAdapter.newLine();
             setListViewHeightBasedOnChildren((ListView) findViewById(R.id.commands));
         }
     };
-    private Button.OnClickListener getConfigButtonOnClickListener = new Button.OnClickListener() {
-        @Override
-        public void onClick(View arg0) {
-            //Log.i("text button", configOkButton.getText().toString());
-            showFHEMunits();
-        }
-    };
 
-    private Button.OnClickListener saveConfigButtonOnClickListener = new Button.OnClickListener() {
-        @Override
-        public void onClick(View arg0) {
-            //Log.i("text button", configOkButton.getText().toString());
-            saveConfig();
-        }
-    };
+    private Button.OnClickListener getConfigButtonOnClickListener = arg0 -> showFHEMunits();
+
+    private Button.OnClickListener saveConfigButtonOnClickListener = arg0 -> saveConfig();
 
     private void showFHEMunits() {
-
         // hide soft keyboard
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -263,27 +210,14 @@ public class ConfigMain extends Activity {
             url.toURI();
             try {
                 String pw = connectionPW.getText().toString();
-                Boolean socketConnected = false;
-                if (WidgetService.mySocket != null && WidgetService.mySocket.socket.connected()) {
-                    if (urljs.getText().toString().equals(WidgetService.mySocket.url) && pw.equals(configDataOnly.connectionPW)) {
-                        socketConnected = true;
-                        mySocket = WidgetService.mySocket;
-                        buildOutput();
-                    } else {
-                        WidgetService.mySocket.socket.close();
-                    }
-                }
 
-                if (!socketConnected) {
-                    ownSocketStarted = true;
-                    mySocket = new MySocket(urljs.getText().toString(), mContext);
-                    mySocket.socket.on("authenticated", authListener);
+                mySocket = new MySocket(urljs.getText().toString(), mContext);
+                mySocket.socket.on("authenticated", authListener);
 
-                    if (!pw.equals("")) {
-                        //Log.i("send pw",pw);
-                        mySocket.socket.emit("authentication", pw);
-                        waitAuth.postDelayed(runnableWaitAuth, 2000);
-                    }
+                if (!pw.equals("")) {
+                    //Log.i("send pw",pw);
+                    mySocket.socket.emit("authentication", pw);
+                    waitAuth.postDelayed(runnableWaitAuth, 2000);
                 }
             } catch (Exception e) {
                 waitAuth.removeCallbacks(runnableWaitAuth);
@@ -334,7 +268,7 @@ public class ConfigMain extends Activity {
         // scroll nach oben
         ScrollView mainScrollView = (ScrollView) findViewById(R.id.config_scroll_block);
         mainScrollView.fullScroll(ScrollView.FOCUS_UP);
-        mainScrollView.smoothScrollTo(0,0);
+        mainScrollView.smoothScrollTo(0, 0);
     }
 
     public void sendAlertMessage(final String msg) {
@@ -363,22 +297,23 @@ public class ConfigMain extends Activity {
         newCommandButton.setOnClickListener(newCommandButtonOnClickListener);
 
     }
+
     private void getAllSwitches(MySocket mySocket) {
-        DragSortListView l = (DragSortListView) findViewById(R.id.switches);
+        DragSortListView switchesDSLV = (DragSortListView) findViewById(R.id.switches);
         configSwitchesAdapter = new ConfigSwitchesAdapter(this);
-        l.setAdapter(configSwitchesAdapter);
-        ConfigSwitchesController c = new ConfigSwitchesController(l, configSwitchesAdapter, mContext);
-        l.setFloatViewManager(c);
-        l.setOnTouchListener(c);
-        l.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        switchesDSLV.setAdapter(configSwitchesAdapter);
+        ConfigSwitchesController c = new ConfigSwitchesController(switchesDSLV, configSwitchesAdapter, mContext);
+        switchesDSLV.setFloatViewManager(c);
+        switchesDSLV.setOnTouchListener(c);
+        switchesDSLV.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         // read switches from FHEM server
         mySocket.socket.emit("getAllSwitches", new Ack() {
             @Override
             public void call(Object... args) {
                 //Log.i("get allSwitches", args[0].toString());
-                configSwitchesAdapter.initData((JSONArray) args[0], configData.switches, configData.switchesDisabled);
                 runOnUiThread(() -> {
+                    configSwitchesAdapter.initData((JSONArray) args[0], configData.switches, configData.switchesDisabled);
                     configSwitchesAdapter.notifyDataSetChanged();
                     setListViewHeightBasedOnChildren((ListView) findViewById(R.id.switches));
                 });
@@ -413,8 +348,8 @@ public class ConfigMain extends Activity {
                     }
                     lsCounter++;
                     if (lsCounter == lsSize) {
-                        configLightscenesAdapter.initData(configData, lightsceneRowsTemp);
                         runOnUiThread(() -> {
+                            configLightscenesAdapter.initData(configData, lightsceneRowsTemp);
                             configLightscenesAdapter.notifyDataSetChanged();
                             setListViewHeightBasedOnChildren((ListView) findViewById(R.id.lightscenes));
                         });
@@ -436,9 +371,8 @@ public class ConfigMain extends Activity {
         mySocket.socket.emit("getAllValues", new Ack() {
             @Override
             public void call(Object... args) {
-                configValuesAdapter.initData((JSONObject) args[0], configData.values, configData.valuesDisabled);
-
                 runOnUiThread(() -> {
+                    configValuesAdapter.initData((JSONObject) args[0], configData.values, configData.valuesDisabled);
                     configValuesAdapter.notifyDataSetChanged();
                     setListViewHeightBasedOnChildren((ListView) findViewById(R.id.values));
                 });
@@ -447,11 +381,9 @@ public class ConfigMain extends Activity {
     }
 
     private void saveConfig() {
-        if (ownSocketStarted) {
-            mySocket.socket.close();
-        }
+        mySocket.socket.close();
 
-        configDataOnly = new ConfigDataOnly();
+        //configDataOnly = new ConfigDataOnly();
         configDataOnly.urljs = urljs.getText().toString();
         configDataOnly.urlpl = urlpl.getText().toString();
         configDataOnly.connectionPW = connectionPW.getText().toString();
@@ -468,18 +400,8 @@ public class ConfigMain extends Activity {
         configDataOnly.layoutPortrait = Integer.valueOf(radioLayoutPortraitButton.getTag().toString());
         configDataOnly.layoutLandscape = Integer.valueOf(radioLayoutLandscapeButton.getTag().toString());
 
-        try {
-            String dir = getFilesDir().getAbsolutePath();
-            File f0 = new File(dir, WidgetService.CONFIGFILE);
-            f0.delete();
-            FileOutputStream f_out = openFileOutput(WidgetService.CONFIGFILE, Context.MODE_PRIVATE);
-            ObjectOutputStream obj_out = new ObjectOutputStream(f_out);
-            obj_out.writeObject(configDataOnly);
-            obj_out.close();
-            //Log.i("config", "config.data written");
-        } catch (Exception e) {
-            sendAlertMessage(getString(R.string.fileerr) + ":\n " + e);
-        }
+        configDataOnlyIO.save(configDataOnly);
+
 
         Intent resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);

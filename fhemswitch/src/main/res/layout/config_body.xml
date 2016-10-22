@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/configBody"
-    android:layout_width="596dp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
 
     android:layout_gravity="center_horizontal"
@@ -22,8 +22,8 @@
         android:textSize="28sp"
         android:textStyle="bold" />
 
-    <include layout="@layout/config_url_block"></include>
-    <include layout="@layout/config_layout_block"></include>
+    <include layout="@layout/config_bodyblock_url"></include>
+    <include layout="@layout/config_bodyblock_layout"></include>
 
 </LinearLayout>
 
