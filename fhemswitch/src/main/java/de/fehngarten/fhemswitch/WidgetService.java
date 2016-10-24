@@ -438,35 +438,36 @@ public class WidgetService extends Service {
                     actCol = Integer.parseInt(intent.getExtras().getString(WidgetProvider.COL));
                     break;
             }
-        }
 
-        mySocket.sendCommand(cmd);
 
-        switch (type) {
-            case "switch":
-                configData.switchesCols.get(actCol).get(position).setIcon("set_toggle");
+            mySocket.sendCommand(cmd);
 
-                for (int id : allWidgetIds) {
-                    appWidgetManager.notifyAppWidgetViewDataChanged(id, myLayout.layout.get("switch").get(actCol));
-                }
-                break;
-            case "lightscene":
-                configData.lightScenes.items.get(position).activ = true;
+            switch (type) {
+                case "switch":
+                    configData.switchesCols.get(actCol).get(position).setIcon("set_toggle");
 
-                for (int id : allWidgetIds) {
-                    appWidgetManager.notifyAppWidgetViewDataChanged(id, myLayout.layout.get("lightscene").get(0));
-                }
-                handler.postDelayed(deactLightscene, 500);
-                break;
-            case "command":
-                //Log.i("col + pos", Integer.toString(actCol) + " + " + Integer.toString(position));
-                configData.commandsCols.get(actCol).get(position).activ = true;
-                for (int id : allWidgetIds) {
-                    appWidgetManager.notifyAppWidgetViewDataChanged(id, myLayout.layout.get("command").get(actCol));
-                }
-                Runnable deactCommand = new DeactCommand(actCol, position);
-                handler.postDelayed(deactCommand, 500);
-                break;
+                    for (int id : allWidgetIds) {
+                        appWidgetManager.notifyAppWidgetViewDataChanged(id, myLayout.layout.get("switch").get(actCol));
+                    }
+                    break;
+                case "lightscene":
+                    configData.lightScenes.items.get(position).activ = true;
+
+                    for (int id : allWidgetIds) {
+                        appWidgetManager.notifyAppWidgetViewDataChanged(id, myLayout.layout.get("lightscene").get(0));
+                    }
+                    handler.postDelayed(deactLightscene, 500);
+                    break;
+                case "command":
+                    //Log.i("col + pos", Integer.toString(actCol) + " + " + Integer.toString(position));
+                    configData.commandsCols.get(actCol).get(position).activ = true;
+                    for (int id : allWidgetIds) {
+                        appWidgetManager.notifyAppWidgetViewDataChanged(id, myLayout.layout.get("command").get(actCol));
+                    }
+                    Runnable deactCommand = new DeactCommand(actCol, position);
+                    handler.postDelayed(deactCommand, 500);
+                    break;
+            }
         }
     }
 
@@ -685,7 +686,7 @@ public class WidgetService extends Service {
     private void initSocket() {
         Log.d(TAG, "initSocket started");
 
-        mySocket = new MySocket(websocketUrl, mContext);
+        mySocket = new MySocket(websocketUrl, mContext, "Widget");
         mySocket.socket.off(Socket.EVENT_CONNECT);
         mySocket.socket.on(Socket.EVENT_CONNECT, args -> {
             String pw = configDataOnly.connectionPW;
@@ -762,24 +763,23 @@ public class WidgetService extends Service {
                 }
             }
         });
-/*
+
         mySocket.socket.off("version");
         mySocket.socket.on("version", args -> {
-            //Log.i("get value", args[0].toString());
+            Log.d("version", args[0].toString());
             JSONObject obj = (JSONObject) args[0];
-            Iterator<String> iterator = obj.keys();
-            String unit = null;
-            while (iterator.hasNext()) {
-                unit = iterator.next();
-                String value = null;
-                try {
-                    value = obj.getString(unit);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            try {
+                String versionInstalled = obj.getString("installed");
+                String versionLatest = obj.getString("latest");
+                Boolean versionIsLatest = obj.getBoolean("isLatest");
+
+                Log.d("version", versionInstalled + " - " + versionLatest);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
         });
-*/
+
         mySocket.socket.off("fhemError");
         mySocket.socket.on("fhemError", args -> {
             ////Log.i("socket", "disconnected");
@@ -789,7 +789,7 @@ public class WidgetService extends Service {
         mySocket.socket.off("fhemConn");
         mySocket.socket.on("fhemConn", args -> {
             ////Log.i("socket", "disconnected");
-            setVisibility("connected", getString(R.string.noconn));
+            setVisibility("connected", "");
         });
 
     }

@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "de.fehngarten.fhemswitch"
-        versionCode 222
-        versionName "2.2.2"
+        versionCode 223
+        versionName "2.2.4"
         minSdkVersion 14
         targetSdkVersion 24
         archivesBaseName = "fhemswitch-$versionName"

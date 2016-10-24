@@ -1,6 +1,7 @@
 package de.fehngarten.fhemswitch;
 
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 
@@ -84,10 +85,19 @@ public class ConfigMain extends Activity {
         float density = getResources().getDisplayMetrics().density;
         float dpWidth = screenWidth / density;
 
-        if (dpWidth < 596) {
+        if (dpWidth < 600) {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            screenWidth = getResources().getDisplayMetrics().widthPixels;
+            density = getResources().getDisplayMetrics().density;
+            dpWidth = screenWidth / density;
         }
-        setContentView(R.layout.config);
+        if (dpWidth < 600) {
+            setContentView(R.layout.config__s);
+        } else if (dpWidth < 725) {
+            setContentView(R.layout.config__m);
+        } else {
+            setContentView(R.layout.config__l);
+        }
 
         urlpl = (EditText) findViewById(R.id.urlpl);
         urljs = (EditText) findViewById(R.id.urljs);
@@ -211,7 +221,7 @@ public class ConfigMain extends Activity {
             try {
                 String pw = connectionPW.getText().toString();
 
-                mySocket = new MySocket(urljs.getText().toString(), mContext);
+                mySocket = new MySocket(urljs.getText().toString(), mContext, "Config");
                 mySocket.socket.on("authenticated", authListener);
 
                 if (!pw.equals("")) {

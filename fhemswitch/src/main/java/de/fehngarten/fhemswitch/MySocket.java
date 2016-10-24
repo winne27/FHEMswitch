@@ -1,7 +1,7 @@
 package de.fehngarten.fhemswitch;
 
 import java.util.ArrayList;
-
+import android.os.Build;
 import android.util.Log;
 
 //import io.socket.emitter.Emitter;
@@ -14,7 +14,7 @@ class MySocket {
     Socket socket = null;
     public String url;
 
-    MySocket(String url, Context context) {
+    MySocket(String url, Context context, String type) {
         //Log.d("MySocket", "started");
 
         try {
@@ -22,6 +22,7 @@ class MySocket {
             IO.Options options = new IO.Options();
             options.reconnection = false;
             options.timeout = context.getResources().getInteger(R.integer.socketsConnectionTimeout);
+            options.query = "client=" + type + "&platform=Android&version=" + Build.VERSION.RELEASE + "&model=" + Build.MODEL + "&appver=" + BuildConfig.VERSION_NAME;
             socket = IO.socket(url, options);
             socket.connect();
             this.url = url;
