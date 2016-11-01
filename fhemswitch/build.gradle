@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "de.fehngarten.fhemswitch"
-        versionCode 223
-        versionName "2.2.4"
+        versionCode 225
+        versionName "2.2.5"
         minSdkVersion 14
         targetSdkVersion 24
         archivesBaseName = "fhemswitch-$versionName"
@@ -63,4 +63,5 @@ dependencies {
     }
     compile 'asia.ivity.android:drag-sort-listview:1.0'
     compile 'org.jsoup:jsoup:1.7.2'
+    compile group: 'joda-time', name: 'joda-time', version: '2.9.4'
 }

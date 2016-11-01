@@ -71,4 +71,5 @@
     <string name="donotshow">Nicht mehr anzeigen</string>
     <string name="rememberlater">Später nochmals erinnern</string>
     <string name="config_header">FHEMswitch Konfiguration</string>
+    <string name="newVersionFhemjs">Die Version %1$s von fhem.js ist auf dem Server  installiert.  Im NPM Repository ist die aktuelle Version %2$s verfügbar.</string>
 </resources>

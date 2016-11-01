@@ -67,6 +67,7 @@
     <string name="mixed">two columns</string>
     <string name="name">Displayed Name</string>
     <string name="newVersionApp">Version %1$s of this App is installed.\nIn Google Play Store the newest Version %2$s is available.</string>
+    <string name="newVersionFhemjs">Version %1$s of fhem.js is installed on the server. In NPM repository Version %2$s is available.</string>
     <string name="newline">+</string>
     <string name="noconn">No connection to FHEM server. Tip for reconnection attempt.</string>
     <string name="ok">OK</string>
@@ -93,14 +94,10 @@
     <string name="vertical">vertical</string>
     <string name="widget_name">FHEMswitch</string>
     <style name="AppBaseTheme" parent="android:Theme.Holo.NoActionBar">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
+        
     </style>
     <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        
     </style>
     <style name="Widget.Button" parent="android:Widget">
         <item name="android:textAllCaps">false</item>

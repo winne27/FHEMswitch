@@ -41,6 +41,7 @@
     <string name="mixed">zweispaltig</string>
     <string name="name">Angezeigter Name</string>
     <string name="newVersionApp">Die Version %1$s dieser App ist installiert. \nIm Google Play Store ist die aktuelle Version %2$s verfügbar.</string>
+    <string name="newVersionFhemjs">Die Version %1$s von fhem.js ist auf dem Server  installiert.  Im NPM Repository ist die aktuelle Version %2$s verfügbar.</string>
     <string name="newline">+</string>
     <string name="noconn">Keine Verbindung zum FHEM Server. Antippen um Neuverbindung zu versuchen.</string>
     <string name="ok">OK</string>

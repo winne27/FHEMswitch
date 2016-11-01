@@ -31,6 +31,7 @@ class ConfigDataOnly implements java.io.Serializable {
 
     String suppressNewAppVersion;
     String suppressNewNodeVersion;
+    String suppressNewFhemVersion;
 
     ConfigDataOnly() {
 
@@ -52,6 +53,7 @@ class ConfigDataOnly implements java.io.Serializable {
     private void initNewVersions() {
         this.suppressNewAppVersion = "";
         this.suppressNewNodeVersion = "";
+        this.suppressNewFhemVersion = "";
     }
 
     private void initNewProps() {
@@ -68,7 +70,7 @@ class ConfigDataOnly implements java.io.Serializable {
             initNewProps();
         }
 
-        if (this.suppressNewAppVersion == null) {
+        if (this.suppressNewFhemVersion == null) {
             initNewVersions();
         }
     }

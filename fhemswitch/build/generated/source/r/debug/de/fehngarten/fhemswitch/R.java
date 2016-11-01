@@ -375,54 +375,48 @@ containing a value of this type.
         public static final int error_header=0x7f060014;
         public static final int fileerr=0x7f060015;
         public static final int getConfig=0x7f060016;
-        public static final int googleStoreUrl=0x7f060038;
+        public static final int googleStoreUrl=0x7f060039;
         public static final int header=0x7f060017;
         public static final int horizontal=0x7f060018;
         public static final int initruns=0x7f060019;
         public static final int landscape=0x7f06001a;
-        public static final int licenceKey=0x7f060039;
+        public static final int licenceKey=0x7f06003a;
         public static final int lightscenes=0x7f06001b;
         public static final int mixed=0x7f06001c;
         public static final int name=0x7f06001d;
         public static final int newVersionApp=0x7f06001e;
-        public static final int newline=0x7f06001f;
-        public static final int noconn=0x7f060020;
-        public static final int ok=0x7f060021;
-        public static final int onlinecheck=0x7f060022;
-        public static final int openstore=0x7f060023;
-        public static final int portrait=0x7f060024;
-        public static final int rememberlater=0x7f060025;
-        public static final int save=0x7f060026;
-        public static final int sel=0x7f060027;
-        public static final int switches=0x7f060028;
-        public static final int switchicon=0x7f060029;
-        public static final int thanks_text=0x7f06002a;
-        public static final int unit=0x7f06002b;
-        public static final int url_fhem_js=0x7f06002c;
-        public static final int url_fhem_pl=0x7f06002d;
-        public static final int urlcheck=0x7f06002e;
-        public static final int urlerr=0x7f06002f;
-        public static final int value0=0x7f060030;
-        public static final int value1=0x7f060031;
-        public static final int value2=0x7f060032;
-        public static final int value3=0x7f060033;
-        public static final int values=0x7f060034;
-        public static final int values2=0x7f060035;
-        public static final int vertical=0x7f060036;
-        public static final int widget_name=0x7f060037;
+        public static final int newVersionFhemjs=0x7f06001f;
+        public static final int newline=0x7f060020;
+        public static final int noconn=0x7f060021;
+        public static final int ok=0x7f060022;
+        public static final int onlinecheck=0x7f060023;
+        public static final int openstore=0x7f060024;
+        public static final int portrait=0x7f060025;
+        public static final int rememberlater=0x7f060026;
+        public static final int save=0x7f060027;
+        public static final int sel=0x7f060028;
+        public static final int switches=0x7f060029;
+        public static final int switchicon=0x7f06002a;
+        public static final int thanks_text=0x7f06002b;
+        public static final int unit=0x7f06002c;
+        public static final int url_fhem_js=0x7f06002d;
+        public static final int url_fhem_pl=0x7f06002e;
+        public static final int urlcheck=0x7f06002f;
+        public static final int urlerr=0x7f060030;
+        public static final int value0=0x7f060031;
+        public static final int value1=0x7f060032;
+        public static final int value2=0x7f060033;
+        public static final int value3=0x7f060034;
+        public static final int values=0x7f060035;
+        public static final int values2=0x7f060036;
+        public static final int vertical=0x7f060037;
+        public static final int widget_name=0x7f060038;
     }
     public static final class style {
         /**  API 11 theme customizations can go here. 
  API 14 theme customizations can go here. 
-
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        
          */
         public static final int AppBaseTheme=0x7f070000;
-        /**  All customizations that are NOT specific to a particular API-level can go here. 
-         */
         public static final int AppTheme=0x7f070001;
         public static final int Widget_Button=0x7f070002;
         public static final int lightimg=0x7f070003;

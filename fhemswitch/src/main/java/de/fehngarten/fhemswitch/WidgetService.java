@@ -49,6 +49,15 @@ public class WidgetService extends Service {
     static final String NEW_VERSION_SHOW = "de.fehngarten.fhemswitch.NEW_VERSION_SHOW";
     static final String NEW_VERSION_REMEMBER = "de.fehngarten.fhemswitch.NEW_VERSION_REMEMBER";
     static final String TAG = "WidgetService";
+    static final String VERSION_APP = "app";
+    static final String VERSION_FHEMJS = "fhemjs";
+    static final String VERSION_FHEMPL = "fhempl";
+    static final String VERSION_CLOSE = "closeversion";
+    static final String SOCKET_CONNECTED = "connected";
+    static final String SOCKET_DISCONNECTED = "disconnected";
+    private String newVersionType;
+    private String versionLatest;
+    private String versionType;
     public static MySocket mySocket = null;
 
     public static String websocketUrl;
@@ -84,6 +93,7 @@ public class WidgetService extends Service {
     private BroadcastReceiver connChangeReceiver;
     private BroadcastReceiver userIntentReceiver;
     private BroadcastReceiver screenReceiver;
+    private HashMap<String, VersionCheck> versionChecks;
 
     public void onCreate() {
         Log.d(TAG, "onCreate fired");
@@ -106,7 +116,14 @@ public class WidgetService extends Service {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        versionChecks = new HashMap<>();
+
+        versionChecks.put(VERSION_APP, new VersionCheck(VERSION_APP));
+        versionChecks.put(VERSION_FHEMJS, new VersionCheck(VERSION_FHEMJS));
+        versionChecks.put(VERSION_FHEMPL, new VersionCheck(VERSION_FHEMPL));
+
         handler.postDelayed(checkVersionTimer, 10000);
+        handler.postDelayed(checkShowVersionTimer, 20000);
 
         // Intent conn changed
         connChangeReceiver = new BroadcastReceiver() {
@@ -134,6 +151,7 @@ public class WidgetService extends Service {
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
                 Log.d(TAG, "userIntent fired by " + action);
+                VersionCheck versionCheck = versionChecks.get(newVersionType);
                 switch (action) {
                     case NEW_VERSION_STORE:
                         final String appPackageName = getPackageName();
@@ -146,14 +164,20 @@ public class WidgetService extends Service {
                             storeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(storeIntent);
                         }
-                        setVisibility("closeversion", null);
+                        setVisibility(VERSION_CLOSE, null);
+                        versionCheck.setDateShown();
+                        versionChecks.put(VERSION_APP, versionCheck);
                         break;
                     case NEW_VERSION_SHOW:
-                        stopVersionRemember();
-                        setVisibility("closeversion", null);
+                        String latestSuppress = stopVersionRemember();
+                        setVisibility(VERSION_CLOSE, null);
+                        versionCheck.setSuppress(latestSuppress);
+                        versionChecks.put(VERSION_APP, versionCheck);
                         break;
                     case NEW_VERSION_REMEMBER:
-                        setVisibility("closeversion", null);
+                        setVisibility(VERSION_CLOSE, null);
+                        versionCheck.setDateShown();
+                        versionChecks.put(VERSION_APP, versionCheck);
                         break;
                 }
             }
@@ -235,9 +259,19 @@ public class WidgetService extends Service {
         layouts[Integer.valueOf(getString(R.string.LAYOUT_VERTICAL))] = R.layout.main_layout_vertical;
         layouts[Integer.valueOf(getString(R.string.LAYOUT_MIXED))] = R.layout.main_layout_mixed;
 
+        saveSuppressed(VERSION_APP, configDataOnly.suppressNewAppVersion);
+        saveSuppressed(VERSION_FHEMJS, configDataOnly.suppressNewNodeVersion);
+        saveSuppressed(VERSION_FHEMPL, configDataOnly.suppressNewFhemVersion);
+
         setOrientation();
         doStart(5);
         initListviews();
+    }
+
+    private void saveSuppressed(String type, String version) {
+        VersionCheck versionCheck = versionChecks.get(type);
+        versionCheck.setSuppress(version);
+        versionChecks.put(type, versionCheck);
     }
 
     public void setOrientation() {
@@ -459,7 +493,6 @@ public class WidgetService extends Service {
                     handler.postDelayed(deactLightscene, 500);
                     break;
                 case "command":
-                    //Log.i("col + pos", Integer.toString(actCol) + " + " + Integer.toString(position));
                     configData.commandsCols.get(actCol).get(position).activ = true;
                     for (int id : allWidgetIds) {
                         appWidgetManager.notifyAppWidgetViewDataChanged(id, myLayout.layout.get("command").get(actCol));
@@ -474,8 +507,6 @@ public class WidgetService extends Service {
     public static Runnable deactLightscene = new Runnable() {
         @Override
         public void run() {
-            //String methodname = "checkSocketTimer";
-            ////Log.d(CLASSNAME + methodname, "started");
             for (Item item : configData.lightScenes.items) {
                 item.activ = false;
             }
@@ -523,7 +554,6 @@ public class WidgetService extends Service {
                 String type = entry.getKey();
                 int actCol = 0;
                 for (int listviewId : entry.getValue()) {
-                    ////Log.i("initListview",type + " " + Integer.toString(actCol));
                     initListview(widgetId, listviewId, actCol, type);
 
                     mView.setViewVisibility(listviewId, View.VISIBLE);
@@ -545,17 +575,12 @@ public class WidgetService extends Service {
 
         mView.setRemoteAdapter(listviewId, switchIntent);
         mView.setViewVisibility(listviewId, View.VISIBLE);
-
-        //appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, listviewId);
     }
 
     public Runnable checkSocketTimer = new Runnable() {
         @Override
         public void run() {
-            //String methodname = "checkSocketTimer";
-            //Log.d(TAG, methodname + " started");
             checkSocket();
-
             Integer wait;
             waitCount++;
             if (mySocket != null && mySocket.socket.connected()) {
@@ -625,42 +650,31 @@ public class WidgetService extends Service {
         //Log.i("type of setVisibility",type);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
         switch (type) {
-            case "newVersion":
+            case VERSION_APP:
                 mView.setTextViewText(R.id.new_version_text, text);
+                mView.setViewVisibility(R.id.new_version_store_button, View.VISIBLE);
                 mView.setViewVisibility(R.id.new_version, View.VISIBLE);
-
-                for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
-                    for (int listviewId : entry.getValue()) {
-                        mView.setViewVisibility(listviewId, View.GONE);
-                    }
-                }
+                setVisibilityListViews(View.GONE);
                 break;
-            case "connected":
+            case VERSION_FHEMJS:
+                mView.setTextViewText(R.id.new_version_text, text);
+                mView.setViewVisibility(R.id.new_version_store_button, View.GONE);
+                mView.setViewVisibility(R.id.new_version, View.VISIBLE);
+                setVisibilityListViews(View.GONE);
+                break;
+            case SOCKET_CONNECTED:
                 mView.setViewVisibility(R.id.noconn, View.GONE);
                 mView.setViewVisibility(R.id.new_version, View.GONE);
-                for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
-                    for (int listviewId : entry.getValue()) {
-                        mView.setViewVisibility(listviewId, View.VISIBLE);
-                    }
-                }
+                setVisibilityListViews(View.VISIBLE);
                 break;
-            case "closeversion":
+            case VERSION_CLOSE:
                 mView.setViewVisibility(R.id.new_version, View.GONE);
-                for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
-                    for (int listviewId : entry.getValue()) {
-                        mView.setViewVisibility(listviewId, View.VISIBLE);
-                    }
-                }
+                setVisibilityListViews(View.VISIBLE);
                 break;
-            default:
+            case SOCKET_DISCONNECTED:
                 mView.setTextViewText(R.id.noconn, text);
                 mView.setViewVisibility(R.id.noconn, View.VISIBLE);
-
-                for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
-                    for (int listviewId : entry.getValue()) {
-                        mView.setViewVisibility(listviewId, View.GONE);
-                    }
-                }
+                setVisibilityListViews(View.GONE);
                 break;
         }
 
@@ -669,11 +683,16 @@ public class WidgetService extends Service {
         }
     }
 
+    private void setVisibilityListViews(int action) {
+        for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
+            for (int listviewId : entry.getValue()) {
+                mView.setViewVisibility(listviewId, action);
+            }
+        }
+    }
+
     private void requestValues(String from) {
         Log.d(TAG, "requestValues started by " + from);
-
-        //initListviews();
-        //handler.postDelayed(initListviewsTimer, 2000);
 
         mySocket.requestValues(configData.getSwitchesList(), "once");
         mySocket.requestValues(configData.getValuesList(), "once");
@@ -697,16 +716,15 @@ public class WidgetService extends Service {
 
             try {
                 requestValues("initSocket");
-                setVisibility("connected", "");
+                setVisibility(SOCKET_CONNECTED, "");
             } catch (NullPointerException e) {
                 //ignore this exception
             }
         });
         mySocket.socket.off(Socket.EVENT_DISCONNECT);
         mySocket.socket.on(Socket.EVENT_DISCONNECT, args -> {
-            ////Log.i("socket", "disconnected");
             try {
-                setVisibility("disconnected", getString(R.string.noconn));
+                setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn));
             } catch (NullPointerException e) {
                 //ignore this exception
             }
@@ -715,7 +733,7 @@ public class WidgetService extends Service {
         mySocket.socket.on(Socket.EVENT_RECONNECT_FAILED, args -> {
             //Log.i("socket", "reconnect failed");
             try {
-                setVisibility("disconnected", getString(R.string.noconn));
+                setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn));
             } catch (NullPointerException e) {
                 //ignore this exception
             }
@@ -727,7 +745,7 @@ public class WidgetService extends Service {
                 mySocket.socket.close();
                 mySocket.socket.off();
                 mySocket = null;
-                setVisibility("disconnected", getString(R.string.noconn));
+                setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn));
             } catch (NullPointerException e) {
                 //ignore this exception
             }
@@ -769,11 +787,13 @@ public class WidgetService extends Service {
             Log.d("version", args[0].toString());
             JSONObject obj = (JSONObject) args[0];
             try {
-                String versionInstalled = obj.getString("installed");
-                String versionLatest = obj.getString("latest");
-                Boolean versionIsLatest = obj.getBoolean("isLatest");
+                versionLatest = obj.getString("latest");
+                versionType = obj.getString("type");
 
-                Log.d("version", versionInstalled + " - " + versionLatest);
+                VersionCheck versionCheck = versionChecks.get(versionType);
+                versionCheck.setLatest(obj.getString("latest"));
+                versionCheck.setInstalled(obj.getString("installed"));
+                versionChecks.put(versionType, versionCheck);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -781,17 +801,10 @@ public class WidgetService extends Service {
         });
 
         mySocket.socket.off("fhemError");
-        mySocket.socket.on("fhemError", args -> {
-            ////Log.i("socket", "disconnected");
-            setVisibility("fhemError", getString(R.string.noconn));
-        });
+        mySocket.socket.on("fhemError", args -> setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn)));
 
         mySocket.socket.off("fhemConn");
-        mySocket.socket.on("fhemConn", args -> {
-            ////Log.i("socket", "disconnected");
-            setVisibility("connected", "");
-        });
-
+        mySocket.socket.on("fhemConn", args -> setVisibility(SOCKET_CONNECTED, ""));
     }
 
     Runnable checkVersionTimer = new Runnable() {
@@ -801,7 +814,17 @@ public class WidgetService extends Service {
                 checkVersion(); //this function can change value of mInterval.
             } finally {
                 handler.postDelayed(checkVersionTimer, 3600000);
-                //handler.postDelayed(checkVersionTimer, 3600000);
+            }
+        }
+    };
+
+    Runnable checkShowVersionTimer = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                checkShowVersion(); //this function can change value of mInterval.
+            } finally {
+                handler.postDelayed(checkShowVersionTimer, 600000);
             }
         }
     };
@@ -815,6 +838,33 @@ public class WidgetService extends Service {
         boolean isWiFi = networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
         if (isWiFi) {
             getStoreVersion();
+        }
+    }
+
+    private void checkShowVersion() {
+        Log.d(TAG, "checkShowVersion started");
+        if (!isScreenOn()) return;
+        for (VersionCheck versionCheck : versionChecks.values()) {
+            Log.d(TAG, versionCheck.toString());
+
+            if (versionCheck.showVersionHint()) {
+                String hint = "";
+                switch (versionCheck.type) {
+                    case VERSION_APP:
+                        hint = getString(R.string.newVersionApp, versionCheck.installed, versionCheck.latest);
+                        break;
+                    case VERSION_FHEMJS:
+                        hint = getString(R.string.newVersionFhemjs, versionCheck.installed, versionCheck.latest);
+                        break;
+                    case VERSION_FHEMPL:
+                        hint = getString(R.string.newVersionFhemjs, versionCheck.installed, versionCheck.latest);
+                        break;
+                }
+                newVersionType = versionCheck.type;
+                setVisibility(versionCheck.type, hint);
+                Log.d(TAG, "show version hint " + versionCheck.type);
+                break;
+            }
         }
     }
 
@@ -832,20 +882,32 @@ public class WidgetService extends Service {
                     .first()
                     .ownText();
             String localVersion = BuildConfig.VERSION_NAME;
-            if (!localVersion.equals(storeVersion) && !configDataOnly.suppressNewAppVersion.equals(storeVersion)) {
-                setVisibility("newVersion", getString(R.string.newVersionApp, localVersion, storeVersion));
-                Log.d("localVersion", localVersion);
-                Log.d("storeVersion", storeVersion);
-            }
+
+            VersionCheck versionCheck = versionChecks.get(VERSION_APP);
+            versionCheck.setLatest(storeVersion);
+            versionCheck.setInstalled(localVersion);
+            versionChecks.put(VERSION_APP, versionCheck);
 
         } catch (IOException e) {
             Log.d(TAG, "read app version failed");
         }
     }
 
-    private void stopVersionRemember() {
-        configDataOnly.suppressNewAppVersion = storeVersion;
+    private String stopVersionRemember() {
+        String latestSuppress = "";
+        switch (newVersionType) {
+            case VERSION_FHEMJS:
+                latestSuppress = configDataOnly.suppressNewNodeVersion = versionLatest;
+                break;
+            case VERSION_FHEMPL:
+                latestSuppress = configDataOnly.suppressNewFhemVersion = versionLatest;
+                break;
+            case VERSION_APP:
+                latestSuppress = configDataOnly.suppressNewAppVersion = storeVersion;
+                break;
+        }
         configDataOnlyIO.save(configDataOnly);
+        return latestSuppress;
     }
 
     @Override
