@@ -36,15 +36,12 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.content.pm.ActivityInfo;
-
 import io.socket.emitter.Emitter;
 import io.socket.client.Socket;
 import io.socket.client.Ack;
 
 import com.mobeta.android.dslv.DragSortListView;
-
 import de.fehngarten.fhemswitch.MyLightScenes.MyLightScene;
-
 
 import android.util.Log;
 
@@ -83,7 +80,7 @@ public class ConfigMain extends Activity {
         mContext = this;
         setResult(RESULT_CANCELED);
 
-        //int height = size.y;
+        //int height = size.y; a
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
         float density = getResources().getDisplayMetrics().density;
         float dpWidth = screenWidth / density;
