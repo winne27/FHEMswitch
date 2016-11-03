@@ -1,17 +1,15 @@
 package de.fehngarten.fhemswitch;
 
-import android.content.Context;
-
 import org.joda.time.LocalDate;
 
 class VersionCheck {
     String type;
     String latest;
     String installed;
-    String suppress;
-    LocalDate rememberDate;
-    Boolean suppressed;
-    Boolean isLatest;
+    private String suppress;
+    private LocalDate rememberDate;
+    private Boolean suppressed;
+    private Boolean isLatest;
 
     VersionCheck(String type) {
         this.type = type;
@@ -51,12 +49,11 @@ class VersionCheck {
         this.rememberDate = LocalDate.now();
     }
 
-    public boolean showVersionHint() {
+    boolean showVersionHint() {
         if (this.isLatest) return false;
         if (this.suppressed) return false;
-        if (this.rememberDate.equals(LocalDate.now())) return false;
+        return !this.rememberDate.equals(LocalDate.now());
 
-        return true;
     }
 
     public String toString() {

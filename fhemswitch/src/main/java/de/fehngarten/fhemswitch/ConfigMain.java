@@ -1,7 +1,8 @@
 package de.fehngarten.fhemswitch;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 
@@ -71,6 +72,8 @@ public class ConfigMain extends Activity {
     public RadioGroup radioLayoutLandscape;
     public RadioGroup radioLayoutPortrait;
     public ConfigDataOnlyIO configDataOnlyIO;
+    static final String STORE_VERSION_CONFIG = "de.fehngarten.fhemswitch.STORE_VERSION_CONFIG";
+    BroadcastReceiver storeVersionReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +101,29 @@ public class ConfigMain extends Activity {
         } else {
             setContentView(R.layout.config__l);
         }
+
+        String installedText = BuildConfig.VERSION_NAME;
+        TextView installedView = (TextView) findViewById(R.id.installedView);
+        installedView.setText(installedText);
+
+        GetStoreVersion getStoreVersion = new GetStoreVersion(mContext, STORE_VERSION_CONFIG);
+
+        // intent get store version
+        storeVersionReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String latest = intent.getExtras().getString(GetStoreVersion.LATEST);
+                Log.d("ConfigMain", "get store version: " + latest);
+                TextView latestView = (TextView) findViewById(R.id.latestView);
+                latestView.setText(latest);
+            }
+        };
+
+        IntentFilter storeVersionFilter = new IntentFilter();
+        storeVersionFilter.addAction(STORE_VERSION_CONFIG);
+        registerReceiver(storeVersionReceiver, storeVersionFilter);
+
+        getStoreVersion.execute();
 
         urlpl = (EditText) findViewById(R.id.urlpl);
         urljs = (EditText) findViewById(R.id.urljs);
@@ -187,10 +213,22 @@ public class ConfigMain extends Activity {
         ((RadioButton) radioLayoutPortrait.getChildAt(configDataOnly.layoutPortrait)).setChecked(true);
     }
 
+    @Override
+    public void onDestroy() {
+        Log.d("ConfigMain", "onDestroy fired");
+        if (mySocket != null) {
+            mySocket.socket.disconnect();
+            mySocket.socket.close();
+        }
+
+        unregisterReceiver(storeVersionReceiver);
+
+        super.onDestroy();
+    }
     private Button.OnClickListener callDonateButtonOnClickListener = new Button.OnClickListener() {
         @Override
         public void onClick(View arg0) {
-            Intent donateIntent = new Intent(mContext, Donate.class);
+            Intent donateIntent = new Intent(mContext, ConfigDonate.class);
             startActivity(donateIntent);
         }
     };
@@ -391,8 +429,6 @@ public class ConfigMain extends Activity {
     }
 
     private void saveConfig() {
-        mySocket.socket.close();
-
         //configDataOnly = new ConfigDataOnly();
         configDataOnly.urljs = urljs.getText().toString();
         configDataOnly.urlpl = urlpl.getText().toString();
@@ -411,7 +447,6 @@ public class ConfigMain extends Activity {
         configDataOnly.layoutLandscape = Integer.valueOf(radioLayoutLandscapeButton.getTag().toString());
 
         configDataOnlyIO.save(configDataOnly);
-
 
         Intent resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);

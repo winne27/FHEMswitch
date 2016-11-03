@@ -1,5 +1,7 @@
 .project
 .gradle
-.idea/*
-build/*
-fhemswitch/build/*
+.idea
+build
+fhemswitch/build
+/fhemswitch/build*
+captures

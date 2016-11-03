@@ -72,4 +72,6 @@
     <string name="rememberlater">Später nochmals erinnern</string>
     <string name="config_header">FHEMswitch Konfiguration</string>
     <string name="newVersionFhemjs">Die Version %1$s von fhem.js ist auf dem Server  installiert.  Im NPM Repository ist die aktuelle Version %2$s verfügbar.</string>
+    <string name="installed_version">installierte Version</string>
+    <string name="latest_version">neueste Version</string>
 </resources>

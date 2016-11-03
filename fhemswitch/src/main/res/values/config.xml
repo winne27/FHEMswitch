@@ -3,8 +3,12 @@
     <integer name="waitCyclesShort">15</integer>
     <integer name="waitIntervalLong">91000</integer>
     <integer name="waitIntervalShort">4000</integer>
-
     <integer name="socketsConnectionTimeout">15000</integer>
+    <integer name="delaySocketCheck">1000</integer>
+    <integer name="delayVersionCheck">10000</integer>
+    <integer name="delayShowVersionCheck">20000</integer>
+    <integer name="waitIntervalVersionCheck">3600000</integer>
+    <integer name="waitIntervalVersionShowCheck">600000</integer>
 
     <string name="googleStoreUrl" translatable="false">https://play.google.com/store/apps/details?id=de.fehngarten.fhemswitch</string>
     <string name="licenceKey" translatable="false">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh7D+DlsyIr/qs/nzYQHHITVBXoDn8eSsFKGUgjvlJhINvjFUTwiHBmwrTKBIXye6WozJ4QM7Ov3cUXqeDlIz4m8bHCibXzQsra2kWSZagRhHLcrBwVBy1a3JXB74E1VQO0LbPPgnfeL2Uzv4IIS3QvyAJ2Uo5lHJBoTA+jxUIe/YFPovNvhWhZna2oHZlptc07rNydcTShdMzk/Ujv881jJB0GJMUol5OM5/WG+dHpfyplxlolpS/AXX9312VeU7LkRdOUikQ+bPQMT5gbYyWPXoDAKRkJiU6F5LR+xQqxHxNyedy3yZnlkmXDq0l7u1HYkJaY3Pr2hxOo3hAjX2pQIDAQAB</string>

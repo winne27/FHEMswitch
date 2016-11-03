@@ -52,7 +52,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="de.fehngarten.fhemswitch.Donate"
+            android:name="de.fehngarten.fhemswitch.ConfigDonate"
             android:label="@string/widget_name" >
         </activity>
 
@@ -69,13 +69,6 @@
                 android:resource="@xml/widget_info" />
         </receiver>
 
-        <!--
-        <receiver android:name="de.fehngarten.fhemswitch.NetworkStateReceiver" >
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-        -->
         <service android:name="de.fehngarten.fhemswitch.WidgetService" >
         </service>
         <service

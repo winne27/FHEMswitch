@@ -36,7 +36,9 @@
     <string name="header">Header</string>
     <string name="horizontal">nebeneinander</string>
     <string name="initruns">Initialisierung läuft</string>
+    <string name="installed_version">installierte Version</string>
     <string name="landscape">Layout Landscape</string>
+    <string name="latest_version">neueste Version</string>
     <string name="lightscenes">Szenarios</string>
     <string name="mixed">zweispaltig</string>
     <string name="name">Angezeigter Name</string>

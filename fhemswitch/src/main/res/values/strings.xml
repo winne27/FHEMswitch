@@ -73,4 +73,6 @@
     <string name="config_header">FHEMswitch configuration</string>
     <string name="newVersionApp">Version %1$s of this App is installed.\nIn Google Play Store the newest Version %2$s is available.</string>
     <string name="newVersionFhemjs">Version %1$s of fhem.js is installed on the server. In NPM repository Version %2$s is available.</string>
+    <string name="installed_version">installed version</string>
+    <string name="latest_version">latest_version</string>
 </resources>

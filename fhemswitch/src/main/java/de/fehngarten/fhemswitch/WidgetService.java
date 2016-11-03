@@ -1,6 +1,5 @@
 package de.fehngarten.fhemswitch;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,7 +9,6 @@ import java.util.Map.Entry;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
 
 import android.annotation.TargetApi;
 import android.app.PendingIntent;
@@ -55,6 +53,7 @@ public class WidgetService extends Service {
     static final String VERSION_CLOSE = "closeversion";
     static final String SOCKET_CONNECTED = "connected";
     static final String SOCKET_DISCONNECTED = "disconnected";
+    static final String STORE_VERSION_WIDGET = "de.fehngarten.fhemswitch.STORE_VERSION_WIDGET";
     private String newVersionType;
     private String versionLatest;
     private String versionType;
@@ -93,6 +92,7 @@ public class WidgetService extends Service {
     private BroadcastReceiver connChangeReceiver;
     private BroadcastReceiver userIntentReceiver;
     private BroadcastReceiver screenReceiver;
+    private BroadcastReceiver storeVersionReceiver;
     private HashMap<String, VersionCheck> versionChecks;
 
     public void onCreate() {
@@ -122,8 +122,28 @@ public class WidgetService extends Service {
         versionChecks.put(VERSION_FHEMJS, new VersionCheck(VERSION_FHEMJS));
         versionChecks.put(VERSION_FHEMPL, new VersionCheck(VERSION_FHEMPL));
 
-        handler.postDelayed(checkVersionTimer, 10000);
-        handler.postDelayed(checkShowVersionTimer, 20000);
+        // intent get store version
+        storeVersionReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                storeVersion = intent.getExtras().getString(GetStoreVersion.LATEST);
+                Log.d(TAG, "get store version: " + storeVersion);
+                String localVersion = BuildConfig.VERSION_NAME;
+
+                VersionCheck versionCheck = versionChecks.get(VERSION_APP);
+                versionCheck.setLatest(storeVersion);
+                versionCheck.setInstalled(localVersion);
+                versionChecks.put(VERSION_APP, versionCheck);
+
+            }
+        };
+
+        IntentFilter storeVersionFilter = new IntentFilter();
+        storeVersionFilter.addAction(STORE_VERSION_WIDGET);
+        registerReceiver(storeVersionReceiver, storeVersionFilter);
+
+        handler.postDelayed(checkVersionTimer, getResources().getInteger(R.integer.delayVersionCheck));
+        handler.postDelayed(checkShowVersionTimer, getResources().getInteger(R.integer.delayShowVersionCheck));
 
         // Intent conn changed
         connChangeReceiver = new BroadcastReceiver() {
@@ -207,14 +227,12 @@ public class WidgetService extends Service {
         screenReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                //do something you need when broadcast received
                 Log.d(TAG, "screenaction " + intent.getAction());
 
                 if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
                     waitCount = 0;
                 }
-
-                handler.postDelayed(checkSocketTimer, 1000);
+                handler.postDelayed(checkSocketTimer, getResources().getInteger(R.integer.delaySocketCheck));
             }
         };
 
@@ -222,7 +240,6 @@ public class WidgetService extends Service {
         screenFilter.addAction(Intent.ACTION_SCREEN_ON);
         screenFilter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(screenReceiver, screenFilter);
-
         // ---------------------------------------
 
         readConfig();
@@ -240,6 +257,7 @@ public class WidgetService extends Service {
         unregisterReceiver(connChangeReceiver);
         unregisterReceiver(userIntentReceiver);
         unregisterReceiver(screenReceiver);
+        unregisterReceiver(storeVersionReceiver);
 
         super.onDestroy();
     }
@@ -423,7 +441,8 @@ public class WidgetService extends Service {
 
         layoutId = layouts[iLayout];
 
-        handler.postDelayed(checkSocketTimer, 1000);
+        //handler.postDelayed(checkSocketTimer, R.integer.delaySocketCheck);
+        handler.postDelayed(checkSocketTimer, getResources().getInteger(R.integer.delaySocketCheck));
         mView = new RemoteViews(mContext.getPackageName(), layoutId);
 
         Intent clickIntent = new Intent();
@@ -813,7 +832,7 @@ public class WidgetService extends Service {
             try {
                 checkVersion(); //this function can change value of mInterval.
             } finally {
-                handler.postDelayed(checkVersionTimer, 3600000);
+                handler.postDelayed(checkVersionTimer, getResources().getInteger(R.integer.waitIntervalVersionCheck));
             }
         }
     };
@@ -822,9 +841,9 @@ public class WidgetService extends Service {
         @Override
         public void run() {
             try {
-                checkShowVersion(); //this function can change value of mInterval.
+                checkShowVersion();
             } finally {
-                handler.postDelayed(checkShowVersionTimer, 600000);
+                handler.postDelayed(checkShowVersionTimer, getResources().getInteger(R.integer.waitIntervalVersionShowCheck));
             }
         }
     };
@@ -837,7 +856,7 @@ public class WidgetService extends Service {
 
         boolean isWiFi = networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
         if (isWiFi) {
-            getStoreVersion();
+            new GetStoreVersion(mContext, STORE_VERSION_WIDGET).execute();
         }
     }
 
@@ -865,31 +884,6 @@ public class WidgetService extends Service {
                 Log.d(TAG, "show version hint " + versionCheck.type);
                 break;
             }
-        }
-    }
-
-    private void getStoreVersion() {
-        String url = getResources().getString(R.string.googleStoreUrl);
-        storeVersion = "";
-
-        try {
-            storeVersion = Jsoup.connect(url)
-                    .timeout(30000)
-                    .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                    .referrer("http://www.google.com")
-                    .get()
-                    .select("div[itemprop=softwareVersion]")
-                    .first()
-                    .ownText();
-            String localVersion = BuildConfig.VERSION_NAME;
-
-            VersionCheck versionCheck = versionChecks.get(VERSION_APP);
-            versionCheck.setLatest(storeVersion);
-            versionCheck.setInstalled(localVersion);
-            versionChecks.put(VERSION_APP, versionCheck);
-
-        } catch (IOException e) {
-            Log.d(TAG, "read app version failed");
         }
     }
 
