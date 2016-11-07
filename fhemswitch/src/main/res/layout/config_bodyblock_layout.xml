@@ -16,10 +16,19 @@
         android:background="@color/conf_bg_header_3">
 
         <Button
+            android:id="@+id/cancel_config"
+            style="@style/Widget.Button"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/cancel" />
+
+        <Button
             android:id="@+id/save_config"
             style="@style/Widget.Button"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
             android:text="@string/save" />
     </LinearLayout>
 

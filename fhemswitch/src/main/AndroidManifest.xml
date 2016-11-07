@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="de.fehngarten.fhemswitch.ConfigMain"
+            android:name="de.fehngarten.fhemswitch.config.ConfigMain"
             android:icon="@drawable/icon2"
             android:label="@string/widget_name" >
             <intent-filter>
@@ -41,12 +41,12 @@
         </activity>
 
         <activity
-            android:name="de.fehngarten.fhemswitch.ConfigDonate"
+            android:name="de.fehngarten.fhemswitch.config.ConfigDonate"
             android:label="@string/widget_name" >
         </activity>
 
         <receiver
-            android:name="de.fehngarten.fhemswitch.WidgetProvider"
+            android:name="de.fehngarten.fhemswitch.widget.WidgetProvider"
             android:icon="@drawable/widget_icon"
             android:label="@string/widget_name" >
             <intent-filter>
@@ -58,46 +58,46 @@
                 android:resource="@xml/widget_info" />
         </receiver>
 
-        <service android:name="de.fehngarten.fhemswitch.WidgetService" >
+        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService" >
         </service>
         <service
-            android:name="de.fehngarten.fhemswitch.SwitchesService0"
+            android:name="de.fehngarten.fhemswitch.widget.listviews.SwitchesService0"
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
         <service
-            android:name="de.fehngarten.fhemswitch.SwitchesService1"
+            android:name="de.fehngarten.fhemswitch.widget.listviews.SwitchesService1"
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
         <service
-            android:name="de.fehngarten.fhemswitch.SwitchesService2"
+            android:name="de.fehngarten.fhemswitch.widget.listviews.SwitchesService2"
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
         <service
-            android:name="de.fehngarten.fhemswitch.LightScenesService"
+            android:name="de.fehngarten.fhemswitch.widget.listviews.LightScenesService"
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
         <service
-            android:name="de.fehngarten.fhemswitch.ValuesService0"
+            android:name="de.fehngarten.fhemswitch.widget.listviews.ValuesService0"
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
         <service
-            android:name="de.fehngarten.fhemswitch.ValuesService1"
+            android:name="de.fehngarten.fhemswitch.widget.listviews.ValuesService1"
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
         <service
-            android:name="de.fehngarten.fhemswitch.ValuesService2"
+            android:name="de.fehngarten.fhemswitch.widget.listviews.ValuesService2"
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
         <service
-            android:name="de.fehngarten.fhemswitch.CommandsService0"
+            android:name="de.fehngarten.fhemswitch.widget.listviews.CommandsService0"
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
         <service
-            android:name="de.fehngarten.fhemswitch.CommandsService1"
+            android:name="de.fehngarten.fhemswitch.widget.listviews.CommandsService1"
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
         <service
-            android:name="de.fehngarten.fhemswitch.CommandsService2"
+            android:name="de.fehngarten.fhemswitch.widget.listviews.CommandsService2"
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
     </application>

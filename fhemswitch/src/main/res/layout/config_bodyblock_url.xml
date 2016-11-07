@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/url_block"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,19 +7,23 @@
     android:layout_marginBottom="6dp"
     android:layout_marginTop="0dp"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
     android:visibility="visible">
     <!-- URL for node.js +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <Button
         android:id="@+id/callDonateButton"
         style="@style/Widget.Button"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:gravity="center_horizontal|center_vertical"
         android:text="@string/donate_string_call" />
 
     <TableLayout
+        android:id="@+id/url_table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/callDonateButton"
+        android:layout_centerInParent="true"
         android:stretchColumns="1">
 
         <TableRow
@@ -93,11 +97,28 @@
         </TableRow>
     </TableLayout>
 
-    <Button
-        android:id="@+id/get_config"
-        style="@style/Widget.Button"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/getConfig" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/url_table"
+        android:layout_centerHorizontal="true">
 
-</LinearLayout>
+        <Button
+            android:id="@+id/cancel2_config"
+            style="@style/Widget.Button"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+
+            android:text="@string/cancel" />
+
+        <Button
+            android:id="@+id/get_config"
+            style="@style/Widget.Button"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/cancel2_config"
+            android:text="@string/getConfig" />
+    </RelativeLayout>
+</RelativeLayout>

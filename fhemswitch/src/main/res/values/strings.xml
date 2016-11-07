@@ -75,4 +75,5 @@
     <string name="newVersionFhemjs">Version %1$s of fhem.js is installed on the server. In NPM repository Version %2$s is available.</string>
     <string name="installed_version">installed version</string>
     <string name="latest_version">latest_version</string>
+    <string name="cancel">Cancel</string>
 </resources>
