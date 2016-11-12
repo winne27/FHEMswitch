@@ -8,16 +8,25 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
+import de.fehngarten.fhemswitch.*;
+import de.fehngarten.fhemswitch.ConfigCommandRow;
+import de.fehngarten.fhemswitch.ConfigLightsceneRow;
+import de.fehngarten.fhemswitch.ConfigSwitchRow;
+import de.fehngarten.fhemswitch.ConfigValueRow;
 
 public class ConfigDataOnlyIO {
     public static final String CONFIGFILE = "config.data";
 
     public ConfigDataOnly configDataOnly;
     private Context mContext;
+    private String[] types;
 
-    public ConfigDataOnlyIO(Context context) {
+    public ConfigDataOnlyIO(Context context, String[] types) {
 
         mContext = context;
+        this.types = types;
     }
 
     public ConfigDataOnly read() {
@@ -29,16 +38,21 @@ public class ConfigDataOnlyIO {
             obj = obj_in.readObject();
             obj_in.close();
 
-            Log.d("configIO", "config.data found");
+            if (BuildConfig.DEBUG) Log.d("configIO", "config.data found");
             if (obj instanceof ConfigDataOnly) {
-                Log.d("configIO", "config.data ok");
+                if (BuildConfig.DEBUG) Log.d("configIO", "config.data ok");
                 configDataOnly = (ConfigDataOnly) obj;
-                configDataOnly.checkNewProps();
+                configDataOnly.checkTypes(types);
+            } else {
+                if (BuildConfig.DEBUG) Log.d("configIO", "config.data not correct ");
+                configDataOnly = checkForOldVersion(obj);
             }
         } catch (Exception e) {
-            Log.d("configIO", "config.data corrupted");
+            if (BuildConfig.DEBUG) Log.d("configIO", "config.data with exception");
+            //if (BuildConfig.DEBUG) Log.d("configIO", e.getMessage());
             configDataOnly = checkForOldVersion(obj);
         }
+
         return configDataOnly;
     }
 
@@ -51,7 +65,7 @@ public class ConfigDataOnlyIO {
             ObjectOutputStream obj_out = new ObjectOutputStream(f_out);
             obj_out.writeObject(configDataOnly);
             obj_out.close();
-            Log.d("config", "config.data written");
+            if (BuildConfig.DEBUG) Log.d("config", "config.data written");
             return true;
         } catch (Exception e) {
             return false;
@@ -59,16 +73,41 @@ public class ConfigDataOnlyIO {
     }
 
     public ConfigDataOnly checkForOldVersion(Object obj) {
+        if (BuildConfig.DEBUG) Log.d("configIO", "check for old version started");
+        configDataOnly = new ConfigDataOnly(types);
         try {
-            if (obj != null && obj instanceof ConfigDataOnly) {
-                Log.d("configIO", "config.data old version found");
-                configDataOnlyOld = (ConfigDataOnly) obj;
-            } else {
-                configDataOnly = new ConfigDataOnly();
+            if (obj != null && obj instanceof de.fehngarten.fhemswitch.ConfigDataOnly) {
+                if (BuildConfig.DEBUG) Log.d("configIO", "config.data old version found");
+                de.fehngarten.fhemswitch.ConfigDataOnly configDataOnlyOld = (de.fehngarten.fhemswitch.ConfigDataOnly) obj;
+                configDataOnly.urljs = configDataOnlyOld.urljs;
+                configDataOnly.urlpl = configDataOnlyOld.urlpl;
+                for (de.fehngarten.fhemswitch.ConfigSwitchRow oldRow : configDataOnlyOld.switchRows) {
+                    configDataOnly.switchRows.add(new de.fehngarten.fhemswitch.data.ConfigSwitchRow(oldRow.unit, oldRow.name, oldRow.enabled, oldRow.cmd));
+                }
+
+                for (de.fehngarten.fhemswitch.ConfigValueRow oldRow : configDataOnlyOld.valueRows) {
+                    configDataOnly.valueRows.add(new de.fehngarten.fhemswitch.data.ConfigValueRow(oldRow.unit, oldRow.name, oldRow.value, oldRow.enabled));
+                }
+
+                for (de.fehngarten.fhemswitch.ConfigCommandRow oldRow : configDataOnlyOld.commandRows) {
+                    configDataOnly.commandRows.add(new de.fehngarten.fhemswitch.data.ConfigCommandRow(oldRow.name, oldRow.command, oldRow.enabled));
+                }
+
+                for (de.fehngarten.fhemswitch.ConfigLightsceneRow oldRow : configDataOnlyOld.lightsceneRows) {
+                    configDataOnly.lightsceneRows.add(new de.fehngarten.fhemswitch.data.ConfigLightsceneRow(oldRow.unit, oldRow.name, oldRow.enabled, oldRow.isHeader, oldRow.showHeader));
+                }
+
+                configDataOnly.connectionPW = configDataOnlyOld.connectionPW;
+                configDataOnly.layoutLandscape = configDataOnlyOld.layoutLandscape;
+                configDataOnly.layoutPortrait = configDataOnlyOld.layoutPortrait;
+                configDataOnly.switchCols = configDataOnlyOld.switchCols;
+                configDataOnly.valueCols = configDataOnlyOld.valueCols;
+                configDataOnly.commandCols = configDataOnlyOld.commandCols;
+
             }
         } catch (Exception e) {
-            Log.d("configIO", "config.data no old version");
-            configDataOnly = new ConfigDataOnly();
+            if (BuildConfig.DEBUG) Log.d("configIO", "config.data no old version");
+            //configDataOnly = new ConfigDataOnly();
         }
         return configDataOnly;
     }

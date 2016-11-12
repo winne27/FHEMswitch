@@ -61,7 +61,7 @@
         <service android:name="de.fehngarten.fhemswitch.widget.WidgetService" >
         </service>
         <service
-            android:name="de.fehngarten.fhemswitch.widget.listviews.SwitchesService0"
+            android:name="de.fehngarten.fhemswitch.widget.listviews.CommonListviewService"
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
         <service
@@ -77,7 +77,7 @@
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
         <service
-            android:name="de.fehngarten.fhemswitch.widget.listviews.ValuesService0"
+            android:name="de.fehngarten.fhemswitch.widget.listviews.ValuesService"
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
         <service
@@ -89,7 +89,7 @@
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
         <service
-            android:name="de.fehngarten.fhemswitch.widget.listviews.CommandsService0"
+            android:name="de.fehngarten.fhemswitch.widget.listviews.CommandsService"
             android:permission="android.permission.BIND_REMOTEVIEWS" >
         </service>
         <service

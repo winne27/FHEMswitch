@@ -3,7 +3,14 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
-
+    signingConfigs {
+        wetterstation {
+            storeFile file("C:\\Users\\Werner\\Documents\\Zertifikate\\app-keys\\android\\wetterstation.keystore")
+            storePassword "fehn10"
+            keyAlias "wetterstation"
+            keyPassword "fehn10"
+        }
+    }
     defaultConfig {
         applicationId "de.fehngarten.fhemswitch"
         versionCode 225
@@ -14,21 +21,12 @@ android {
         jackOptions {
             enabled true
         }
+        signingConfig signingConfigs.wetterstation
     }
-
-    signingConfigs {
-        wetterstation {
-            storeFile file("C:\\Users\\Werner\\Documents\\Zertifikate\\app-keys\\android\\wetterstation.keystore")
-            storePassword "fehn10"
-            keyAlias "wetterstation"
-            keyPassword "fehn10"
-        }
-    }
-
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.wetterstation
         }
         debug {
@@ -39,16 +37,16 @@ android {
         exclude 'META-INF/maven/com.squareup.okio/okio/pom.properties'
         exclude 'META-INF/maven/com.squareup.okio/okio/pom.xml'
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     lintOptions {
         abortOnError false
         disable 'InvalidPackage'
         disable 'Assert'
+    }
+    productFlavors {
     }
 }
 
@@ -57,11 +55,11 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.1'
     //compile 'com.squareup.okio:okio:1.10.0'
     //compile 'com.squareup.okhttp3:okhttp-ws:3.4.1'
-
     compile('io.socket:socket.io-client:0.8.1') {
         exclude group: 'org.json', module: 'json'
     }
     compile 'asia.ivity.android:drag-sort-listview:1.0'
     compile 'org.jsoup:jsoup:1.7.2'
-    compile group: 'joda-time', name: 'joda-time', version: '2.9.4'
+    compile 'joda-time:joda-time:2.9.4'
+    //compile 'com.google.code.gson:gson:2.8.0'
 }

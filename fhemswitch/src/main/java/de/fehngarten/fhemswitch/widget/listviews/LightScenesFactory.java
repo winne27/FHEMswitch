@@ -10,7 +10,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import de.fehngarten.fhemswitch.R;
-import de.fehngarten.fhemswitch.widget.WidgetProvider;
+import static de.fehngarten.fhemswitch.global.Consts.*;
 import de.fehngarten.fhemswitch.widget.WidgetService;
 //import android.util.Log;
 
@@ -19,25 +19,25 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
     private Context mContext = null;
 
     LightScenesFactory(Context context, Intent intent) {
-        //Log.d(CLASSNAME, "started");
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME, "started");
         mContext = context;
     }
 
     public void initData() {
         //String methodname = "initData";
-        //Log.d(CLASSNAME + methodname, "started");
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "started");
     }
 
     @Override
     public void onCreate() {
         //String methodname = "onCreate";
-        //Log.d(CLASSNAME + methodname, "started");
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "started");
     }
 
     @Override
     public void onDataSetChanged() {
         //String methodname = "onDataSetChanged";
-        //Log.d(CLASSNAME + methodname, "started");
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "started");
         //initData();
     }
 
@@ -50,7 +50,7 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
     @Override
     public int getCount() {
         //String methodname = "getCount";
-        //Log.d(CLASSNAME + methodname, "lightscenes size: " + Integer.toString(WidgetService.configData.lightScenes.itemsCount));
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "lightscenes size: " + Integer.toString(WidgetService.configData.lightScenes.itemsCount));
         if (WidgetService.configData == null || WidgetService.configData.lightScenes == null) {
             return (0);
         } else {
@@ -79,11 +79,11 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
             }
 
             final Intent fillInIntent = new Intent();
-            fillInIntent.setAction(WidgetProvider.OPEN_URL);
+            fillInIntent.setAction(OPEN_FHEM_HOMEPAGE);
             final Bundle bundle = new Bundle();
-            bundle.putString(WidgetProvider.URL, WidgetService.fhemUrl + "?detail=" + WidgetService.configData.lightScenes.items.get(position).unit);
-            bundle.putString(WidgetProvider.TYPE, "lightScene");
-            bundle.putString(WidgetProvider.POS, Integer.toString(position));
+            bundle.putString(FHEM_URI, WidgetService.fhemUrl + "?detail=" + WidgetService.configData.lightScenes.items.get(position).unit);
+            bundle.putString(FHEM_TYPE, "lightScene");
+            bundle.putString(POS, Integer.toString(position));
             fillInIntent.putExtras(bundle);
             mView.setOnClickFillInIntent(R.id.lightscene_name, fillInIntent);
         } else {
@@ -112,11 +112,11 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
                     mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.inactive);
                 }
                 final Intent fillInIntent = new Intent();
-                fillInIntent.setAction(WidgetProvider.SEND_FHEM_COMMAND);
+                fillInIntent.setAction(SEND_FHEM_COMMAND);
                 final Bundle bundle = new Bundle();
-                bundle.putString(WidgetProvider.COMMAND, WidgetService.configData.lightScenes.activateCmd(position));
-                bundle.putString(WidgetProvider.TYPE, "lightscene");
-                bundle.putString(WidgetProvider.POS, Integer.toString(position));
+                bundle.putString(FHEM_COMMAND, WidgetService.configData.lightScenes.activateCmd(position));
+                bundle.putString(FHEM_TYPE, "lightscene");
+                bundle.putString(POS, Integer.toString(position));
                 fillInIntent.putExtras(bundle);
                 mView.setOnClickFillInIntent(R.id.lightscene_name, fillInIntent);
             }

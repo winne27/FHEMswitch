@@ -1,10 +1,8 @@
 <resources>
 
-    <string name="widget_name">FHEMswitch</string>
     <string name="url_fhem_pl">URL FHEM Webserver (optional):</string>
     <string name="url_fhem_js">URL FHEM node.js Server:</string>
     <string name="conn_pw">FHEM Server Passwort (optional):</string>
-    <string name="ok">OK</string>
     <string name="switchicon">Lampe</string>
     <string name="save">Speichern</string>
     <string name="error_header">Es ist ein Fehler aufgetreten</string>
@@ -29,17 +27,13 @@
     <string name="onlinecheck">ist dieses Geräte überhaupt Online</string>
 	<string name="commands">Freie Befehle</string>
     <string name="commands2">FHEM Befehl</string>
-    <string name="newline">+</string>
-    
+
     <string name="landscape">Layout Landscape</string>
     <string name="portrait">Layout Portrait</string>
     <string name="horizontal">nebeneinander</string>
     <string name="vertical">untereinander</string>
     <string name="mixed">zweispaltig</string>
-    <string name="LAYOUT_HORIZONTAL">0</string>
-    <string name="LAYOUT_VERTICAL">1</string>
-    <string name="LAYOUT_MIXED">2</string>
-       
+
     <string-array name="commands">
         <item>toggle</item>
         <item>on</item>
@@ -58,14 +52,6 @@
     <string name="donate_string_call">freiwillige Spende</string>
     <string name="donate_text">Diese App ist mir folgendes Wert:</string>
     <string name="thanks_text">Vielen Dank für Ihre Spende!</string>
-    <string name="value0">1</string>
-    <string name="value1">2</string>
-    <string name="value2">5</string>
-    <string name="value3">10</string>
-    <string name="account0">1 Euro</string>
-    <string name="account1">2 Euro</string>
-    <string name="account2">5 Euro</string>
-    <string name="account3">10 Euro</string>
     <string name="newVersionApp">Die Version %1$s dieser App ist installiert. \nIm Google Play Store ist die aktuelle Version %2$s verfügbar.</string>
     <string name="openstore">Öffne Play Store für Update</string>
     <string name="donotshow">Nicht mehr anzeigen</string>

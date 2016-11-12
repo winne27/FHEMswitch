@@ -7,7 +7,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import de.fehngarten.fhemswitch.R;
-import de.fehngarten.fhemswitch.widget.WidgetProvider;
+import static de.fehngarten.fhemswitch.global.Consts.*;
 import de.fehngarten.fhemswitch.widget.WidgetService;
 
 //import android.util.Log;
@@ -18,27 +18,27 @@ class ValuesFactory implements RemoteViewsFactory {
     private int colnum;
 
     ValuesFactory(Context context, Intent intent, int colnum) {
-        //Log.d(CLASSNAME, "started");
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME, "started");
         mContext = context;
         this.colnum = colnum;
     }
 
     public void initData() {
         //String methodname = "initData";
-        //Log.d(CLASSNAME + methodname, "started");
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "started");
     }
 
     @Override
     public void onCreate() {
         //String methodname = "onCreate";
-        //Log.d(CLASSNAME + methodname, "started");
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "started");
         //initData();
     }
 
     @Override
     public void onDataSetChanged() {
         //String methodname = "onDataSetChanged";
-        //Log.d(CLASSNAME + methodname, "started");
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "started");
         //initData();
     }
 
@@ -51,7 +51,7 @@ class ValuesFactory implements RemoteViewsFactory {
     @Override
     public int getCount() {
         //String methodname = "getCount";
-        //Log.d(CLASSNAME + methodname, "values size: " + Integer.toString(values.size()));
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "values size: " + Integer.toString(values.size()));
 
         if (WidgetService.configData == null || WidgetService.configData.valuesCols == null || WidgetService.configData.valuesCols.size() <= colnum) {
             return (0);
@@ -79,9 +79,9 @@ class ValuesFactory implements RemoteViewsFactory {
         }
 
         final Intent fillInIntent = new Intent();
-        fillInIntent.setAction(WidgetProvider.OPEN_URL);
+        fillInIntent.setAction(OPEN_FHEM_HOMEPAGE);
         final Bundle bundle = new Bundle();
-        bundle.putString(WidgetProvider.URL, WidgetService.fhemUrl + "?detail=" + WidgetService.configData.valuesCols.get(colnum).get(position).unit);
+        bundle.putString(FHEM_URI, WidgetService.fhemUrl + "?detail=" + WidgetService.configData.valuesCols.get(colnum).get(position).unit);
         fillInIntent.putExtras(bundle);
         mView.setOnClickFillInIntent(R.id.value_name, fillInIntent);
 

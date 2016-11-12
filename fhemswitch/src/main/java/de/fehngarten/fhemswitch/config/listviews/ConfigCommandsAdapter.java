@@ -72,7 +72,7 @@ public class ConfigCommandsAdapter extends ConfigAdapter
 
    public View getView(int position, View convertView, ViewGroup parent)
    {
-      //Log.d("command pos",Integer.toString(position) + " from " + Integer.toString(getCount()));
+      //if (BuildConfig.DEBUG) Log.d("command pos",Integer.toString(position) + " from " + Integer.toString(getCount()));
       View rowView = convertView;
       ConfigCommandRow commandRow = getItem(position);
       final CommandHolder commandHolder;

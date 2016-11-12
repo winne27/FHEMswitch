@@ -44,6 +44,10 @@ public class ConfigData {
         return -1;
     }
 
+    public boolean setLightscene(String unit, String member) {
+        return lightScenes.setMemberActive(unit, member);
+    }
+
     /*
     public MySwitch isInSwitchesDisabled(String unit)
     {
@@ -87,6 +91,20 @@ public class ConfigData {
         }
         return valuesList;
     }
+
+    public ArrayList<String> getLightScenesList()
+    {
+        ArrayList<String> lightScenesList = new ArrayList<>();
+        for (MyLightScenes.MyLightScene myLightScene : lightScenes.lightScenes)
+        {
+            if (myLightScene.enabled)
+            {
+                lightScenesList.add(myLightScene.unit);
+            }
+        }
+        return lightScenesList;
+    }
+
  /*
    public ArrayList<String> getCommandsList()
    {
@@ -98,17 +116,5 @@ public class ConfigData {
       return commandsList;
    }
 
-   public ArrayList<String> getLightScenesList()
-   {
-      ArrayList<String> lightScenesList = new ArrayList<>();
-      for (MyLightScene myLightScene : lightScenes.lightScenes)
-      {
-         if (myLightScene.enabled)
-         {
-            lightScenesList.add(myLightScene.unit);
-         }
-      }
-      return lightScenesList;
-   }
 */
 }

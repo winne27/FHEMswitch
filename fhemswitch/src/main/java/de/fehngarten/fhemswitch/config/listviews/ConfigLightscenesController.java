@@ -91,7 +91,7 @@ public class ConfigLightscenesController extends DragSortController {
     @Override
     public void onDestroyFloatView(View floatView) {
         //do nothing; block super from crashing
-        //Log.d("ConfigLightscenesContro","******* destroyed");
+        //if (BuildConfig.DEBUG) Log.d("ConfigLightscenesContro","******* destroyed");
         //mAdapter.notifyDataSetChanged();
     }
 

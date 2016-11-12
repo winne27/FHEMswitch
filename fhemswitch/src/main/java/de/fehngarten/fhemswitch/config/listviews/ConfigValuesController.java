@@ -44,7 +44,7 @@ public class ConfigValuesController extends DragSortController {
 
     @Override
     public void onDestroyFloatView(View floatView) {
-        //Log.d("ConfigValuesContro","******* destroyed");
+        //if (BuildConfig.DEBUG) Log.d("ConfigValuesContro","******* destroyed");
         //mAdapter.notifyDataSetChanged();
     }
 

@@ -7,7 +7,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import de.fehngarten.fhemswitch.R;
-import de.fehngarten.fhemswitch.widget.WidgetProvider;
+import static de.fehngarten.fhemswitch.global.Consts.*;
 import de.fehngarten.fhemswitch.widget.WidgetService;
 //import android.util.Log;
 
@@ -18,7 +18,7 @@ class SwitchesFactory implements RemoteViewsFactory {
     //private List<MySwitch> switches = new ArrayList<MySwitch>();
 
     SwitchesFactory(Context context, Intent intent, int colnum) {
-        //Log.d(CLASSNAME, "started");
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME, "started");
         mContext = context;
         this.colnum = colnum;
         //Log.i("colnum in factory",intent.getExtras().getString("colnum"));
@@ -26,20 +26,20 @@ class SwitchesFactory implements RemoteViewsFactory {
 
     public void initData() {
         //String methodname = "initData";
-        //Log.d(CLASSNAME + methodname, "started");
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "started");
     }
 
     @Override
     public void onCreate() {
         //String methodname = "onCreate";
-        //Log.d(CLASSNAME + methodname, "started");
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "started");
         //initData();
     }
 
     @Override
     public void onDataSetChanged() {
         //String methodname = "onDataSetChanged";
-        //Log.d(CLASSNAME + methodname, "started");
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "started");
         //initData();
     }
 
@@ -51,7 +51,7 @@ class SwitchesFactory implements RemoteViewsFactory {
 
     public int getCount() {
         //String methodname = "getCount";
-        //Log.d(CLASSNAME + methodname, "switches size: " + Integer.toString(switches.size()));
+        //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "switches size: " + Integer.toString(switches.size()));
 
         if (WidgetService.configData == null || WidgetService.configData.switchesCols == null || WidgetService.configData.switchesCols.size() <= colnum) {
             return (0);
@@ -70,13 +70,13 @@ class SwitchesFactory implements RemoteViewsFactory {
         mView.setTextViewText(R.id.switch_name, WidgetService.configData.switchesCols.get(colnum).get(position).name);
         mView.setImageViewResource(R.id.switch_icon, WidgetService.icons.get(WidgetService.configData.switchesCols.get(colnum).get(position).icon));
         final Intent fillInIntent = new Intent();
-        fillInIntent.setAction(WidgetProvider.SEND_FHEM_COMMAND);
+        fillInIntent.setAction(SEND_FHEM_COMMAND);
         final Bundle bundle = new Bundle();
-        bundle.putString(WidgetProvider.COMMAND, WidgetService.configData.switchesCols.get(colnum).get(position).activateCmd());
-        //Log.d("SwitchesFactory","cmd: " + WidgetService.configData.switchesCols.get(colnum).get(position).activateCmd());
-        bundle.putString(WidgetProvider.TYPE, "switch");
-        bundle.putString(WidgetProvider.POS, Integer.toString(position));
-        bundle.putString(WidgetProvider.COL, Integer.toString(colnum));
+        bundle.putString(FHEM_COMMAND, WidgetService.configData.switchesCols.get(colnum).get(position).activateCmd());
+        //if (BuildConfig.DEBUG) Log.d("SwitchesFactory","cmd: " + WidgetService.configData.switchesCols.get(colnum).get(position).activateCmd());
+        bundle.putString(FHEM_TYPE, "switch");
+        bundle.putString(POS, Integer.toString(position));
+        bundle.putString(COL, Integer.toString(colnum));
         fillInIntent.putExtras(bundle);
         mView.setOnClickFillInIntent(R.id.switch_row, fillInIntent);
 

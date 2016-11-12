@@ -89,7 +89,7 @@ public class ConfigSwitchesAdapter extends ConfigAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        //Log.d("switch pos",Integer.toString(position) + " from " + Integer.toString(getCount()));
+        //if (BuildConfig.DEBUG) Log.d("switch pos",Integer.toString(position) + " from " + Integer.toString(getCount()));
 
         View rowView = convertView;
 
@@ -114,7 +114,7 @@ public class ConfigSwitchesAdapter extends ConfigAdapter {
         switchHolder.switch_name.setText(switchRow.name);
         switchHolder.switch_enabled.setChecked(switchRow.enabled);
 
-        //Log.d("switchRow.cmd", switchRow.cmd + " in Pos " + getSpinnerIndex(switchHolder.switch_cmd, switchRow.cmd));
+        //if (BuildConfig.DEBUG) Log.d("switchRow.cmd", switchRow.cmd + " in Pos " + getSpinnerIndex(switchHolder.switch_cmd, switchRow.cmd));
         switchHolder.switch_cmd.setSelection(getSpinnerIndex(switchHolder.switch_cmd, switchRow.cmd));
 
         //private method of your class

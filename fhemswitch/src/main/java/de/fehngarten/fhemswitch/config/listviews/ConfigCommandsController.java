@@ -45,7 +45,7 @@ public class ConfigCommandsController extends DragSortController {
     @Override
     public void onDestroyFloatView(View floatView) {
         //do nothing; block super from crashing
-        //Log.d("ConfigCommandsContro","******* destroyed");
+        //if (BuildConfig.DEBUG) Log.d("ConfigCommandsContro","******* destroyed");
         //mAdapter.notifyDataSetChanged();
     }
 

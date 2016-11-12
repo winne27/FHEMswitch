@@ -12,6 +12,8 @@ import de.fehngarten.fhemswitch.R;
 import util.IabHelper;
 import util.IabResult;
 
+import static de.fehngarten.fhemswitch.global.Settings.settingLicenceKey;
+
 public class ConfigDonate extends Activity {
 
     IabHelper mHelper;
@@ -33,16 +35,16 @@ public class ConfigDonate extends Activity {
         Button backButton = (Button) findViewById(R.id.backButton);
         backButton.setOnClickListener(cancelOnClickListener);
 
-        String base64EncodedPublicKey = getResources().getString(R.string.licenceKey);
+        String base64EncodedPublicKey = settingLicenceKey;
 
         mHelper = new IabHelper(this, base64EncodedPublicKey);
 
         mHelper.startSetup((IabResult result) -> {
  /*
                 if (!result.isSuccess()) {
-                    Log.d("trace", "In-app Billing setup failed: " + result);
+                    if (BuildConfig.DEBUG) Log.d("trace", "In-app Billing setup failed: " + result);
                 } else {
-                    Log.d("trace", "In-app Billing is set up OK");
+                    if (BuildConfig.DEBUG) Log.d("trace", "In-app Billing is set up OK");
                 }
  */
         });
@@ -67,7 +69,7 @@ public class ConfigDonate extends Activity {
 
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = (result, purchase) -> {
         if (!result.isFailure()) {
-            //Log.d("trace", "In-app Billing success");
+            //if (BuildConfig.DEBUG) Log.d("trace", "In-app Billing success");
             findViewById(R.id.donateThanks).setVisibility(View.VISIBLE);
             findViewById(R.id.donateRequest).setVisibility(View.GONE);
         }

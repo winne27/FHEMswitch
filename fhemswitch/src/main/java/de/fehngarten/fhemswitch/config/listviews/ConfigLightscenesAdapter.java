@@ -124,7 +124,7 @@ public class ConfigLightscenesAdapter extends ConfigAdapter
 
    Boolean isDragable(int res)
    {
-      //Log.d("isDragable res", Integer.toString(res));
+      //if (BuildConfig.DEBUG) Log.d("isDragable res", Integer.toString(res));
       return !getItem(res).isHeader;
    }
  

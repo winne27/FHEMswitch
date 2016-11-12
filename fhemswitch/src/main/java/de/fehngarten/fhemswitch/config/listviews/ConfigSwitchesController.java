@@ -30,7 +30,7 @@ public class ConfigSwitchesController extends DragSortController {
     @Override
     public int startDragPosition(MotionEvent ev) {
         int res = super.dragHandleHitPosition(ev);
-        //Log.d("position", String.valueOf(res));
+        //if (BuildConfig.DEBUG) Log.d("position", String.valueOf(res));
         if (res == 0) {
             return DragSortController.MISS;
         } else {
@@ -53,7 +53,7 @@ public class ConfigSwitchesController extends DragSortController {
     @Override
     public void onDestroyFloatView(View floatView) {
         //do nothing; block super from crashing
-        //Log.d("ConfigSwitchesControl","******* destroyed");
+        //if (BuildConfig.DEBUG) Log.d("ConfigSwitchesControl","******* destroyed");
         //mAdapter.notifyDataSetChanged();
     }
 

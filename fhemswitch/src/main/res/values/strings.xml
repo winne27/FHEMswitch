@@ -1,10 +1,10 @@
 <resources>
 
-    <string name="widget_name">FHEMswitch</string>
+    <string name="widget_name" translatable="false">FHEMswitch</string>
     <string name="url_fhem_pl">URL FHEM webserver (optional):</string>
     <string name="url_fhem_js">URL FHEM node.js server:</string>
     <string name="conn_pw">FHEM server password (optional):</string>
-    <string name="ok">OK</string>
+    <string name="ok" translatable="false">OK</string>
     <string name="switchicon">Lamp</string>
     <string name="save">Save</string>
     <string name="error_header">An error has occurred</string>
@@ -29,16 +29,16 @@
     <string name="onlinecheck">is this device online</string>
 	<string name="commands">Custom commands</string>
     <string name="commands2">FHEM command</string>
-    <string name="newline">+</string>
+    <string name="newline" translatable="false">+</string>
     
     <string name="landscape">Layout Landscape</string>
     <string name="portrait">Layout Portrait</string>
     <string name="horizontal">horizontal</string>
     <string name="vertical">vertical</string>
     <string name="mixed">two columns</string>
-    <string name="LAYOUT_HORIZONTAL">0</string>
-    <string name="LAYOUT_VERTICAL">1</string>
-    <string name="LAYOUT_MIXED">2</string>
+    <string name="LAYOUT_HORIZONTAL" translatable="false">0</string>
+    <string name="LAYOUT_VERTICAL" translatable="false">1</string>
+    <string name="LAYOUT_MIXED" translatable="false">2</string>
  
     <string-array name="commands">
         <item>toggle</item>
@@ -58,14 +58,14 @@
     <string name="donate_google">Donate</string>
     <string name="donate_string_call">optional donation</string>
 
-    <string name="value0">1</string>
-    <string name="value1">2</string>
-    <string name="value2">5</string>
-    <string name="value3">10</string>
-    <string name="account0">1 Euro</string>
-    <string name="account1">2 Euro</string>
-    <string name="account2">5 Euro</string>
-    <string name="account3">10 Euro</string>
+    <string name="value0" translatable="false">1</string>
+    <string name="value1" translatable="false">2</string>
+    <string name="value2" translatable="false">5</string>
+    <string name="value3" translatable="false">10</string>
+    <string name="account0" translatable="false">1 Euro</string>
+    <string name="account1" translatable="false">2 Euro</string>
+    <string name="account2" translatable="false">5 Euro</string>
+    <string name="account3" translatable="false">10 Euro</string>
     <string name="donate_back">Go</string>
     <string name="openstore">Open Play Store for Update</string>
     <string name="donotshow">Don\'t show again</string>
@@ -76,4 +76,5 @@
     <string name="installed_version">installed version</string>
     <string name="latest_version">latest_version</string>
     <string name="cancel">Cancel</string>
+    <string name="widget_name2" translatable="false">FHEMswitch2</string>
 </resources>

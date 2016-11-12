@@ -9,7 +9,7 @@ import android.util.Log;
 
 import org.jsoup.Jsoup;
 import java.io.IOException;
-import de.fehngarten.fhemswitch.R;
+import static de.fehngarten.fhemswitch.global.Settings.*;
 
 public class GetStoreVersion extends AsyncTask<String, Void, String> {
     Context mContext;
@@ -23,7 +23,7 @@ public class GetStoreVersion extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        String url = mContext.getResources().getString(R.string.googleStoreUrl);
+        String url = settingGoogleStoreUrl;
         String latest = "";
         try {
             latest = Jsoup.connect(url)

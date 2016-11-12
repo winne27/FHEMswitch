@@ -4,7 +4,10 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.compat.BuildConfig;
 import android.util.Log;
+
+import static de.fehngarten.fhemswitch.global.Consts.*;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_DELETED;
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
@@ -12,20 +15,13 @@ import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 public class WidgetProvider extends AppWidgetProvider {
 
     private static final String TAG = "WidgetProvider";
-    public static final String SEND_FHEM_COMMAND = "de.fehngarten.fhemswitch.SEND_FHEM_COMMAND";
-    public static final String COMMAND = "de.fehngarten.fhemswitch.COMMAND";
-    public static final String TYPE = "de.fehngarten.fhemswitch.TYPE";
-    public static final String POS = "de.fehngarten.fhemswitch.POS";
-    public static final String COL = "de.fehngarten.fhemswitch.COL";
-    public static final String URL = "de.fehngarten.fhemswitch.URL";
-    public static final String OPEN_URL = "de.fehngarten.fhemswitch.OPEN_URL";
 
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "onReiceive startet by " + intent.getAction());
-        //Log.d(TAG, bundleToString(intent.getExtras()));
-
+        if (BuildConfig.DEBUG) Log.d(TAG, "onReiceive startet by " + intent.getAction());
+        //if (BuildConfig.DEBUG) Log.d(TAG, bundleToString(intent.getExtras()));
         switch (intent.getAction()) {
             case ACTION_APPWIDGET_UPDATE:
+                context.stopService(new Intent(context.getApplicationContext(), WidgetService.class));
                 context.startService(new Intent(context.getApplicationContext(), WidgetService.class));
                 break;
             case ACTION_APPWIDGET_DELETED:
@@ -34,8 +30,8 @@ public class WidgetProvider extends AppWidgetProvider {
             case SEND_FHEM_COMMAND:
                 WidgetService.sendCommand(intent);
                 break;
-            case OPEN_URL:
-                String urlString = intent.getExtras().getString(URL);
+            case OPEN_FHEM_HOMEPAGE:
+                String urlString = intent.getExtras().getString(FHEM_URI);
                 Intent webIntent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(urlString));
                 webIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(webIntent);

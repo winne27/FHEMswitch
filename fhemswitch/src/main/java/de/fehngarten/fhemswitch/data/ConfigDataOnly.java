@@ -2,6 +2,7 @@ package de.fehngarten.fhemswitch.data;
 
 import android.util.Log;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ConfigDataOnly implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
@@ -17,12 +18,9 @@ public class ConfigDataOnly implements java.io.Serializable {
     public int switchCols;
     public int valueCols;
     public int commandCols;
+    public HashMap<String, String> suppressedVersions;
 
-    public String suppressNewAppVersion;
-    public String suppressNewFhemjsVersion;
-    public String suppressNewFhemplVersion;
-
-    ConfigDataOnly() {
+    public ConfigDataOnly(String[] types) {
 
         this.switchRows = new ArrayList<>();
         this.lightsceneRows = new ArrayList<>();
@@ -34,20 +32,23 @@ public class ConfigDataOnly implements java.io.Serializable {
         this.switchCols = 0;
         this.valueCols = 0;
         this.commandCols = 0;
-
-        initNewVersions();
-    }
-
-    public void checkNewProps() {
-        if (this.suppressNewFhemplVersion == null) {
-            initNewVersions();
+        suppressedVersions = new HashMap<>();
+        for (String type : types) {
+            suppressedVersions.put(type,"");
         }
     }
 
-    private void initNewVersions() {
-        Log.d("ConfigDataOnly", "initNewVersion startet");
-        this.suppressNewAppVersion = "";
-        this.suppressNewFhemjsVersion = "";
-        this.suppressNewFhemplVersion = "";
+    public void checkTypes(String[] types) {
+        if (types != null) {
+            if (suppressedVersions == null) {
+                suppressedVersions = new HashMap<>();
+            }
+            for (String type : types) {
+                if (!suppressedVersions.containsKey(type)) {
+                   suppressedVersions.put(type, "");
+                }
+            }
+
+        }
     }
 }

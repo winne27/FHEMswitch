@@ -14,5 +14,4 @@ public class MySetOnClickPendingIntent {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, clickIntent, 0);
         view.setOnClickPendingIntent(id, pendingIntent);
     }
-
 }

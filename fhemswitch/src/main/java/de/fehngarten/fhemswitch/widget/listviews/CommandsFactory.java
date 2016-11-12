@@ -7,7 +7,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import de.fehngarten.fhemswitch.R;
-import de.fehngarten.fhemswitch.widget.WidgetProvider;
+import static de.fehngarten.fhemswitch.global.Consts.*;
 import de.fehngarten.fhemswitch.widget.WidgetService;
 
 //import android.util.Log;
@@ -18,7 +18,7 @@ class CommandsFactory implements RemoteViewsFactory {
     private int colnum;
 
     CommandsFactory(Context context, Intent intent, int colnum) {
-        //Log.d(TAG, "started");
+        //if (BuildConfig.DEBUG) Log.d(TAG, "started");
         mContext = context;
         this.colnum = colnum;
     }
@@ -44,7 +44,7 @@ class CommandsFactory implements RemoteViewsFactory {
 
     @Override
     public int getCount() {
-        //Log.d(TAG, "values size: " + Integer.toString(values.size()));
+        //if (BuildConfig.DEBUG) Log.d(TAG, "values size: " + Integer.toString(values.size()));
         if (WidgetService.configData == null || WidgetService.configData.commandsCols == null || WidgetService.configData.commandsCols.size() <= colnum) {
             return (0);
         } else {
@@ -68,12 +68,12 @@ class CommandsFactory implements RemoteViewsFactory {
         }
 
         final Intent fillInIntent = new Intent();
-        fillInIntent.setAction(WidgetProvider.SEND_FHEM_COMMAND);
+        fillInIntent.setAction(SEND_FHEM_COMMAND);
         final Bundle bundle = new Bundle();
-        bundle.putString(WidgetProvider.COMMAND, WidgetService.configData.commandsCols.get(colnum).get(position).command);
-        bundle.putString(WidgetProvider.TYPE, "command");
-        bundle.putString(WidgetProvider.POS, Integer.toString(position));
-        bundle.putString(WidgetProvider.COL, Integer.toString(colnum));
+        bundle.putString(FHEM_COMMAND, WidgetService.configData.commandsCols.get(colnum).get(position).command);
+        bundle.putString(FHEM_TYPE, "command");
+        bundle.putString(POS, Integer.toString(position));
+        bundle.putString(COL, Integer.toString(colnum));
         fillInIntent.putExtras(bundle);
         mView.setOnClickFillInIntent(R.id.command_name, fillInIntent);
 

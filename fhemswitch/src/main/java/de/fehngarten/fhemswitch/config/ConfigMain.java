@@ -38,25 +38,19 @@ import de.fehngarten.fhemswitch.BuildConfig;
 import de.fehngarten.fhemswitch.data.ConfigData;
 import de.fehngarten.fhemswitch.data.ConfigDataOnly;
 import de.fehngarten.fhemswitch.data.ConfigDataOnlyIO;
-import de.fehngarten.fhemswitch.modul.GetStoreVersion;
+import de.fehngarten.fhemswitch.data.MyLightScenes.MyLightScene;
 import de.fehngarten.fhemswitch.data.MySocket;
 import de.fehngarten.fhemswitch.data.MySwitch;
 import de.fehngarten.fhemswitch.data.MyValue;
-import de.fehngarten.fhemswitch.R;
-import de.fehngarten.fhemswitch.modul.VersionCheck;
-import de.fehngarten.fhemswitch.widget.WidgetService;
 import de.fehngarten.fhemswitch.data.ConfigLightsceneRow;
 import de.fehngarten.fhemswitch.data.ConfigSwitchRow;
 import de.fehngarten.fhemswitch.data.ConfigValueRow;
-import de.fehngarten.fhemswitch.config.listviews.ConfigCommandsAdapter;
-import de.fehngarten.fhemswitch.config.listviews.ConfigCommandsController;
-import de.fehngarten.fhemswitch.config.listviews.ConfigLightscenesAdapter;
-import de.fehngarten.fhemswitch.config.listviews.ConfigLightscenesController;
-import de.fehngarten.fhemswitch.config.listviews.ConfigSwitchesAdapter;
-import de.fehngarten.fhemswitch.config.listviews.ConfigSwitchesController;
-import de.fehngarten.fhemswitch.config.listviews.ConfigValuesAdapter;
-import de.fehngarten.fhemswitch.config.listviews.ConfigValuesController;
 
+import de.fehngarten.fhemswitch.config.listviews.*;
+import de.fehngarten.fhemswitch.widget.WidgetService;
+import de.fehngarten.fhemswitch.R;
+
+import de.fehngarten.fhemswitch.modul.GetStoreVersion;
 import de.fehngarten.fhemswitch.modul.MyBroadcastReceiver;
 import de.fehngarten.fhemswitch.modul.MyReceiveListener;
 
@@ -65,8 +59,10 @@ import io.socket.client.Socket;
 import io.socket.client.Ack;
 
 import com.mobeta.android.dslv.DragSortListView;
-import de.fehngarten.fhemswitch.data.MyLightScenes.MyLightScene;
 import android.util.Log;
+import static de.fehngarten.fhemswitch.global.Settings.*;
+
+import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 
 public class ConfigMain extends Activity {
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
@@ -90,12 +86,11 @@ public class ConfigMain extends Activity {
     public RadioGroup radioLayoutPortrait;
     public ConfigDataOnlyIO configDataOnlyIO;
     static final String STORE_VERSION_CONFIG = "de.fehngarten.fhemswitch.STORE_VERSION_CONFIG";
-    BroadcastReceiver storeVersionReceiver;
     private ArrayList<BroadcastReceiver> broadcastReceivers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("ConfigMain", "onCreate fired");
+        if (BuildConfig.DEBUG) Log.d("ConfigMain", "onCreate fired");
         super.onCreate(savedInstanceState);
 
         mContext = this;
@@ -127,7 +122,7 @@ public class ConfigMain extends Activity {
         class OnStoreVersion implements MyReceiveListener {
             public void run(Context context, Intent intent) {
                 String latest = intent.getExtras().getString(GetStoreVersion.LATEST);
-                Log.d("ConfigMain", "get store version: " + latest);
+                if (BuildConfig.DEBUG) Log.d("ConfigMain", "get store version: " + latest);
                 TextView latestView = (TextView) findViewById(R.id.latestView);
                 latestView.setText(latest);
             }
@@ -145,7 +140,7 @@ public class ConfigMain extends Activity {
         urljs = (EditText) findViewById(R.id.urljs);
         connectionPW = (EditText) findViewById(R.id.connection_pw);
 
-        configDataOnlyIO = new ConfigDataOnlyIO(mContext);
+        configDataOnlyIO = new ConfigDataOnlyIO(mContext, settingVersionTypes);
         configDataOnly = configDataOnlyIO.read();
 
         // Read object using ObjectInputStream
@@ -237,7 +232,7 @@ public class ConfigMain extends Activity {
 
     @Override
     public void onDestroy() {
-        Log.d("ConfigMain", "onDestroy fired");
+        if (BuildConfig.DEBUG) Log.d("ConfigMain", "onDestroy fired");
         if (mySocket != null) {
             mySocket.socket.disconnect();
             mySocket.socket.close();
@@ -460,7 +455,6 @@ public class ConfigMain extends Activity {
     }
 
     private void saveConfig() {
-        //configDataOnly = new ConfigDataOnly();
         configDataOnly.urljs = urljs.getText().toString();
         configDataOnly.urlpl = urlpl.getText().toString();
         configDataOnly.connectionPW = connectionPW.getText().toString();
@@ -484,9 +478,13 @@ public class ConfigMain extends Activity {
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
         setResult(RESULT_OK, resultValue);
 
-        Intent updateIntent = new Intent();
-        updateIntent.setAction(WidgetService.NEW_CONFIG);
-        mContext.sendBroadcast(updateIntent);
+        Intent restartIntent = new Intent();
+        restartIntent.setAction(ACTION_APPWIDGET_UPDATE);
+        mContext.sendBroadcast(restartIntent);
+
+        //Intent updateIntent = new Intent();
+        //updateIntent.setAction(WidgetService.NEW_CONFIG);
+        //mContext.sendBroadcast(updateIntent);
 
         finish();
     }
