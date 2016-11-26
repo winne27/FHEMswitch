@@ -2,7 +2,7 @@ package de.fehngarten.fhemswitch.config.listviews;
 
 import java.util.ArrayList;
 
-import de.fehngarten.fhemswitch.data.ConfigData;
+import de.fehngarten.fhemswitch.data.ConfigWorkInstance;
 import de.fehngarten.fhemswitch.data.MyLightScenes.MyLightScene;
 import de.fehngarten.fhemswitch.R;
 import de.fehngarten.fhemswitch.data.ConfigLightsceneRow;
@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 //import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,10 +33,10 @@ public class ConfigLightscenesAdapter extends ConfigAdapter
       lightsceneRows = new ArrayList<>();
    }
 
-   public void initData(ConfigData configData, ArrayList<ConfigLightsceneRow> FHEMlightsceneRows)
+   public void initData(ConfigWorkInstance configWorkData, ArrayList<ConfigLightsceneRow> FHEMlightsceneRows)
    {
       lightsceneRows = new ArrayList<>();
-      for (MyLightScene lightScene : configData.lightScenes.lightScenes)
+      for (MyLightScene lightScene : configWorkData.lightScenes.lightScenes)
       {
          if (isInFhem(FHEMlightsceneRows, lightScene.unit,true))
          {
@@ -73,7 +72,7 @@ public class ConfigLightscenesAdapter extends ConfigAdapter
       {
          if (lightsceneRow.isHeader)
          {
-            if (!lightsceneRow.unit.equals("") && !configData.lightScenes.isLightScene(lightsceneRow.unit))
+            if (!lightsceneRow.unit.equals("") && !configWorkData.lightScenes.isLightScene(lightsceneRow.unit))
             {
                isNew = true;
                lightsceneRows.add(new ConfigLightsceneRow(lightsceneRow.unit, lightsceneRow.unit, false, true, true));

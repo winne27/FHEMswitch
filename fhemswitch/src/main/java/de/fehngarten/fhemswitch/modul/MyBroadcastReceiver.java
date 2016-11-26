@@ -4,15 +4,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+
 //import android.support.compat.BuildConfig;
 //import android.util.Log;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
 
     private MyReceiveListener myReceiveListener;
+    private Context mContext;
 
-    public MyBroadcastReceiver(Context myContext, MyReceiveListener myReceiveListener, String[] actions) {
-
+    public MyBroadcastReceiver(Context context, MyReceiveListener myReceiveListener, String[] actions) {
+        mContext = context;
         this.myReceiveListener = myReceiveListener;
 
         IntentFilter myfilter = new IntentFilter();
@@ -20,7 +22,11 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         for (String action : actions) {
             myfilter.addAction(action);
         }
-        myContext.registerReceiver(this, myfilter);
+        mContext.registerReceiver(this, myfilter);
+    }
+
+    public void unregister() {
+        mContext.unregisterReceiver(this);
     }
 
     @Override

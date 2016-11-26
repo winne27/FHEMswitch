@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetSelector"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/conf_bg_header_3"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
+
+    <RadioGroup
+        android:id="@+id/widgetsel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="5dp">
+
+        <RadioButton
+            android:id="@+id/widgetsel_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="6dp"
+            android:textStyle="bold"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
+            android:tag="0"
+            android:text="@string/widget1"
+            android:buttonTint="@color/black"
+            android:background="@drawable/myshape0"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/widgetsel_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="6dp"
+            android:textStyle="bold"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
+            android:tag="1"
+            android:text="@string/widget2"
+            android:buttonTint="@color/black"
+            android:background="@drawable/myshape1"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/widgetsel_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="6dp"
+            android:textStyle="bold"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
+            android:tag="2"
+            android:text="@string/widget3"
+            android:buttonTint="@color/black"
+            android:background="@drawable/myshape2"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/widgetsel_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="6dp"
+            android:textStyle="bold"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
+            android:tag="3"
+            android:text="@string/widget4"
+            android:buttonTint="@color/black"
+            android:background="@drawable/myshape3"
+            android:textSize="16sp" />
+    </RadioGroup>
+
+</LinearLayout>

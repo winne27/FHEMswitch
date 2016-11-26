@@ -94,5 +94,7 @@
 
     <include layout="@layout/config_bodyblock_layout"></include>
 
+    <include layout="@layout/config_bodyblock_message"></include>
+
 </LinearLayout>
 

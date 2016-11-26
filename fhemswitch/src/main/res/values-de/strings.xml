@@ -61,4 +61,6 @@
     <string name="installed_version">installierte Version</string>
     <string name="latest_version">neueste Version</string>
     <string name="cancel">Abbrechen</string>
+    <string name="noWidgetMessage">Bitte erst ein Widget platzieren.</string>
+    <string name="maxWidgetMessage">Es sind nur maximal %1$s Widgets möglich</string>
 </resources>

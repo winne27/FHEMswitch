@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <dimen name="colwidth" format="dimension">170dp</dimen>
-
+    <string name="LAYOUT_HORIZONTAL">0</string>
+    <string name="LAYOUT_VERTICAL">1</string>
+    <string name="LAYOUT_MIXED">2</string>
 </resources>

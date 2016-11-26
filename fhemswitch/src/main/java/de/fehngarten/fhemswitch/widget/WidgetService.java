@@ -1,7 +1,6 @@
 package de.fehngarten.fhemswitch.widget;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -14,14 +13,14 @@ import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
-import android.content.BroadcastReceiver;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -33,25 +32,23 @@ import android.hardware.display.DisplayManager;
 import android.widget.RemoteViews;
 
 import de.fehngarten.fhemswitch.BuildConfig;
+import de.fehngarten.fhemswitch.data.ConfigDataCommon;
+import de.fehngarten.fhemswitch.data.ConfigDataIO;
+import de.fehngarten.fhemswitch.data.ConfigDataInstance;
+import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
 import de.fehngarten.fhemswitch.modul.MyBroadcastReceiver;
 import de.fehngarten.fhemswitch.modul.MyReceiveListener;
 import de.fehngarten.fhemswitch.modul.MySetOnClickPendingIntent;
+import de.fehngarten.fhemswitch.modul.MyWifiInfo;
 import de.fehngarten.fhemswitch.modul.VersionChecks;
-import de.fehngarten.fhemswitch.data.ConfigData;
-import de.fehngarten.fhemswitch.data.ConfigDataOnly;
-import de.fehngarten.fhemswitch.data.ConfigDataOnlyIO;
 import de.fehngarten.fhemswitch.modul.GetStoreVersion;
 import de.fehngarten.fhemswitch.data.MyCommand;
 import de.fehngarten.fhemswitch.data.MyLayout;
-import de.fehngarten.fhemswitch.data.MySocket;
+import de.fehngarten.fhemswitch.modul.MySocket;
 import de.fehngarten.fhemswitch.data.MySwitch;
 import de.fehngarten.fhemswitch.data.MyValue;
 import de.fehngarten.fhemswitch.R;
-//import de.fehngarten.fhemswitch.widget.listviews.ListviewService;
 import de.fehngarten.fhemswitch.widget.listviews.CommonListviewService;
-//import de.fehngarten.fhemswitch.widget.listviews.ValuesService;
-//import de.fehngarten.fhemswitch.widget.listviews.LightScenesService;
-//import de.fehngarten.fhemswitch.widget.listviews.CommandsService;
 import de.fehngarten.fhemswitch.data.ConfigCommandRow;
 import de.fehngarten.fhemswitch.data.ConfigLightsceneRow;
 import de.fehngarten.fhemswitch.data.ConfigSwitchRow;
@@ -66,74 +63,98 @@ import static de.fehngarten.fhemswitch.global.Consts.*;
 import static de.fehngarten.fhemswitch.global.Settings.*;
 
 public class WidgetService extends Service {
-    private static final String TAG = "WidgetService";
     private VersionChecks versionChecks;
-    public static MySocket mySocket = null;
+    private MySocket mySocket = null;
 
-    public static String websocketUrl;
     public static String fhemUrl;
-    public static Map<String, Integer> icons = new HashMap<>();
-    public static int switchCols;
-    public static int valueCols;
-    public static int commandCols;
+    private int switchCols;
+    private int valueCols;
+    private int commandCols;
 
-    private static AppWidgetManager appWidgetManager;
-    private static int iLayout;
-    private static int[] allWidgetIds;
-    private static int[] layouts = new int[3];
-    static Handler handler = new Handler();
+    private int layoutId;
+    private int iLayout;
+    private MyLayout myLayout;
+
+    private AppWidgetManager appWidgetManager;
+
+    private Handler handler;
+    private ArrayList<MyBroadcastReceiver> myBroadcastReceivers;
+
     private Context mContext;
     private RemoteViews mView;
 
-    public static ConfigData configData;
-    private ConfigDataOnly configDataOnly;
-    private ConfigDataOnlyIO configDataOnlyIO;
+    private ConfigDataCommon configDataCommon;
+    private ConfigDataInstance configDataInstance;
 
-    public static PowerManager pm;
-    private int layoutId;
-
-    private PendingIntent onClickPendingIntent;
-    public static MyLayout myLayout;
     public Boolean valuesRequested = false;
-    public static Boolean serviceRunning = false;
     private int waitCount = 0;
     private String currentVersionType;
-    public ArrayList<BroadcastReceiver> broadcastReceivers;
+    private int widgetId;
+
+    protected int instSerial;
+    private String TAG;
+
+    public WidgetService() {
+        versionChecks = new VersionChecks();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //configData = ConfigDataCage.data.get(instSerial);
+        if (intent != null) {
+            String action = intent.getAction();
+            Log.d(TAG, "onStartCommand with " + action);
+            switch (action) {
+                case FHEM_COMMAND:
+                    sendCommand(intent);
+                    break;
+                case SEND_DO_COLOR:
+                    mView = new RemoteViews(mContext.getPackageName(), layoutId);
+                    int shape = intent.getBooleanExtra("COLOR", false) ? settingShapes[instSerial] : R.drawable.myshape;
+                    mView.setInt(R.id.main_layout, "setBackgroundResource", shape);
+                    widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
+                    appWidgetManager.updateAppWidget(widgetId, mView);
+                    break;
+                case NEW_CONFIG:
+                    widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
+                    Log.d(TAG, "action: " + action + " started instance " + instSerial + " with widgetId " + widgetId);
+                    start();
+                    break;
+                default:
+                    widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
+                    Log.d(TAG, "action: " + action + " started instance " + instSerial + " with widgetId " + widgetId);
+                    if (start()) {
+                        checkVersion();
+                        setBroadcastReceivers();
+                        handler.postDelayed(checkVersionTimer, settingWaitIntervalVersionCheck);
+                        handler.postDelayed(checkShowVersionTimer, settingDelayShowVersionCheck);
+                    }
+                    break;
+            }
+        }
+        return super.onStartCommand(intent, flags, startId);
+    }
 
     public void onCreate() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "onCreate fired");
+        TAG = "WidgetService-" + instSerial;
+        //if (BuildConfig.DEBUG) Log.d(TAG, "onCreate fired");
 
-        super.onCreate();
-
-        serviceRunning = true;
         mContext = getApplicationContext();
         appWidgetManager = AppWidgetManager.getInstance(mContext);
-        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        handler = new Handler();
+        myBroadcastReceivers = new ArrayList<>();
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        icons.put("on", R.drawable.on);
-        icons.put("set_on", R.drawable.set_on);
-        icons.put("off", R.drawable.off);
-        icons.put("set_off", R.drawable.set_off);
-        icons.put("set_toggle", R.drawable.set_toggle);
-        icons.put("undefined", R.drawable.undefined);
-        icons.put("toggle", R.drawable.undefined);
-
-        versionChecks = new VersionChecks();
-        start();
-
-        checkVersion();
-        setBroadcastReceivers();
-        handler.postDelayed(checkVersionTimer, settingWaitIntervalVersionCheck);
-        handler.postDelayed(checkShowVersionTimer, settingDelayShowVersionCheck);
+        super.onCreate();
     }
 
-    private void start() {
+    private boolean start() {
         readConfig();
         setOrientation();
         doStart(5);
+        return true;
     }
 
     @Override
@@ -148,10 +169,10 @@ public class WidgetService extends Service {
         handler.removeCallbacks(checkVersionTimer);
         handler.removeCallbacks(checkShowVersionTimer);
         handler.removeCallbacks(setBroadcastReceiverConnectivity);
-        serviceRunning = false;
-        for (BroadcastReceiver broadcastReceiver : broadcastReceivers) {
+
+        for (MyBroadcastReceiver myBroadcastReceiver : myBroadcastReceivers) {
             try {
-                unregisterReceiver(broadcastReceiver);
+                myBroadcastReceiver.unregister();
             } catch (java.lang.IllegalArgumentException e) {
                 if (BuildConfig.DEBUG) Log.d(TAG, "unregister failed");
             }
@@ -161,20 +182,23 @@ public class WidgetService extends Service {
     }
 
     private void setBroadcastReceivers() {
-
-        broadcastReceivers = new ArrayList<>();
+        Log.d(TAG,"setBroadcastReceivers started");
+        myBroadcastReceivers = new ArrayList<>();
 
         String[] actions = new String[]{STORE_VERSION_WIDGET};
-        broadcastReceivers.add(new MyBroadcastReceiver(this, new OnStoreVersion(), actions));
+        myBroadcastReceivers.add(new MyBroadcastReceiver(this, new OnStoreVersion(), actions));
 
         actions = new String[]{NEW_VERSION_STORE, NEW_VERSION_SUPPRESS, NEW_VERSION_REMEMBER};
-        broadcastReceivers.add(new MyBroadcastReceiver(this, new OnUserIntent(), actions));
+        myBroadcastReceivers.add(new MyBroadcastReceiver(this, new OnUserIntent(), actions));
 
         actions = new String[]{Intent.ACTION_CONFIGURATION_CHANGED, NEW_CONFIG};
-        broadcastReceivers.add(new MyBroadcastReceiver(this, new OnConfigChange(), actions));
+        myBroadcastReceivers.add(new MyBroadcastReceiver(this, new OnConfigChange(), actions));
 
         actions = new String[]{Intent.ACTION_SCREEN_ON, Intent.ACTION_SCREEN_OFF};
-        broadcastReceivers.add(new MyBroadcastReceiver(this, new OnScreenOnOff(), actions));
+        myBroadcastReceivers.add(new MyBroadcastReceiver(this, new OnScreenOnOff(), actions));
+
+        actions = new String[]{SEND_FHEM_COMMAND};
+        myBroadcastReceivers.add(new MyBroadcastReceiver(this, new OnSendCommand(), actions));
 
         handler.postDelayed(setBroadcastReceiverConnectivity, settingDelayShowVersionCheck);
     }
@@ -183,10 +207,15 @@ public class WidgetService extends Service {
         @Override
         public void run() {
             String[] actions = new String[]{ConnectivityManager.CONNECTIVITY_ACTION};
-            broadcastReceivers.add(new MyBroadcastReceiver(mContext, new OnConnectionChange(), actions));
-
+            myBroadcastReceivers.add(new MyBroadcastReceiver(mContext, new OnConnectionChange(), actions));
         }
     };
+
+    class OnSendCommand implements MyReceiveListener {
+        public void run(Context context, Intent intent) {
+            //Log.d(TAG,"send command fired by " + intent.getAction());
+        }
+    }
 
     class OnScreenOnOff implements MyReceiveListener {
         public void run(Context context, Intent intent) {
@@ -253,161 +282,13 @@ public class WidgetService extends Service {
         }
     }
 
-    public void readConfig() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "readConfig started");
-        valuesRequested = false;
-        configDataOnlyIO = new ConfigDataOnlyIO(mContext, null);
-        configDataOnly = configDataOnlyIO.read();
-
-        websocketUrl = configDataOnly.urljs;
-        fhemUrl = configDataOnly.urlpl;
-        switchCols = configDataOnly.switchCols;
-        valueCols = configDataOnly.valueCols;
-        commandCols = configDataOnly.commandCols;
-        layouts[Integer.valueOf(getString(R.string.LAYOUT_HORIZONTAL))] = R.layout.main_layout_horizontal;
-        layouts[Integer.valueOf(getString(R.string.LAYOUT_VERTICAL))] = R.layout.main_layout_vertical;
-        layouts[Integer.valueOf(getString(R.string.LAYOUT_MIXED))] = R.layout.main_layout_mixed;
-
-        if (configDataOnly.suppressedVersions != null) {
-            for (Map.Entry<String, String> entry : configDataOnly.suppressedVersions.entrySet()) {
-                String type = entry.getKey();
-                String suppressedVersion = entry.getValue();
-                versionChecks.setSuppressedVersion(type, suppressedVersion);
-            }
+    //class OnSendCommand implements MyReceiveListener {
+    //    public void run(Context context, Intent intent) {
+    public void sendCommand(Intent intent) {
+        if (mySocket == null) {
+            checkSocket();
+            return;
         }
-    }
-
-    public void setOrientation() {
-        Configuration config = getResources().getConfiguration();
-
-        if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            iLayout = configDataOnly.layoutLandscape;
-        } else {
-            iLayout = configDataOnly.layoutPortrait;
-        }
-
-        if (iLayout > 0) {
-            switchCols = 0;
-            valueCols = 0;
-            commandCols = 0;
-        }
-    }
-
-    public void doStart(int nr) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "doStart started with " + Integer.toString(nr));
-
-        handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
-
-        allWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, WidgetProvider.class));
-        layoutId = layouts[iLayout];
-        mView = new RemoteViews(mContext.getPackageName(), layoutId);
-
-        configData = new ConfigData();
-        if (myLayout != null) {
-            for (int widgetId : allWidgetIds) {
-                for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
-                    for (int listviewId : entry.getValue()) {
-                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, listviewId);
-                    }
-                }
-            }
-        }
-
-        //-- control switches  ------------------------------------------------------------------
-        if (configDataOnly.switchRows != null) {
-            for (ConfigSwitchRow switchRow : configDataOnly.switchRows) {
-                if (switchRow.enabled) {
-                    //if (BuildConfig.DEBUG) Log.d(TAG,"unit: " + switchRow.unit + " cmd: " + switchRow.cmd);
-                    configData.switches.add(new MySwitch(switchRow.name, switchRow.unit, switchRow.cmd));
-                }
-            }
-        }
-        int switchCount = configData.switches.size();
-
-        //-- control lightscenes  ------------------------------------------------------------------
-        MyLightScene newLightScene = null;
-        if (configDataOnly.lightsceneRows != null) {
-            for (ConfigLightsceneRow lightsceneRow : configDataOnly.lightsceneRows) {
-                if (lightsceneRow.isHeader) {
-                    newLightScene = configData.lightScenes.newLightScene(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.showHeader);
-                } else {
-                    if (newLightScene != null) {
-                        newLightScene.addMember(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.enabled);
-                    }
-                }
-            }
-        }
-        int lightsceneCount = configData.lightScenes.itemsCount;
-
-        //-- control values  ------------------------------------------------------------------
-        if (configDataOnly.valueRows != null) {
-            for (ConfigValueRow valueRow : configDataOnly.valueRows) {
-                if (valueRow.enabled) {
-                    configData.values.add(new MyValue(valueRow.name, valueRow.unit));
-                }
-            }
-        }
-        int valueCount = configData.values.size();
-
-        //-- control commands  ------------------------------------------------------------------
-        if (configDataOnly.commandRows != null) {
-            for (ConfigCommandRow commandRow : configDataOnly.commandRows) {
-                if (commandRow.enabled) {
-                    configData.commands.add(new MyCommand(commandRow.name, commandRow.command, false));
-                }
-            }
-        }
-        int commandCount = configData.commands.size();
-        myLayout = new MyLayout(iLayout, switchCols, valueCols, commandCols, switchCount, lightsceneCount, valueCount, commandCount);
-
-        //-- control switches  ------------------------------------------------------------------
-        for (int i = 0; i <= switchCols; i++) {
-            configData.switchesCols.add(new ArrayList<>());
-        }
-
-        int rownum = 0;
-        int colnum = 0;
-        for (MySwitch switchRow : configData.switches) {
-            rownum = rownum + 1;
-            configData.switchesCols.get(colnum).add(switchRow);
-            if (rownum % myLayout.rowsPerCol.get("switch") == 0) {
-                colnum++;
-            }
-        }
-
-        //-- control values  ------------------------------------------------------------------
-        for (int i = 0; i <= valueCols; i++) {
-            configData.valuesCols.add(new ArrayList<>());
-        }
-        rownum = 0;
-        colnum = 0;
-        for (MyValue valueRow : configData.values) {
-            rownum = rownum + 1;
-            configData.valuesCols.get(colnum).add(valueRow);
-            if (rownum % myLayout.rowsPerCol.get("value") == 0) {
-                colnum++;
-            }
-        }
-
-        //-- control commands  ------------------------------------------------------------------
-        for (int i = 0; i <= commandCols; i++) {
-            configData.commandsCols.add(new ArrayList<>());
-        }
-        rownum = 0;
-        colnum = 0;
-        for (MyCommand commandRow : configData.commands) {
-            rownum = rownum + 1;
-            configData.commandsCols.get(colnum).add(commandRow);
-            if (rownum % myLayout.rowsPerCol.get("command") == 0) {
-                colnum++;
-            }
-        }
-        // -------------------------------------------------------------------------------
-        initListviews();
-    }
-
-    public static void sendCommand(Intent intent) {
-
         String type = intent.getExtras().getString(FHEM_TYPE);
         String cmd = intent.getExtras().getString(FHEM_COMMAND);
 
@@ -432,26 +313,18 @@ public class WidgetService extends Service {
 
             switch (type) {
                 case "switch":
-                    configData.switchesCols.get(actCol).get(position).setIcon("set_toggle");
-
-                    for (int id : allWidgetIds) {
-                        appWidgetManager.notifyAppWidgetViewDataChanged(id, myLayout.layout.get("switch").get(actCol));
-                    }
+                    ConfigWorkBasket.data.get(instSerial).switchesCols.get(actCol).get(position).setIcon("set_toggle");
+                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("switch").get(actCol));
                     break;
                 case "lightscene":
-                    configData.lightScenes.items.get(position).activ = true;
-
-                    for (int id : allWidgetIds) {
-                        appWidgetManager.notifyAppWidgetViewDataChanged(id, myLayout.layout.get("lightscene").get(0));
-                    }
+                    ConfigWorkBasket.data.get(instSerial).lightScenes.items.get(position).activ = true;
+                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("lightscene").get(0));
                     //handler.postDelayed(deactLightscene, 500);
                     break;
                 case "command":
-                    configData.commandsCols.get(actCol).get(position).activ = true;
-                    for (int id : allWidgetIds) {
-                        appWidgetManager.notifyAppWidgetViewDataChanged(id, myLayout.layout.get("command").get(actCol));
-                    }
-                    Runnable deactCommand = new DeactCommand(actCol, position);
+                    ConfigWorkBasket.data.get(instSerial).commandsCols.get(actCol).get(position).activ = true;
+                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("command").get(actCol));
+                    Runnable deactCommand = new DeactCommand(myLayout.layout.get("command").get(actCol), position, widgetId, instSerial, appWidgetManager);
                     handler.postDelayed(deactCommand, 500);
                     break;
             }
@@ -460,28 +333,186 @@ public class WidgetService extends Service {
 
     // after touch command button is for 500ms pride
     public static class DeactCommand implements Runnable {
-        int actCol;
         int actPos;
+        int widgetId;
+        int viewId;
+        int instSerial;
+        AppWidgetManager appWidgetManager;
 
-        DeactCommand(int actCol, int actPos) {
-            this.actCol = actCol;
+        DeactCommand(int viewId, int actPos, int widgetId, int instSerial, AppWidgetManager appWidgetManager) {
+            this.viewId = viewId;
             this.actPos = actPos;
+            this.widgetId = widgetId;
+            this.instSerial = instSerial;
+            this.appWidgetManager = appWidgetManager;
         }
 
         public void run() {
-            configData.commands.get(actPos).activ = false;
+            ConfigWorkBasket.data.get(instSerial).commands.get(actPos).activ = false;
+            appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, viewId);
+        }
 
-            for (int id : allWidgetIds) {
-                appWidgetManager.notifyAppWidgetViewDataChanged(id, myLayout.layout.get("command").get(actCol));
+    }
+
+
+    public void readConfig() {
+        if (BuildConfig.DEBUG) Log.d(TAG, "readConfig started");
+        valuesRequested = false;
+
+        ConfigDataIO configDataIO = new ConfigDataIO(mContext);
+
+        configDataCommon = configDataIO.readCommon();
+        ConfigWorkBasket.fhemjsPW = configDataCommon.fhemjsPW;
+        ConfigWorkBasket.urlFhemjs = configDataCommon.urlFhemjs;
+        ConfigWorkBasket.urlFhempl = configDataCommon.urlFhempl;
+
+        if (configDataCommon.suppressedVersions != null) {
+            for (Map.Entry<String, String> entry : configDataCommon.suppressedVersions.entrySet()) {
+                String type = entry.getKey();
+                String suppressedVersion = entry.getValue();
+                versionChecks.setSuppressedVersion(type, suppressedVersion);
             }
+        }
+
+        configDataInstance = configDataIO.readInstance(instSerial);
+
+        switchCols = configDataInstance.switchCols;
+        valueCols = configDataInstance.valueCols;
+        commandCols = configDataInstance.commandCols;
+    }
+
+    public void setOrientation() {
+        Configuration config = getResources().getConfiguration();
+
+        if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            iLayout = configDataInstance.layoutLandscape;
+        } else {
+            iLayout = configDataInstance.layoutPortrait;
+        }
+
+        if (iLayout > 0) {
+            switchCols = 0;
+            valueCols = 0;
+            commandCols = 0;
         }
     }
 
+    public void doStart(int nr) {
+        //if (BuildConfig.DEBUG) Log.d(TAG, "doStart started with " + Integer.toString(nr));
+
+        handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
+
+        //allWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, WidgetProvider.class));
+        layoutId = settingLayouts[iLayout];
+        mView = new RemoteViews(mContext.getPackageName(), layoutId);
+
+        //mView.setInt(R.id.main_layout, "setBackgroundResource", R.drawable.myshape);
+        //appWidgetManager.updateAppWidget(widgetId, mView);
+
+        if (myLayout != null) {
+            for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
+                for (int listviewId : entry.getValue()) {
+                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, listviewId);
+                }
+            }
+        }
+
+        ConfigWorkBasket.data.get(instSerial).init();
+        //-- control switches  ------------------------------------------------------------------
+        if (configDataInstance.switchRows != null) {
+            for (ConfigSwitchRow switchRow : configDataInstance.switchRows) {
+                if (switchRow.enabled) {
+                    //if (BuildConfig.DEBUG) Log.d(TAG,"unit: " + switchRow.unit + " cmd: " + switchRow.cmd);
+                    ConfigWorkBasket.data.get(instSerial).switches.add(new MySwitch(switchRow.name, switchRow.unit, switchRow.cmd));
+                }
+            }
+        }
+        int switchCount = ConfigWorkBasket.data.get(instSerial).switches.size();
+
+        //-- control lightscenes  ------------------------------------------------------------------
+        MyLightScene newLightScene = null;
+        if (configDataInstance.lightsceneRows != null) {
+            for (ConfigLightsceneRow lightsceneRow : configDataInstance.lightsceneRows) {
+                if (lightsceneRow.isHeader) {
+                    newLightScene = ConfigWorkBasket.data.get(instSerial).lightScenes.newLightScene(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.showHeader);
+                } else {
+                    if (newLightScene != null) {
+                        newLightScene.addMember(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.enabled);
+                    }
+                }
+            }
+        }
+        int lightsceneCount = ConfigWorkBasket.data.get(instSerial).lightScenes.itemsCount;
+
+        //-- control values  ------------------------------------------------------------------
+        if (configDataInstance.valueRows != null) {
+            for (ConfigValueRow valueRow : configDataInstance.valueRows) {
+                if (valueRow.enabled) {
+                    ConfigWorkBasket.data.get(instSerial).values.add(new MyValue(valueRow.name, valueRow.unit));
+                }
+            }
+        }
+        int valueCount = ConfigWorkBasket.data.get(instSerial).values.size();
+
+        //-- control commands  ------------------------------------------------------------------
+        if (configDataInstance.commandRows != null) {
+            for (ConfigCommandRow commandRow : configDataInstance.commandRows) {
+                if (commandRow.enabled) {
+                    ConfigWorkBasket.data.get(instSerial).commands.add(new MyCommand(commandRow.name, commandRow.command, false));
+                }
+            }
+        }
+        int commandCount = ConfigWorkBasket.data.get(instSerial).commands.size();
+        myLayout = new MyLayout(iLayout, switchCols, valueCols, commandCols, switchCount, lightsceneCount, valueCount, commandCount);
+
+        //-- control switches  ------------------------------------------------------------------
+        for (int i = 0; i <= switchCols; i++) {
+            ConfigWorkBasket.data.get(instSerial).switchesCols.add(new ArrayList<>());
+        }
+
+        int rownum = 0;
+        int colnum = 0;
+        for (MySwitch switchRow : ConfigWorkBasket.data.get(instSerial).switches) {
+            rownum = rownum + 1;
+            ConfigWorkBasket.data.get(instSerial).switchesCols.get(colnum).add(switchRow);
+            if (rownum % myLayout.rowsPerCol.get("switch") == 0) {
+                colnum++;
+            }
+        }
+
+        //-- control values  ------------------------------------------------------------------
+        for (int i = 0; i <= valueCols; i++) {
+            ConfigWorkBasket.data.get(instSerial).valuesCols.add(new ArrayList<>());
+        }
+        rownum = 0;
+        colnum = 0;
+        for (MyValue valueRow : ConfigWorkBasket.data.get(instSerial).values) {
+            rownum = rownum + 1;
+            ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).add(valueRow);
+            if (rownum % myLayout.rowsPerCol.get("value") == 0) {
+                colnum++;
+            }
+        }
+
+        //-- control commands  ------------------------------------------------------------------
+        for (int i = 0; i <= commandCols; i++) {
+            ConfigWorkBasket.data.get(instSerial).commandsCols.add(new ArrayList<>());
+        }
+        rownum = 0;
+        colnum = 0;
+        for (MyCommand commandRow : ConfigWorkBasket.data.get(instSerial).commands) {
+            rownum = rownum + 1;
+            ConfigWorkBasket.data.get(instSerial).commandsCols.get(colnum).add(commandRow);
+            if (rownum % myLayout.rowsPerCol.get("command") == 0) {
+                colnum++;
+            }
+        }
+        // -------------------------------------------------------------------------------
+        initListviews();
+    }
+
     private void initListviews() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "initListviews started");
-        final Intent onItemClick = new Intent(mContext, WidgetProvider.class);
-        onItemClick.setData(Uri.parse(onItemClick.toUri(Intent.URI_INTENT_SCHEME)));
-        onClickPendingIntent = PendingIntent.getBroadcast(mContext, 0, onItemClick, PendingIntent.FLAG_UPDATE_CURRENT);
+        //if (BuildConfig.DEBUG) Log.d(TAG, "initListviews started");
         mView = new RemoteViews(mContext.getPackageName(), layoutId);
 
         mView.setViewVisibility(R.id.noconn, View.GONE);
@@ -490,28 +521,31 @@ public class WidgetService extends Service {
             mView.setViewVisibility(viewId, View.GONE);
         }
 
-        for (int widgetId : allWidgetIds) {
-
-            for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
-                String type = entry.getKey();
-                int actCol = 0;
-                for (int listviewId : entry.getValue()) {
-                    initListview(widgetId, listviewId, actCol, type);
-                    mView.setViewVisibility(listviewId, View.VISIBLE);
-                    actCol++;
-                }
+        for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
+            String type = entry.getKey();
+            int actCol = 0;
+            for (int listviewId : entry.getValue()) {
+                initListview(listviewId, actCol, type);
+                mView.setViewVisibility(listviewId, View.VISIBLE);
+                actCol++;
             }
-            appWidgetManager.updateAppWidget(widgetId, mView);
         }
+        appWidgetManager.updateAppWidget(widgetId, mView);
     }
 
-    private void initListview(int widgetId, int listviewId, int actCol, String type) {
+    private void initListview(int listviewId, int actCol, String type) {
+        //final Intent onItemClick = new Intent(mContext, serviceClasses.get(instSerial));
+        final Intent onItemClick = new Intent(mContext, WidgetProvider.class);
+        //onItemClick.setAction(SEND_FHEM_COMMAND);
+        onItemClick.setData(Uri.parse(onItemClick.toUri(Intent.URI_INTENT_SCHEME)));
+        PendingIntent onClickPendingIntent = PendingIntent.getBroadcast(mContext, 0, onItemClick, PendingIntent.FLAG_UPDATE_CURRENT);
         mView.setPendingIntentTemplate(listviewId, onClickPendingIntent);
+
         Class serviceClass = CommonListviewService.class;
         Intent myIntent = new Intent(mContext, serviceClass);
-        myIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         myIntent.putExtra(ACTCOL, actCol);
         myIntent.putExtra(FHEM_TYPE, type);
+        myIntent.putExtra(INSTSERIAL, instSerial);
         String uriString = myIntent.toUri(Intent.URI_INTENT_SCHEME);
         myIntent.setData(Uri.parse(uriString));
         mView.setRemoteAdapter(listviewId, myIntent);
@@ -591,7 +625,7 @@ public class WidgetService extends Service {
 
     private void setVisibility(String type, String text) {
         //Log.i("type of setVisibility",type);
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
+        //AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
 
         switch (type) {
             case VERSION_APP:
@@ -628,9 +662,7 @@ public class WidgetService extends Service {
                 break;
         }
 
-        for (int widgetId : allWidgetIds) {
-            appWidgetManager.updateAppWidget(widgetId, mView);
-        }
+        appWidgetManager.updateAppWidget(widgetId, mView);
     }
 
     private void setVisibilityListViews(int action) {
@@ -642,27 +674,26 @@ public class WidgetService extends Service {
     }
 
     private void requestValues(String from) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "requestValues started by " + from);
+        //if (BuildConfig.DEBUG) Log.d(TAG, "requestValues started by " + from);
 
-        mySocket.requestValues(configData.getSwitchesList(), "once");
-        mySocket.requestValues(configData.getValuesList(), "once");
-        mySocket.requestValues(configData.getLightScenesList(), "once");
+        mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getSwitchesList(), "once");
+        mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getValuesList(), "once");
+        mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getLightScenesList(), "once");
         valuesRequested = true;
 
-        mySocket.requestValues(configData.getSwitchesList(), "onChange");
-        mySocket.requestValues(configData.getValuesList(), "onChange");
-        mySocket.requestValues(configData.getLightScenesList(), "onChange");
+        mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getSwitchesList(), "onChange");
+        mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getValuesList(), "onChange");
+        mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getLightScenesList(), "onChange");
     }
 
     private void initSocket() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "initSocket started");
+        //if (BuildConfig.DEBUG) Log.d(TAG, "initSocket started");
 
-        mySocket = new MySocket(websocketUrl, mContext, "Widget");
+        mySocket = new MySocket(ConfigWorkBasket.urlFhemjs, "Widget");
         mySocket.socket.off(Socket.EVENT_CONNECT);
         mySocket.socket.on(Socket.EVENT_CONNECT, args -> {
-            String pw = configDataOnly.connectionPW;
-            if (!pw.equals("")) {
-                mySocket.socket.emit("authentication", pw);
+            if (!ConfigWorkBasket.fhemjsPW.equals("")) {
+                mySocket.socket.emit("authentication", ConfigWorkBasket.fhemjsPW);
             }
             requestValues("initSocket");
             setVisibility(SOCKET_CONNECTED, "");
@@ -696,25 +727,18 @@ public class WidgetService extends Service {
                         e.printStackTrace();
                     }
 
-                    //if (BuildConfig.DEBUG) Log.d(TAG,"new value: " + unit + ":" + value);
-                    int actCol = configData.setSwitchIcon(unit, value);
+                    //if (BuildConfig.DEBUG && instSerial == 1) Log.d(TAG,"new value: " + unit + ":" + value);
+                    int actCol = ConfigWorkBasket.data.get(instSerial).setSwitchIcon(unit, value);
                     if (actCol > -1) {
-                        for (int id : allWidgetIds) {
-                            appWidgetManager.notifyAppWidgetViewDataChanged(id, myLayout.layout.get("switch").get(actCol));
-                        }
+                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("switch").get(actCol));
+                    }
+                    actCol = ConfigWorkBasket.data.get(instSerial).setValue(unit, value);
+                    if (actCol > -1) {
+                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("value").get(actCol));
                     }
 
-                    actCol = configData.setValue(unit, value);
-                    if (actCol > -1) {
-                        for (int id : allWidgetIds) {
-                            appWidgetManager.notifyAppWidgetViewDataChanged(id, myLayout.layout.get("value").get(actCol));
-                        }
-                    }
-
-                    if (configData.setLightscene(unit, value)) {
-                        for (int id : allWidgetIds) {
-                            appWidgetManager.notifyAppWidgetViewDataChanged(id, myLayout.layout.get("lightscene").get(0));
-                        }
+                    if (ConfigWorkBasket.data.get(instSerial).setLightscene(unit, value)) {
+                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("lightscene").get(0));
                     }
 
 
@@ -723,7 +747,7 @@ public class WidgetService extends Service {
 
             mySocket.socket.off("version");
             mySocket.socket.on("version", args1 -> {
-                if (BuildConfig.DEBUG) Log.d("version", args1[0].toString());
+                //if (BuildConfig.DEBUG) Log.d("version", args1[0].toString());
                 JSONObject obj = (JSONObject) args1[0];
                 try {
                     versionChecks.setVersions(obj.getString("type"), obj.getString("installed"), obj.getString("latest"));
@@ -766,19 +790,16 @@ public class WidgetService extends Service {
     };
 
     private void checkVersion() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "checkVersion started");
 
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        MyWifiInfo myWifiInfo = new MyWifiInfo(mContext);
 
-        boolean isWiFi = networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
-        if (isWiFi) {
+        if (myWifiInfo.isWifi()) {
             new GetStoreVersion(mContext, STORE_VERSION_WIDGET).execute();
         }
     }
 
     private void checkShowVersion() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "checkShowVersion started");
+        //if (BuildConfig.DEBUG) Log.d(TAG, "checkShowVersion started");
         if (!isScreenOn()) return;
         //if (BuildConfig.DEBUG) Log.d(TAG, versionChecks.typesToString());
         String type = versionChecks.showVersionHint();
@@ -802,13 +823,14 @@ public class WidgetService extends Service {
 
             setVisibility(type, hint);
             currentVersionType = type;
-            if (BuildConfig.DEBUG) Log.d(TAG, "show version hint " + type);
+            //if (BuildConfig.DEBUG) Log.d(TAG, "show version hint " + type);
         }
     }
 
     private void saveSuppressedVersions(String type) {
-        configDataOnly.suppressedVersions.put(type, versionChecks.getSuppressedVersion(type));
-        configDataOnlyIO.save(configDataOnly);
+        configDataCommon.suppressedVersions.put(type, versionChecks.getSuppressedVersion(type));
+        ConfigDataIO configDataIO = new ConfigDataIO(mContext);
+        configDataIO.saveCommon(configDataCommon);
     }
 
     @Override

@@ -13,8 +13,8 @@ android {
     }
     defaultConfig {
         applicationId "de.fehngarten.fhemswitch"
-        versionCode 225
-        versionName "2.2.5"
+        versionCode 3002
+        versionName "3.0.0.beta2"
         minSdkVersion 14
         targetSdkVersion 24
         archivesBaseName = "fhemswitch-$versionName"
@@ -62,4 +62,5 @@ dependencies {
     compile 'org.jsoup:jsoup:1.7.2'
     compile 'joda-time:joda-time:2.9.4'
     //compile 'com.google.code.gson:gson:2.8.0'
+    //compile 'com.google.android.gms:play-services-appindexing:9.8.0'
 }

@@ -1,7 +1,6 @@
 package de.fehngarten.fhemswitch.config;
 
 import android.content.BroadcastReceiver;
-import android.content.IntentFilter;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import android.widget.ArrayAdapter;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
@@ -35,11 +35,12 @@ import android.widget.TextView;
 import android.content.pm.ActivityInfo;
 
 import de.fehngarten.fhemswitch.BuildConfig;
-import de.fehngarten.fhemswitch.data.ConfigData;
-import de.fehngarten.fhemswitch.data.ConfigDataOnly;
-import de.fehngarten.fhemswitch.data.ConfigDataOnlyIO;
+import de.fehngarten.fhemswitch.data.ConfigDataCommon;
+import de.fehngarten.fhemswitch.data.ConfigDataIO;
+import de.fehngarten.fhemswitch.data.ConfigWorkInstance;
+import de.fehngarten.fhemswitch.data.ConfigDataInstance;
 import de.fehngarten.fhemswitch.data.MyLightScenes.MyLightScene;
-import de.fehngarten.fhemswitch.data.MySocket;
+import de.fehngarten.fhemswitch.modul.MySocket;
 import de.fehngarten.fhemswitch.data.MySwitch;
 import de.fehngarten.fhemswitch.data.MyValue;
 import de.fehngarten.fhemswitch.data.ConfigLightsceneRow;
@@ -47,7 +48,6 @@ import de.fehngarten.fhemswitch.data.ConfigSwitchRow;
 import de.fehngarten.fhemswitch.data.ConfigValueRow;
 
 import de.fehngarten.fhemswitch.config.listviews.*;
-import de.fehngarten.fhemswitch.widget.WidgetService;
 import de.fehngarten.fhemswitch.R;
 
 import de.fehngarten.fhemswitch.modul.GetStoreVersion;
@@ -59,16 +59,23 @@ import io.socket.client.Socket;
 import io.socket.client.Ack;
 
 import com.mobeta.android.dslv.DragSortListView;
+
 import android.util.Log;
+
+import static de.fehngarten.fhemswitch.global.Consts.NEW_CONFIG;
+import static de.fehngarten.fhemswitch.global.Consts.SEND_DO_COLOR;
+import static de.fehngarten.fhemswitch.global.Consts.STOP_CONFIG;
 import static de.fehngarten.fhemswitch.global.Settings.*;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 
 public class ConfigMain extends Activity {
+    private final String TAG = "ConfigMain";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private EditText urlpl, urljs, connectionPW;
-    public static ConfigData configData;
-    private ConfigDataOnly configDataOnly;
+    public static ConfigWorkInstance configWorkInstance;
+    private ConfigDataCommon configDataCommon;
+    private ConfigDataInstance configDataInstance;
     public static MySocket mySocket;
 
     public ConfigSwitchesAdapter configSwitchesAdapter;
@@ -84,13 +91,15 @@ public class ConfigMain extends Activity {
     public Spinner spinnerCommandCols;
     public RadioGroup radioLayoutLandscape;
     public RadioGroup radioLayoutPortrait;
-    public ConfigDataOnlyIO configDataOnlyIO;
+    public RadioGroup radioWidgetSelector;
+    public ConfigDataIO configDataIO;
     static final String STORE_VERSION_CONFIG = "de.fehngarten.fhemswitch.STORE_VERSION_CONFIG";
     private ArrayList<BroadcastReceiver> broadcastReceivers;
+    private int instSerial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (BuildConfig.DEBUG) Log.d("ConfigMain", "onCreate fired");
+        //if (BuildConfig.DEBUG) Log.d(TAG, "onCreate fired");
         super.onCreate(savedInstanceState);
 
         mContext = this;
@@ -100,13 +109,14 @@ public class ConfigMain extends Activity {
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
         float density = getResources().getDisplayMetrics().density;
         float dpWidth = screenWidth / density;
-
+/*
         if (dpWidth < 600) {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             screenWidth = getResources().getDisplayMetrics().widthPixels;
             density = getResources().getDisplayMetrics().density;
             dpWidth = screenWidth / density;
         }
+*/
         if (dpWidth < 600) {
             setContentView(R.layout.config__s);
         } else if (dpWidth < 725) {
@@ -122,17 +132,27 @@ public class ConfigMain extends Activity {
         class OnStoreVersion implements MyReceiveListener {
             public void run(Context context, Intent intent) {
                 String latest = intent.getExtras().getString(GetStoreVersion.LATEST);
-                if (BuildConfig.DEBUG) Log.d("ConfigMain", "get store version: " + latest);
+                if (BuildConfig.DEBUG) Log.d("ConfigMain", "latest store version: " + latest);
                 TextView latestView = (TextView) findViewById(R.id.latestView);
                 latestView.setText(latest);
             }
         }
 
+        class OnStopConfig implements MyReceiveListener {
+            public void run(Context context, Intent intent) {
+                Log.d(TAG,"OnStopConfig fired");
+                finish();
+            }
+        }
 
         broadcastReceivers = new ArrayList<>();
 
-        String[] actions = new String[]{STORE_VERSION_CONFIG};
+        String[] actions;
+        actions = new String[]{STORE_VERSION_CONFIG};
         broadcastReceivers.add(new MyBroadcastReceiver(this, new OnStoreVersion(), actions));
+
+        actions = new String[]{STOP_CONFIG};
+        broadcastReceivers.add(new MyBroadcastReceiver(this, new OnStopConfig(), actions));
 
         new GetStoreVersion(mContext, STORE_VERSION_CONFIG).execute();
 
@@ -140,99 +160,77 @@ public class ConfigMain extends Activity {
         urljs = (EditText) findViewById(R.id.urljs);
         connectionPW = (EditText) findViewById(R.id.connection_pw);
 
-        configDataOnlyIO = new ConfigDataOnlyIO(mContext, settingVersionTypes);
-        configDataOnly = configDataOnlyIO.read();
+        configDataIO = new ConfigDataIO(mContext);
+        //configDataIO.deleteCommon();
+        configDataCommon = configDataIO.readCommon();
 
         // Read object using ObjectInputStream
 
-        urljs.setText(configDataOnly.urljs, TextView.BufferType.EDITABLE);
-        urlpl.setText(configDataOnly.urlpl, TextView.BufferType.EDITABLE);
-        connectionPW.setText(configDataOnly.connectionPW, TextView.BufferType.EDITABLE);
-
-        Button callDonateButton = (Button) findViewById(R.id.callDonateButton);
-        callDonateButton.setOnClickListener(callDonateButtonOnClickListener);
-
-        Button getConfigButton = (Button) findViewById(R.id.get_config);
-        getConfigButton.setOnClickListener(getConfigButtonOnClickListener);
-
-        Button saveConfigButton = (Button) findViewById(R.id.save_config);
-        saveConfigButton.setOnClickListener(saveConfigButtonOnClickListener);
-
-        Button cancelConfigButton = (Button) findViewById(R.id.cancel_config);
-        cancelConfigButton.setOnClickListener(cancelConfigButtonOnClickListener);
-
-        Button cancel2ConfigButton = (Button) findViewById(R.id.cancel2_config);
-        cancel2ConfigButton.setOnClickListener(cancelConfigButtonOnClickListener);
-
-        spinnerSwitchCols = (Spinner) this.findViewById(R.id.config_switch_cols);
-        ArrayAdapter<CharSequence> adapterSwitchCols = ArrayAdapter.createFromResource(this, R.array.colnum, R.layout.spinner_item);
-        adapterSwitchCols.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinnerSwitchCols.setAdapter(adapterSwitchCols);
-        spinnerSwitchCols.setSelection(configDataOnly.switchCols);
-
-        spinnerValueCols = (Spinner) this.findViewById(R.id.config_value_cols);
-        ArrayAdapter<CharSequence> adapterValueCols = ArrayAdapter.createFromResource(this, R.array.colnum, R.layout.spinner_item);
-        adapterValueCols.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinnerValueCols.setAdapter(adapterValueCols);
-        spinnerValueCols.setSelection(configDataOnly.valueCols);
-
-        spinnerCommandCols = (Spinner) this.findViewById(R.id.config_command_cols);
-        ArrayAdapter<CharSequence> adapterCommandCols = ArrayAdapter.createFromResource(this, R.array.colnum, R.layout.spinner_item);
-        adapterCommandCols.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinnerCommandCols.setAdapter(adapterCommandCols);
-        spinnerCommandCols.setSelection(configDataOnly.commandCols);
-
-        configData = new ConfigData();
-        if (configDataOnly.switchRows != null) {
-            for (ConfigSwitchRow switchRow : configDataOnly.switchRows) {
-                if (switchRow.enabled) {
-                    configData.switches.add(new MySwitch(switchRow.name, switchRow.unit, switchRow.cmd));
-                } else {
-                    configData.switchesDisabled.add(new MySwitch(switchRow.name, switchRow.unit, switchRow.cmd));
-                }
-            }
-            Collections.sort(configData.switchesDisabled);
-        }
-
-        MyLightScene newLightScene = null;
-        if (configDataOnly.lightsceneRows != null) {
-            for (ConfigLightsceneRow lightsceneRow : configDataOnly.lightsceneRows) {
-                //Log.i("lightscene row",lightsceneRow.isHeader.toString());
-                if (lightsceneRow.isHeader) {
-                    newLightScene = configData.lightScenes.newLightScene(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.showHeader);
-                } else {
-                    newLightScene.addMember(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.enabled);
-                }
-            }
-        }
-
-        if (configDataOnly.valueRows != null) {
-            for (ConfigValueRow valueRow : configDataOnly.valueRows) {
-                if (valueRow.enabled) {
-                    configData.values.add(new MyValue(valueRow.name, valueRow.unit));
-                } else {
-                    configData.valuesDisabled.add(new MyValue(valueRow.name, valueRow.unit));
-                }
-            }
-            Collections.sort(configData.valuesDisabled);
-        }
+        urljs.setText(configDataCommon.urlFhemjs, TextView.BufferType.EDITABLE);
+        urlpl.setText(configDataCommon.urlFhempl, TextView.BufferType.EDITABLE);
+        connectionPW.setText(configDataCommon.fhemjsPW, TextView.BufferType.EDITABLE);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
             mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+            if (mAppWidgetId > 0) {
+                instSerial = configDataCommon.getFreeInstance(mAppWidgetId);
+            } else {
+                instSerial = configDataCommon.getFirstInstance();
+            }
+        } else {
+            instSerial = configDataCommon.getFirstInstance();
+        }
+        Log.d(TAG, "instSerial: " + instSerial);
+        if (instSerial < 0) {
+            String hint;
+            if (mAppWidgetId > 0) {
+                hint = getString(R.string.maxWidgetMessage, Integer.toString(settingsMaxInst));
+            } else {
+                hint = getString(R.string.noWidgetMessage);
+            }
+
+            TextView t = (TextView) findViewById(R.id.message);
+            t.setText(hint);
+
+            findViewById(R.id.url_block).setVisibility(View.GONE);
+            findViewById(R.id.message_block).setVisibility(View.VISIBLE);
+        } else if (configDataCommon.getWidgetCount() > 1) {
+            findViewById(R.id.widgetSelector).setVisibility(View.VISIBLE);
+            int i = 0;
+            for (int widgetId : configDataCommon.instances) {
+                if (widgetId > 0) {
+                    findViewById(settingWidgetSel[i]).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(settingWidgetSel[i]).setVisibility(View.GONE);
+                }
+                i++;
+            }
+        } else {
+            findViewById(R.id.widgetSelector).setVisibility(View.GONE);
         }
 
-        radioLayoutLandscape = (RadioGroup) findViewById(R.id.layout_landscape);
-        radioLayoutPortrait = (RadioGroup) findViewById(R.id.layout_portrait);
+        handleButtons();
+    }
 
-        ((RadioButton) radioLayoutLandscape.getChildAt(configDataOnly.layoutLandscape)).setChecked(true);
-        ((RadioButton) radioLayoutPortrait.getChildAt(configDataOnly.layoutPortrait)).setChecked(true);
+    private void sendDoColor(boolean setColor) {
+        int widgetId;
+        for (int i = 0; i < configDataCommon.instances.length; i++) {
+            widgetId = configDataCommon.instances[i];
+            if (widgetId > 0) {
+                Intent intent = new Intent(mContext.getApplicationContext(), settingServiceClasses.get(i));
+                intent.setAction(SEND_DO_COLOR);
+                intent.putExtra("COLOR", setColor);
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+                mContext.startService(intent);
+            }
+        }
     }
 
     @Override
     public void onDestroy() {
-        if (BuildConfig.DEBUG) Log.d("ConfigMain", "onDestroy fired");
+        if (BuildConfig.DEBUG) Log.d(TAG, "onDestroy fired");
         if (mySocket != null) {
             mySocket.socket.disconnect();
             mySocket.socket.close();
@@ -242,33 +240,35 @@ public class ConfigMain extends Activity {
             unregisterReceiver(broadcastReceiver);
         }
 
+        sendDoColor(false);
+
+        //Intent restartIntent = new Intent();
+        //restartIntent.setAction(ACTION_APPWIDGET_UPDATE);
+        //mContext.sendBroadcast(restartIntent);
+
+        int widgetId;
+        for (int i = 0; i < configDataCommon.instances.length; i++) {
+            widgetId = configDataCommon.instances[i];
+            if (widgetId > 0) {
+                Intent intent = new Intent(mContext.getApplicationContext(), settingServiceClasses.get(i));
+                intent.setAction(ACTION_APPWIDGET_UPDATE);
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+                mContext.stopService(intent);
+                mContext.startService(intent);
+            }
+        }
+
         super.onDestroy();
     }
 
-    private Button.OnClickListener callDonateButtonOnClickListener = new Button.OnClickListener() {
-        @Override
-        public void onClick(View arg0) {
-            Intent donateIntent = new Intent(mContext, ConfigDonate.class);
-            startActivity(donateIntent);
-        }
-    };
-
-    private Button.OnClickListener newCommandButtonOnClickListener = new Button.OnClickListener() {
-        @Override
-        public void onClick(View arg0) {
-            configCommandsAdapter.newLine();
-            configCommandsAdapter.setListViewHeightBasedOnChildren((ListView) findViewById(R.id.commands));
-        }
-    };
-
-    private Button.OnClickListener getConfigButtonOnClickListener = arg0 -> showFHEMunits();
-
-    private Button.OnClickListener saveConfigButtonOnClickListener = arg0 -> saveConfig();
-
-    private Button.OnClickListener cancelConfigButtonOnClickListener = arg0 -> finish();
 
     private void showFHEMunits() {
         // hide soft keyboard
+        sendDoColor(true);
+        configDataInstance = configDataIO.readInstance(instSerial);
+
+        buildSpinnerRadio();
+        radioWidgetSelector.setOnCheckedChangeListener(widgetSelectorChange);
         View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -281,7 +281,7 @@ public class ConfigMain extends Activity {
             try {
                 String pw = connectionPW.getText().toString();
 
-                mySocket = new MySocket(urljs.getText().toString(), mContext, "Config");
+                mySocket = new MySocket(urljs.getText().toString(), "Config");
                 mySocket.socket.on("authenticated", authListener);
 
                 if (!pw.equals("")) {
@@ -303,6 +303,86 @@ public class ConfigMain extends Activity {
         }
     }
 
+    private void buildSpinnerRadio() {
+        ((RadioButton) radioLayoutLandscape.getChildAt(configDataInstance.layoutLandscape)).setChecked(true);
+        ((RadioButton) radioLayoutPortrait.getChildAt(configDataInstance.layoutPortrait)).setChecked(true);
+        ((RadioButton) radioWidgetSelector.getChildAt(instSerial)).setChecked(true);
+
+        spinnerSwitchCols = (Spinner) this.findViewById(R.id.config_switch_cols);
+        ArrayAdapter<CharSequence> adapterSwitchCols = ArrayAdapter.createFromResource(this, R.array.colnum, R.layout.spinner_item);
+        adapterSwitchCols.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerSwitchCols.setAdapter(adapterSwitchCols);
+        spinnerSwitchCols.setSelection(configDataInstance.switchCols);
+
+        spinnerValueCols = (Spinner) this.findViewById(R.id.config_value_cols);
+        ArrayAdapter<CharSequence> adapterValueCols = ArrayAdapter.createFromResource(this, R.array.colnum, R.layout.spinner_item);
+        adapterValueCols.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerValueCols.setAdapter(adapterValueCols);
+        spinnerValueCols.setSelection(configDataInstance.valueCols);
+
+        spinnerCommandCols = (Spinner) this.findViewById(R.id.config_command_cols);
+        ArrayAdapter<CharSequence> adapterCommandCols = ArrayAdapter.createFromResource(this, R.array.colnum, R.layout.spinner_item);
+        adapterCommandCols.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerCommandCols.setAdapter(adapterCommandCols);
+        spinnerCommandCols.setSelection(configDataInstance.commandCols);
+    }
+
+    private void handleButtons() {
+        findViewById(R.id.callDonateButton).setOnClickListener(callDonateButtonOnClickListener);
+        findViewById(R.id.get_config).setOnClickListener(getConfigButtonOnClickListener);
+        findViewById(R.id.save_config).setOnClickListener(saveConfigButtonOnClickListener);
+        findViewById(R.id.cancel_config).setOnClickListener(cancelConfigButtonOnClickListener);
+        findViewById(R.id.cancel2_config).setOnClickListener(cancelConfigButtonOnClickListener);
+        findViewById(R.id.cancel3_config).setOnClickListener(cancelConfigButtonOnClickListener);
+
+        radioLayoutLandscape = (RadioGroup) findViewById(R.id.layout_landscape);
+        radioLayoutPortrait = (RadioGroup) findViewById(R.id.layout_portrait);
+        radioWidgetSelector = (RadioGroup) findViewById(R.id.widgetsel);
+    }
+
+    private RadioGroup.OnCheckedChangeListener widgetSelectorChange = new OnCheckedChangeListener() {
+
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            View radioButton = group.findViewById(checkedId);
+            saveConfig(false);
+
+            Intent intent = new Intent(mContext.getApplicationContext(), settingServiceClasses.get(instSerial));
+            intent.setAction(NEW_CONFIG);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, configDataCommon.instances[instSerial]);
+            mContext.stopService(intent);
+            mContext.startService(intent);
+
+            instSerial = Integer.valueOf(radioButton.getTag().toString());
+            showFHEMunits();
+        }
+    };
+
+    private Button.OnClickListener callDonateButtonOnClickListener = new Button.OnClickListener() {
+        @Override
+        public void onClick(View arg0) {
+            Intent donateIntent = new Intent(mContext, ConfigDonate.class);
+            startActivity(donateIntent);
+        }
+    };
+
+    private Button.OnClickListener newCommandButtonOnClickListener = new Button.OnClickListener() {
+        @Override
+        public void onClick(View arg0) {
+            configCommandsAdapter.newLine();
+            configCommandsAdapter.setListViewHeightBasedOnChildren((ListView) findViewById(R.id.commands));
+        }
+    };
+
+    private Button.OnClickListener getConfigButtonOnClickListener = arg0 -> {
+        saveConfigCommon();
+        showFHEMunits();
+    };
+
+    private Button.OnClickListener saveConfigButtonOnClickListener = arg0 -> saveConfig(true);
+
+    private Button.OnClickListener cancelConfigButtonOnClickListener = arg0 -> finish();
+
     private Runnable runnableWaitAuth = new Runnable() {
         @Override
         public void run() {
@@ -316,6 +396,44 @@ public class ConfigMain extends Activity {
     private Emitter.Listener authListener = args -> runOnUiThread(this::buildOutput);
 
     public void buildOutput() {
+
+        configWorkInstance = new ConfigWorkInstance();
+        configWorkInstance.init();
+
+        if (configDataInstance.switchRows != null) {
+            for (ConfigSwitchRow switchRow : configDataInstance.switchRows) {
+                if (switchRow.enabled) {
+                    configWorkInstance.switches.add(new MySwitch(switchRow.name, switchRow.unit, switchRow.cmd));
+                } else {
+                    configWorkInstance.switchesDisabled.add(new MySwitch(switchRow.name, switchRow.unit, switchRow.cmd));
+                }
+            }
+            Collections.sort(configWorkInstance.switchesDisabled);
+        }
+
+        MyLightScene newLightScene = null;
+        if (configDataInstance.lightsceneRows != null) {
+            for (ConfigLightsceneRow lightsceneRow : configDataInstance.lightsceneRows) {
+                //Log.i("lightscene row",lightsceneRow.isHeader.toString());
+                if (lightsceneRow.isHeader) {
+                    newLightScene = configWorkInstance.lightScenes.newLightScene(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.showHeader);
+                } else {
+                    newLightScene.addMember(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.enabled);
+                }
+            }
+        }
+
+        if (configDataInstance.valueRows != null) {
+            for (ConfigValueRow valueRow : configDataInstance.valueRows) {
+                if (valueRow.enabled) {
+                    configWorkInstance.values.add(new MyValue(valueRow.name, valueRow.unit));
+                } else {
+                    configWorkInstance.valuesDisabled.add(new MyValue(valueRow.name, valueRow.unit));
+                }
+            }
+            Collections.sort(configWorkInstance.valuesDisabled);
+        }
+
         waitAuth.removeCallbacks(runnableWaitAuth);
 
         getAllSwitches(mySocket);
@@ -357,7 +475,7 @@ public class ConfigMain extends Activity {
         l.setOnTouchListener(c);
         l.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        configCommandsAdapter.initData(configDataOnly.commandRows);
+        configCommandsAdapter.initData(configDataInstance.commandRows);
         configCommandsAdapter.dataComplete((ListView) findViewById(R.id.commands));
 
         Button newCommandButton = (Button) findViewById(R.id.newcommandline);
@@ -380,7 +498,7 @@ public class ConfigMain extends Activity {
             public void call(Object... args) {
                 runOnUiThread(() -> {
                     try {
-                        configSwitchesAdapter.initData((JSONArray) args[0], configData.switches, configData.switchesDisabled);
+                        configSwitchesAdapter.initData((JSONArray) args[0], configWorkInstance.switches, configWorkInstance.switchesDisabled);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -398,6 +516,7 @@ public class ConfigMain extends Activity {
         l.setAdapter(configLightscenesAdapter);
         ConfigLightscenesController c = new ConfigLightscenesController(l, configLightscenesAdapter, mContext);
         l.setFloatViewManager(c);
+        lsCounter = 0;
 
         mySocket.socket.emit("getAllUnitsOf", "LightScene", (Ack) args -> {
             try {
@@ -422,7 +541,7 @@ public class ConfigMain extends Activity {
                         lsCounter++;
                         if (lsCounter == lsSize) {
                             runOnUiThread(() -> {
-                                configLightscenesAdapter.initData(configData, lightsceneRowsTemp);
+                                configLightscenesAdapter.initData(configWorkInstance, lightsceneRowsTemp);
                                 configLightscenesAdapter.dataComplete((ListView) findViewById(R.id.lightscenes));
                             });
                         }
@@ -447,45 +566,43 @@ public class ConfigMain extends Activity {
             @Override
             public void call(Object... args) {
                 runOnUiThread(() -> {
-                    configValuesAdapter.initData((JSONObject) args[0], configData.values, configData.valuesDisabled);
+                    configValuesAdapter.initData((JSONObject) args[0], configWorkInstance.values, configWorkInstance.valuesDisabled);
                     configValuesAdapter.dataComplete((ListView) findViewById(R.id.values));
                 });
             }
         });
     }
 
-    private void saveConfig() {
-        configDataOnly.urljs = urljs.getText().toString();
-        configDataOnly.urlpl = urlpl.getText().toString();
-        configDataOnly.connectionPW = connectionPW.getText().toString();
-        configDataOnly.switchRows = configSwitchesAdapter.getData();
-        configDataOnly.lightsceneRows = configLightscenesAdapter.getData();
-        configDataOnly.valueRows = configValuesAdapter.getData();
-        configDataOnly.commandRows = configCommandsAdapter.getData();
-        configDataOnly.switchCols = spinnerSwitchCols.getSelectedItemPosition();
-        configDataOnly.valueCols = spinnerValueCols.getSelectedItemPosition();
-        configDataOnly.commandCols = spinnerCommandCols.getSelectedItemPosition();
+    private void saveConfig(boolean doFinish) {
+        configDataInstance.switchRows = configSwitchesAdapter.getData();
+        configDataInstance.lightsceneRows = configLightscenesAdapter.getData();
+        configDataInstance.valueRows = configValuesAdapter.getData();
+        configDataInstance.commandRows = configCommandsAdapter.getData();
+        configDataInstance.switchCols = spinnerSwitchCols.getSelectedItemPosition();
+        configDataInstance.valueCols = spinnerValueCols.getSelectedItemPosition();
+        configDataInstance.commandCols = spinnerCommandCols.getSelectedItemPosition();
 
         RadioButton radioLayoutPortraitButton = (RadioButton) findViewById(radioLayoutPortrait.getCheckedRadioButtonId());
         RadioButton radioLayoutLandscapeButton = (RadioButton) findViewById(radioLayoutLandscape.getCheckedRadioButtonId());
-        configDataOnly.layoutPortrait = Integer.valueOf(radioLayoutPortraitButton.getTag().toString());
-        configDataOnly.layoutLandscape = Integer.valueOf(radioLayoutLandscapeButton.getTag().toString());
+        configDataInstance.layoutPortrait = Integer.valueOf(radioLayoutPortraitButton.getTag().toString());
+        configDataInstance.layoutLandscape = Integer.valueOf(radioLayoutLandscapeButton.getTag().toString());
 
-        configDataOnlyIO.save(configDataOnly);
+        configDataIO.saveInstance(configDataInstance, instSerial);
 
-        // send Intent "new config" to widget
-        Intent resultValue = new Intent();
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-        setResult(RESULT_OK, resultValue);
+        if (doFinish) {
+            Intent resultValue = new Intent();
+            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+            setResult(RESULT_OK, resultValue);
+            finish();
+        }
+    }
 
-        Intent restartIntent = new Intent();
-        restartIntent.setAction(ACTION_APPWIDGET_UPDATE);
-        mContext.sendBroadcast(restartIntent);
+    private void saveConfigCommon() {
+        configDataCommon.urlFhemjs = urljs.getText().toString();
+        configDataCommon.urlFhempl = urlpl.getText().toString();
+        configDataCommon.fhemjsPW = connectionPW.getText().toString();
 
-        //Intent updateIntent = new Intent();
-        //updateIntent.setAction(WidgetService.NEW_CONFIG);
-        //mContext.sendBroadcast(updateIntent);
+        configDataIO.saveCommon(configDataCommon);
 
-        finish();
     }
 }

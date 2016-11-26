@@ -8,6 +8,7 @@ import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import de.fehngarten.fhemswitch.R;
 import static de.fehngarten.fhemswitch.global.Consts.*;
+import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
 import de.fehngarten.fhemswitch.widget.WidgetService;
 
 //import android.util.Log;
@@ -16,11 +17,13 @@ class ValuesFactory implements RemoteViewsFactory {
     //private static final String CLASSNAME = "ValuesFactory.";
     private Context mContext = null;
     private int colnum;
+    private int instSerial;
 
     ValuesFactory(Context context, Intent intent, int colnum) {
         //if (BuildConfig.DEBUG) Log.d(CLASSNAME, "started");
         mContext = context;
         this.colnum = colnum;
+        instSerial = intent.getIntExtra(INSTSERIAL, -1);
     }
 
     public void initData() {
@@ -53,10 +56,10 @@ class ValuesFactory implements RemoteViewsFactory {
         //String methodname = "getCount";
         //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "values size: " + Integer.toString(values.size()));
 
-        if (WidgetService.configData == null || WidgetService.configData.valuesCols == null || WidgetService.configData.valuesCols.size() <= colnum) {
+        if (ConfigWorkBasket.data.get(instSerial).valuesCols == null || ConfigWorkBasket.data.get(instSerial).valuesCols.size() <= colnum) {
             return (0);
         } else {
-            return WidgetService.configData.valuesCols.get(colnum).size();
+            return ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).size();
         }
     }
 
@@ -67,21 +70,23 @@ class ValuesFactory implements RemoteViewsFactory {
         if (position >= getCount()) {
             return mView;
         }
-        mView.setTextViewText(R.id.value_name, WidgetService.configData.valuesCols.get(colnum).get(position).name);
-        mView.setTextViewText(R.id.value_value, WidgetService.configData.valuesCols.get(colnum).get(position).value);
+
+        mView.setTextViewText(R.id.value_name, ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).get(position).name);
+        mView.setTextViewText(R.id.value_value, ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).get(position).value);
 
         if (position == 0) {
             mView.setInt(R.id.value_row, "setBackgroundResource", R.drawable.valuefirst);
-        } else if (position == WidgetService.configData.valuesCols.get(colnum).size() - 1) {
+        } else if (position == ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).size() - 1) {
             mView.setInt(R.id.value_row, "setBackgroundResource", R.drawable.valuelast);
         } else {
             mView.setInt(R.id.value_row, "setBackgroundResource", R.drawable.value);
         }
 
+        final Bundle bundle = new Bundle();
+        bundle.putString(FHEM_URI, ConfigWorkBasket.urlFhempl + "?detail=" + ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).get(position).unit);
+
         final Intent fillInIntent = new Intent();
         fillInIntent.setAction(OPEN_FHEM_HOMEPAGE);
-        final Bundle bundle = new Bundle();
-        bundle.putString(FHEM_URI, WidgetService.fhemUrl + "?detail=" + WidgetService.configData.valuesCols.get(colnum).get(position).unit);
         fillInIntent.putExtras(bundle);
         mView.setOnClickFillInIntent(R.id.value_name, fillInIntent);
 

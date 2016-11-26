@@ -36,10 +36,7 @@
     <string name="horizontal">horizontal</string>
     <string name="vertical">vertical</string>
     <string name="mixed">two columns</string>
-    <string name="LAYOUT_HORIZONTAL" translatable="false">0</string>
-    <string name="LAYOUT_VERTICAL" translatable="false">1</string>
-    <string name="LAYOUT_MIXED" translatable="false">2</string>
- 
+
     <string-array name="commands">
         <item>toggle</item>
         <item>on</item>
@@ -58,6 +55,10 @@
     <string name="donate_google">Donate</string>
     <string name="donate_string_call">optional donation</string>
 
+    <string name="widget1" translatable="false">Widget 1</string>
+    <string name="widget2" translatable="false">Widget 2</string>
+    <string name="widget3" translatable="false">Widget 3</string>
+    <string name="widget4" translatable="false">Widget 4</string>
     <string name="value0" translatable="false">1</string>
     <string name="value1" translatable="false">2</string>
     <string name="value2" translatable="false">5</string>
@@ -77,4 +78,6 @@
     <string name="latest_version">latest_version</string>
     <string name="cancel">Cancel</string>
     <string name="widget_name2" translatable="false">FHEMswitch2</string>
+    <string name="noWidgetMessage">First create widget by moving it to start screen.</string>
+    <string name="maxWidgetMessage">Maximum of %1$s widgets reached</string>
 </resources>

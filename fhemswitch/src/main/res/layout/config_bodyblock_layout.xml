@@ -8,6 +8,8 @@
     android:orientation="vertical"
     android:visibility="gone">
 
+
+
     <LinearLayout
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
@@ -31,6 +33,9 @@
             android:layout_marginLeft="8dp"
             android:text="@string/save" />
     </LinearLayout>
+
+    <!-- Block of widget seletor +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <include layout="@layout/config_block_widgetselect"></include>
 
     <ScrollView
         android:id="@+id/config_scroll_block"

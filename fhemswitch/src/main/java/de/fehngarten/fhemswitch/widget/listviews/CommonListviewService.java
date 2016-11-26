@@ -1,5 +1,6 @@
 package de.fehngarten.fhemswitch.widget.listviews;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.widget.RemoteViewsService;
 
@@ -13,7 +14,6 @@ public class CommonListviewService extends RemoteViewsService {
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         int col = intent.getIntExtra(ACTCOL, -1);
         String type = intent.getStringExtra(FHEM_TYPE);
-        //Log.d("CommonListviewService", "started " + type);
 
         switch (type) {
             case "switch":

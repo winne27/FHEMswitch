@@ -4,6 +4,7 @@
     <!--    android:versionCode="216"
             android:versionName="2.1.6" >
     -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.android.vending.BILLING" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -58,48 +59,18 @@
                 android:resource="@xml/widget_info" />
         </receiver>
 
-        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService" >
-        </service>
+        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService0" ></service>
+        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService1" ></service>
+        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService2" ></service>
+        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService3" ></service>
         <service
             android:name="de.fehngarten.fhemswitch.widget.listviews.CommonListviewService"
             android:permission="android.permission.BIND_REMOTEVIEWS" >
-        </service>
-        <service
-            android:name="de.fehngarten.fhemswitch.widget.listviews.SwitchesService1"
-            android:permission="android.permission.BIND_REMOTEVIEWS" >
-        </service>
-        <service
-            android:name="de.fehngarten.fhemswitch.widget.listviews.SwitchesService2"
-            android:permission="android.permission.BIND_REMOTEVIEWS" >
-        </service>
-        <service
-            android:name="de.fehngarten.fhemswitch.widget.listviews.LightScenesService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" >
-        </service>
-        <service
-            android:name="de.fehngarten.fhemswitch.widget.listviews.ValuesService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" >
-        </service>
-        <service
-            android:name="de.fehngarten.fhemswitch.widget.listviews.ValuesService1"
-            android:permission="android.permission.BIND_REMOTEVIEWS" >
-        </service>
-        <service
-            android:name="de.fehngarten.fhemswitch.widget.listviews.ValuesService2"
-            android:permission="android.permission.BIND_REMOTEVIEWS" >
-        </service>
-        <service
-            android:name="de.fehngarten.fhemswitch.widget.listviews.CommandsService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" >
-        </service>
-        <service
-            android:name="de.fehngarten.fhemswitch.widget.listviews.CommandsService1"
-            android:permission="android.permission.BIND_REMOTEVIEWS" >
-        </service>
-        <service
-            android:name="de.fehngarten.fhemswitch.widget.listviews.CommandsService2"
-            android:permission="android.permission.BIND_REMOTEVIEWS" >
-        </service>
+        </service><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />-->
     </application>
 
 </manifest>

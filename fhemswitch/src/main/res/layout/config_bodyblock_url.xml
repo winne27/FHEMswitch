@@ -1,124 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/url_block"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:layout_marginBottom="6dp"
-    android:layout_marginTop="0dp"
-    android:gravity="center_horizontal"
-    android:visibility="visible">
-    <!-- URL for node.js +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-    <Button
-        android:id="@+id/callDonateButton"
-        style="@style/Widget.Button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="@string/donate_string_call" />
-
-    <TableLayout
-        android:id="@+id/url_table"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/callDonateButton"
-        android:layout_centerInParent="true"
-        android:stretchColumns="1">
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/urljs_label"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="13dp"
-                android:text="@string/url_fhem_js"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/urljs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:ems="10"
-                android:inputType="text" />
-        </TableRow>
-
-        <!-- URL for node.pl ++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/urlpl_label"
-                android:layout_width="220dp"
-                android:layout_height="match_parent"
-                android:paddingLeft="13dp"
-                android:text="@string/url_fhem_pl"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/urlpl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:ems="10"
-                android:inputType="textUri" />
-        </TableRow>
-
-        <!-- connection password +++++++++++++++++++++++++++++++++++++++++++++++++++++++++- -->
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/password_label"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="13dp"
-                android:text="@string/conn_pw"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/connection_pw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:ems="10"
-                android:inputType="textPassword" />
-        </TableRow>
-    </TableLayout>
+    android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/url_block"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/url_table"
-        android:layout_centerHorizontal="true">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center_horizontal"
+        android:visibility="visible">
+
 
         <Button
-            android:id="@+id/cancel2_config"
+            android:id="@+id/callDonateButton"
             style="@style/Widget.Button"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/donate_string_call" />
 
-            android:text="@string/cancel" />
+        <TableLayout
+            android:id="@+id/url_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/callDonateButton"
+            android:layout_centerInParent="true"
+            android:stretchColumns="1">
 
-        <Button
-            android:id="@+id/get_config"
-            style="@style/Widget.Button"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_toRightOf="@id/cancel2_config"
-            android:text="@string/getConfig" />
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/urljs_label"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="13dp"
+                    android:text="@string/url_fhem_js"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/urljs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:ems="10"
+                    android:inputType="text" />
+            </TableRow>
+
+            <!-- URL for node.pl ++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/urlpl_label"
+                    android:layout_width="220dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="13dp"
+                    android:text="@string/url_fhem_pl"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/urlpl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:ems="10"
+                    android:inputType="textUri" />
+            </TableRow>
+
+            <!-- connection password +++++++++++++++++++++++++++++++++++++++++++++++++++++++++- -->
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/password_label"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="13dp"
+                    android:text="@string/conn_pw"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/connection_pw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:ems="10"
+                    android:inputType="textPassword" />
+            </TableRow>
+        </TableLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/url_table"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:id="@+id/cancel2_config"
+                style="@style/Widget.Button"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+
+                android:text="@string/cancel" />
+
+            <Button
+                android:id="@+id/get_config"
+                style="@style/Widget.Button"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/cancel2_config"
+                android:text="@string/getConfig" />
+        </RelativeLayout>
     </RelativeLayout>
-</RelativeLayout>
+</ScrollView>

@@ -8,7 +8,7 @@ public class ConfigSwitchRow implements java.io.Serializable
    public Boolean enabled;
    public String cmd;
 
-   ConfigSwitchRow(String unit, String name, Boolean enabled, String cmd)
+   public ConfigSwitchRow(String unit, String name, Boolean enabled, String cmd)
    {
       this.unit = unit;
       this.name = name;
