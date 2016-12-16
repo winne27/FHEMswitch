@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/config_layout_block"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="6dp"
     android:layout_marginTop="0dp"
     android:orientation="vertical"
     android:visibility="gone">
-
-
 
     <LinearLayout
         android:layout_gravity="center_horizontal"
@@ -31,7 +29,16 @@
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:text="@string/save" />
+
+        <Button
+            android:id="@+id/help_layout"
+            style="@style/Widget.Button.Help"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="\?" />
     </LinearLayout>
 
     <!-- Block of widget seletor +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -61,6 +68,9 @@
 
             <!-- Block of values +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
             <include layout="@layout/config_block_values"></include>
+
+            <!-- Block of intvalues +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+            <include layout="@layout/config_block_intvalues"></include>
 
             <!-- Block of commands +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
             <include layout="@layout/config_block_commands"></include>

@@ -45,7 +45,7 @@ public class ConfigValuesAdapter extends ConfigAdapter {
         for (MyValue myValue : values) {
             ConfigValueRow FHEMrow = mFHEMvalues.getValue(myValue.unit);
             if (FHEMrow != null && !allUnits.contains(myValue.unit)) {
-                valueRows.add(new ConfigValueRow(myValue.unit, myValue.name, FHEMrow.value, true));
+                valueRows.add(new ConfigValueRow(myValue.unit, myValue.name, FHEMrow.value, true, myValue.useIcon));
                 valuesConfig.add(myValue.unit);
                 allUnits.add(myValue.unit);
             }
@@ -54,14 +54,14 @@ public class ConfigValuesAdapter extends ConfigAdapter {
         for (MyValue myValue : valuesDisabled) {
             ConfigValueRow FHEMrow = mFHEMvalues.getValue(myValue.unit);
             if (FHEMrow != null && !allUnits.contains(myValue.unit)) {
-                valueRows.add(new ConfigValueRow(myValue.unit, myValue.name, FHEMrow.value, false));
+                valueRows.add(new ConfigValueRow(myValue.unit, myValue.name, FHEMrow.value, false, myValue.useIcon));
                 valuesConfig.add(myValue.unit);
                 allUnits.add(myValue.unit);
             }
         }
         for (ConfigValueRow FHEMrow : mFHEMvalues.getAllValues()) {
             if (!valuesConfig.contains(FHEMrow.unit) && !allUnits.contains(FHEMrow.unit)) {
-                valueRows.add(new ConfigValueRow(FHEMrow.unit, FHEMrow.name, FHEMrow.value, false));
+                valueRows.add(new ConfigValueRow(FHEMrow.unit, FHEMrow.name, FHEMrow.value, false, false));
                 allUnits.add(FHEMrow.unit);
             }
         }
@@ -97,6 +97,7 @@ public class ConfigValuesAdapter extends ConfigAdapter {
             valueHolder.value_name = (EditText) rowView.findViewById(R.id.config_value_name);
             valueHolder.value_value = (TextView) rowView.findViewById(R.id.config_value_value);
             valueHolder.value_enabled = (CheckBox) rowView.findViewById(R.id.config_value_enabled);
+            valueHolder.value_useicon = (CheckBox) rowView.findViewById(R.id.config_value_useicon);
         } else {
             valueHolder = (ValueHolder) rowView.getTag();
         }
@@ -106,10 +107,12 @@ public class ConfigValuesAdapter extends ConfigAdapter {
         valueHolder.value_name.setText(valueRow.name);
         valueHolder.value_value.setText(valueRow.value);
         valueHolder.value_enabled.setChecked(valueRow.enabled);
+        valueHolder.value_useicon.setChecked(valueRow.useIcon);
 
         //private method of your class
 
         valueHolder.value_enabled.setOnClickListener(arg0 -> getItem(valueHolder.ref).enabled = valueHolder.value_enabled.isChecked());
+        valueHolder.value_useicon.setOnClickListener(arg0 -> getItem(valueHolder.ref).useIcon = valueHolder.value_useicon.isChecked());
 
         valueHolder.value_name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -169,6 +172,7 @@ public class ConfigValuesAdapter extends ConfigAdapter {
 
     private class ValueHolder {
         CheckBox value_enabled;
+        CheckBox value_useicon;
         TextView value_unit;
         EditText value_name;
         TextView value_value;
@@ -186,7 +190,7 @@ public class ConfigValuesAdapter extends ConfigAdapter {
                 String value;
                 try {
                     value = obj.getString(unit);
-                    valueRows.add(new ConfigValueRow(unit, unit, value, false));
+                    valueRows.add(new ConfigValueRow(unit, unit, value, false, false));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

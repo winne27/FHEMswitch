@@ -1,10 +1,9 @@
 package de.fehngarten.fhemswitch.global;
 
-import android.content.res.Resources;
-import de.fehngarten.fhemswitch.R;
+import java.util.ArrayList;
 
 public class Consts {
-    public static final String OPEN_FHEM_HOMEPAGE = "de.fehngarten.fhemswitch.OPEN_URL";
+    public static final String OPEN_WEBPAGE = "de.fehngarten.fhemswitch.OPEN_WEBPAGE";
     public static final String NEW_CONFIG = "de.fehngarten.fhemswitch.NEW_CONFIG";
     public static final String STOP_CONFIG = "de.fehngarten.fhemswitch.STOP_CONFIG";
     public static final String SEND_FHEM_COMMAND = "de.fehngarten.fhemswitch.SEND_FHEM_COMMAND";
@@ -22,6 +21,11 @@ public class Consts {
     public static final String FHEM_TYPE = "FHEMTYPE";
     public static final String POS = "POS";
     public static final String COL = "COL";
+    public static final String SUBACTION = "SUBACTION";
+    public static final String DOWN = "DOWN";
+    public static final String DOWNFAST = "DOWNFAST";
+    public static final String UP = "UP";
+    public static final String UPFAST = "UPFAST";
     public static final String FHEM_URI = "FHEMURI";
     public static final String ACTCOL = "ACTCOL";
     public static final String INSTSERIAL = "INSTSERIAL";

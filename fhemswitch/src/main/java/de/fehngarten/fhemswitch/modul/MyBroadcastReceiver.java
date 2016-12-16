@@ -4,9 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
 //import android.support.compat.BuildConfig;
-//import android.util.Log;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
 
@@ -31,6 +31,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d("MyBroadcastReceiver", intent.getAction());
         myReceiveListener.run(context, intent);
     }
 

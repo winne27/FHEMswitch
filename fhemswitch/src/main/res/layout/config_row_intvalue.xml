@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/config_intvalue_enabled"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/config_intvalue_unit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.37"
+            android:textAllCaps="false"
+            android:textColor="#008"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/config_intvalue_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.37"
+            android:ems="10"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/config_intvalue_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.26"
+            android:maxLines="1"
+            android:textAllCaps="false"
+            android:textColor="#008"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/second_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="8dp"
+            android:maxLines="1"
+            android:text="@string/stepsize"
+            android:textAllCaps="false"
+            android:textColor="#008"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/config_intvalue_stepsize"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="@string/delay"
+            android:textAllCaps="false"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="8dp"
+            android:textColor="#008"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/config_intvalue_delay"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/third_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="8dp"
+            android:maxLines="1"
+            android:text="@string/execcmd"
+            android:textAllCaps="false"
+            android:textColor="#008"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:maxLines="1"
+            android:text="@string/set"
+            android:textAllCaps="false"
+            android:textColor="#008"
+            android:textStyle="italic"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/config_intvalue_cmd"
+            android:layout_width="0dp"
+            android:layout_weight="0.95"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="@string/value"
+            android:textAllCaps="false"
+            android:textColor="#008"
+            android:textStyle="italic"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

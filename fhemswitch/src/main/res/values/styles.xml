@@ -22,10 +22,15 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_height">36dp</item>
-        <item name="android:layout_width">250dp</item>
+        <item name="android:layout_width">220dp</item>
         <item name="android:background">@drawable/configbutton</item>
         <item name="android:textColor">@color/text_hinweis</item>
         <item name="android:gravity">center_horizontal|center_vertical</item>
+    </style>
+
+    <style name="Widget.Button.Help" parent="Widget.Button">
+        <item name="android:layout_width">38dp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
 </resources>

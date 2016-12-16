@@ -9,6 +9,7 @@ public class ConfigDataInstance implements java.io.Serializable {
     public ArrayList<ConfigSwitchRow> switchRows;
     public ArrayList<ConfigLightsceneRow> lightsceneRows;
     public ArrayList<ConfigValueRow> valueRows;
+    public ArrayList<ConfigIntValueRow> intValueRows;
     public ArrayList<ConfigCommandRow> commandRows;
     public int layoutLandscape;
     public int layoutPortrait;
@@ -21,6 +22,7 @@ public class ConfigDataInstance implements java.io.Serializable {
         switchRows = new ArrayList<>();
         lightsceneRows = new ArrayList<>();
         valueRows = new ArrayList<>();
+        intValueRows = new ArrayList<>();
         commandRows = new ArrayList<>();
         layoutLandscape = 1;
         layoutPortrait = 0;

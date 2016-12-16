@@ -3,11 +3,13 @@ package de.fehngarten.fhemswitch.config;
 import android.app.Activity;
 import android.os.Bundle;
 //import android.util.Log;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import de.fehngarten.fhemswitch.BuildConfig;
 import de.fehngarten.fhemswitch.R;
 import util.IabHelper;
 import util.IabResult;
@@ -40,13 +42,13 @@ public class ConfigDonate extends Activity {
         mHelper = new IabHelper(this, base64EncodedPublicKey);
 
         mHelper.startSetup((IabResult result) -> {
- /*
-                if (!result.isSuccess()) {
-                    if (BuildConfig.DEBUG) Log.d("trace", "In-app Billing setup failed: " + result);
-                } else {
-                    if (BuildConfig.DEBUG) Log.d("trace", "In-app Billing is set up OK");
-                }
- */
+        /*
+            if (!result.isSuccess()) {
+                //if (BuildConfig.DEBUG) Log.d("trace", "In-app Billing setup failed: " + result);
+            } else {
+                //if (BuildConfig.DEBUG) Log.d("trace", "In-app Billing is set up OK");
+            }
+        */
         });
     }
 
@@ -56,14 +58,15 @@ public class ConfigDonate extends Activity {
         @Override
         public void onClick(View arg0) {
             String donateValue = getDonateValue();
-            mHelper.launchPurchaseFlow(activity, donateValue, 10001, mPurchaseFinishedListener, "mypurchasetoken");
+            mHelper.launchPurchaseFlow(activity, donateValue, 10001, mPurchaseFinishedListener);
+            //mHelper.launchPurchaseFlow(activity, donateValue, 10001, mPurchaseFinishedListener, "de.fehngarten.fhemswitch.inapp");
         }
     };
 
     private String getDonateValue() {
         RadioGroup valueGroup = (RadioGroup) findViewById(R.id.valueGroup);
         RadioButton valueGroupButton = (RadioButton) findViewById(valueGroup.getCheckedRadioButtonId());
-        //Log.i("value", donateValue);
+        //Log.i("value", valueGroupButton.getTag().toString());
         return valueGroupButton.getTag().toString();
     }
 

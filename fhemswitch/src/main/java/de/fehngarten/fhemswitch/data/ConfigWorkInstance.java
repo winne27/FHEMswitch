@@ -13,8 +13,11 @@ public class ConfigWorkInstance {
     public MyLightScenes lightScenes;
 
     public List<MyValue> values;
-    public List<ArrayList<MyValue>> valuesCols;
     public List<MyValue> valuesDisabled;
+    public List<ArrayList<MyValue>> valuesCols;
+
+    public List<MyIntValue> intValues;
+    public List<MyIntValue> intValuesDisabled;
 
     public List<MyCommand> commands;
     public List<ArrayList<MyCommand>> commandsCols;
@@ -29,6 +32,9 @@ public class ConfigWorkInstance {
         values = new ArrayList<>();
         valuesCols = new ArrayList<>();
         valuesDisabled = new ArrayList<>();
+
+        intValues = new ArrayList<>();
+        intValuesDisabled = new ArrayList<>();
 
         commands = new ArrayList<>();
         commandsCols = new ArrayList<>();
@@ -58,6 +64,16 @@ public class ConfigWorkInstance {
         return -1;
     }
 
+    public boolean setIntValue(String unit, String value) {
+        for (MyIntValue myIntValue : intValues) {
+            if (myIntValue.unit.equals(unit)) {
+                myIntValue.setValue(value);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean setLightscene(String unit, String member) {
         return lightScenes.setMemberActive(unit, member);
     }
@@ -76,6 +92,14 @@ public class ConfigWorkInstance {
             valuesList.add(myValue.unit);
         }
         return valuesList;
+    }
+
+    public ArrayList<String> getIntValuesList() {
+        ArrayList<String> intValuesList = new ArrayList<>();
+        for (MyIntValue myIntValue : intValues) {
+            intValuesList.add(myIntValue.unit);
+        }
+        return intValuesList;
     }
 
     public ArrayList<String> getLightScenesList()

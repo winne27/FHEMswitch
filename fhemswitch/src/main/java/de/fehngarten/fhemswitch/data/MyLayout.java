@@ -13,25 +13,25 @@ public class MyLayout {
     public ArrayList<Integer> goneViews;
 
     public MyLayout(int layoutId, int switchCols, int valueCols, int commandCols, int switchCount, int lightsceneCount,
-                    int valueCount, int commandCount) {
+                    int valueCount, int commandCount, int intValueCount) {
         layout = new HashMap<>();
         rowsPerCol = new HashMap<>();
         goneViews = new ArrayList<>();
 
         if (layoutId == 0) {
-            buildLayoutHorizontal(switchCols, valueCols, commandCols, switchCount, lightsceneCount, valueCount, commandCount);
+            buildLayoutHorizontal(switchCols, valueCols, commandCols, switchCount, lightsceneCount, valueCount, commandCount, intValueCount);
         }
         if (layoutId == 1) {
-            buildLayoutVertical(switchCount, lightsceneCount, valueCount, commandCount);
+            buildLayoutVertical(switchCount, lightsceneCount, valueCount, commandCount, intValueCount);
             initRowsPerCol();
         }
         if (layoutId == 2) {
-            buildLayoutMixed(switchCount, lightsceneCount, valueCount, commandCount);
+            buildLayoutMixed(switchCount, lightsceneCount, valueCount, commandCount, intValueCount);
             initRowsPerCol();
         }
     }
 
-    private void buildLayoutVertical(int switchCount, int lightsceneCount, int valueCount, int commandCount) {
+    private void buildLayoutVertical(int switchCount, int lightsceneCount, int valueCount, int commandCount, int intValueCount) {
         if (switchCount > 0) {
             ArrayList<Integer> listViewIds = new ArrayList<>();
             listViewIds.add(R.id.switches0);
@@ -46,6 +46,14 @@ public class MyLayout {
             layout.put("value", listViewIds);
         } else {
             goneViews.add(R.id.values0);
+        }
+
+        if (intValueCount > 0) {
+            ArrayList<Integer> listViewIds = new ArrayList<>();
+            listViewIds.add(R.id.intvalues);
+            layout.put("intvalue", listViewIds);
+        } else {
+            goneViews.add(R.id.intvalues);
         }
 
         if (commandCount > 0) {
@@ -65,77 +73,94 @@ public class MyLayout {
         }
     }
 
-    private void buildLayoutMixed(int switchCount, int lightsceneCount, int valueCount, int commandCount) {
+    private void buildLayoutMixed(int switchCount, int lightsceneCount, int valueCount, int commandCount, int intValueCount) {
         ArrayList<MyCounter> counter = new ArrayList<>();
         counter.add(new MyCounter("switch", switchCount * 10));
         counter.add(new MyCounter("lightscene", lightsceneCount * 8));
         counter.add(new MyCounter("value", valueCount * 7));
         counter.add(new MyCounter("command", commandCount * 10));
+        counter.add(new MyCounter("intvalue", intValueCount * 11));
         Collections.sort(counter);
 
-        if (counter.get(0).count >= counter.get(1).count + counter.get(2).count + counter.get(3).count) {
-            ArrayList<Integer> listViewIds0 = new ArrayList<>();
-            listViewIds0.add(R.id.mixed00);
-            layout.put(counter.get(0).type, listViewIds0);
+        ArrayList<Integer> listViewIds = new ArrayList<>();
+        if (counter.get(0).count >= counter.get(1).count + counter.get(2).count + counter.get(3).count + counter.get(4).count) {
+            listViewIds.add(R.id.mixed00);
+            layout.put(counter.get(0).type, listViewIds);
             goneViews.add(R.id.mixed01);
 
             if (counter.get(1).count > 0) {
-                ArrayList<Integer> listViewIds1 = new ArrayList<>();
-                listViewIds1.add(R.id.mixed10);
-                layout.put(counter.get(1).type, listViewIds1);
+                listViewIds = new ArrayList<>();
+                listViewIds.add(R.id.mixed10);
+                layout.put(counter.get(1).type, listViewIds);
             } else {
                 goneViews.add(R.id.mixed10);
             }
 
             if (counter.get(2).count > 0) {
-                ArrayList<Integer> listViewIds2 = new ArrayList<>();
-                listViewIds2.add(R.id.mixed11);
-                layout.put(counter.get(2).type, listViewIds2);
+                listViewIds = new ArrayList<>();
+                listViewIds.add(R.id.mixed11);
+                layout.put(counter.get(2).type, listViewIds);
             } else {
                 goneViews.add(R.id.mixed11);
             }
 
             if (counter.get(3).count > 0) {
-                ArrayList<Integer> listViewIds3 = new ArrayList<>();
-                listViewIds3.add(R.id.mixed12);
-                layout.put(counter.get(3).type, listViewIds3);
+                listViewIds = new ArrayList<>();
+                listViewIds.add(R.id.mixed12);
+                layout.put(counter.get(3).type, listViewIds);
             } else {
                 goneViews.add(R.id.mixed12);
             }
-        } else {
-            ArrayList<Integer> listViewIds0 = new ArrayList<>();
-            listViewIds0.add(R.id.mixed00);
-            layout.put(counter.get(0).type, listViewIds0);
 
-            if (counter.get(3).count > 0) {
-                ArrayList<Integer> listViewIds3 = new ArrayList<>();
-                listViewIds3.add(R.id.mixed01);
-                layout.put(counter.get(3).type, listViewIds3);
+            if (counter.get(4).count > 0) {
+                listViewIds = new ArrayList<>();
+                listViewIds.add(R.id.mixed12);
+                layout.put(counter.get(4).type, listViewIds);
+            } else {
+                goneViews.add(R.id.mixed13);
+            }
+        } else {
+            listViewIds.add(R.id.mixed00);
+            layout.put(counter.get(0).type, listViewIds);
+
+            if (counter.get(1).count > 0) {
+                listViewIds = new ArrayList<>();
+                listViewIds.add(R.id.mixed01);
+                layout.put(counter.get(1).type, listViewIds);
             } else {
                 goneViews.add(R.id.mixed01);
             }
 
-            if (counter.get(1).count > 0) {
-                ArrayList<Integer> listViewIds1 = new ArrayList<>();
-                listViewIds1.add(R.id.mixed10);
-                layout.put(counter.get(1).type, listViewIds1);
+            if (counter.get(2).count > 0) {
+                listViewIds = new ArrayList<>();
+                listViewIds.add(R.id.mixed10);
+                layout.put(counter.get(3).type, listViewIds);
             } else {
                 goneViews.add(R.id.mixed10);
             }
 
-            if (counter.get(2).count > 0) {
-                ArrayList<Integer> listViewIds2 = new ArrayList<>();
-                listViewIds2.add(R.id.mixed11);
-                layout.put(counter.get(2).type, listViewIds2);
+            if (counter.get(3).count > 0) {
+                listViewIds = new ArrayList<>();
+                listViewIds.add(R.id.mixed11);
+                layout.put(counter.get(3).type, listViewIds);
             } else {
                 goneViews.add(R.id.mixed11);
             }
-            goneViews.add(R.id.mixed12);
+
+            if (counter.get(4).count > 0) {
+                listViewIds = new ArrayList<>();
+                listViewIds.add(R.id.mixed12);
+                layout.put(counter.get(4).type, listViewIds);
+            } else {
+                goneViews.add(R.id.mixed12);
+            }
+
+            goneViews.add(R.id.mixed13);
         }
     }
 
     private void buildLayoutHorizontal(int switchCols, int valueCols, int commandCols, int switchCount, int lightsceneCount,
-                                       int valueCount, int commandCount) {
+                                       int valueCount, int commandCount, int intValueCount) {
         if (switchCount > 0) {
             rowsPerCol.put("switch", (int) Math.ceil((double) switchCount / (double) (switchCols + 1)));
 
@@ -214,6 +239,14 @@ public class MyLayout {
             layout.put("lightscene", listViewIds);
         } else {
             goneViews.add(R.id.lightscenes);
+        }
+
+        if (intValueCount > 0) {
+            ArrayList<Integer> listViewIds = new ArrayList<>();
+            listViewIds.add(R.id.intvalues);
+            layout.put("intvalue", listViewIds);
+        } else {
+            goneViews.add(R.id.intvalues);
         }
     }
 

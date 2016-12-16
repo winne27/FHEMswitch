@@ -44,6 +44,13 @@
                 android:visibility="gone" />
 
             <ListView
+                android:id="@+id/intvalues"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:visibility="gone" />
+
+            <ListView
                 android:id="@+id/commands0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

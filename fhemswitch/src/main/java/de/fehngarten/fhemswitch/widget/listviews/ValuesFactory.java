@@ -2,14 +2,14 @@ package de.fehngarten.fhemswitch.widget.listviews;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import de.fehngarten.fhemswitch.R;
 import static de.fehngarten.fhemswitch.global.Consts.*;
 import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
-import de.fehngarten.fhemswitch.widget.WidgetService;
+import de.fehngarten.fhemswitch.global.Settings;
 
 //import android.util.Log;
 
@@ -18,12 +18,14 @@ class ValuesFactory implements RemoteViewsFactory {
     private Context mContext = null;
     private int colnum;
     private int instSerial;
+    private final String TAG;
 
     ValuesFactory(Context context, Intent intent, int colnum) {
         //if (BuildConfig.DEBUG) Log.d(CLASSNAME, "started");
         mContext = context;
         this.colnum = colnum;
         instSerial = intent.getIntExtra(INSTSERIAL, -1);
+        TAG = "ValuesFactory-" + instSerial;
     }
 
     public void initData() {
@@ -72,7 +74,28 @@ class ValuesFactory implements RemoteViewsFactory {
         }
 
         mView.setTextViewText(R.id.value_name, ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).get(position).name);
-        mView.setTextViewText(R.id.value_value, ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).get(position).value);
+        String value = ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).get(position).value;
+
+        if (value.length() > 0 && value.substring(value.length() - 1).equals("%")) {
+            String value1 = value.substring(0, value.length() - 1);
+            int val = Integer.parseInt(value1);
+            val = val / 10;
+            String vals = Integer.toString(val);
+            mView.setImageViewResource(R.id.prozent_icon, Settings.settingIcons.get("p_" + vals));
+            mView.setViewVisibility(R.id.prozent_icon, View.VISIBLE);
+            mView.setViewVisibility(R.id.value_icon, View.GONE);
+            mView.setViewVisibility(R.id.value_value, View.GONE);
+        } else if (Settings.settingIcons.containsKey("v_" + value)) {
+            mView.setImageViewResource(R.id.value_icon, Settings.settingIcons.get("v_" + value));
+            mView.setViewVisibility(R.id.prozent_icon, View.GONE);
+            mView.setViewVisibility(R.id.value_icon, View.VISIBLE);
+            mView.setViewVisibility(R.id.value_value, View.GONE);
+        } else {
+            mView.setTextViewText(R.id.value_value, value);
+            mView.setViewVisibility(R.id.prozent_icon, View.GONE);
+            mView.setViewVisibility(R.id.value_icon, View.GONE);
+            mView.setViewVisibility(R.id.value_value, View.VISIBLE);
+        }
 
         if (position == 0) {
             mView.setInt(R.id.value_row, "setBackgroundResource", R.drawable.valuefirst);
@@ -82,12 +105,9 @@ class ValuesFactory implements RemoteViewsFactory {
             mView.setInt(R.id.value_row, "setBackgroundResource", R.drawable.value);
         }
 
-        final Bundle bundle = new Bundle();
-        bundle.putString(FHEM_URI, ConfigWorkBasket.urlFhempl + "?detail=" + ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).get(position).unit);
-
         final Intent fillInIntent = new Intent();
-        fillInIntent.setAction(OPEN_FHEM_HOMEPAGE);
-        fillInIntent.putExtras(bundle);
+        fillInIntent.setAction(OPEN_WEBPAGE);
+        fillInIntent.putExtra(FHEM_URI, ConfigWorkBasket.urlFhempl + "?detail=" + ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).get(position).unit);
         mView.setOnClickFillInIntent(R.id.value_name, fillInIntent);
 
         return mView;

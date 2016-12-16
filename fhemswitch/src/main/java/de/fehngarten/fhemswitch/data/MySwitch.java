@@ -30,6 +30,6 @@ public class MySwitch implements Comparable<MySwitch> {
 
     @Override
     public int compareTo(MySwitch compSwitch) {
-        return this.unit.compareTo(compSwitch.unit);
+        return this.unit.compareToIgnoreCase(compSwitch.unit);
     }
 }

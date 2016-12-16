@@ -19,8 +19,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -35,7 +33,9 @@ import de.fehngarten.fhemswitch.BuildConfig;
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
 import de.fehngarten.fhemswitch.data.ConfigDataIO;
 import de.fehngarten.fhemswitch.data.ConfigDataInstance;
+import de.fehngarten.fhemswitch.data.ConfigIntValueRow;
 import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
+import de.fehngarten.fhemswitch.data.MyIntValue;
 import de.fehngarten.fhemswitch.modul.MyBroadcastReceiver;
 import de.fehngarten.fhemswitch.modul.MyReceiveListener;
 import de.fehngarten.fhemswitch.modul.MySetOnClickPendingIntent;
@@ -66,7 +66,6 @@ public class WidgetService extends Service {
     private VersionChecks versionChecks;
     private MySocket mySocket = null;
 
-    public static String fhemUrl;
     private int switchCols;
     private int valueCols;
     private int commandCols;
@@ -79,7 +78,7 @@ public class WidgetService extends Service {
 
     private Handler handler;
     private ArrayList<MyBroadcastReceiver> myBroadcastReceivers;
-
+    private ArrayList<DoSendCommand> doSendCommands = new ArrayList<>();
     private Context mContext;
     private RemoteViews mView;
 
@@ -87,11 +86,10 @@ public class WidgetService extends Service {
     private ConfigDataInstance configDataInstance;
 
     public Boolean valuesRequested = false;
-    private int waitCount = 0;
     private String currentVersionType;
     private int widgetId;
 
-    protected int instSerial;
+    protected Integer instSerial;
     private String TAG;
 
     public WidgetService() {
@@ -106,6 +104,11 @@ public class WidgetService extends Service {
             Log.d(TAG, "onStartCommand with " + action);
             switch (action) {
                 case FHEM_COMMAND:
+                    if (configDataCommon == null || configDataCommon.urlFhemjsLocal == null) {
+                        //Log.e(TAG, "perform start on command fired");
+                        start();
+                    }
+
                     sendCommand(intent);
                     break;
                 case SEND_DO_COLOR:
@@ -117,16 +120,16 @@ public class WidgetService extends Service {
                     break;
                 case NEW_CONFIG:
                     widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-                    Log.d(TAG, "action: " + action + " started instance " + instSerial + " with widgetId " + widgetId);
                     start();
                     break;
                 default:
                     widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-                    Log.d(TAG, "action: " + action + " started instance " + instSerial + " with widgetId " + widgetId);
+                    //Log.d(TAG, "action: " + action + " started instance " + instSerial + " with widgetId " + widgetId);
                     if (start()) {
-                        checkVersion();
                         setBroadcastReceivers();
-                        handler.postDelayed(checkVersionTimer, settingWaitIntervalVersionCheck);
+                        checkVersion();
+                        handler.postDelayed(setBroadcastReceiversTimer, settingDelayDefineBroadcastReceivers);
+                        handler.postDelayed(checkVersionTimer, settingIntervalVersionCheck);
                         handler.postDelayed(checkShowVersionTimer, settingDelayShowVersionCheck);
                     }
                     break;
@@ -137,7 +140,7 @@ public class WidgetService extends Service {
 
     public void onCreate() {
         TAG = "WidgetService-" + instSerial;
-        //if (BuildConfig.DEBUG) Log.d(TAG, "onCreate fired");
+        //if (BuildConfig.DEBUG) //Log.d(TAG, "onCreate fired");
 
         mContext = getApplicationContext();
         appWidgetManager = AppWidgetManager.getInstance(mContext);
@@ -153,28 +156,31 @@ public class WidgetService extends Service {
     private boolean start() {
         readConfig();
         setOrientation();
-        doStart(5);
+        doStart();
         return true;
     }
 
     @Override
     public void onDestroy() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "onDestroy fired");
+        //if (BuildConfig.DEBUG) //Log.d(TAG, "onDestroy fired");
         if (mySocket != null) {
-            mySocket.socket.disconnect();
-            mySocket.socket.close();
+            mySocket.destroy();
         }
 
         handler.removeCallbacks(checkSocketTimer);
         handler.removeCallbacks(checkVersionTimer);
         handler.removeCallbacks(checkShowVersionTimer);
-        handler.removeCallbacks(setBroadcastReceiverConnectivity);
+        handler.removeCallbacks(setBroadcastReceiversTimer);
+
+        for (DoSendCommand doSendCommand : doSendCommands) {
+            doSendCommand.kill();
+        }
 
         for (MyBroadcastReceiver myBroadcastReceiver : myBroadcastReceivers) {
             try {
                 myBroadcastReceiver.unregister();
             } catch (java.lang.IllegalArgumentException e) {
-                if (BuildConfig.DEBUG) Log.d(TAG, "unregister failed");
+                //if (BuildConfig.DEBUG) Log.d(TAG, "unregister failed");
             }
         }
 
@@ -182,7 +188,7 @@ public class WidgetService extends Service {
     }
 
     private void setBroadcastReceivers() {
-        Log.d(TAG,"setBroadcastReceivers started");
+        //Log.d(TAG, "setBroadcastReceivers started");
         myBroadcastReceivers = new ArrayList<>();
 
         String[] actions = new String[]{STORE_VERSION_WIDGET};
@@ -190,44 +196,33 @@ public class WidgetService extends Service {
 
         actions = new String[]{NEW_VERSION_STORE, NEW_VERSION_SUPPRESS, NEW_VERSION_REMEMBER};
         myBroadcastReceivers.add(new MyBroadcastReceiver(this, new OnUserIntent(), actions));
-
-        actions = new String[]{Intent.ACTION_CONFIGURATION_CHANGED, NEW_CONFIG};
-        myBroadcastReceivers.add(new MyBroadcastReceiver(this, new OnConfigChange(), actions));
-
-        actions = new String[]{Intent.ACTION_SCREEN_ON, Intent.ACTION_SCREEN_OFF};
-        myBroadcastReceivers.add(new MyBroadcastReceiver(this, new OnScreenOnOff(), actions));
-
-        actions = new String[]{SEND_FHEM_COMMAND};
-        myBroadcastReceivers.add(new MyBroadcastReceiver(this, new OnSendCommand(), actions));
-
-        handler.postDelayed(setBroadcastReceiverConnectivity, settingDelayShowVersionCheck);
     }
 
-    Runnable setBroadcastReceiverConnectivity = new Runnable() {
+    Runnable setBroadcastReceiversTimer = new Runnable() {
         @Override
         public void run() {
             String[] actions = new String[]{ConnectivityManager.CONNECTIVITY_ACTION};
-            myBroadcastReceivers.add(new MyBroadcastReceiver(mContext, new OnConnectionChange(), actions));
+            //myBroadcastReceivers.add(new MyBroadcastReceiver(mContext, new OnConnectionChange(), actions));
+
+            actions = new String[]{Intent.ACTION_CONFIGURATION_CHANGED, NEW_CONFIG};
+            myBroadcastReceivers.add(new MyBroadcastReceiver(mContext, new OnConfigChange(), actions));
+
+            actions = new String[]{Intent.ACTION_SCREEN_ON, Intent.ACTION_SCREEN_OFF};
+            myBroadcastReceivers.add(new MyBroadcastReceiver(mContext, new OnScreenOnOff(), actions));
+
         }
     };
 
-    class OnSendCommand implements MyReceiveListener {
-        public void run(Context context, Intent intent) {
-            //Log.d(TAG,"send command fired by " + intent.getAction());
-        }
-    }
-
     class OnScreenOnOff implements MyReceiveListener {
         public void run(Context context, Intent intent) {
-            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                waitCount = 0;
-            }
-            handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
+             //Log.d(TAG,"on/off fired");
+             handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
         }
     }
 
     class OnConfigChange implements MyReceiveListener {
         public void run(Context context, Intent intent) {
+            //Log.d(TAG, "config change fired");
             start();
         }
     }
@@ -270,31 +265,37 @@ public class WidgetService extends Service {
 
     class OnConnectionChange implements MyReceiveListener {
         public void run(Context context, Intent intent) {
+            //Log.d(TAG,"connection change fired");
+
             ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             if (networkInfo != null) {
                 NetworkInfo.State state = networkInfo.getState();
                 if (state.toString().equals("CONNECTED")) {
-                    //doStart(6);
+                    doStart();
                     checkSocket();
                 }
             }
         }
     }
 
-    //class OnSendCommand implements MyReceiveListener {
-    //    public void run(Context context, Intent intent) {
     public void sendCommand(Intent intent) {
+
         if (mySocket == null) {
             checkSocket();
             return;
         }
-        String type = intent.getExtras().getString(FHEM_TYPE);
-        String cmd = intent.getExtras().getString(FHEM_COMMAND);
 
-        int actCol = 0;
-        int position = -1;
-        if (type != null) {
+        String type = intent.getExtras().getString(FHEM_TYPE);
+
+        if (type.equals("intvalue")) {
+            setNewValue(intent);
+        } else {
+
+            String cmd = intent.getExtras().getString(FHEM_COMMAND);
+
+            int actCol = 0;
+            int position = -1;
             switch (type) {
                 case "switch":
                     position = Integer.parseInt(intent.getExtras().getString(POS));
@@ -331,6 +332,44 @@ public class WidgetService extends Service {
         }
     }
 
+    private void setNewValue(Intent intent) {
+        int pos = intent.getIntExtra(POS, -1);
+        MyIntValue myIntValue = ConfigWorkBasket.data.get(instSerial).intValues.get(pos);
+        Float delta = myIntValue.stepSize * settingMultiplier.get(intent.getStringExtra(SUBACTION));
+        Float newValue = Float.valueOf(myIntValue.value) + delta;
+        String newValueString = newValue.toString();
+        String cmd = "set " + myIntValue.setCommand + " " + newValueString;
+
+        ConfigWorkBasket.data.get(instSerial).intValues.get(pos).setValue(newValueString);
+        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("intvalue").get(0));
+        doSendCommands.get(pos).fire(cmd, myIntValue.commandExecDelay);
+    }
+
+    public class DoSendCommand implements Runnable {
+        String cmd;
+        Handler handler;
+
+        DoSendCommand(Handler handler) {
+            this.handler = handler;
+        }
+
+        void fire(String cmd, int delay) {
+            this.cmd = cmd;
+            kill();
+            handler.postDelayed(this, delay);
+        }
+
+        void kill() {
+            handler.removeCallbacks(this);
+        }
+
+        public void run() {
+            //Log.d(TAG, "cmd: " + cmd);
+            mySocket.sendCommand(cmd);
+        }
+
+    }
+
     // after touch command button is for 500ms pride
     public static class DeactCommand implements Runnable {
         int actPos;
@@ -351,20 +390,16 @@ public class WidgetService extends Service {
             ConfigWorkBasket.data.get(instSerial).commands.get(actPos).activ = false;
             appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, viewId);
         }
-
     }
 
-
     public void readConfig() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "readConfig started");
+        //if (BuildConfig.DEBUG) //Log.d(TAG, "readConfig started");
         valuesRequested = false;
 
         ConfigDataIO configDataIO = new ConfigDataIO(mContext);
 
-        configDataCommon = configDataIO.readCommon();
+        configDataCommon = configDataIO.readCommon(-1);
         ConfigWorkBasket.fhemjsPW = configDataCommon.fhemjsPW;
-        ConfigWorkBasket.urlFhemjs = configDataCommon.urlFhemjs;
-        ConfigWorkBasket.urlFhempl = configDataCommon.urlFhempl;
 
         if (configDataCommon.suppressedVersions != null) {
             for (Map.Entry<String, String> entry : configDataCommon.suppressedVersions.entrySet()) {
@@ -397,8 +432,8 @@ public class WidgetService extends Service {
         }
     }
 
-    public void doStart(int nr) {
-        //if (BuildConfig.DEBUG) Log.d(TAG, "doStart started with " + Integer.toString(nr));
+    public void doStart() {
+        //if (BuildConfig.DEBUG) //Log.d(TAG, "doStart started with " + Integer.toString(nr));
 
         handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
 
@@ -422,7 +457,7 @@ public class WidgetService extends Service {
         if (configDataInstance.switchRows != null) {
             for (ConfigSwitchRow switchRow : configDataInstance.switchRows) {
                 if (switchRow.enabled) {
-                    //if (BuildConfig.DEBUG) Log.d(TAG,"unit: " + switchRow.unit + " cmd: " + switchRow.cmd);
+                    //if (BuildConfig.DEBUG) //Log.d(TAG,"unit: " + switchRow.unit + " cmd: " + switchRow.cmd);
                     ConfigWorkBasket.data.get(instSerial).switches.add(new MySwitch(switchRow.name, switchRow.unit, switchRow.cmd));
                 }
             }
@@ -448,11 +483,25 @@ public class WidgetService extends Service {
         if (configDataInstance.valueRows != null) {
             for (ConfigValueRow valueRow : configDataInstance.valueRows) {
                 if (valueRow.enabled) {
-                    ConfigWorkBasket.data.get(instSerial).values.add(new MyValue(valueRow.name, valueRow.unit));
+                    ConfigWorkBasket.data.get(instSerial).values.add(new MyValue(valueRow.name, valueRow.unit, valueRow.useIcon));
                 }
             }
         }
         int valueCount = ConfigWorkBasket.data.get(instSerial).values.size();
+
+         //-- control intvalues  ------------------------------------------------------------------
+        if (configDataInstance.intValueRows != null) {
+            doSendCommands = new ArrayList<>();
+            for (ConfigIntValueRow configIntValueRow : configDataInstance.intValueRows) {
+                if (configIntValueRow.enabled) {
+                    MyIntValue myIntValue = new MyIntValue();
+                    myIntValue.transfer(configIntValueRow);
+                    ConfigWorkBasket.data.get(instSerial).intValues.add(myIntValue);
+                    doSendCommands.add(new DoSendCommand(handler));
+                }
+            }
+        }
+        int intValueCount = ConfigWorkBasket.data.get(instSerial).intValues.size();
 
         //-- control commands  ------------------------------------------------------------------
         if (configDataInstance.commandRows != null) {
@@ -463,7 +512,7 @@ public class WidgetService extends Service {
             }
         }
         int commandCount = ConfigWorkBasket.data.get(instSerial).commands.size();
-        myLayout = new MyLayout(iLayout, switchCols, valueCols, commandCols, switchCount, lightsceneCount, valueCount, commandCount);
+        myLayout = new MyLayout(iLayout, switchCols, valueCols, commandCols, switchCount, lightsceneCount, valueCount, commandCount, intValueCount);
 
         //-- control switches  ------------------------------------------------------------------
         for (int i = 0; i <= switchCols; i++) {
@@ -512,7 +561,7 @@ public class WidgetService extends Service {
     }
 
     private void initListviews() {
-        //if (BuildConfig.DEBUG) Log.d(TAG, "initListviews started");
+        //if (BuildConfig.DEBUG) //Log.d(TAG, "initListviews started");
         mView = new RemoteViews(mContext.getPackageName(), layoutId);
 
         mView.setViewVisibility(R.id.noconn, View.GONE);
@@ -534,10 +583,8 @@ public class WidgetService extends Service {
     }
 
     private void initListview(int listviewId, int actCol, String type) {
-        //final Intent onItemClick = new Intent(mContext, serviceClasses.get(instSerial));
         final Intent onItemClick = new Intent(mContext, WidgetProvider.class);
-        //onItemClick.setAction(SEND_FHEM_COMMAND);
-        onItemClick.setData(Uri.parse(onItemClick.toUri(Intent.URI_INTENT_SCHEME)));
+        //onItemClick.setData(Uri.parse(onItemClick.toUri(Intent.URI_INTENT_SCHEME)));
         PendingIntent onClickPendingIntent = PendingIntent.getBroadcast(mContext, 0, onItemClick, PendingIntent.FLAG_UPDATE_CURRENT);
         mView.setPendingIntentTemplate(listviewId, onClickPendingIntent);
 
@@ -551,50 +598,6 @@ public class WidgetService extends Service {
         mView.setRemoteAdapter(listviewId, myIntent);
         mView.setViewVisibility(listviewId, View.VISIBLE);
         appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get(type).get(actCol));
-    }
-
-    public Runnable checkSocketTimer = new Runnable() {
-        @Override
-        public void run() {
-            handler.removeCallbacks(checkSocketTimer);
-            checkSocket();
-            Integer wait;
-            waitCount++;
-            if (mySocket != null && mySocket.socket.connected()) {
-                wait = settingWaitIntervalLong;
-            } else {
-                if (waitCount > settingWaitCyclesShort) {
-                    wait = settingWaitIntervalLong;
-                } else {
-                    wait = settingWaitIntervalShort;
-                }
-            }
-
-            //handler.removeCallbacks(this);
-            handler.postDelayed(this, wait);
-        }
-    };
-
-    public void checkSocket() {
-        //Boolean callInitSocket = false;
-        //if (BuildConfig.DEBUG) Log.d(TAG, "checkSocket started");
-        //if (BuildConfig.DEBUG) Log.d("trace screen is on", String.valueOf(isScreenOn()));
-        if (mySocket == null || !mySocket.socket.connected()) {
-            if (isScreenOn()) {
-                initSocket();
-                valuesRequested = false;
-            }
-        } else if (!isScreenOn() && mySocket.socket.connected()) {
-            //if (BuildConfig.DEBUG) Log.d("trace", "disconnect socket");
-            mySocket.socket.disconnect();
-            mySocket.socket.close();
-            mySocket = null;
-            valuesRequested = true;
-        }
-
-        if (mySocket != null && !valuesRequested && mySocket.socket.connected()) {
-            requestValues("checkSocket");
-        }
     }
 
     public boolean isScreenOn() {
@@ -673,96 +676,116 @@ public class WidgetService extends Service {
         }
     }
 
-    private void requestValues(String from) {
-        //if (BuildConfig.DEBUG) Log.d(TAG, "requestValues started by " + from);
-
+    private void requestValues() {
         mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getSwitchesList(), "once");
         mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getValuesList(), "once");
+        mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getIntValuesList(), "once");
         mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getLightScenesList(), "once");
-        valuesRequested = true;
 
         mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getSwitchesList(), "onChange");
         mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getValuesList(), "onChange");
+        mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getIntValuesList(), "onChange");
         mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getLightScenesList(), "onChange");
+    }
+
+    public Runnable checkSocketTimer = new Runnable() {
+        @Override
+        public void run() {
+            handler.removeCallbacks(checkSocketTimer);
+            checkSocket();
+            handler.postDelayed(this, settingWaitIntervalLong);
+        }
+    };
+
+    public void checkSocket() {
+        if (isScreenOn()) {
+            if (mySocket == null || !mySocket.socket.connected()) {
+                initSocket();
+            }
+        } else {
+            if (mySocket != null && mySocket.socket.connected()) {
+                //if (BuildConfig.DEBUG) Log.d(TAG, "sockets closed");
+                mySocket.destroy();
+                mySocket = null;
+            }
+        }
     }
 
     private void initSocket() {
         //if (BuildConfig.DEBUG) Log.d(TAG, "initSocket started");
+        mySocket = new MySocket(mContext, configDataCommon, "Widget");
 
-        mySocket = new MySocket(ConfigWorkBasket.urlFhemjs, "Widget");
-        mySocket.socket.off(Socket.EVENT_CONNECT);
-        mySocket.socket.on(Socket.EVENT_CONNECT, args -> {
-            if (!ConfigWorkBasket.fhemjsPW.equals("")) {
-                mySocket.socket.emit("authentication", ConfigWorkBasket.fhemjsPW);
-            }
-            requestValues("initSocket");
+        defineSocketListeners();
+        mySocket.doConnect();
+    }
+
+    private void defineSocketListeners() {
+        // main run path: after auth resp -> request values from server
+        mySocket.socket.on("authenticated", args -> {
+            requestValues();
             setVisibility(SOCKET_CONNECTED, "");
+        });
 
+        mySocket.socket.on(Socket.EVENT_DISCONNECT, args1 -> setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn)));
 
-            mySocket.socket.off(Socket.EVENT_DISCONNECT);
-            mySocket.socket.on(Socket.EVENT_DISCONNECT, args1 -> setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn)));
+        mySocket.socket.on(Socket.EVENT_RECONNECT_FAILED, args1 -> setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn)));
 
-            mySocket.socket.off(Socket.EVENT_RECONNECT_FAILED);
-            mySocket.socket.on(Socket.EVENT_RECONNECT_FAILED, args1 -> setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn)));
+        mySocket.socket.on(Socket.EVENT_CONNECT_ERROR, args1 -> {
+            //mySocket.socket.close();
+            //mySocket.socket.off();
+            //mySocket = null;
+            setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn));
+        });
 
-            mySocket.socket.off(Socket.EVENT_CONNECT_ERROR);
-            mySocket.socket.on(Socket.EVENT_CONNECT_ERROR, args1 -> {
-                mySocket.socket.close();
-                mySocket.socket.off();
-                mySocket = null;
-                setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn));
-            });
-
-            mySocket.socket.off("value");
-            mySocket.socket.on("value", args1 -> {
-                JSONObject obj = (JSONObject) args1[0];
-                Iterator<String> iterator = obj.keys();
-                String unit = null;
-                while (iterator.hasNext()) {
-                    unit = iterator.next();
-                    String value = null;
-                    try {
-                        value = obj.getString(unit);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    //if (BuildConfig.DEBUG && instSerial == 1) Log.d(TAG,"new value: " + unit + ":" + value);
-                    int actCol = ConfigWorkBasket.data.get(instSerial).setSwitchIcon(unit, value);
-                    if (actCol > -1) {
-                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("switch").get(actCol));
-                    }
-                    actCol = ConfigWorkBasket.data.get(instSerial).setValue(unit, value);
-                    if (actCol > -1) {
-                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("value").get(actCol));
-                    }
-
-                    if (ConfigWorkBasket.data.get(instSerial).setLightscene(unit, value)) {
-                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("lightscene").get(0));
-                    }
-
-
-                }
-            });
-
-            mySocket.socket.off("version");
-            mySocket.socket.on("version", args1 -> {
-                //if (BuildConfig.DEBUG) Log.d("version", args1[0].toString());
-                JSONObject obj = (JSONObject) args1[0];
+        mySocket.socket.on("value", args1 -> {
+            JSONObject obj = (JSONObject) args1[0];
+            Iterator<String> iterator = obj.keys();
+            String unit = null;
+            while (iterator.hasNext()) {
+                unit = iterator.next();
+                String value = null;
                 try {
-                    versionChecks.setVersions(obj.getString("type"), obj.getString("installed"), obj.getString("latest"));
+                    value = obj.getString(unit);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-            });
+                //if (BuildConfig.DEBUG) //Log.d(TAG,"new value: " + unit + ":" + value);
 
-            mySocket.socket.off("fhemError");
-            mySocket.socket.on("fhemError", args1 -> setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn)));
+                int actCol = ConfigWorkBasket.data.get(instSerial).setSwitchIcon(unit, value);
+                if (actCol > -1) {
+                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("switch").get(actCol));
+                }
 
-            mySocket.socket.off("fhemConn");
-            mySocket.socket.on("fhemConn", args1 -> setVisibility(SOCKET_CONNECTED, ""));
+                actCol = ConfigWorkBasket.data.get(instSerial).setValue(unit, value);
+                if (actCol > -1) {
+                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("value").get(actCol));
+                }
+
+                if (ConfigWorkBasket.data.get(instSerial).setLightscene(unit, value)) {
+                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("lightscene").get(0));
+                }
+
+                if (ConfigWorkBasket.data.get(instSerial).setIntValue(unit, value)) {
+                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("intvalue").get(0));
+                }
+            }
         });
+
+        mySocket.socket.on("version", args1 -> {
+            //if (BuildConfig.DEBUG) //Log.d("version", args1[0].toString());
+            JSONObject obj = (JSONObject) args1[0];
+            try {
+                versionChecks.setVersions(obj.getString("type"), obj.getString("installed"), obj.getString("latest"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        });
+
+        mySocket.socket.on("fhemError", args1 -> setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn)));
+
+        mySocket.socket.on("fhemConn", args1 -> setVisibility(SOCKET_CONNECTED, ""));
     }
 
     Runnable checkVersionTimer = new Runnable() {
@@ -772,7 +795,7 @@ public class WidgetService extends Service {
                 handler.removeCallbacks(checkVersionTimer);
                 checkVersion();
             } finally {
-                handler.postDelayed(checkVersionTimer, settingWaitIntervalVersionCheck);
+                handler.postDelayed(checkVersionTimer, settingIntervalVersionCheck);
             }
         }
     };
@@ -784,7 +807,7 @@ public class WidgetService extends Service {
             try {
                 checkShowVersion();
             } finally {
-                handler.postDelayed(checkShowVersionTimer, settingWaitIntervalVersionShowCheck);
+                handler.postDelayed(checkShowVersionTimer, settingIntervalShowVersionCheck);
             }
         }
     };
@@ -799,9 +822,9 @@ public class WidgetService extends Service {
     }
 
     private void checkShowVersion() {
-        //if (BuildConfig.DEBUG) Log.d(TAG, "checkShowVersion started");
+        //if (BuildConfig.DEBUG) //Log.d(TAG, "checkShowVersion started");
         if (!isScreenOn()) return;
-        //if (BuildConfig.DEBUG) Log.d(TAG, versionChecks.typesToString());
+        //if (BuildConfig.DEBUG) //Log.d(TAG, versionChecks.typesToString());
         String type = versionChecks.showVersionHint();
 
         if (type != null) {
@@ -823,7 +846,7 @@ public class WidgetService extends Service {
 
             setVisibility(type, hint);
             currentVersionType = type;
-            //if (BuildConfig.DEBUG) Log.d(TAG, "show version hint " + type);
+            //if (BuildConfig.DEBUG) //Log.d(TAG, "show version hint " + type);
         }
     }
 
@@ -835,7 +858,6 @@ public class WidgetService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO Auto-generated method stub
         return null;
     }
 

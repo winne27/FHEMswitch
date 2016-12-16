@@ -12,11 +12,14 @@ import java.io.IOException;
 import static de.fehngarten.fhemswitch.global.Settings.*;
 
 public class GetStoreVersion extends AsyncTask<String, Void, String> {
+    private final String TAG;
     Context mContext;
     String mAction;
     public static final String LATEST = "LATEST";
 
     public GetStoreVersion(Context context, String action) {
+        TAG = getClass().getName();
+        Log.d(TAG, "started");
         mContext = context;
         mAction = action;
     }
@@ -34,9 +37,8 @@ public class GetStoreVersion extends AsyncTask<String, Void, String> {
                     .select("div[itemprop=softwareVersion]")
                     .first()
                     .ownText();
-
-        } catch (IOException e) {
-            Log.i("ConfigMain", "read app version failed");
+        } catch (Exception e) {
+            Log.i(TAG, "read app version failed");
         }
         return latest;
     }

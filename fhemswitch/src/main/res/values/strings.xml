@@ -1,9 +1,14 @@
 <resources>
 
     <string name="widget_name" translatable="false">FHEMswitch</string>
-    <string name="url_fhem_pl">URL FHEM webserver (optional):</string>
-    <string name="url_fhem_js">URL FHEM node.js server:</string>
-    <string name="conn_pw">FHEM server password (optional):</string>
+    <string name="url_fhem_pl">URL FHEM webserver</string>
+    <string name="url_fhem_pl_local">... in local net</string>
+    <string name="url_fhem_js">* URL fhem.js server</string>
+    <string name="url_fhem_js_local">... in local net</string>
+    <string name="conn_pw">fhem.js password</string>
+    <string name="ismand">* mandatory fields</string>
+    <string name="is_home_net">The current WLAN (%1$s) is the home net</string>
+
     <string name="ok" translatable="false">OK</string>
     <string name="switchicon">Lamp</string>
     <string name="save">Save</string>
@@ -26,7 +31,7 @@
     <string name="urlerr">The typed URL is invalid</string>
     <string name="urlcheck">please check URL</string>
     <string name="fileerr">Error at saving configuration:</string>
-    <string name="onlinecheck">is this device online</string>
+    <string name="onlinecheck">is this server online</string>
 	<string name="commands">Custom commands</string>
     <string name="commands2">FHEM command</string>
     <string name="newline" translatable="false">+</string>
@@ -55,6 +60,7 @@
     <string name="donate_google">Donate</string>
     <string name="donate_string_call">optional donation</string>
 
+    <string name="icon" translatable="false">Icon</string>
     <string name="widget1" translatable="false">Widget 1</string>
     <string name="widget2" translatable="false">Widget 2</string>
     <string name="widget3" translatable="false">Widget 3</string>
@@ -80,4 +86,11 @@
     <string name="widget_name2" translatable="false">FHEMswitch2</string>
     <string name="noWidgetMessage">First create widget by moving it to start screen.</string>
     <string name="maxWidgetMessage">Maximum of %1$s widgets reached</string>
+    <string name="noconnjs">No conection to fhem.js server possible:</string>
+    <string name="adjustable">Adjustable items</string>
+    <string name="stepsize">Step size:</string>
+    <string name="delay">Command delay in ms:</string>
+    <string name="execcmd">FHEM Command for setting value:</string>
+    <string name="set">set</string>
+    <string name="value">value</string>
 </resources>

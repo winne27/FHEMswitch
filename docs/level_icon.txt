@@ -1,0 +1,49 @@
+Dieser Thread bezieht sich auf die Android App FHEMswitch
+siehe [url]https://forum.fhem.de/index.php?topic=36824.msg29093[/url]
+
+Ab der Version 3 von FHEMswitch können Prozentwerte durch ein Symbol dargestellt werden.
+Dies hier ist ein Beispiel wie man das für den Batterielevel eines Homematic Thermostaten realisieren kann.
+Für andere Geräte wird das ähnlich funktionieren.
+
+Angenommen es gibt einen Homematic Thermostaten der so benannt wurde:
+Heizung_Bad
+
+Dazu gibt es dann mehrere Channel. Einer davon heißt
+Heizung_Bad_Clima
+
+Dummy, Notify und Event für Batterielevel definieren:
+
+define Heizung_Bad_Batterie_Level dummy;
+
+define Heizung_Bad_batteryLevel notify Heizung_Bad:batteryLevel:.* {
+    my $level;;
+    if ( $EVTPART1 < 1.8 ) {
+        $level = "0%";;
+    } elsif ( $EVTPART1 < 1.9 ) {
+        $level = "10%";;
+    } elsif ( $EVTPART1 < 2.0 ) {
+        $level = "30%";;
+    } elsif ( $EVTPART1 < 2.2 ) {
+        $level = "40%";;
+    } elsif ( $EVTPART1 < 2.4 ) {
+        $level = "50%";;
+    } elsif ( $EVTPART1 < 2.6 ) {
+        $level = "60%";;
+    } elsif ( $EVTPART1 < 2.7 ) {
+        $level = "70%";;
+    } elsif ( $EVTPART1 < 2.8 ) {
+        $level = "80%";;
+    } elsif ( $EVTPART1 < 2.9 ) {
+        $level = "90%";;
+    } else {
+        $level = "100%";;
+    }
+    fhem "set BU_Heizung_Batterie $level";;
+};
+
+attr Heizung_Bad event-on-update-reading batteryLevel;
+
+Will man dieses Konstrukt in FHEMswitch nutzen, wählt man in der Konfiguration unter "numerische Werte setzen" die Einheit Heizung_Bad_Batterie_Level aus, setzt noch ein Häkchen in der Soalte "Icon" und der Ladezustand der Batterie wird als Symbol angezeigt.
+
+Hinweis:
+Neue Fhem Einheiten werden in fhem.js erst nach einer gewissen Zeit erkannt. Diese Zeit läßt sich in params.js einstellen (Default: 10 Minuten). Durch einen Neustart von fhem.js kann man das aber auch sofort erreichen.

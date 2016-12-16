@@ -40,7 +40,7 @@ public class MyLightScenes {
         }
     }
 
-    public boolean setMemberActive(String lightSceneUnit, String memberUnit) {
+    boolean setMemberActive(String lightSceneUnit, String memberUnit) {
         boolean lightSceneFound = false;
         for (Item item : items) {
             if (lightSceneFound && item.header) {

@@ -18,7 +18,7 @@
             android:id="@+id/callDonateButton"
             style="@style/Widget.Button"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="3dp"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/donate_string_call" />
@@ -27,6 +27,7 @@
             android:id="@+id/url_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="6dp"
             android:layout_below="@id/callDonateButton"
             android:layout_centerInParent="true"
             android:stretchColumns="1">
@@ -37,9 +38,11 @@
 
                 <TextView
                     android:id="@+id/urljs_label"
-                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
+                    android:paddingEnd="13dp"
+                    android:paddingTop="12dp"
+                    android:layout_gravity="end|right"
                     android:text="@string/url_fhem_js"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -48,33 +51,31 @@
                     android:id="@+id/urljs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
                     android:ems="10"
                     android:inputType="text" />
             </TableRow>
-
-            <!-- URL for node.pl ++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/urlpl_label"
-                    android:layout_width="220dp"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="13dp"
-                    android:text="@string/url_fhem_pl"
+                    android:id="@+id/urljs_label_local"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="13dp"
+                    android:paddingEnd="13dp"
+                    android:paddingTop="12dp"
+                    android:layout_gravity="end|right"
+                    android:text="@string/url_fhem_js_local"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/urlpl"
+                    android:id="@+id/urljs_local"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
                     android:ems="10"
-                    android:inputType="textUri" />
+                    android:inputType="text" />
             </TableRow>
 
             <!-- connection password +++++++++++++++++++++++++++++++++++++++++++++++++++++++++- -->
@@ -85,9 +86,11 @@
 
                 <TextView
                     android:id="@+id/password_label"
-                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
+                    android:paddingEnd="13dp"
+                    android:paddingTop="12dp"
+                    android:layout_gravity="end|right"
                     android:text="@string/conn_pw"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -96,10 +99,82 @@
                     android:id="@+id/connection_pw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:ems="10"
                     android:inputType="textPassword" />
             </TableRow>
+
+            <!-- URL for node.pl ++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/urlpl_label"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="13dp"
+                    android:paddingEnd="13dp"
+                    android:paddingTop="12dp"
+                    android:layout_gravity="end|right"
+                    android:text="@string/url_fhem_pl"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/urlpl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textUri" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/urlpl_label_local"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:paddingRight="13dp"
+                    android:paddingEnd="13dp"
+                    android:layout_gravity="end|right"
+                    android:text="@string/url_fhem_pl_local"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/urlpl_local"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textUri" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/is_home_net_row"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/is_home_net"
+                    android:layout_width="40dp"
+                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_gravity="end|right"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/is_home_net_label"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="3dp"
+                    android:paddingLeft="2dp"
+                    android:text="@string/is_home_net"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
         </TableLayout>
 
         <RelativeLayout
@@ -113,8 +188,7 @@
                 style="@style/Widget.Button"
                 android:layout_marginBottom="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-
+                android:layout_marginTop="2dp"
                 android:text="@string/cancel" />
 
             <Button
@@ -122,9 +196,19 @@
                 style="@style/Widget.Button"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="8dp"
                 android:layout_toRightOf="@id/cancel2_config"
                 android:text="@string/getConfig" />
+
+            <Button
+                android:id="@+id/help_url"
+                style="@style/Widget.Button.Help"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="2dp"
+                android:layout_toRightOf="@id/get_config"
+                android:text="\?" />
         </RelativeLayout>
     </RelativeLayout>
 </ScrollView>

@@ -12,7 +12,6 @@ import android.widget.RemoteViewsService;
 import de.fehngarten.fhemswitch.R;
 import static de.fehngarten.fhemswitch.global.Consts.*;
 import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
-import de.fehngarten.fhemswitch.widget.WidgetService;
 //import android.util.Log;
 
 class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {

@@ -1,0 +1,27 @@
+Dieser Thread bezieht sich auf die Android App FHEMswitch
+siehe [url]https://forum.fhem.de/index.php?topic=36824[/url]
+
+Dies ist ein Beispiel, wie sich in FHEMswitch Buttons zum Rauf- und Runtersetzen von Werten definieren lassen.
+
+Angenommen es gibt einen Homematic Thermostaten der so benannt wurde:
+Heizung_Bad
+
+Dazu gibt es dann mehrere Channel. Einer davon heißt
+Heizung_Bad_Clima
+
+Dummy, Notify und Event für Zieltemperatur definieren:
+
+define Heizung_Bad_Ziel_Temp dummy;
+define Heizung_Bad_desired-temp notify Heizung_Bad_Clima.*desired-temp:.* set Heizung_Bad_Ziel_Temp $EVTPART1;
+attr Heizung_Bad_Clima event-on-update-reading desired-temp
+
+Unter Android in der Konfiguration von FHEMswitch in der Rubrik "" aktiviert man dann Heizung_Bad_Ziel_Temp. Jetzt lassen sich folgende Felder einstellen:
+
+Schrittweite (default: 1.0):
+hier kann man festlegen um wieviel der Wert bei einem einmaligen Buttonclick verändert werden soll.
+
+
+
+
+Befehl um Zieltemperatur am Heizkörper einzustellen:
+set Heizung_Bad_Clima desired-temp 22.0

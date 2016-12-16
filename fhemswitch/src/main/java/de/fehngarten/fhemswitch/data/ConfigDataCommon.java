@@ -1,6 +1,6 @@
 package de.fehngarten.fhemswitch.data;
 
-import android.util.Log;
+//import android.util.Log;
 
 import java.util.HashMap;
 
@@ -14,7 +14,6 @@ public class ConfigDataCommon implements java.io.Serializable {
     public String fhemjsPW = "";
     public String urlFhemjsLocal = "http://local_ip_addr:8087";
     public String urlFhemplLocal = "http://local_ip_addr:8083/fhem";
-    public String fhemjsPWLocal = "";
     public String bssId = "";
     public HashMap<String, String> suppressedVersions;
     public int[] instances = new int[settingsMaxInst];

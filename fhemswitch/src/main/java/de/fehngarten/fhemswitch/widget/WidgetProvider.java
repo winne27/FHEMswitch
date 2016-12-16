@@ -5,12 +5,10 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.net.Uri;
 import android.util.Log;
 import java.util.HashMap;
 
-import de.fehngarten.fhemswitch.config.ConfigMain;
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
 import de.fehngarten.fhemswitch.data.ConfigDataIO;
 
@@ -25,12 +23,10 @@ public class WidgetProvider extends AppWidgetProvider {
     private HashMap<Integer, MyService> serviceIntents;
 
     private class MyService {
-        private int widgetId;
         private int serial;
         private Intent intent;
 
-        private MyService(int widgetId, int serial, Intent intent) {
-            this.widgetId = widgetId;
+        private MyService(int serial, Intent intent) {
             this.serial = serial;
             this.intent = intent;
         }
@@ -47,7 +43,7 @@ public class WidgetProvider extends AppWidgetProvider {
             case ACTION_APPWIDGET_UPDATE:
                  checkWidgets(context, "INIT");
                  for (MyService myService  : serviceIntents.values()) {
-                    Log.d(TAG,"start service " + myService.serial);
+                    //Log.d(TAG,"start service " + myService.serial);
                     context.stopService(myService.intent);
                     context.startService(myService.intent);
                 }
@@ -59,18 +55,8 @@ public class WidgetProvider extends AppWidgetProvider {
                 commandIntent.putExtras(intent.getExtras());
                 context.startService(commandIntent);
                 break;
-            /*
-            case SEND_DO_COLOR:
-                checkWidgets(context, SEND_DO_COLOR);
-                Boolean doColor = intent.getBooleanExtra("COLOR", false);
-                for (MyService myService  : serviceIntents.values()) {
-                    myService.intent.putExtra("COLOR", doColor);
-                    context.startService(myService.intent);
-                }
-                break;
-            */
-            case OPEN_FHEM_HOMEPAGE:
-                String urlString = intent.getExtras().getString(FHEM_URI);
+            case OPEN_WEBPAGE:
+                String urlString = intent.getStringExtra(FHEM_URI);
                 Intent webIntent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(urlString));
                 webIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(webIntent);
@@ -81,16 +67,16 @@ public class WidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,int[] appWidgetIds) {
-        Log.d(TAG, "onUpdate started");
+        //Log.d(TAG, "onUpdate started");
     }
 
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         super.onDeleted(context, appWidgetIds);
-        Log.d(TAG, "Deleting " + appWidgetIds.length + " widgets");
+        //Log.d(TAG, "Deleting " + appWidgetIds.length + " widgets");
         int widgetId = appWidgetIds[0];
         ConfigDataIO configDataIO = new ConfigDataIO(context);
-        ConfigDataCommon configDataCommon = configDataIO.readCommon();
+        ConfigDataCommon configDataCommon = configDataIO.readCommon(-1);
         int serial = configDataCommon.delete(configDataIO, widgetId);
 
         if (serial > -1) {
@@ -107,6 +93,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
+        //Log.d(TAG, "onEnabled started");
         super.onEnabled(context);
     }
 
@@ -119,21 +106,22 @@ public class WidgetProvider extends AppWidgetProvider {
     private void checkWidgets(Context context, String action) {
         int[] widgetIds = getWidgetIds(context);
 
+        //Log.d(TAG,"widgetIds: " + widgetIds.toString());
         ConfigDataIO configDataIO = new ConfigDataIO(context);
-        ConfigDataCommon configDataCommon = configDataIO.readCommon();
+        int curWidgetId = (widgetIds.length > 0) ? widgetIds[0] : -1;
+        //Log.d(TAG,"curWidgetId: " + curWidgetId);
+        ConfigDataCommon configDataCommon = configDataIO.readCommon(curWidgetId);
 
         serviceIntents = new HashMap<>();
 
         for (int widgetId : widgetIds) {
             int serial = configDataCommon.getInstByWidgetid(widgetId);
-            /*
+
             if (serial == -1) {
-                serial = configDataCommon.getFreeInstance(widgetId);
-                if (serial > -1) {
-                    configDataIO.saveNewInstance(configDataCommon, serial);
-                }
+                serial = 0;
+
             }
-            */
+
             if (serial > -1) {
                 addServiceIntent(serial, widgetId, context, action);
             }
@@ -146,6 +134,6 @@ public class WidgetProvider extends AppWidgetProvider {
         Intent intent = new Intent(context.getApplicationContext(), settingServiceClasses.get(serial));
         intent.setAction(action);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-        serviceIntents.put(widgetId, new MyService(widgetId, serial, intent));
+        serviceIntents.put(widgetId, new MyService(serial, intent));
     }
 }

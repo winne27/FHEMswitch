@@ -1,8 +1,12 @@
 <resources>
+    <string name="url_fhem_pl">URL FHEM Webserver</string>
+    <string name="url_fhem_pl_local">... im Heimnetz</string>
+    <string name="url_fhem_js">* URL fhem.js server</string>
+    <string name="url_fhem_js_local">... im Heimnetz</string>
+    <string name="conn_pw">fhem.js Passwort</string>
+    <string name="is_home_net">Das augenblickliche WLAN (%1$s) ist das Heimnetz</string>
+    <string name="ismand">* mandatory fields</string>
 
-    <string name="url_fhem_pl">URL FHEM Webserver (optional):</string>
-    <string name="url_fhem_js">URL FHEM node.js Server:</string>
-    <string name="conn_pw">FHEM Server Passwort (optional):</string>
     <string name="switchicon">Lampe</string>
     <string name="save">Speichern</string>
     <string name="error_header">Es ist ein Fehler aufgetreten</string>
@@ -24,7 +28,7 @@
     <string name="urlerr">Die angegbene URL ist ungültig</string>
     <string name="fileerr">Fehler beim Speichern der Konfiguration:</string>
     <string name="urlcheck">bitte URL prüfen</string>
-    <string name="onlinecheck">ist dieses Geräte überhaupt Online</string>
+    <string name="onlinecheck">ist dieser Server Online?</string>
 	<string name="commands">Freie Befehle</string>
     <string name="commands2">FHEM Befehl</string>
 
@@ -61,6 +65,16 @@
     <string name="installed_version">installierte Version</string>
     <string name="latest_version">neueste Version</string>
     <string name="cancel">Abbrechen</string>
-    <string name="noWidgetMessage">Bitte erst ein Widget platzieren.</string>
+    <string name="noWidgetMessage">Bitte erst ein neues Widget auf einem Startscreen platzieren.
+                                   \n\nDabei startet die Konfiguration automatisch und die alten Konfigurationsdaten werden dabei übernommen, falls bereits eine Installation von FHEMswitch auf diesem Gerät vorhanden war.
+                                   \n\nWurden alte Daten erfolgreich übernommen und gespeichert(!), bleibt in der Regel ein Zombie-Widget der alten Version erhalten. Dies kann man einfach in den Papierkorb verschieben oder durch einen Neustart des Gerätes wird der Zombie auch eleminiert.
+    </string>
     <string name="maxWidgetMessage">Es sind nur maximal %1$s Widgets möglich</string>
+    <string name="noconnjs">Keine Verbindung zum fhem.js Server möglich:</string>
+    <string name="adjustable">numerische Werte setzen</string>
+    <string name="stepsize">Schrittweite:</string>
+    <string name="delay">Befehlsverzögerung in ms:</string>
+    <string name="value">value</string>
+    <string name="set">set</string>
+    <string name="execcmd">FHEM-Befehl um Wert zu setzen:</string>
 </resources>

@@ -10,9 +10,13 @@ import de.fehngarten.fhemswitch.widget.WidgetService1;
 import de.fehngarten.fhemswitch.widget.WidgetService2;
 import de.fehngarten.fhemswitch.widget.WidgetService3;
 
+import static de.fehngarten.fhemswitch.global.Consts.DOWN;
+import static de.fehngarten.fhemswitch.global.Consts.DOWNFAST;
 import static de.fehngarten.fhemswitch.global.Consts.LAYOUT_HORIZONTAL;
 import static de.fehngarten.fhemswitch.global.Consts.LAYOUT_MIXED;
 import static de.fehngarten.fhemswitch.global.Consts.LAYOUT_VERTICAL;
+import static de.fehngarten.fhemswitch.global.Consts.UP;
+import static de.fehngarten.fhemswitch.global.Consts.UPFAST;
 
 public final class Settings {
 
@@ -20,16 +24,20 @@ public final class Settings {
     public static final String settingsConfigFileName = "config.data.";
 
     public static final int settingsMaxInst = 4;
-    public static final int settingWaitCyclesShort = 15;
-    public static final int settingWaitIntervalLong = 91000;
-    public static final int settingWaitIntervalShort = 4000;
-    public static final int settingSocketsConnectionTimeout = 15000;
+    public static final int settingWaitIntervalLong = 21000;
+    public static final int settingSocketsConnectionTimeout = 3000;
     public static final int settingDelaySocketCheck = 1000;
-    public static final int settingDelayVersionCheck = 10000;
-    public static final int settingDelayShowVersionCheck = 20000;
-    public static final int settingWaitIntervalVersionCheck = 3600000;
-    public static final int settingWaitIntervalVersionShowCheck = 600000;
 
+
+    public static final int settingDelayDefineBroadcastReceivers = 5000;
+
+    public static final int settingDelayVersionCheck = 10000;
+    public static final int settingIntervalVersionCheck = 3600000;
+
+    public static final int settingDelayShowVersionCheck = 20000;
+    public static final int settingIntervalShowVersionCheck = 600000;
+
+    public static final String settingHelpUrl = "https://forum.fhem.de/index.php?topic=36824.msg290935";
     public static final String settingGoogleStoreUrl = "https://play.google.com/store/apps/details?id=de.fehngarten.fhemswitch";
     public static final String settingLicenceKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh7D+DlsyIr/qs/nzYQHHITVBXoDn8eSsFKGUgjvlJhINvjFUTwiHBmwrTKBIXye6WozJ4QM7Ov3cUXqeDlIz4m8bHCibXzQsra2kWSZagRhHLcrBwVBy1a3JXB74E1VQO0LbPPgnfeL2Uzv4IIS3QvyAJ2Uo5lHJBoTA+jxUIe/YFPovNvhWhZna2oHZlptc07rNydcTShdMzk/Ujv881jJB0GJMUol5OM5/WG+dHpfyplxlolpS/AXX9312VeU7LkRdOUikQ+bPQMT5gbYyWPXoDAKRkJiU6F5LR+xQqxHxNyedy3yZnlkmXDq0l7u1HYkJaY3Pr2hxOo3hAjX2pQIDAQAB";
     public static final Map<String, Integer> settingIcons = new HashMap<>();
@@ -37,16 +45,33 @@ public final class Settings {
     public static final int[] settingWidgetSel = new int[settingsMaxInst];
     public static final int[] settingShapes = new int[settingsMaxInst];
     public static final int[] settingLayouts = new int[3];
-
+    public static final HashMap<String, Float> settingMultiplier = new HashMap<>();
 
     static {
+        settingIcons.put("v_on", R.drawable.v_on);
+        settingIcons.put("v_off", R.drawable.v_off);
+        settingIcons.put("v_set_toggle", R.drawable.v_toggle);
+        settingIcons.put("v_set_off", R.drawable.v_toggle);
+        settingIcons.put("v_set_on", R.drawable.v_toggle);
+        settingIcons.put("v_ok", R.drawable.prozent10);
+        settingIcons.put("v_low", R.drawable.prozent3);
+        settingIcons.put("p_1", R.drawable.prozent1);
+        settingIcons.put("p_2", R.drawable.prozent2);
+        settingIcons.put("p_3", R.drawable.prozent3);
+        settingIcons.put("p_4", R.drawable.prozent4);
+        settingIcons.put("p_5", R.drawable.prozent5);
+        settingIcons.put("p_6", R.drawable.prozent6);
+        settingIcons.put("p_7", R.drawable.prozent7);
+        settingIcons.put("p_8", R.drawable.prozent8);
+        settingIcons.put("p_9", R.drawable.prozent9);
+        settingIcons.put("p_10", R.drawable.prozent10);
         settingIcons.put("on", R.drawable.on);
         settingIcons.put("set_on", R.drawable.set_on);
         settingIcons.put("off", R.drawable.off);
         settingIcons.put("set_off", R.drawable.set_off);
         settingIcons.put("set_toggle", R.drawable.set_toggle);
         settingIcons.put("undefined", R.drawable.undefined);
-        settingIcons.put("toggle", R.drawable.undefined);
+        settingIcons.put("toggle", R.drawable.set_toggle);
 
         settingServiceClasses.add(WidgetService0.class);
         settingServiceClasses.add(WidgetService1.class);
@@ -66,5 +91,10 @@ public final class Settings {
         settingLayouts[LAYOUT_HORIZONTAL] = R.layout.main_layout_horizontal;
         settingLayouts[LAYOUT_VERTICAL] = R.layout.main_layout_vertical;
         settingLayouts[LAYOUT_MIXED] = R.layout.main_layout_mixed;
+
+        settingMultiplier.put(DOWNFAST, (float) -3);
+        settingMultiplier.put(DOWN, (float) -1);
+        settingMultiplier.put(UP,(float) 1);
+        settingMultiplier.put(UPFAST, (float) 3);
     }
 }

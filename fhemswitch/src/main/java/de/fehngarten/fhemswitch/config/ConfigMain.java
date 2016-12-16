@@ -1,7 +1,9 @@
 package de.fehngarten.fhemswitch.config;
 
 import android.content.BroadcastReceiver;
+import android.net.Uri;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 
@@ -21,7 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -32,13 +33,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.content.pm.ActivityInfo;
 
 import de.fehngarten.fhemswitch.BuildConfig;
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
 import de.fehngarten.fhemswitch.data.ConfigDataIO;
+import de.fehngarten.fhemswitch.data.ConfigIntValueRow;
+import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
 import de.fehngarten.fhemswitch.data.ConfigWorkInstance;
 import de.fehngarten.fhemswitch.data.ConfigDataInstance;
+import de.fehngarten.fhemswitch.data.MyIntValue;
 import de.fehngarten.fhemswitch.data.MyLightScenes.MyLightScene;
 import de.fehngarten.fhemswitch.modul.MySocket;
 import de.fehngarten.fhemswitch.data.MySwitch;
@@ -54,13 +57,15 @@ import de.fehngarten.fhemswitch.modul.GetStoreVersion;
 import de.fehngarten.fhemswitch.modul.MyBroadcastReceiver;
 import de.fehngarten.fhemswitch.modul.MyReceiveListener;
 
+import de.fehngarten.fhemswitch.modul.MyWifiInfo;
+import de.fehngarten.fhemswitch.modul.SendAlertMessage;
 import io.socket.emitter.Emitter;
 import io.socket.client.Socket;
 import io.socket.client.Ack;
 
 import com.mobeta.android.dslv.DragSortListView;
 
-import android.util.Log;
+//import android.util.Log;
 
 import static de.fehngarten.fhemswitch.global.Consts.NEW_CONFIG;
 import static de.fehngarten.fhemswitch.global.Consts.SEND_DO_COLOR;
@@ -72,7 +77,9 @@ import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 public class ConfigMain extends Activity {
     private final String TAG = "ConfigMain";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-    private EditText urlpl, urljs, connectionPW;
+    private EditText urlpl, urljs, connectionPW, urlplLocal, urljsLocal;
+    private CheckBox isHomeNet;
+    private MyWifiInfo myWifiInfo;
     public static ConfigWorkInstance configWorkInstance;
     private ConfigDataCommon configDataCommon;
     private ConfigDataInstance configDataInstance;
@@ -81,6 +88,7 @@ public class ConfigMain extends Activity {
     public ConfigSwitchesAdapter configSwitchesAdapter;
     public ConfigLightscenesAdapter configLightscenesAdapter;
     public ConfigValuesAdapter configValuesAdapter;
+    public ConfigIntValuesAdapter configIntValuesAdapter;
     public ConfigCommandsAdapter configCommandsAdapter;
     public int lsCounter = 0;
     public int lsSize = 0;
@@ -118,10 +126,13 @@ public class ConfigMain extends Activity {
         }
 */
         if (dpWidth < 600) {
+            //Log.d(TAG, "config__s");
             setContentView(R.layout.config__s);
         } else if (dpWidth < 725) {
+            //Log.d(TAG, "config__m");
             setContentView(R.layout.config__m);
         } else {
+            //Log.d(TAG, "config__l");
             setContentView(R.layout.config__l);
         }
 
@@ -132,7 +143,7 @@ public class ConfigMain extends Activity {
         class OnStoreVersion implements MyReceiveListener {
             public void run(Context context, Intent intent) {
                 String latest = intent.getExtras().getString(GetStoreVersion.LATEST);
-                if (BuildConfig.DEBUG) Log.d("ConfigMain", "latest store version: " + latest);
+                //if (BuildConfig.DEBUG) Log.d("ConfigMain", "latest store version: " + latest);
                 TextView latestView = (TextView) findViewById(R.id.latestView);
                 latestView.setText(latest);
             }
@@ -140,7 +151,7 @@ public class ConfigMain extends Activity {
 
         class OnStopConfig implements MyReceiveListener {
             public void run(Context context, Intent intent) {
-                Log.d(TAG,"OnStopConfig fired");
+                //Log.d(TAG, "OnStopConfig fired");
                 finish();
             }
         }
@@ -158,31 +169,54 @@ public class ConfigMain extends Activity {
 
         urlpl = (EditText) findViewById(R.id.urlpl);
         urljs = (EditText) findViewById(R.id.urljs);
+        urlplLocal = (EditText) findViewById(R.id.urlpl_local);
+        urljsLocal = (EditText) findViewById(R.id.urljs_local);
+        isHomeNet = (CheckBox) findViewById(R.id.is_home_net);
+        TextView isHomeNetLabel = (TextView) findViewById(R.id.is_home_net_label);
         connectionPW = (EditText) findViewById(R.id.connection_pw);
-
-        configDataIO = new ConfigDataIO(mContext);
-        //configDataIO.deleteCommon();
-        configDataCommon = configDataIO.readCommon();
-
-        // Read object using ObjectInputStream
-
-        urljs.setText(configDataCommon.urlFhemjs, TextView.BufferType.EDITABLE);
-        urlpl.setText(configDataCommon.urlFhempl, TextView.BufferType.EDITABLE);
-        connectionPW.setText(configDataCommon.fhemjsPW, TextView.BufferType.EDITABLE);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
             mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-            if (mAppWidgetId > 0) {
-                instSerial = configDataCommon.getFreeInstance(mAppWidgetId);
-            } else {
-                instSerial = configDataCommon.getFirstInstance();
-            }
+        } else {
+            mAppWidgetId = -1;
+        }
+
+        configDataIO = new ConfigDataIO(mContext);
+        configDataCommon = configDataIO.readCommon(mAppWidgetId);
+
+        // Read object using ObjectInputStream
+
+        urljs.setText(configDataCommon.urlFhemjs, TextView.BufferType.EDITABLE);
+        urljsLocal.setText(configDataCommon.urlFhemjsLocal, TextView.BufferType.EDITABLE);
+        urlpl.setText(configDataCommon.urlFhempl, TextView.BufferType.EDITABLE);
+        urlplLocal.setText(configDataCommon.urlFhemplLocal, TextView.BufferType.EDITABLE);
+        connectionPW.setText(configDataCommon.fhemjsPW, TextView.BufferType.EDITABLE);
+
+        myWifiInfo = new MyWifiInfo(mContext);
+        if (myWifiInfo.isWifi()) {
+            String isHomeNetText = getString(R.string.is_home_net, myWifiInfo.getWifiName());
+            isHomeNetLabel.setText(isHomeNetText);
+            isHomeNet.setChecked(myWifiInfo.getWifiId().equals(configDataCommon.bssId));
+            findViewById(R.id.is_home_net_row).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.is_home_net_row).setVisibility(View.GONE);
+        }
+
+        if (mAppWidgetId > 0 && !ConfigWorkBasket.justMigrated) {
+            instSerial = configDataCommon.getFreeInstance(mAppWidgetId);
         } else {
             instSerial = configDataCommon.getFirstInstance();
         }
-        Log.d(TAG, "instSerial: " + instSerial);
+        ConfigWorkBasket.justMigrated = false;
+        //Log.d(TAG, "instSerial: " + instSerial);
+
+        // Migration stuff to 3.0.0
+        if (instSerial == 0 && configDataCommon.instances[0] == 0 && mAppWidgetId > 0 && configDataIO.configInstanceExists(0)) {
+            configDataCommon.instances[0] = mAppWidgetId;
+        }
+
         if (instSerial < 0) {
             String hint;
             if (mAppWidgetId > 0) {
@@ -230,10 +264,9 @@ public class ConfigMain extends Activity {
 
     @Override
     public void onDestroy() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "onDestroy fired");
+        //if (BuildConfig.DEBUG) Log.d(TAG, "onDestroy fired");
         if (mySocket != null) {
-            mySocket.socket.disconnect();
-            mySocket.socket.close();
+            mySocket.destroy();
         }
 
         for (BroadcastReceiver broadcastReceiver : broadcastReceivers) {
@@ -241,10 +274,6 @@ public class ConfigMain extends Activity {
         }
 
         sendDoColor(false);
-
-        //Intent restartIntent = new Intent();
-        //restartIntent.setAction(ACTION_APPWIDGET_UPDATE);
-        //mContext.sendBroadcast(restartIntent);
 
         int widgetId;
         for (int i = 0; i < configDataCommon.instances.length; i++) {
@@ -275,32 +304,21 @@ public class ConfigMain extends Activity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
-        try {
-            URL url = new URL(urljs.getText().toString());
-            url.toURI();
-            try {
-                String pw = connectionPW.getText().toString();
+        // open websocket connection
 
-                mySocket = new MySocket(urljs.getText().toString(), "Config");
-                mySocket.socket.on("authenticated", authListener);
+        mySocket = new MySocket(mContext, configDataCommon, "Config");
+        mySocket.socket.on("authenticated", authListener);
 
-                if (!pw.equals("")) {
-                    //Log.i("send pw",pw);
-                    mySocket.socket.emit("authentication", pw);
-                    waitAuth.postDelayed(runnableWaitAuth, 2000);
-                }
-            } catch (Exception e) {
-                waitAuth.removeCallbacks(runnableWaitAuth);
-                sendAlertMessage(getString(R.string.noconn) + ":\n- " + getString(R.string.urlcheck) + "!\n- " + getString(R.string.onlinecheck) + "?\n" + e);
-            }
+        mySocket.socket.on(Socket.EVENT_CONNECT_ERROR, args -> runOnUiThread(() -> {
+            waitAuth.removeCallbacks(runnableWaitAuth);
+            new SendAlertMessage(mContext, getString(R.string.noconnjs) + ":\n- " + getString(R.string.urlcheck) + ".\n- " + getString(R.string.onlinecheck) + "?");
+        }));
 
-            mySocket.socket.on(Socket.EVENT_CONNECT_ERROR, args -> runOnUiThread(() -> {
-                waitAuth.removeCallbacks(runnableWaitAuth);
-                sendAlertMessage(getString(R.string.noconn) + ":\n- " + getString(R.string.urlcheck) + ".\n- " + getString(R.string.onlinecheck) + "?");
-            }));
-        } catch (MalformedURLException | URISyntaxException e) {
-            sendAlertMessage(getString(R.string.urlerr) + ":\n " + e);
-        }
+        mySocket.socket.on("unauthorized", args -> runOnUiThread(() -> {
+            new SendAlertMessage(mContext, getString(R.string.checkpw));
+        }));
+
+        mySocket.doConnect();
     }
 
     private void buildSpinnerRadio() {
@@ -334,6 +352,8 @@ public class ConfigMain extends Activity {
         findViewById(R.id.cancel_config).setOnClickListener(cancelConfigButtonOnClickListener);
         findViewById(R.id.cancel2_config).setOnClickListener(cancelConfigButtonOnClickListener);
         findViewById(R.id.cancel3_config).setOnClickListener(cancelConfigButtonOnClickListener);
+        findViewById(R.id.help_layout).setOnClickListener(callHelpOnClickListener);
+        findViewById(R.id.help_url).setOnClickListener(callHelpOnClickListener);
 
         radioLayoutLandscape = (RadioGroup) findViewById(R.id.layout_landscape);
         radioLayoutPortrait = (RadioGroup) findViewById(R.id.layout_portrait);
@@ -379,14 +399,25 @@ public class ConfigMain extends Activity {
         showFHEMunits();
     };
 
+    private Button.OnClickListener callHelpOnClickListener = arg0 -> {
+        Intent webIntent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(settingHelpUrl));
+        webIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(webIntent);
+    };
+
     private Button.OnClickListener saveConfigButtonOnClickListener = arg0 -> saveConfig(true);
 
-    private Button.OnClickListener cancelConfigButtonOnClickListener = arg0 -> finish();
+    private Button.OnClickListener cancelConfigButtonOnClickListener = arg0 -> {
+
+        //new ConfigDataIO(mContext).deleteCommon();
+
+        finish();
+    };
 
     private Runnable runnableWaitAuth = new Runnable() {
         @Override
         public void run() {
-            sendAlertMessage(getString(R.string.checkpw));
+            new SendAlertMessage(mContext, getString(R.string.checkpw));
             mySocket.socket.off("authenticated");
             mySocket.socket.close();
             mySocket = null;
@@ -425,13 +456,30 @@ public class ConfigMain extends Activity {
 
         if (configDataInstance.valueRows != null) {
             for (ConfigValueRow valueRow : configDataInstance.valueRows) {
+                Boolean useIcon = false;
+                if (valueRow.useIcon != null) {
+                    useIcon = valueRow.useIcon;
+                }
                 if (valueRow.enabled) {
-                    configWorkInstance.values.add(new MyValue(valueRow.name, valueRow.unit));
+                    configWorkInstance.values.add(new MyValue(valueRow.name, valueRow.unit, useIcon));
                 } else {
-                    configWorkInstance.valuesDisabled.add(new MyValue(valueRow.name, valueRow.unit));
+                    configWorkInstance.valuesDisabled.add(new MyValue(valueRow.name, valueRow.unit, useIcon));
                 }
             }
             Collections.sort(configWorkInstance.valuesDisabled);
+        }
+
+        if (configDataInstance.intValueRows != null) {
+            for (ConfigIntValueRow intValueRow : configDataInstance.intValueRows) {
+                MyIntValue myIntValue = new MyIntValue();
+                myIntValue.transfer(intValueRow);
+                if (intValueRow.enabled) {
+                    configWorkInstance.intValues.add(myIntValue);
+                } else {
+                    configWorkInstance.intValuesDisabled.add(myIntValue);
+                }
+            }
+            Collections.sort(configWorkInstance.intValuesDisabled);
         }
 
         waitAuth.removeCallbacks(runnableWaitAuth);
@@ -455,15 +503,6 @@ public class ConfigMain extends Activity {
         ScrollView mainScrollView = (ScrollView) findViewById(R.id.config_scroll_block);
         mainScrollView.fullScroll(ScrollView.FOCUS_UP);
         mainScrollView.smoothScrollTo(0, 0);
-    }
-
-    public void sendAlertMessage(final String msg) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-        dialog.setTitle(mContext.getString(R.string.error_header));
-        //dialog.setIcon(R.drawable.error_icon);
-        dialog.setMessage(msg);
-        dialog.setNeutralButton(mContext.getString(R.string.ok), null);
-        dialog.create().show();
     }
 
     private void allCommands() {
@@ -566,6 +605,7 @@ public class ConfigMain extends Activity {
             @Override
             public void call(Object... args) {
                 runOnUiThread(() -> {
+                    initIntValues((JSONObject) args[0]);
                     configValuesAdapter.initData((JSONObject) args[0], configWorkInstance.values, configWorkInstance.valuesDisabled);
                     configValuesAdapter.dataComplete((ListView) findViewById(R.id.values));
                 });
@@ -573,10 +613,22 @@ public class ConfigMain extends Activity {
         });
     }
 
+    private void initIntValues(JSONObject intValues) {
+        DragSortListView l = (DragSortListView) findViewById(R.id.intvalues);
+        configIntValuesAdapter = new ConfigIntValuesAdapter(this);
+        l.setAdapter(configIntValuesAdapter);
+        ConfigIntValuesController c = new ConfigIntValuesController(l, configIntValuesAdapter, mContext);
+        l.setFloatViewManager(c);
+        l.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        configIntValuesAdapter.initData(intValues, configWorkInstance.intValues, configWorkInstance.intValuesDisabled);
+        configIntValuesAdapter.dataComplete((ListView) findViewById(R.id.intvalues));
+    }
+
     private void saveConfig(boolean doFinish) {
         configDataInstance.switchRows = configSwitchesAdapter.getData();
         configDataInstance.lightsceneRows = configLightscenesAdapter.getData();
         configDataInstance.valueRows = configValuesAdapter.getData();
+        configDataInstance.intValueRows = configIntValuesAdapter.getData();
         configDataInstance.commandRows = configCommandsAdapter.getData();
         configDataInstance.switchCols = spinnerSwitchCols.getSelectedItemPosition();
         configDataInstance.valueCols = spinnerValueCols.getSelectedItemPosition();
@@ -598,11 +650,28 @@ public class ConfigMain extends Activity {
     }
 
     private void saveConfigCommon() {
+
+        // check syntax of url
+        String urlString = urljs.getText().toString();
+        try {
+            URL url = new URL(urlString);
+            url.toURI();
+        } catch (MalformedURLException | URISyntaxException e) {
+            new SendAlertMessage(mContext, getString(R.string.urlerr) + ":\n" + e.getMessage());
+            return;
+        }
+
         configDataCommon.urlFhemjs = urljs.getText().toString();
+        configDataCommon.urlFhemjsLocal = urljsLocal.getText().toString();
         configDataCommon.urlFhempl = urlpl.getText().toString();
+        configDataCommon.urlFhemplLocal = urlplLocal.getText().toString();
         configDataCommon.fhemjsPW = connectionPW.getText().toString();
 
+        if (isHomeNet.isChecked()) {
+            configDataCommon.bssId = myWifiInfo.getWifiId();
+        } else if (configDataCommon.bssId.equals(myWifiInfo.getWifiId())) {
+            configDataCommon.bssId = "";
+        }
         configDataIO.saveCommon(configDataCommon);
-
     }
 }

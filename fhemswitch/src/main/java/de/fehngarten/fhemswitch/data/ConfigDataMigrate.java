@@ -1,7 +1,5 @@
 package de.fehngarten.fhemswitch.data;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.util.Log;
 
@@ -9,25 +7,24 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
-import de.fehngarten.fhemswitch.BuildConfig;
+//import de.fehngarten.fhemswitch.BuildConfig;
 import de.fehngarten.fhemswitch.ConfigDataOnly;
-import de.fehngarten.fhemswitch.widget.WidgetProvider;
 
 
-public class ConfigDataMigrate {
+class ConfigDataMigrate {
 
-    Context mContext;
-    ConfigDataIO configDataIO;
+    private Context mContext;
+    private ConfigDataIO configDataIO;
     private final String TAG = "ConfigDataMigrate";
 
-    public ConfigDataMigrate(Context context, ConfigDataIO configDataIO) {
+    ConfigDataMigrate(Context context, ConfigDataIO configDataIO) {
         mContext = context;
         this.configDataIO = configDataIO;
     }
 
-    public ConfigDataCommon doMigrate() {
+    ConfigDataCommon doMigrate(int widgetId) {
         Log.d(TAG, "gestartet");
-        Object obj = null;
+        Object obj;
         try {
             String filename = "config.data";
             FileInputStream f_in = mContext.openFileInput(filename);
@@ -37,35 +34,28 @@ public class ConfigDataMigrate {
             obj_in.close();
 
             if (obj instanceof ConfigDataOnly) {
-                if (BuildConfig.DEBUG) Log.d(TAG, "old config found");
+                //if (BuildConfig.DEBUG) Log.d(TAG, "old config found");
                 ConfigDataOnly configDataOnly = (ConfigDataOnly) obj;
-                return doRealMigrate(configDataOnly);
+                return doRealMigrate(configDataOnly, widgetId);
             } else {
-                if (BuildConfig.DEBUG) Log.d(TAG, "old config data not correct ");
+                //if (BuildConfig.DEBUG) Log.d(TAG, "old config data not correct ");
                 return null;
             }
         } catch (Exception e) {
-            if (BuildConfig.DEBUG) Log.d(TAG, "old config data with exception");
-            if (BuildConfig.DEBUG) Log.d(TAG, e.getMessage());
+            //if (BuildConfig.DEBUG) Log.d(TAG, "old config data with exception");
+            //if (BuildConfig.DEBUG) Log.d(TAG, e.getMessage());
             return null;
         }
     }
 
-    private ConfigDataCommon doRealMigrate(ConfigDataOnly configDataOnly) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "old version takeover started");
+    private ConfigDataCommon doRealMigrate(ConfigDataOnly configDataOnly, int widgetId) {
+        //if (BuildConfig.DEBUG) Log.d(TAG, "old version takeover started");
         ConfigDataCommon configDataCommon = new ConfigDataCommon();
         configDataCommon.init();
         configDataCommon.urlFhemjs = configDataOnly.urljs;
         configDataCommon.urlFhempl = configDataOnly.urlpl;
         configDataCommon.fhemjsPW = configDataOnly.connectionPW;
-
-        ComponentName thisWidget = new ComponentName(mContext, WidgetProvider.class);
-        AppWidgetManager mgr = AppWidgetManager.getInstance(mContext);
-        int[] widgetIds = mgr.getAppWidgetIds(thisWidget);
-
-        if (widgetIds.length > 0) {
-            configDataCommon.instances[0] = widgetIds[0];
-        }
+        configDataCommon.instances[0] = widgetId;
 
         configDataIO.saveCommon(configDataCommon);
         ConfigDataInstance configDataInstance = new ConfigDataInstance();
@@ -77,7 +67,7 @@ public class ConfigDataMigrate {
 
         configDataInstance.valueRows = new ArrayList<>();
         for (de.fehngarten.fhemswitch.ConfigValueRow configValueRow : configDataOnly.valueRows) {
-            configDataInstance.valueRows.add(new ConfigValueRow(configValueRow.unit, configValueRow.name, configValueRow.value, configValueRow.enabled));
+            configDataInstance.valueRows.add(new ConfigValueRow(configValueRow.unit, configValueRow.name, configValueRow.value, configValueRow.enabled, false));
         }
 
         configDataInstance.commandRows = new ArrayList<>();
@@ -95,9 +85,13 @@ public class ConfigDataMigrate {
         configDataInstance.switchCols      = configDataOnly.switchCols     ;
         configDataInstance.valueCols       = configDataOnly.valueCols      ;
         configDataInstance.commandCols     = configDataOnly.commandCols    ;
+        configDataInstance.widgetId        = widgetId;
 
         configDataIO.saveInstance(configDataInstance, 0);
 
+        ConfigWorkBasket.justMigrated = true;
         return configDataCommon;
     }
+
+
 }

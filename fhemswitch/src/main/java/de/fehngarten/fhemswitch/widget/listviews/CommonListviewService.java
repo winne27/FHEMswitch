@@ -24,6 +24,8 @@ public class CommonListviewService extends RemoteViewsService {
                 return new LightScenesFactory(getApplicationContext(), intent);
             case "command":
                 return new CommandsFactory(getApplicationContext(), intent, col);
+           case "intvalue":
+                return new IntValuesFactory(getApplicationContext(), intent);
         }
         return null;
     }

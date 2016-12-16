@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/configBody"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
+    android:layout_height="wrap_content"
     android:background="@drawable/configshape"
-    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="2dp">
 
@@ -17,12 +16,12 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.25"
+            android:layout_weight="0.28"
             android:background="@color/conf_bg_header_1"
             android:gravity="center_vertical|left"
             android:paddingLeft="8dp"
             android:textColor="@color/conf_text_header_1"
-            android:textSize="16sp">
+            android:textSize="14sp">
 
             <TextView
                 android:id="@+id/installedLabel"
@@ -30,43 +29,43 @@
                 android:layout_height="wrap_content"
                 android:text="@string/installed_version"
                 android:textColor="@color/conf_text_header_1"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/installedView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/installedLabel"
                 android:layout_alignLeft="@id/installedLabel"
                 android:layout_alignRight="@id/installedLabel"
+                android:layout_below="@id/installedLabel"
                 android:gravity="center_vertical|center_horizontal"
                 android:textColor="@color/conf_text_header_1"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </RelativeLayout>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.6"
+            android:layout_weight="0.44"
             android:background="@color/conf_bg_header_1"
             android:gravity="center_vertical|center_horizontal"
             android:paddingBottom="4dp"
             android:paddingTop="4dp"
             android:text="@string/config_header"
             android:textColor="@color/conf_text_header_1"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.25"
+            android:layout_weight="0.28"
             android:background="@color/conf_bg_header_1"
             android:gravity="center_vertical|right"
             android:paddingRight="8dp"
             android:textColor="@color/conf_text_header_1"
-            android:textSize="16sp">
+            android:textSize="14sp">
 
             <TextView
                 android:id="@+id/latestLabel"
@@ -74,18 +73,18 @@
                 android:layout_height="wrap_content"
                 android:text="@string/latest_version"
                 android:textColor="@color/conf_text_header_1"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/latestView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/latestLabel"
                 android:layout_alignLeft="@id/latestLabel"
                 android:layout_alignRight="@id/latestLabel"
+                android:layout_below="@id/latestLabel"
                 android:gravity="center_vertical|center_horizontal"
                 android:textColor="@color/conf_text_header_1"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </RelativeLayout>
     </LinearLayout>
@@ -97,4 +96,3 @@
     <include layout="@layout/config_bodyblock_message"></include>
 
 </LinearLayout>
-

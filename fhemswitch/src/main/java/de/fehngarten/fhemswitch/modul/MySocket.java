@@ -2,52 +2,74 @@ package de.fehngarten.fhemswitch.modul;
 
 import java.util.ArrayList;
 
+import android.content.Context;
 import android.os.Build;
-import android.util.Log;
+//import android.util.Log;
 
-//import io.socket.emitter.Emitter;
 import de.fehngarten.fhemswitch.BuildConfig;
-import de.fehngarten.fhemswitch.R;
+import de.fehngarten.fhemswitch.data.ConfigDataCommon;
+import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
 import io.socket.client.IO;
 import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
-
-import android.content.Context;
 
 import static de.fehngarten.fhemswitch.global.Settings.*;
 
 public class MySocket {
-    public Socket socket = null;
-    public String url;
+    public Socket socket;
     private final String TAG = "MySocket";
 
-    public MySocket(String url, String type) {
-        //if (BuildConfig.DEBUG) Log.d("MySocket", "started");
+    public MySocket(Context context, ConfigDataCommon configDataCommon, String type) {
+        checkLocalWlan(configDataCommon, context);
+        String url = ConfigWorkBasket.urlFhemjs;
+
         try {
-            socket = null;
+            //Log.d(TAG, "URL: " + url);
             IO.Options options = new IO.Options();
-            options.reconnection = false;
+            if (type.equals("Config")) {
+                options.reconnection = false;
+            } else {
+                options.reconnection = true;
+                options.reconnectionDelay = 1000;
+                options.reconnectionDelayMax = 30000;
+            }
+
             options.timeout = settingSocketsConnectionTimeout;
             options.query = "client=" + type + "&platform=Android&version=" + Build.VERSION.RELEASE + "&model=" + Build.MODEL + "&appver=" + BuildConfig.VERSION_NAME;
             socket = IO.socket(url, options);
-            socket.connect();
-            this.url = url;
+
+            socket.on(Socket.EVENT_CONNECT, args -> {
+                String pw = ConfigWorkBasket.fhemjsPW;
+                if (!pw.equals("")) {
+                    socket.emit("authentication", pw);
+                }
+            });
+
         } catch (Exception e1) {
-            Log.e("socket error", e1.toString());
+            //Log.e("socket error", e1.toString());
+        }
+    }
+
+    private void checkLocalWlan(ConfigDataCommon configDataCommon, Context context) {
+        MyWifiInfo myWifiInfo = new MyWifiInfo(context);
+        boolean beAtHome = myWifiInfo.beAtHome(configDataCommon.bssId);
+
+        if (!configDataCommon.urlFhemjsLocal.equals("") && beAtHome) {
+            ConfigWorkBasket.urlFhemjs = configDataCommon.urlFhemjsLocal;
+        } else {
+            ConfigWorkBasket.urlFhemjs = configDataCommon.urlFhemjs;
         }
 
-        socket.on(Socket.EVENT_ERROR, args -> {
-            if (BuildConfig.DEBUG) Log.d("socket.io", "lost connection to server");
-        });
+        if (!configDataCommon.urlFhemplLocal.equals("") && beAtHome) {
+            ConfigWorkBasket.urlFhempl = configDataCommon.urlFhemplLocal;
+        } else {
+            ConfigWorkBasket.urlFhempl = configDataCommon.urlFhempl;
+        }
 
-        socket.on(Socket.EVENT_CONNECT_ERROR, args -> {
-            if (BuildConfig.DEBUG) Log.d("connection error", args[0].toString());
-            socket.close();
-        });
+        ConfigWorkBasket.fhemjsPW = configDataCommon.fhemjsPW;
+    }
 
-        socket.on(Socket.EVENT_CONNECT, args -> {
-            if (BuildConfig.DEBUG) Log.d("connection established", "");
-        });
+    public void doConnect() {
+        socket.connect();
     }
 
     public void requestValues(ArrayList<String> unitsList, String type) {
@@ -66,5 +88,10 @@ public class MySocket {
         if (socket != null && cmd != null) {
             socket.emit("commandNoResp", cmd);
         }
+    }
+
+    public void destroy() {
+        socket.disconnect();
+        socket.close();
     }
 }

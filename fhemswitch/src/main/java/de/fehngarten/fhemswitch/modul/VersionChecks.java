@@ -35,7 +35,7 @@ public class VersionChecks {
 
     public String showVersionHint() {
         for (String type : types.keySet()) {
-            if (types.get(type).showVersionHint()) {
+            if (types.get(type).doShowVersionHint()) {
                 return type;
             }
         }
@@ -106,9 +106,10 @@ public class VersionChecks {
             lastDateRemembered = LocalDate.now();
         }
 
-        public boolean showVersionHint() {
+        public boolean doShowVersionHint() {
             if (this.isLatest) return false;
             if (this.isSuppressed) return false;
+            if (this.latestVersion.equals("")) return false;
             return !this.lastDateRemembered.equals(LocalDate.now());
         }
     }
