@@ -6,23 +6,29 @@
 
     <LinearLayout
         android:id="@+id/intvalues_header1"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
+        android:background="@color/conf_bg_header_1"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="40dp"
             android:layout_gravity="left"
-            android:background="@color/conf_bg_header_1"
+            android:layout_weight="1"
             android:paddingLeft="10dp"
             android:paddingTop="4dp"
             android:text="@string/adjustable"
             android:textColor="@color/conf_text_header_1"
             android:textSize="24sp"
             android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/help_intvalues"
+            style="@style/Widget.Button.Help"
+            android:layout_margin="2dp"
+            android:text="\?" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,8 +49,8 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="0.37"
             android:layout_height="wrap_content"
+            android:layout_weight="0.37"
             android:background="@color/conf_bg_header_2"
             android:text="@string/unit"
             android:textColor="@color/conf_text_header_2"
@@ -53,8 +59,8 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="0.37"
             android:layout_height="wrap_content"
+            android:layout_weight="0.37"
             android:background="@color/conf_bg_header_2"
             android:text="@string/name"
             android:textColor="@color/conf_text_header_2"
@@ -63,8 +69,8 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="0.26"
             android:layout_height="wrap_content"
+            android:layout_weight="0.26"
             android:background="@color/conf_bg_header_2"
             android:text="@string/values2"
             android:textColor="@color/conf_text_header_2"

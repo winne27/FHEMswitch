@@ -19,7 +19,7 @@ public class GetStoreVersion extends AsyncTask<String, Void, String> {
 
     public GetStoreVersion(Context context, String action) {
         TAG = getClass().getName();
-        Log.d(TAG, "started");
+        //Log.d(TAG, "started");
         mContext = context;
         mAction = action;
     }

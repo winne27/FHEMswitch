@@ -6,32 +6,31 @@
 
     <!-- ++++++++++++++++++++ Header 1 -->
     <LinearLayout
+        android:id="@+id/switches_header1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/switches_header1">
-
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_height="40dp"
             android:layout_width="0dp"
-            android:gravity="left"
+            android:layout_height="40dp"
+            android:layout_weight="1"
             android:background="@color/conf_bg_header_1"
+            android:gravity="left"
             android:paddingLeft="13dp"
             android:paddingTop="4dp"
             android:text="@string/switches"
-            android:layout_weight="1"
             android:textColor="@color/conf_text_header_1"
             android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:background="@color/conf_bg_header_1"
             android:gravity="right"
             android:paddingTop="12dp"
             android:text="@string/columns"
-            android:layout_width="wrap_content"
             android:textColor="@color/conf_text_header_1"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -50,42 +49,42 @@
         android:orientation="horizontal">
 
         <TextView
-            android:background="@color/conf_bg_header_2"
+            android:id="@+id/config_switch_header1"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
+            android:background="@color/conf_bg_header_2"
             android:textColor="@color/conf_bg_header_2"
-            android:id="@+id/config_switch_header1"
             android:textSize="16sp"
-            android:textStyle="bold"       />
+            android:textStyle="bold" />
 
         <TextView
-            android:background="@color/conf_bg_header_2"
             android:id="@+id/config_switch_unit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@color/conf_bg_header_2"
             android:text="@string/unit"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
             android:textColor="@color/conf_text_header_2"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
-            android:background="@color/conf_bg_header_2"
             android:id="@+id/config_switch_name"
-            android:text="@string/name"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0.5"
+            android:background="@color/conf_bg_header_2"
+            android:text="@string/name"
             android:textColor="@color/conf_text_header_2"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
-            android:background="@color/conf_bg_header_2"
             android:id="@+id/config_switch_cmd"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content"
             android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:background="@color/conf_bg_header_2"
+            android:gravity="center_horizontal"
             android:text="@string/command"
             android:textColor="@color/conf_text_header_2"
             android:textSize="16sp"

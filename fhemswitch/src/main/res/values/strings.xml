@@ -60,7 +60,7 @@
     <string name="donate_google">Donate</string>
     <string name="donate_string_call">optional donation</string>
 
-    <string name="icon" translatable="false">Icon</string>
+    <string name="icon" translatable="false">Icon?</string>
     <string name="widget1" translatable="false">Widget 1</string>
     <string name="widget2" translatable="false">Widget 2</string>
     <string name="widget3" translatable="false">Widget 3</string>

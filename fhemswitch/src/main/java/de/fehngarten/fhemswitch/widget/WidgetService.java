@@ -101,12 +101,13 @@ public class WidgetService extends Service {
         //configData = ConfigDataCage.data.get(instSerial);
         if (intent != null) {
             String action = intent.getAction();
-            Log.d(TAG, "onStartCommand with " + action);
+            //Log.d(TAG, "onStartCommand with " + action);
             switch (action) {
                 case FHEM_COMMAND:
                     if (configDataCommon == null || configDataCommon.urlFhemjsLocal == null) {
                         //Log.e(TAG, "perform start on command fired");
                         start();
+                        requestValues("once");
                     }
 
                     sendCommand(intent);
@@ -121,6 +122,7 @@ public class WidgetService extends Service {
                 case NEW_CONFIG:
                     widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
                     start();
+                    requestValues("once");
                     break;
                 default:
                     widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
@@ -156,6 +158,7 @@ public class WidgetService extends Service {
     private boolean start() {
         readConfig();
         setOrientation();
+        handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
         doStart();
         return true;
     }
@@ -202,7 +205,7 @@ public class WidgetService extends Service {
         @Override
         public void run() {
             String[] actions = new String[]{ConnectivityManager.CONNECTIVITY_ACTION};
-            //myBroadcastReceivers.add(new MyBroadcastReceiver(mContext, new OnConnectionChange(), actions));
+            myBroadcastReceivers.add(new MyBroadcastReceiver(mContext, new OnConnectionChange(), actions));
 
             actions = new String[]{Intent.ACTION_CONFIGURATION_CHANGED, NEW_CONFIG};
             myBroadcastReceivers.add(new MyBroadcastReceiver(mContext, new OnConfigChange(), actions));
@@ -224,6 +227,11 @@ public class WidgetService extends Service {
         public void run(Context context, Intent intent) {
             //Log.d(TAG, "config change fired");
             start();
+            if (mySocket != null && mySocket.socket.connected()) {
+                requestValues("once");
+            } else {
+                checkSocket();
+            }
         }
     }
 
@@ -272,7 +280,7 @@ public class WidgetService extends Service {
             if (networkInfo != null) {
                 NetworkInfo.State state = networkInfo.getState();
                 if (state.toString().equals("CONNECTED")) {
-                    doStart();
+                    //doStart();
                     checkSocket();
                 }
             }
@@ -435,7 +443,7 @@ public class WidgetService extends Service {
     public void doStart() {
         //if (BuildConfig.DEBUG) //Log.d(TAG, "doStart started with " + Integer.toString(nr));
 
-        handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
+        //handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
 
         //allWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, WidgetProvider.class));
         layoutId = settingLayouts[iLayout];
@@ -676,16 +684,19 @@ public class WidgetService extends Service {
         }
     }
 
-    private void requestValues() {
+    private void requestValues(String type) {
+
         mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getSwitchesList(), "once");
         mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getValuesList(), "once");
         mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getIntValuesList(), "once");
         mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getLightScenesList(), "once");
 
-        mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getSwitchesList(), "onChange");
-        mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getValuesList(), "onChange");
-        mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getIntValuesList(), "onChange");
-        mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getLightScenesList(), "onChange");
+        if (type.equals("all")) {
+            mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getSwitchesList(), "onChange");
+            mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getValuesList(), "onChange");
+            mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getIntValuesList(), "onChange");
+            mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getLightScenesList(), "onChange");
+        }
     }
 
     public Runnable checkSocketTimer = new Runnable() {
@@ -699,8 +710,10 @@ public class WidgetService extends Service {
 
     public void checkSocket() {
         if (isScreenOn()) {
-            if (mySocket == null || !mySocket.socket.connected()) {
+            if (mySocket == null) {
                 initSocket();
+            } else if (!mySocket.socket.connected()) {
+                mySocket.doConnect();
             }
         } else {
             if (mySocket != null && mySocket.socket.connected()) {
@@ -714,7 +727,6 @@ public class WidgetService extends Service {
     private void initSocket() {
         //if (BuildConfig.DEBUG) Log.d(TAG, "initSocket started");
         mySocket = new MySocket(mContext, configDataCommon, "Widget");
-
         defineSocketListeners();
         mySocket.doConnect();
     }
@@ -722,7 +734,7 @@ public class WidgetService extends Service {
     private void defineSocketListeners() {
         // main run path: after auth resp -> request values from server
         mySocket.socket.on("authenticated", args -> {
-            requestValues();
+            requestValues("all");
             setVisibility(SOCKET_CONNECTED, "");
         });
 
@@ -737,6 +749,7 @@ public class WidgetService extends Service {
             setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn));
         });
 
+        mySocket.socket.off("value");
         mySocket.socket.on("value", args1 -> {
             JSONObject obj = (JSONObject) args1[0];
             Iterator<String> iterator = obj.keys();
@@ -772,6 +785,7 @@ public class WidgetService extends Service {
             }
         });
 
+        mySocket.socket.off("version");
         mySocket.socket.on("version", args1 -> {
             //if (BuildConfig.DEBUG) //Log.d("version", args1[0].toString());
             JSONObject obj = (JSONObject) args1[0];

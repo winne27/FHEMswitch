@@ -1,5 +1,5 @@
 .project
-.gradle
+.gradle/2*
 .idea
 build
 fhemswitch/build

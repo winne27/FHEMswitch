@@ -9,35 +9,35 @@
     android:visibility="gone">
 
     <LinearLayout
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/conf_bg_header_3">
+        android:layout_gravity="center_horizontal"
+        android:background="@color/conf_bg_header_3"
+        android:gravity="center_horizontal">
 
         <Button
             android:id="@+id/cancel_config"
             style="@style/Widget.Button"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:text="@string/cancel" />
 
         <Button
             android:id="@+id/save_config"
             style="@style/Widget.Button"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:text="@string/save" />
 
         <Button
             android:id="@+id/help_layout"
             style="@style/Widget.Button.Help"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
             android:text="\?" />
     </LinearLayout>
 
@@ -48,8 +48,8 @@
         android:id="@+id/config_scroll_block"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fadeScrollbars="true"
         android:layout_marginTop="0dp"
+        android:fadeScrollbars="true"
         android:padding="12dp">
 
         <LinearLayout
@@ -60,10 +60,14 @@
             <!-- Block of orientation +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
             <include layout="@layout/config_block_orient"></include>
 
-            <!-- Block of switches +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+            <!-- Block of switches +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">   -->
             <include layout="@layout/config_block_switches"></include>
 
             <!-- Block of lightscenes +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
             <include layout="@layout/config_block_lightscenes"></include>
 
             <!-- Block of values +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->

@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
     signingConfigs {
         wetterstation {
             storeFile file("C:\\Users\\Werner\\Documents\\Zertifikate\\app-keys\\android\\wetterstation.keystore")
@@ -13,10 +13,10 @@ android {
     }
     defaultConfig {
         applicationId "de.fehngarten.fhemswitch"
-        versionCode 300350
-        versionName "3.0.3"
+        versionCode 3005500
+        versionName "3.0.5"
         minSdkVersion 14
-        targetSdkVersion 24
+        targetSdkVersion 25
         archivesBaseName = "fhemswitch-$versionName"
         jackOptions {
             enabled true

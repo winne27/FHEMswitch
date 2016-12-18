@@ -1,9 +1,12 @@
 package de.fehngarten.fhemswitch.config;
 
 import android.content.BroadcastReceiver;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 
@@ -135,7 +138,13 @@ public class ConfigMain extends Activity {
             //Log.d(TAG, "config__l");
             setContentView(R.layout.config__l);
         }
-
+/*
+        setContentView(R.layout.config);
+        LinearLayout config = (LinearLayout) findViewById(R.id.configView);
+        ViewGroup.LayoutParams layoutParams = config.getLayoutParams();
+        layoutParams.width = Math.round(725 * density);
+        config.setLayoutParams(layoutParams);
+*/
         String installedText = BuildConfig.VERSION_NAME;
         TextView installedView = (TextView) findViewById(R.id.installedView);
         installedView.setText(installedText);
@@ -354,6 +363,8 @@ public class ConfigMain extends Activity {
         findViewById(R.id.cancel3_config).setOnClickListener(cancelConfigButtonOnClickListener);
         findViewById(R.id.help_layout).setOnClickListener(callHelpOnClickListener);
         findViewById(R.id.help_url).setOnClickListener(callHelpOnClickListener);
+        findViewById(R.id.help_icon).setOnClickListener(callHelpIconOnClickListener);
+        findViewById(R.id.help_intvalues).setOnClickListener(callHelpIntvaluesOnClickListener);
 
         radioLayoutLandscape = (RadioGroup) findViewById(R.id.layout_landscape);
         radioLayoutPortrait = (RadioGroup) findViewById(R.id.layout_portrait);
@@ -401,6 +412,18 @@ public class ConfigMain extends Activity {
 
     private Button.OnClickListener callHelpOnClickListener = arg0 -> {
         Intent webIntent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(settingHelpUrl));
+        webIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(webIntent);
+    };
+
+    private Button.OnClickListener callHelpIconOnClickListener = arg0 -> {
+        Intent webIntent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(settingHelpIconUrl));
+        webIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(webIntent);
+    };
+
+    private Button.OnClickListener callHelpIntvaluesOnClickListener = arg0 -> {
+        Intent webIntent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(settingHelpIntvaluesUrl));
         webIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(webIntent);
     };
@@ -500,9 +523,9 @@ public class ConfigMain extends Activity {
         }
 
         // scroll nach oben
-        ScrollView mainScrollView = (ScrollView) findViewById(R.id.config_scroll_block);
-        mainScrollView.fullScroll(ScrollView.FOCUS_UP);
-        mainScrollView.smoothScrollTo(0, 0);
+        //ScrollView mainScrollView = (ScrollView) findViewById(R.id.config_scroll_block);
+        //mainScrollView.fullScroll(ScrollView.FOCUS_UP);
+        //mainScrollView.smoothScrollTo(0, 0);
     }
 
     private void allCommands() {
