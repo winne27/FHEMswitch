@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        style="@style/Tabs"
+        android:id="@+id/tab0"
+        android:tag="0"
+        android:text="@string/orient" />
+
+    <TextView
+        style="@style/Tabs"
+        android:id="@+id/tab1"
+        android:tag="1"
+        android:text="@string/switches" />
+
+    <TextView
+        style="@style/Tabs"
+        android:id="@+id/tab2"
+        android:tag="2"
+        android:text="@string/lightscenes" />
+
+    <TextView
+        style="@style/Tabs"
+        android:id="@+id/tab3"
+        android:tag="3"
+        android:text="@string/values" />
+
+    <TextView
+        style="@style/Tabs"
+        android:id="@+id/tab4"
+        android:tag="4"
+        android:text="@string/values2" />
+
+    <TextView
+        style="@style/Tabs"
+        android:id="@+id/tab5"
+        android:tag="5"
+        android:text="@string/commands" />
+
+</LinearLayout>

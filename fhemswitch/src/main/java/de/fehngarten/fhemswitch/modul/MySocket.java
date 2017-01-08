@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 //import android.util.Log;
 
 import de.fehngarten.fhemswitch.BuildConfig;
@@ -28,9 +29,9 @@ public class MySocket {
             if (type.equals("Config")) {
                 options.reconnection = false;
             } else {
-                options.reconnection = true;
-                options.reconnectionDelay = 1000;
-                options.reconnectionDelayMax = 30000;
+                options.reconnection = false;
+                //options.reconnectionDelay = 1000;
+                //options.reconnectionDelayMax = 30000;
             }
 
             options.timeout = settingSocketsConnectionTimeout;
@@ -69,6 +70,7 @@ public class MySocket {
     }
 
     public void doConnect() {
+        Log.d(TAG, "doConnect");
         socket.connect();
     }
 
@@ -93,5 +95,19 @@ public class MySocket {
     public void destroy() {
         socket.disconnect();
         socket.close();
+        socket.off("authenticated");
+        socket.off(Socket.EVENT_DISCONNECT);
+        socket.off(Socket.EVENT_RECONNECT_FAILED);
+        socket.off(Socket.EVENT_CONNECT_ERROR);
+        socket.off("value");
+        socket.off("version");
+        socket.off("fhemError");
+        socket.off("fhemConn");
+    }
+
+
+
+    public void refresh() {
+        socket.emit("refreshValues");
     }
 }

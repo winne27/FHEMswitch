@@ -77,4 +77,5 @@
     <string name="value">value</string>
     <string name="set">set</string>
     <string name="execcmd">FHEM-Befehl um Wert zu setzen:</string>
+    <string name="serverRefresh">Strukturelle Daten auf dem fhem.js Server wurden aktualisiert.</string>
 </resources>

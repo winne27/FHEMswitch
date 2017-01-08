@@ -93,4 +93,7 @@
     <string name="execcmd">FHEM Command for setting value:</string>
     <string name="set">set</string>
     <string name="value">value</string>
+    <string name="refresh" translatable="false">Server refresh</string>
+    <string name="serverRefresh">Data on server fhem.js refreshed</string>
+    <string name="orient" translatable="false">Orient</string>
 </resources>

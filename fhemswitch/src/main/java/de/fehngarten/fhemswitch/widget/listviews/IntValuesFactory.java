@@ -1,5 +1,6 @@
 package de.fehngarten.fhemswitch.widget.listviews;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,12 +22,14 @@ class IntValuesFactory implements RemoteViewsFactory {
     private Context mContext = null;
     private int instSerial;
     private final String TAG;
+    private int widgetId;
 
     IntValuesFactory(Context context, Intent intent) {
         //if (BuildConfig.DEBUG) Log.d(CLASSNAME, "started");
         mContext = context;
         instSerial = intent.getIntExtra(INSTSERIAL, -1);
         TAG = "IntValuesFactory-" + instSerial;
+        widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
     }
 
     public void initData() {
@@ -89,6 +92,7 @@ class IntValuesFactory implements RemoteViewsFactory {
         bundle.putString(FHEM_TYPE, "intvalue");
         bundle.putInt(POS, position);
         bundle.putString(SUBACTION, DOWNFAST);
+        bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         bundle.putInt(INSTSERIAL, instSerial);
         Intent fillInIntent = new Intent();
         fillInIntent.setAction(SEND_FHEM_COMMAND);
@@ -99,6 +103,7 @@ class IntValuesFactory implements RemoteViewsFactory {
         bundle.putString(FHEM_TYPE, "intvalue");
         bundle.putInt(POS, position);
         bundle.putString(SUBACTION, DOWN);
+        bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         bundle.putInt(INSTSERIAL, instSerial);
         fillInIntent = new Intent();
         fillInIntent.setAction(SEND_FHEM_COMMAND);
@@ -109,6 +114,7 @@ class IntValuesFactory implements RemoteViewsFactory {
         bundle.putString(FHEM_TYPE, "intvalue");
         bundle.putInt(POS, position);
         bundle.putString(SUBACTION, UP);
+        bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         bundle.putInt(INSTSERIAL, instSerial);
         fillInIntent = new Intent();
         fillInIntent.setAction(SEND_FHEM_COMMAND);
@@ -119,6 +125,7 @@ class IntValuesFactory implements RemoteViewsFactory {
         bundle.putString(FHEM_TYPE, "intvalue");
         bundle.putInt(POS, position);
         bundle.putString(SUBACTION, UPFAST);
+        bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         bundle.putInt(INSTSERIAL, instSerial);
         fillInIntent = new Intent();
         fillInIntent.setAction(SEND_FHEM_COMMAND);

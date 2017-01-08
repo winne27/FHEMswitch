@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/config_layout_block"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="6dp"
+    android:layout_marginTop="0dp"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/conf_bg_header_3"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/cancel_config"
+            style="@style/Widget.Button"
+            android:layout_marginBottom="6dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="6dp"
+            android:text="@string/cancel" />
+
+        <Button
+            android:id="@+id/save_config"
+            style="@style/Widget.Button"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="6dp"
+            android:text="@string/save" />
+
+        <Button
+            android:id="@+id/help_layout"
+            style="@style/Widget.Button.Help"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="6dp"
+            android:text="\?" />
+    </LinearLayout>
+
+    <!-- Block of widget seletor +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <include layout="@layout/config_block_widgetselect"></include>
+    <!-- Block of tabs +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <include layout="@layout/config_block_tabs"></include>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/configpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

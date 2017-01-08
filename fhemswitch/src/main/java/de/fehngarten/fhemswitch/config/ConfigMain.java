@@ -41,7 +41,7 @@ import de.fehngarten.fhemswitch.BuildConfig;
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
 import de.fehngarten.fhemswitch.data.ConfigDataIO;
 import de.fehngarten.fhemswitch.data.ConfigIntValueRow;
-import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
+import de.fehngarten.fhemswitch.data.ConfigMainBasket;
 import de.fehngarten.fhemswitch.data.ConfigWorkInstance;
 import de.fehngarten.fhemswitch.data.ConfigDataInstance;
 import de.fehngarten.fhemswitch.data.MyIntValue;
@@ -138,13 +138,7 @@ public class ConfigMain extends Activity {
             //Log.d(TAG, "config__l");
             setContentView(R.layout.config__l);
         }
-/*
-        setContentView(R.layout.config);
-        LinearLayout config = (LinearLayout) findViewById(R.id.configView);
-        ViewGroup.LayoutParams layoutParams = config.getLayoutParams();
-        layoutParams.width = Math.round(725 * density);
-        config.setLayoutParams(layoutParams);
-*/
+
         String installedText = BuildConfig.VERSION_NAME;
         TextView installedView = (TextView) findViewById(R.id.installedView);
         installedView.setText(installedText);
@@ -213,12 +207,12 @@ public class ConfigMain extends Activity {
             findViewById(R.id.is_home_net_row).setVisibility(View.GONE);
         }
 
-        if (mAppWidgetId > 0 && !ConfigWorkBasket.justMigrated) {
+        if (mAppWidgetId > 0 && !ConfigMainBasket.justMigrated) {
             instSerial = configDataCommon.getFreeInstance(mAppWidgetId);
         } else {
             instSerial = configDataCommon.getFirstInstance();
         }
-        ConfigWorkBasket.justMigrated = false;
+        ConfigMainBasket.justMigrated = false;
         //Log.d(TAG, "instSerial: " + instSerial);
 
         // Migration stuff to 3.0.0

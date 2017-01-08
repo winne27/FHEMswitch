@@ -17,7 +17,7 @@
             android:layout_weight="1"
             android:background="@color/conf_bg_header_1"
             android:gravity="left"
-            android:paddingLeft="13dp"
+            android:paddingLeft="40dp"
             android:paddingTop="4dp"
             android:text="@string/switches"
             android:textColor="@color/conf_text_header_1"
@@ -26,7 +26,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:background="@color/conf_bg_header_1"
             android:gravity="right"
             android:paddingTop="12dp"
@@ -38,74 +38,87 @@
         <Spinner
             android:id="@+id/config_switch_cols"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:background="@color/conf_bg_header_1" />
     </LinearLayout>
 
-    <!-- ++++++++++++++++++++ Header 2 -->
-    <LinearLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/config_switch_header1"
-            android:layout_width="40dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/conf_bg_header_2"
-            android:textColor="@color/conf_bg_header_2"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="0dp"
+            android:orientation="vertical">
+            <!-- ++++++++++++++++++++ Header 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/config_switch_unit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:background="@color/conf_bg_header_2"
-            android:text="@string/unit"
-            android:textColor="@color/conf_text_header_2"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/config_switch_header1"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/conf_bg_header_2"
+                    android:textColor="@color/conf_bg_header_2"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/config_switch_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:background="@color/conf_bg_header_2"
-            android:text="@string/name"
-            android:textColor="@color/conf_text_header_2"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/config_switch_unit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@color/conf_bg_header_2"
+                    android:text="@string/unit"
+                    android:textColor="@color/conf_text_header_2"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/config_switch_cmd"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:background="@color/conf_bg_header_2"
-            android:gravity="center_horizontal"
-            android:text="@string/command"
-            android:textColor="@color/conf_text_header_2"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/config_switch_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:paddingLeft="3dp"
+                    android:background="@color/conf_bg_header_2"
+                    android:text="@string/name"
+                    android:textColor="@color/conf_text_header_2"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-    <!-- ++++++++++++++++++++ Listview -->
-    <com.mobeta.android.dslv.DragSortListView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:dslv="com.mobeta.android.dslv"
-        android:id="@+id/switches"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="0dp"
-        android:dividerHeight="1px"
-        android:padding="0dp"
-        dslv:collapsed_height="1px"
-        dslv:drag_enabled="true"
-        dslv:drag_handle_id="@+id/drag_handle"
-        dslv:drag_scroll_start="0.33"
-        dslv:drag_start_mode="onDown"
-        dslv:float_alpha="0.3"
-        dslv:float_background_color="#FF666666"
-        dslv:slide_shuffle_speed="0.3" />
+                <TextView
+                    android:id="@+id/config_switch_cmd"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/conf_bg_header_2"
+                    android:gravity="left"
+                    android:text="@string/command"
+                    android:textColor="@color/conf_text_header_2"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- ++++++++++++++++++++ Listview -->
+            <com.mobeta.android.dslv.DragSortListView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:dslv="com.mobeta.android.dslv"
+                android:id="@+id/switches"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:dividerHeight="1px"
+                android:padding="0dp"
+                dslv:collapsed_height="1px"
+                dslv:drag_enabled="true"
+                dslv:drag_handle_id="@+id/drag_handle"
+                dslv:drag_scroll_start="0.33"
+                dslv:drag_start_mode="onDown"
+                dslv:float_alpha="0.3"
+                dslv:float_background_color="#FF666666"
+                dslv:slide_shuffle_speed="0.3" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

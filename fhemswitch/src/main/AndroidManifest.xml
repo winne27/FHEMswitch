@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="de.fehngarten.fhemswitch.config.ConfigMain"
+            android:name="de.fehngarten.fhemswitch.config.ConfigMain2"
             android:icon="@drawable/icon2"
             android:label="@string/widget_name" >
             <intent-filter>

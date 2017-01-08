@@ -1,5 +1,6 @@
 package de.fehngarten.fhemswitch.widget.listviews;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -18,11 +19,13 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
     //private static final String CLASSNAME = "LightScenesFactory.";
     private Context mContext = null;
     private int instSerial;
+    private int widgetId;
 
     LightScenesFactory(Context context, Intent intent) {
         //if (BuildConfig.DEBUG) Log.d(CLASSNAME, "started");
         mContext = context;
         instSerial = intent.getIntExtra(INSTSERIAL, -1);
+        widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
     }
 
     public void initData() {
@@ -84,6 +87,7 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
             bundle.putString(FHEM_URI, ConfigWorkBasket.urlFhempl + "?detail=" + ConfigWorkBasket.data.get(instSerial).lightScenes.items.get(position).unit);
             bundle.putString(FHEM_TYPE, "lightScene");
             bundle.putString(POS, Integer.toString(position));
+            bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
             bundle.putInt(INSTSERIAL, instSerial);
 
             final Intent fillInIntent = new Intent();
@@ -117,6 +121,7 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
                 final Bundle bundle = new Bundle();
                 bundle.putString(FHEM_COMMAND, ConfigWorkBasket.data.get(instSerial).lightScenes.activateCmd(position));
                 bundle.putString(FHEM_TYPE, "lightscene");
+                bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
                 bundle.putString(POS, Integer.toString(position));
 
                 final Intent fillInIntent = new Intent();

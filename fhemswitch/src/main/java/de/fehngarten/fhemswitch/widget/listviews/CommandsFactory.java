@@ -1,5 +1,6 @@
 package de.fehngarten.fhemswitch.widget.listviews;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,12 +19,14 @@ class CommandsFactory implements RemoteViewsFactory {
     private Context mContext = null;
     private int colnum;
     private int instSerial;
+    private int widgetId;
 
     CommandsFactory(Context context, Intent intent, int colnum) {
         //if (BuildConfig.DEBUG) Log.d(TAG, "started");
         mContext = context;
         this.colnum = colnum;
         instSerial = intent.getIntExtra(INSTSERIAL, -1);
+        widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
     }
 
     public void initData() {
@@ -75,6 +78,7 @@ class CommandsFactory implements RemoteViewsFactory {
         bundle.putString(FHEM_TYPE, "command");
         bundle.putString(POS, Integer.toString(position));
         bundle.putString(COL, Integer.toString(colnum));
+        bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         bundle.putInt(INSTSERIAL, instSerial);
 
         final Intent fillInIntent = new Intent();

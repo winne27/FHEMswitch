@@ -12,6 +12,7 @@ import android.widget.RadioGroup;
 import de.fehngarten.fhemswitch.BuildConfig;
 import de.fehngarten.fhemswitch.R;
 import util.IabHelper;
+import util.IabHelper.OnIabSetupFinishedListener;
 import util.IabResult;
 
 import static de.fehngarten.fhemswitch.global.Settings.settingLicenceKey;
@@ -20,7 +21,7 @@ public class ConfigDonate extends Activity {
 
     IabHelper mHelper;
     Activity activity;
-
+    private final String TAG = "ConfigDonate";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +42,15 @@ public class ConfigDonate extends Activity {
 
         mHelper = new IabHelper(this, base64EncodedPublicKey);
 
-        mHelper.startSetup((IabResult result) -> {
-        /*
-            if (!result.isSuccess()) {
-                //if (BuildConfig.DEBUG) Log.d("trace", "In-app Billing setup failed: " + result);
-            } else {
-                //if (BuildConfig.DEBUG) Log.d("trace", "In-app Billing is set up OK");
+        mHelper.startSetup(new OnIabSetupFinishedListener() {
+            @Override
+            public void onIabSetupFinished(IabResult result) {
+                if (!result.isSuccess()) {
+                    if (BuildConfig.DEBUG) Log.d("x", "In-app Billing setup failed: " + result);
+                } else {
+                    if (BuildConfig.DEBUG) Log.d("x", "In-app Billing is set up OK");
+                }
             }
-        */
         });
     }
 

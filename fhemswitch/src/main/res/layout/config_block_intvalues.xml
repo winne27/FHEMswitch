@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/intvalues_header1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:background="@color/conf_bg_header_1"
         android:orientation="horizontal">
 
@@ -17,7 +18,7 @@
             android:layout_height="40dp"
             android:layout_gravity="left"
             android:layout_weight="1"
-            android:paddingLeft="10dp"
+            android:paddingLeft="40dp"
             android:paddingTop="4dp"
             android:text="@string/adjustable"
             android:textColor="@color/conf_text_header_1"
@@ -31,70 +32,82 @@
             android:text="\?" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/intvalues_header2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:orientation="horizontal">
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="40dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/conf_bg_header_2"
-            android:gravity="center_horizontal"
-            android:textColor="@color/conf_text_header_2"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="0dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.37"
-            android:background="@color/conf_bg_header_2"
-            android:text="@string/unit"
-            android:textColor="@color/conf_text_header_2"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/intvalues_header2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.37"
-            android:background="@color/conf_bg_header_2"
-            android:text="@string/name"
-            android:textColor="@color/conf_text_header_2"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/conf_bg_header_2"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/conf_text_header_2"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.26"
-            android:background="@color/conf_bg_header_2"
-            android:text="@string/values2"
-            android:textColor="@color/conf_text_header_2"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.37"
+                    android:background="@color/conf_bg_header_2"
+                    android:text="@string/unit"
+                    android:textColor="@color/conf_text_header_2"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.37"
+                    android:paddingLeft="3dp"
+                    android:background="@color/conf_bg_header_2"
+                    android:text="@string/name"
+                    android:textColor="@color/conf_text_header_2"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-    <com.mobeta.android.dslv.DragSortListView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:dslv="com.mobeta.android.dslv"
-        android:id="@+id/intvalues"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="0dp"
-        android:dividerHeight="1px"
-        android:padding="0dp"
-        dslv:collapsed_height="1px"
-        dslv:drag_enabled="true"
-        dslv:drag_handle_id="@+id/drag_handle"
-        dslv:drag_scroll_start="0.33"
-        dslv:drag_start_mode="onDown"
-        dslv:float_alpha="0.3"
-        dslv:float_background_color="#FF666666"
-        dslv:slide_shuffle_speed="0.3" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.26"
+                    android:background="@color/conf_bg_header_2"
+                    android:text="@string/values2"
+                    android:textColor="@color/conf_text_header_2"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
+            </LinearLayout>
 
+            <com.mobeta.android.dslv.DragSortListView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:dslv="com.mobeta.android.dslv"
+                android:id="@+id/intvalues"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:dividerHeight="1px"
+                android:padding="0dp"
+                dslv:collapsed_height="1px"
+                dslv:drag_enabled="true"
+                dslv:drag_handle_id="@+id/drag_handle"
+                dslv:drag_scroll_start="0.33"
+                dslv:drag_start_mode="onDown"
+                dslv:float_alpha="0.3"
+                dslv:float_background_color="#FF666666"
+                dslv:slide_shuffle_speed="0.3" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

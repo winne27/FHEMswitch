@@ -21,6 +21,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
     private static final String TAG = "WidgetProvider";
     private HashMap<Integer, MyService> serviceIntents;
+    private int[] widgetIds;
 
     private class MyService {
         private int serial;
@@ -104,7 +105,7 @@ public class WidgetProvider extends AppWidgetProvider {
     }
 
     private void checkWidgets(Context context, String action) {
-        int[] widgetIds = getWidgetIds(context);
+        widgetIds = getWidgetIds(context);
 
         //Log.d(TAG,"widgetIds: " + widgetIds.toString());
         ConfigDataIO configDataIO = new ConfigDataIO(context);

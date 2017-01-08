@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
-        android:background="@drawable/myshape_proz"
+        android:background="@drawable/myshape_proz_down"
         android:padding="5dp"
         android:contentDescription="@string/switchicon"
         android:src="@drawable/arrow_left_double" />
@@ -37,7 +37,7 @@
         android:layout_marginBottom="3dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="3dp"
-        android:background="@drawable/myshape_proz"
+        android:background="@drawable/myshape_proz_down"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
@@ -63,7 +63,7 @@
         android:layout_marginBottom="3dp"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="0dp"
-        android:background="@drawable/myshape_proz"
+        android:background="@drawable/myshape_proz_up"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
-        android:background="@drawable/myshape_proz"
+        android:background="@drawable/myshape_proz_up"
         android:padding="5dp"
         android:src="@drawable/arrow_right_double" />
 </LinearLayout>

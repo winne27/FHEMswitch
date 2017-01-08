@@ -1,7 +1,7 @@
 package de.fehngarten.fhemswitch.data;
 
 import android.content.Context;
-//import android.util.Log;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,8 +42,8 @@ public class ConfigDataIO {
                 throw new Exception("config data corrupted");
             }
         } catch (Exception e) {
-            //if (BuildConfig.DEBUG) Log.d(TAG, "config data with exception");
-            //if (BuildConfig.DEBUG) Log.d(TAG, e.getMessage());
+            if (BuildConfig.DEBUG) Log.d(TAG, "config data with exception");
+            if (BuildConfig.DEBUG) Log.d(TAG, e.getMessage());
 
 
             ConfigDataMigrate configDataMigrate = new ConfigDataMigrate(mContext, this);

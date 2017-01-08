@@ -24,9 +24,10 @@ public final class Settings {
     public static final String settingsConfigFileName = "config.data.";
 
     public static final int settingsMaxInst = 4;
-    public static final int settingWaitIntervalLong = 21000;
+    public static final int settingWaitSocketLong = 600000;
+    public static final int settingWaitSocketShort = 30000;
     public static final int settingSocketsConnectionTimeout = 3000;
-    public static final int settingDelaySocketCheck = 1000;
+    public static final int settingDelaySocketCheck = 500;
 
 
     public static final int settingDelayDefineBroadcastReceivers = 5000;
@@ -36,6 +37,8 @@ public final class Settings {
 
     public static final int settingDelayShowVersionCheck = 20000;
     public static final int settingIntervalShowVersionCheck = 600000;
+
+    public static final int settingPagerFirstItem = 0;
 
     public static final String settingHelpUrl = "https://forum.fhem.de/index.php?topic=36824.0.html";
     public static final String settingHelpIntvaluesUrl = "https://forum.fhem.de/index.php/topic,62655.0.html";
@@ -47,7 +50,10 @@ public final class Settings {
     public static final int[] settingWidgetSel = new int[settingsMaxInst];
     public static final int[] settingShapes = new int[settingsMaxInst];
     public static final int[] settingLayouts = new int[3];
+    public static final int[] settingConfigBlocks = new int[6];
+    public static final int[] settingTabs = new int[6];
     public static final HashMap<String, Float> settingMultiplier = new HashMap<>();
+
 
     static {
         settingIcons.put("v_on", R.drawable.v_on);
@@ -96,7 +102,21 @@ public final class Settings {
 
         settingMultiplier.put(DOWNFAST, (float) -3);
         settingMultiplier.put(DOWN, (float) -1);
-        settingMultiplier.put(UP,(float) 1);
+        settingMultiplier.put(UP, (float) 1);
         settingMultiplier.put(UPFAST, (float) 3);
+
+        settingConfigBlocks[0] = R.layout.config_block_orient;
+        settingConfigBlocks[1] = R.layout.config_block_switches;
+        settingConfigBlocks[2] = R.layout.config_block_lightscenes;
+        settingConfigBlocks[3] = R.layout.config_block_values;
+        settingConfigBlocks[4] = R.layout.config_block_intvalues;
+        settingConfigBlocks[5] = R.layout.config_block_commands;
+
+        settingTabs[0] = R.id.tab0;
+        settingTabs[1] = R.id.tab1;
+        settingTabs[2] = R.id.tab2;
+        settingTabs[3] = R.id.tab3;
+        settingTabs[4] = R.id.tab4;
+        settingTabs[5] = R.id.tab5;
     }
 }

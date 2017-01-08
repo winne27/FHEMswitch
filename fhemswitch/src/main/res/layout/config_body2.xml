@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/configshape"
-    android:orientation="vertical"
-    android:padding="2dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +15,7 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.29"
+            android:layout_weight="0.28"
             android:background="@color/conf_bg_header_1"
             android:gravity="center_vertical|left"
             android:paddingLeft="8dp"
@@ -60,9 +59,10 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.29"
+            android:layout_weight="0.28"
             android:background="@color/conf_bg_header_1"
             android:gravity="center_vertical|right"
+            android:paddingRight="8dp"
             android:textColor="@color/conf_text_header_1"
             android:textSize="14sp">
 
@@ -90,7 +90,7 @@
 
     <include layout="@layout/config_bodyblock_url"></include>
 
-    <include layout="@layout/config_bodyblock_layout"></include>
+    <include layout="@layout/config_bodyblock_layout2"></include>
 
     <include layout="@layout/config_bodyblock_message"></include>
 

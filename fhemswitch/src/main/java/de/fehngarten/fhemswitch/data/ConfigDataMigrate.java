@@ -1,6 +1,7 @@
 package de.fehngarten.fhemswitch.data;
 
 import android.content.Context;
+import android.support.v4.BuildConfig;
 import android.util.Log;
 
 import java.io.FileInputStream;
@@ -49,7 +50,7 @@ class ConfigDataMigrate {
     }
 
     private ConfigDataCommon doRealMigrate(ConfigDataOnly configDataOnly, int widgetId) {
-        //if (BuildConfig.DEBUG) Log.d(TAG, "old version takeover started");
+        if (BuildConfig.DEBUG) Log.d(TAG, "old version takeover started");
         ConfigDataCommon configDataCommon = new ConfigDataCommon();
         configDataCommon.init();
         configDataCommon.urlFhemjs = configDataOnly.urljs;

@@ -1,5 +1,6 @@
 package de.fehngarten.fhemswitch.widget.listviews;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,11 +17,13 @@ class SwitchesFactory implements RemoteViewsFactory {
     private Context mContext = null;
     private int colnum;
     private int instSerial;
+    private int widgetId;
 
     SwitchesFactory(Context context, Intent intent, int colnum) {
         mContext = context;
         this.colnum = colnum;
         instSerial = intent.getIntExtra(INSTSERIAL, -1);
+        widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
         TAG = "SwitchesFactory-" + instSerial;
     }
 
@@ -75,6 +78,7 @@ class SwitchesFactory implements RemoteViewsFactory {
         bundle.putString(FHEM_TYPE, "switch");
         bundle.putString(POS, Integer.toString(position));
         bundle.putString(COL, Integer.toString(colnum));
+        bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         bundle.putInt(INSTSERIAL, instSerial);
 
         final Intent fillInIntent = new Intent();

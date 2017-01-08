@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Point;
 import android.support.v4.content.ContextCompat;
 //import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ScrollView;
 
 import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;
@@ -26,22 +28,23 @@ public class ConfigSwitchesController extends DragSortController {
         setRemoveEnabled(false);
     }
 
-    /*
     @Override
     public int startDragPosition(MotionEvent ev) {
         int res = super.dragHandleHitPosition(ev);
-        //if (BuildConfig.DEBUG) Log.d("position", String.valueOf(res));
         if (res == 0) {
             return DragSortController.MISS;
         } else {
             return res;
         }
     }
-*/
+
     @Override
     public View onCreateFloatView(int position) {
         View v = mAdapter.getView(position, null, mDslv);
         v.setBackgroundColor(ContextCompat.getColor(mContext, R.color.conf_bg_handle_pressed));
+        //ScrollView mainScrollView = (ScrollView) mDslv.findViewById(R.id.scrollView);
+        //mainScrollView.fullScroll(ScrollView.FOCUS_UP);
+        //mainScrollView.scrollTo(0, 0);
         return v;
     }
 

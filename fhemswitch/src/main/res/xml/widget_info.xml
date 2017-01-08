@@ -6,6 +6,6 @@
     android:minWidth="110dp"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="1800000"
-    android:configure="de.fehngarten.fhemswitch.config.ConfigMain"
+    android:configure="de.fehngarten.fhemswitch.config.ConfigMain2"
     android:previewImage="@drawable/widget_icon">
 </appwidget-provider>

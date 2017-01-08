@@ -75,8 +75,9 @@ class ValuesFactory implements RemoteViewsFactory {
 
         mView.setTextViewText(R.id.value_name, ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).get(position).name);
         String value = ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).get(position).value;
+        boolean useIcon = ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).get(position).useIcon;
 
-        if (value.length() > 0 && value.substring(value.length() - 1).equals("%")) {
+        if (useIcon && value.length() > 0 && value.substring(value.length() - 1).equals("%")) {
             String value1 = value.substring(0, value.length() - 1);
             int val = Integer.parseInt(value1);
             val = val / 10;
@@ -85,7 +86,7 @@ class ValuesFactory implements RemoteViewsFactory {
             mView.setViewVisibility(R.id.prozent_icon, View.VISIBLE);
             mView.setViewVisibility(R.id.value_icon, View.GONE);
             mView.setViewVisibility(R.id.value_value, View.GONE);
-        } else if (Settings.settingIcons.containsKey("v_" + value)) {
+        } else if (useIcon && Settings.settingIcons.containsKey("v_" + value)) {
             mView.setImageViewResource(R.id.value_icon, Settings.settingIcons.get("v_" + value));
             mView.setViewVisibility(R.id.prozent_icon, View.GONE);
             mView.setViewVisibility(R.id.value_icon, View.VISIBLE);
