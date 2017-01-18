@@ -43,6 +43,7 @@ public final class Settings {
     public static final String settingHelpUrl = "https://forum.fhem.de/index.php?topic=36824.0.html";
     public static final String settingHelpIntvaluesUrl = "https://forum.fhem.de/index.php/topic,62655.0.html";
     public static final String settingHelpIconUrl = "https://forum.fhem.de/index.php/topic,62610.0.html";
+    public static final String settingHelpUrlHome = "https://forum.fhem.de/index.php/topic,62716.msg541475.html";
     public static final String settingGoogleStoreUrl = "https://play.google.com/store/apps/details?id=de.fehngarten.fhemswitch";
     public static final String settingLicenceKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh7D+DlsyIr/qs/nzYQHHITVBXoDn8eSsFKGUgjvlJhINvjFUTwiHBmwrTKBIXye6WozJ4QM7Ov3cUXqeDlIz4m8bHCibXzQsra2kWSZagRhHLcrBwVBy1a3JXB74E1VQO0LbPPgnfeL2Uzv4IIS3QvyAJ2Uo5lHJBoTA+jxUIe/YFPovNvhWhZna2oHZlptc07rNydcTShdMzk/Ujv881jJB0GJMUol5OM5/WG+dHpfyplxlolpS/AXX9312VeU7LkRdOUikQ+bPQMT5gbYyWPXoDAKRkJiU6F5LR+xQqxHxNyedy3yZnlkmXDq0l7u1HYkJaY3Pr2hxOo3hAjX2pQIDAQAB";
     public static final Map<String, Integer> settingIcons = new HashMap<>();
@@ -86,10 +87,10 @@ public final class Settings {
         settingServiceClasses.add(WidgetService2.class);
         settingServiceClasses.add(WidgetService3.class);
 
-        settingShapes[0] = R.drawable.myshape0;
-        settingShapes[1] = R.drawable.myshape1;
-        settingShapes[2] = R.drawable.myshape2;
-        settingShapes[3] = R.drawable.myshape3;
+        settingShapes[0] = R.drawable.config_shape_widget_0;
+        settingShapes[1] = R.drawable.config_shape_widget_1;
+        settingShapes[2] = R.drawable.config_shape_widget_2;
+        settingShapes[3] = R.drawable.config_shape_widget_3;
 
         settingWidgetSel[0] = R.id.widgetsel_0;
         settingWidgetSel[1] = R.id.widgetsel_1;

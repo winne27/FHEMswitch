@@ -149,7 +149,8 @@ public class ConfigLightscenesAdapter extends ConfigAdapter {
             lightsceneHolder.lightscene_header.setVisibility(View.VISIBLE);
             lightsceneHolder.lightscene_header.setChecked(lightsceneRow.showHeader);
             //rowView.setBackgroundColor(mContext.getResources().getColor(R.color.conf_bg_header_3));
-            rowView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.conf_bg_header_3));
+            //rowView.setBackgroundDrawable(R.drawable.config_shape_header_3);
+            rowView.setBackgroundResource(R.drawable.config_shape_header_3);
 
         } else {
             lightsceneHolder.lightscene_enabled.setChecked(lightsceneRow.enabled);

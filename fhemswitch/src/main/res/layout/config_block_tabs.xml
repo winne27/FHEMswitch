@@ -5,6 +5,11 @@
     android:orientation="horizontal">
 
     <TextView
+        android:layout_height="match_parent"
+        android:background="@color/conf_stroke_1"
+        android:layout_width="2dp" />
+
+    <TextView
         style="@style/Tabs"
         android:id="@+id/tab0"
         android:tag="0"
@@ -38,6 +43,6 @@
         style="@style/Tabs"
         android:id="@+id/tab5"
         android:tag="5"
-        android:text="@string/commands" />
+        android:text="@string/commandsShort" />
 
 </LinearLayout>

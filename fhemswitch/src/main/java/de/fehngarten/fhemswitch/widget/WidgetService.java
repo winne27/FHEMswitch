@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -81,6 +82,7 @@ public class WidgetService extends Service {
     private ArrayList<DoSendCommand> doSendCommands = new ArrayList<>();
     private Context mContext;
     private RemoteViews mView;
+    private IBinder mBinder = new MyBinder();
 
     private ConfigDataCommon configDataCommon;
     private ConfigDataInstance configDataInstance;
@@ -137,12 +139,13 @@ public class WidgetService extends Service {
                     break;
             }
         }
-        return super.onStartCommand(intent, flags, startId);
+        super.onStartCommand(intent, flags, startId);
+        return START_REDELIVER_INTENT;
     }
 
     public void onCreate() {
         TAG = "WidgetService-" + instSerial;
-        //if (BuildConfig.DEBUG) Log.d(TAG, "onCreate fired");
+        if (BuildConfig.DEBUG) Log.d(TAG, "onCreate fired");
 
         mContext = getApplicationContext();
         appWidgetManager = AppWidgetManager.getInstance(mContext);
@@ -156,7 +159,7 @@ public class WidgetService extends Service {
     }
 
     private void start() {
-        Log.d(TAG,"start");
+        Log.d(TAG, "start");
         screenIsOn = isScreenOn();
         if (mySocket != null) {
             mySocket.destroy();
@@ -725,7 +728,8 @@ public class WidgetService extends Service {
             if (mySocket == null) {
                 initSocket();
             } else if (!mySocket.socket.connected()) {
-                mySocket.doConnect();
+                mySocket.destroy();
+                initSocket();
             }
         } else {
             if (mySocket != null) {
@@ -898,7 +902,13 @@ public class WidgetService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
     }
 
+    public class MyBinder extends Binder {
+        WidgetService getService() {
+            return WidgetService.this;
+        }
+    }
 }
+

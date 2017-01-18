@@ -12,74 +12,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="@color/conf_bg_header_3"
+        android:background="@drawable/config_shape_header_3"
         android:gravity="center_horizontal">
 
         <Button
             android:id="@+id/cancel_config"
-            style="@style/Widget.Button"
-            android:layout_marginBottom="8dp"
+            style="@style/Config.Button"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
             android:text="@string/cancel" />
 
         <Button
             android:id="@+id/save_config"
-            style="@style/Widget.Button"
-            android:layout_marginBottom="8dp"
+            style="@style/Config.Button"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
             android:text="@string/save" />
 
         <Button
             android:id="@+id/help_layout"
-            style="@style/Widget.Button.Help"
-            android:layout_marginBottom="8dp"
+            style="@style/Config.Button.Help"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:text="\?" />
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="3dp"
+            android:text="@string/help" />
     </LinearLayout>
 
     <!-- Block of widget seletor +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <include layout="@layout/config_block_widgetselect"></include>
+    <!-- Block of tabs +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <include layout="@layout/config_block_tabs"></include>
 
-    <ScrollView
-        android:id="@+id/config_scroll_block"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/configpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:fadeScrollbars="true"
-        android:padding="12dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <!-- Block of orientation +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <include layout="@layout/config_block_orient"></include>
-
-            <!-- Block of switches +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">   -->
-            <include layout="@layout/config_block_switches"></include>
-
-            <!-- Block of lightscenes +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-
-            <include layout="@layout/config_block_lightscenes"></include>
-
-            <!-- Block of values +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <include layout="@layout/config_block_values"></include>
-
-            <!-- Block of intvalues +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <include layout="@layout/config_block_intvalues"></include>
-
-            <!-- Block of commands +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <include layout="@layout/config_block_commands"></include>
-
-
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="match_parent" />
 </LinearLayout>

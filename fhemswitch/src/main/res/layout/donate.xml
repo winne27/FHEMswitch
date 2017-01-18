@@ -64,7 +64,7 @@
             style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/configbutton"
+            android:background="@drawable/config_shape_button"
             android:text="@string/donate_google" />
 
          <Button
@@ -73,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/configbutton"
+            android:background="@drawable/config_shape_button"
             android:text="@string/donate_cancel" />
 
     </LinearLayout>
@@ -100,7 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/configbutton"
+            android:background="@drawable/config_shape_button"
             android:text="@string/donate_back" />
 
     </LinearLayout>

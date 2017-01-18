@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="conf_bg_header_1">#FF224422</color>
-    <color name="conf_bg_header_2">#FF557755</color>
-    <color name="conf_bg_header_3">#FF99BB99</color>
+    <color name="conf_bg_header_1">#FF336633</color>
+    <color name="conf_bg_header_2">#FF669966</color>
+    <color name="conf_bg_header_3">#FF99CC99</color>
+    <color name="conf_bg_base">#FFFFF4BD</color>
+
     <color name="conf_text_header_1">#ffdddddd</color>
     <color name="conf_text_header_2">#ffdddddd</color>
+    <color name="conf_stroke_1">#ff224422</color>
+    <color name="conf_stroke_2">#ff668866</color>
+
+    <color name="widget_stroke_1">#ffbbbbbb</color>
+
+
     <color name="text_dunkel">#ff333333</color>
     <color name="text_standard">#ff000088</color>
     <color name="text_hinweis">#224322</color>
     <color name="conf_bg_handle_pressed">#FFAEDEB1</color>
-    <color name="conf_bg_line">#FFFFF4BD</color>
+
     <color name="black">#FF000000</color>
 
 </resources>

@@ -7,7 +7,7 @@
     <CheckBox
         android:id="@+id/config_value_enabled"
         android:layout_width="40dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/config_value_unit"
@@ -17,7 +17,8 @@
         android:textAllCaps="false"
         android:textColor="#008"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:paddingBottom="10dp"/>
 
     <EditText
         android:id="@+id/config_value_name"
@@ -40,5 +41,5 @@
     <CheckBox
         android:id="@+id/config_value_useicon"
         android:layout_width="40dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 </LinearLayout>

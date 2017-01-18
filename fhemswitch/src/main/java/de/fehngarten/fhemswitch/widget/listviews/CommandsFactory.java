@@ -70,7 +70,7 @@ class CommandsFactory implements RemoteViewsFactory {
         if (ConfigWorkBasket.data.get(instSerial).commandsCols.get(colnum).get(position).activ) {
             mView.setInt(R.id.command_row, "setBackgroundResource", R.drawable.activecommand);
         } else {
-            mView.setInt(R.id.command_row, "setBackgroundResource", R.drawable.command);
+            mView.setInt(R.id.command_row, "setBackgroundResource", R.drawable.widget_shape_command);
         }
 
         Bundle bundle = new Bundle();

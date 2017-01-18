@@ -4,7 +4,7 @@
     <string name="url_fhem_js">* URL fhem.js server</string>
     <string name="url_fhem_js_local">... im Heimnetz</string>
     <string name="conn_pw">fhem.js Passwort</string>
-    <string name="is_home_net">Das augenblickliche WLAN (%1$s) ist das Heimnetz</string>
+    <string name="is_home_net">Augenblickliches WLAN (%1$s) ist Heimnetz</string>
     <string name="ismand">* mandatory fields</string>
 
     <string name="switchicon">Lampe</string>
@@ -29,7 +29,7 @@
     <string name="fileerr">Fehler beim Speichern der Konfiguration:</string>
     <string name="urlcheck">bitte URL prüfen</string>
     <string name="onlinecheck">ist dieser Server Online?</string>
-	<string name="commands">Freie Befehle</string>
+	<string name="commands">Befehle</string>
     <string name="commands2">FHEM Befehl</string>
 
     <string name="landscape">Layout Landscape</string>
@@ -78,4 +78,5 @@
     <string name="set">set</string>
     <string name="execcmd">FHEM-Befehl um Wert zu setzen:</string>
     <string name="serverRefresh">Strukturelle Daten auf dem fhem.js Server wurden aktualisiert.</string>
+    <string name="commandsShort">Befehle</string>
 </resources>

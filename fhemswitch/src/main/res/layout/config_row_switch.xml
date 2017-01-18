@@ -20,6 +20,7 @@
         android:textAllCaps="false"
         android:textColor="#008"
         android:textSize="18sp"
+        android:paddingBottom="10dp"
         android:textStyle="bold" />
 
     <EditText

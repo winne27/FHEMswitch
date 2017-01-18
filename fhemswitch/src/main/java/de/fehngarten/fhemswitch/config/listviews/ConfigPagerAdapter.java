@@ -1,11 +1,9 @@
 package de.fehngarten.fhemswitch.config.listviews;
 
 import android.app.Activity;
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.BuildConfig;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -17,7 +15,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import com.mobeta.android.dslv.DragSortListView;
@@ -42,12 +39,11 @@ import de.fehngarten.fhemswitch.data.MyValue;
 import de.fehngarten.fhemswitch.modul.MySocket;
 import io.socket.client.Ack;
 
-import static de.fehngarten.fhemswitch.config.ConfigMain2.configDataInstance;
-import static de.fehngarten.fhemswitch.global.Consts.NEW_CONFIG;
+import static de.fehngarten.fhemswitch.config.ConfigMain.configDataInstance;
 import static de.fehngarten.fhemswitch.global.Settings.settingConfigBlocks;
 import static de.fehngarten.fhemswitch.global.Settings.settingHelpIconUrl;
 import static de.fehngarten.fhemswitch.global.Settings.settingHelpIntvaluesUrl;
-import static de.fehngarten.fhemswitch.global.Settings.settingServiceClasses;
+import static de.fehngarten.fhemswitch.global.Settings.settingHelpUrlHome;
 
 public class ConfigPagerAdapter extends PagerAdapter {
     private final String TAG = "ConfigPagerAdapter";
@@ -69,26 +65,25 @@ public class ConfigPagerAdapter extends PagerAdapter {
     public int lsCounter;
     private int lastPos;
     private View mView;
+    private ArrayList<View> views;
 
     public ConfigPagerAdapter(Context context, MySocket mySocket) {
         configWorkInstance = new ConfigWorkInstance();
         configWorkInstance.init();
         mContext = context;
         this.mySocket = mySocket;
+        views = new ArrayList<>();
+
+        LayoutInflater inflater = LayoutInflater.from(mContext); // 1
+        for (int i = 0; i < getCount(); i++) {
+            int resId = settingConfigBlocks[i];
+            views.add(i, inflater.inflate(resId, null));
+            initView(i);
+        }
     }
 
-    public int getCount() {
-        return 6;
-    }
-
-    public Object instantiateItem(ViewGroup collection, int position) {
-        LayoutInflater inflater = (LayoutInflater) collection.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        int resId = settingConfigBlocks[position];
-        View view = inflater.inflate(resId, null);
-
-        ((ViewPager) collection).addView(view, 0);
-
+    private void initView(int position) {
+        View view = views.get(position);
         switch (position) {
             case 0: //config_block_orient
                 radioLayoutLandscape = (RadioGroup) view.findViewById(R.id.layout_landscape);
@@ -132,6 +127,20 @@ public class ConfigPagerAdapter extends PagerAdapter {
                 setupCommands(view);
                 break;
         }
+
+    }
+
+    public int getCount() {
+        return 6;
+    }
+
+    public Object instantiateItem(ViewGroup collection, int position) {
+        //LayoutInflater inflater = (LayoutInflater) collection.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        //int resId = settingConfigBlocks[position];
+        View view = views.get(position);
+        ((ViewPager) collection).addView(view, 0);
+
 
         //ScrollView mainScrollView = (ScrollView) view.findViewById(R.id.scrollView);
         //mainScrollView.fullScroll(ScrollView.FOCUS_UP);

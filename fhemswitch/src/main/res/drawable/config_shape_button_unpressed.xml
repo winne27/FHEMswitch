@@ -5,12 +5,12 @@
 
     <stroke
         android:width="2dp"
-        android:color="#FFBBBBBB" />
+        android:color="@color/conf_stroke_2" />
 
     <gradient
         android:angle="135"
-        android:endColor="#4422A34D"
-        android:startColor="#445BDC86"
+        android:endColor="#AA22A34D"
+        android:startColor="#AA5BDC86"
         android:shape="rectangle"
     />
 

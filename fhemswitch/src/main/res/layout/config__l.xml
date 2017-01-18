@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/configView"
     android:layout_gravity="center_horizontal"
-    android:layout_width="725dp"
+    android:layout_width="800dp"
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <include layout="@layout/config_body"></include>
+    <include layout="@layout/config_body__l"></include>
 
 </LinearLayout>

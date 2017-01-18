@@ -7,7 +7,7 @@
     <string name="url_fhem_js_local">... in local net</string>
     <string name="conn_pw">fhem.js password</string>
     <string name="ismand">* mandatory fields</string>
-    <string name="is_home_net">The current WLAN (%1$s) is the home net</string>
+    <string name="is_home_net">Current WLAN (%1$s) is home net</string>
 
     <string name="ok" translatable="false">OK</string>
     <string name="switchicon">Lamp</string>
@@ -92,8 +92,10 @@
     <string name="delay">Command delay in ms:</string>
     <string name="execcmd">FHEM Command for setting value:</string>
     <string name="set">set</string>
+    <string name="help" translatable="false">\?</string>
     <string name="value">value</string>
     <string name="refresh" translatable="false">Server refresh</string>
     <string name="serverRefresh">Data on server fhem.js refreshed</string>
     <string name="orient" translatable="false">Orient</string>
+    <string name="commandsShort">Commands</string>
 </resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/configBody"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/config_shape_main"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/config_shape_header_1"
+        android:orientation="horizontal"
+        android:paddingBottom="2dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <include layout="@layout/config_version_installed"></include>
+
+        <TextView
+            android:id="@+id/config_header_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.44"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingTop="4dp"
+            android:text="@string/config_header"
+            android:textColor="@color/conf_text_header_1"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <include layout="@layout/config_version_latest"></include>
+    </LinearLayout>
+
+    <include layout="@layout/config_bodyblock_url"></include>
+
+    <include layout="@layout/config_bodyblock_layout"></include>
+
+    <include layout="@layout/config_bodyblock_message"></include>
+
+</LinearLayout>

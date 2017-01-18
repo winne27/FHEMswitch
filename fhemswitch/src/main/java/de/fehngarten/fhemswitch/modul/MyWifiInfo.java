@@ -7,13 +7,14 @@ import android.net.wifi.WifiManager;
 public class MyWifiInfo {
 
     private WifiInfo wifiInfo;
+    private WifiManager wifiMan;
     public MyWifiInfo(Context context) {
-        WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         wifiInfo = wifiMan.getConnectionInfo();
     }
 
     public boolean isWifi() {
-        return wifiInfo.getNetworkId() > 0;
+        return wifiMan.getWifiState() == WifiManager.WIFI_STATE_ENABLED;
     }
 
     public String getWifiName() {

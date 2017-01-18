@@ -6,5 +6,5 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <include layout="@layout/config_body"></include>
+    <include layout="@layout/config_body__l"></include>
 </LinearLayout>

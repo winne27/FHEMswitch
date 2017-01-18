@@ -9,14 +9,14 @@
     <TextView
         android:id="@+id/lightscenes_header1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="36dp"
         android:layout_gravity="center_vertical"
-        android:background="@color/conf_bg_header_1"
+        android:background="@drawable/config_shape_header_1"
         android:paddingLeft="40dp"
-        android:paddingTop="4dp"
+        android:paddingTop="3dp"
         android:text="@string/lightscenes"
         android:textColor="@color/conf_text_header_1"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -35,12 +35,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
+                android:background="@drawable/config_shape_header_2"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/conf_bg_header_2"
                     android:gravity="center_horizontal"
                     android:textColor="@color/conf_text_header_2"
                     android:textSize="16sp"
@@ -50,7 +50,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:background="@color/conf_bg_header_2"
                     android:text="@string/unit"
                     android:textColor="@color/conf_text_header_2"
                     android:textSize="16sp"
@@ -61,7 +60,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:paddingLeft="3dp"
-                    android:background="@color/conf_bg_header_2"
                     android:text="@string/name"
                     android:textColor="@color/conf_text_header_2"
                     android:textSize="16sp"
@@ -70,7 +68,6 @@
                 <TextView
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/conf_bg_header_2"
                     android:gravity="center_horizontal"
                     android:text="@string/header"
                     android:textColor="@color/conf_text_header_2"

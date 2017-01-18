@@ -4,9 +4,7 @@
 
     <stroke
         android:width="2dp"
-        android:color="#FF999999" />
-    <solid android:color="@color/conf_bg_header_3" />
+        android:color="@color/conf_stroke_1" />
 
-    <corners android:radius="0dp" />
-
+    <solid android:color="@color/conf_bg_header_1" />
 </shape>

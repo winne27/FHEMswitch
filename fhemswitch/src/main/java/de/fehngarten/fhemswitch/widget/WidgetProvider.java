@@ -2,19 +2,24 @@ package de.fehngarten.fhemswitch.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+
 import java.util.HashMap;
 
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
 import de.fehngarten.fhemswitch.data.ConfigDataIO;
+import de.fehngarten.fhemswitch.modul.MyBroadcastReceiver;
+import de.fehngarten.fhemswitch.modul.MyReceiveListener;
 
 import static de.fehngarten.fhemswitch.global.Consts.*;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
+import static de.fehngarten.fhemswitch.global.Settings.settingDelaySocketCheck;
 import static de.fehngarten.fhemswitch.global.Settings.settingServiceClasses;
 
 public class WidgetProvider extends AppWidgetProvider {
@@ -42,10 +47,11 @@ public class WidgetProvider extends AppWidgetProvider {
         }
         switch (action) {
             case ACTION_APPWIDGET_UPDATE:
-                 checkWidgets(context, "INIT");
-                 for (MyService myService  : serviceIntents.values()) {
+
+                checkWidgets(context, "INIT");
+                for (MyService myService : serviceIntents.values()) {
                     //Log.d(TAG,"start service " + myService.serial);
-                    context.stopService(myService.intent);
+                    //context.stopService(myService.intent);
                     context.startService(myService.intent);
                 }
                 break;
@@ -67,7 +73,7 @@ public class WidgetProvider extends AppWidgetProvider {
     }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager,int[] appWidgetIds) {
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         //Log.d(TAG, "onUpdate started");
     }
 
