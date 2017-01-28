@@ -74,9 +74,9 @@
     <string name="account2" translatable="false">5 Euro</string>
     <string name="account3" translatable="false">10 Euro</string>
     <string name="donate_back">Go</string>
-    <string name="openstore">Open Play Store for Update</string>
+    <string name="openstore">Open Play Store</string>
     <string name="donotshow">Don\'t show again</string>
-    <string name="rememberlater">Remember me later</string>
+    <string name="rememberlater">Remember tomorrow</string>
     <string name="config_header">FHEMswitch configuration</string>
     <string name="newVersionApp">Version %1$s of this App is installed.\nIn Google Play Store the newest Version %2$s is available.</string>
     <string name="newVersionFhemjs">Version %1$s of fhem.js is installed on the server. In NPM repository Version %2$s is available.</string>
@@ -98,4 +98,6 @@
     <string name="serverRefresh">Data on server fhem.js refreshed</string>
     <string name="orient" translatable="false">Orient</string>
     <string name="commandsShort">Commands</string>
+    <string name="hint">Hint</string>
+    <string name="hinttext">Navigate through config parts by horizontal wiping or by touch the tabs on top.</string>
 </resources>

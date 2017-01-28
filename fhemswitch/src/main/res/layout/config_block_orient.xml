@@ -9,108 +9,142 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:background="@drawable/config_shape_header_1"
-                android:paddingTop="3dp"
-                android:paddingLeft="10dp"
-                android:text="@string/portrait"
-                android:textColor="@color/conf_text_header_1"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <RadioGroup
-                android:id="@+id/layout_portrait"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp">
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/layout_portrait_0"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:background="@drawable/config_shape_header_1"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:text="@string/portrait"
+                    android:textColor="@color/conf_text_header_1"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/layout_portrait"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:tag="@string/LAYOUT_HORIZONTAL"
-                    android:text="@string/horizontal"
-                    android:textSize="16sp" />
+                    android:layout_marginLeft="5dp">
 
-                <RadioButton
-                    android:id="@+id/layout_portrait_1"
+                    <RadioButton
+                        android:id="@+id/layout_portrait_0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:tag="@string/LAYOUT_HORIZONTAL"
+                        android:text="@string/horizontal"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/layout_portrait_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="@string/LAYOUT_VERTICAL"
+                        android:text="@string/vertical"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/layout_portrait_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="@string/LAYOUT_MIXED"
+                        android:text="@string/mixed"
+                        android:textSize="16sp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:background="@drawable/config_shape_header_1"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:text="@string/landscape"
+                    android:textColor="@color/conf_text_header_1"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/layout_landscape"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:tag="@string/LAYOUT_VERTICAL"
-                    android:text="@string/vertical"
-                    android:textSize="16sp" />
+                    android:layout_marginLeft="5dp">
 
-                <RadioButton
-                    android:id="@+id/layout_portrait_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="@string/LAYOUT_MIXED"
-                    android:text="@string/mixed"
-                    android:textSize="16sp" />
-            </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/layout_landscape_0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:tag="@string/LAYOUT_HORIZONTAL"
+                        android:text="@string/horizontal"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/layout_landscape_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="@string/LAYOUT_VERTICAL"
+                        android:text="@string/vertical"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/layout_landscape_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="@string/LAYOUT_MIXED"
+                        android:text="@string/mixed"
+                        android:textSize="16sp" />
+                </RadioGroup>
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:paddingTop="9dp"
+            android:paddingLeft="9dp"
+            android:paddingBottom="9dp"
+            android:background="@drawable/config_shape_button_pressed"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:background="@drawable/config_shape_header_1"
-                android:paddingTop="3dp"
-                android:paddingLeft="10dp"
-                android:text="@string/landscape"
-                android:textColor="@color/conf_text_header_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <RadioGroup
-                android:id="@+id/layout_landscape"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp">
+                android:textSize="16sp"
+                android:width="350dp"
+                android:text="@string/hinttext" />
 
-                <RadioButton
-                    android:id="@+id/layout_landscape_0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:tag="@string/LAYOUT_HORIZONTAL"
-                    android:text="@string/horizontal"
-                    android:textSize="16sp" />
-
-                <RadioButton
-                    android:id="@+id/layout_landscape_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="@string/LAYOUT_VERTICAL"
-                    android:text="@string/vertical"
-                    android:textSize="16sp" />
-
-                <RadioButton
-                    android:id="@+id/layout_landscape_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="@string/LAYOUT_MIXED"
-                    android:text="@string/mixed"
-                    android:textSize="16sp" />
-            </RadioGroup>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

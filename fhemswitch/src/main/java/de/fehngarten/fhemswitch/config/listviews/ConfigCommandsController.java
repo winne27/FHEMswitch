@@ -12,15 +12,21 @@ import de.fehngarten.fhemswitch.R;
 
 public class ConfigCommandsController extends DragSortController {
 
-    ConfigCommandsAdapter mAdapter;
+    private ConfigCommandsAdapter mAdapter;
     Context mContext;
-    DragSortListView mDslv;
+    private DragSortListView mDslv;
 
     public ConfigCommandsController(DragSortListView dslv, ConfigCommandsAdapter adapter, Context context) {
         super(dslv, R.id.config_switch_unit, DragSortController.ON_DOWN, 0);
         mAdapter = adapter;
         mContext = context;
         mDslv = dslv;
+        DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
+            @Override
+            public void drop(int from, int to) {
+                mAdapter.changeItems(from, to);
+            }
+        };
         mDslv.setDropListener(onDrop);
         setRemoveEnabled(false);
     }
@@ -44,13 +50,7 @@ public class ConfigCommandsController extends DragSortController {
 
     @Override
     public void onDestroyFloatView(View floatView) {
-        //mAdapter.notifyDataSetChanged();
+        //do nothing; block super from crashing
     }
 
-    private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
-        @Override
-        public void drop(int from, int to) {
-            mAdapter.changeItems(from, to);
-        }
-    };
 }

@@ -17,7 +17,7 @@ public class ConfigLightscenesController extends DragSortController {
     private Boolean curViewIsHeader = false;
     private DragSortListView mDslv;
     Context mContext;
-    ConfigLightscenesAdapter mAdapter;
+    private ConfigLightscenesAdapter mAdapter;
 
     public ConfigLightscenesController(DragSortListView dslv, ConfigLightscenesAdapter adapter, Context context) {
         super(dslv, R.id.config_lightscene_unit, DragSortController.ON_DOWN, 0);
@@ -25,6 +25,12 @@ public class ConfigLightscenesController extends DragSortController {
         mDslv = dslv;
         mContext = context;
         mAdapter = adapter;
+        DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
+            @Override
+            public void drop(int from, int to) {
+                mAdapter.changeItems(from, to);
+            }
+        };
         mDslv.setDropListener(onDrop);
         mAdapter = adapter;
         //setDragHandleId(dslv);
@@ -94,12 +100,5 @@ public class ConfigLightscenesController extends DragSortController {
         //if (BuildConfig.DEBUG) Log.d("ConfigLightscenesContro","******* destroyed");
         //mAdapter.notifyDataSetChanged();
     }
-
-    private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
-        @Override
-        public void drop(int from, int to) {
-            mAdapter.changeItems(from, to);
-        }
-    };
 
 }

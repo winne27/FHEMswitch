@@ -29,20 +29,6 @@ public class ConfigDataCommon implements java.io.Serializable {
         }
     }
 
-    public void checkTypes(String[] types) {
-        if (types != null) {
-            if (suppressedVersions == null) {
-                suppressedVersions = new HashMap<>();
-            }
-            for (String type : types) {
-                if (!suppressedVersions.containsKey(type)) {
-                    suppressedVersions.put(type, "");
-                }
-            }
-
-        }
-    }
-
     public int getInstByWidgetid(int widgetId) {
         for (int j = 0; j < settingsMaxInst; j++) {
             if (instances[j] == widgetId) {

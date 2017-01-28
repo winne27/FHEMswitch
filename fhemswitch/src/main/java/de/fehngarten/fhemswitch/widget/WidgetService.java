@@ -19,7 +19,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -58,7 +57,7 @@ import io.socket.client.Socket;
 
 import de.fehngarten.fhemswitch.data.MyLightScenes.MyLightScene;
 
-import android.util.Log;
+//import android.util.Log;
 
 import static de.fehngarten.fhemswitch.global.Consts.*;
 import static de.fehngarten.fhemswitch.global.Settings.*;
@@ -82,7 +81,6 @@ public class WidgetService extends Service {
     private ArrayList<DoSendCommand> doSendCommands = new ArrayList<>();
     private Context mContext;
     private RemoteViews mView;
-    private IBinder mBinder = new MyBinder();
 
     private ConfigDataCommon configDataCommon;
     private ConfigDataInstance configDataInstance;
@@ -109,21 +107,16 @@ public class WidgetService extends Service {
         if (intent != null) {
             String action = intent.getAction();
             widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-            if (BuildConfig.DEBUG)
-                Log.d(TAG, "onStartCommand with " + action + " and widgetId: " + widgetId);
+            //if (BuildConfig.DEBUG) Log.d(TAG, "onStartCommand with " + action + " and widgetId: " + widgetId);
             switch (action) {
                 case FHEM_COMMAND:
                     if (configDataCommon == null || configDataCommon.urlFhemjsLocal == null) {
-                        Log.e(TAG, "perform start on command fired");
                         start();
                     }
                     sendCommand(intent);
                     break;
                 case SEND_DO_COLOR:
-                    mView = new RemoteViews(mContext.getPackageName(), layoutId);
-                    int shape = intent.getBooleanExtra("COLOR", false) ? settingShapes[instSerial] : R.drawable.myshape;
-                    mView.setInt(R.id.main_layout, "setBackgroundResource", shape);
-                    appWidgetManager.updateAppWidget(widgetId, mView);
+                    doColoring(intent.getBooleanExtra("COLOR", false));
                     break;
                 case NEW_CONFIG:
                     start();
@@ -131,6 +124,7 @@ public class WidgetService extends Service {
                 default:
                     //Log.d(TAG, "action: " + action + " started instance " + instSerial + " with widgetId " + widgetId);
                     start();
+                    doColoring(false);
                     setBroadcastReceivers();
                     checkVersion();
                     handler.postDelayed(setBroadcastReceiversTimer, settingDelayDefineBroadcastReceivers);
@@ -140,12 +134,11 @@ public class WidgetService extends Service {
             }
         }
         super.onStartCommand(intent, flags, startId);
-        return START_REDELIVER_INTENT;
+        return START_STICKY;
     }
 
     public void onCreate() {
         TAG = "WidgetService-" + instSerial;
-        if (BuildConfig.DEBUG) Log.d(TAG, "onCreate fired");
 
         mContext = getApplicationContext();
         appWidgetManager = AppWidgetManager.getInstance(mContext);
@@ -159,7 +152,6 @@ public class WidgetService extends Service {
     }
 
     private void start() {
-        Log.d(TAG, "start");
         screenIsOn = isScreenOn();
         if (mySocket != null) {
             mySocket.destroy();
@@ -172,15 +164,14 @@ public class WidgetService extends Service {
 
     @Override
     public void onDestroy() {
-        if (BuildConfig.DEBUG) //Log.d(TAG, "onDestroy fired");
-            if (mySocket != null) {
-                mySocket.destroy();
-            }
+        if (mySocket != null) {
+            mySocket.destroy();
+        }
 
         handler.removeCallbacks(checkSocketTimer);
         handler.removeCallbacks(checkVersionTimer);
         handler.removeCallbacks(checkShowVersionTimer);
-        handler.removeCallbacks(setBroadcastReceiversTimer);
+        //handler.removeCallbacks(setBroadcastReceiversTimer);
 
         for (DoSendCommand doSendCommand : doSendCommands) {
             doSendCommand.kill();
@@ -189,6 +180,13 @@ public class WidgetService extends Service {
         unregisterBroadcastReceivers();
 
         super.onDestroy();
+    }
+
+    private void doColoring(boolean doit) {
+        mView = new RemoteViews(mContext.getPackageName(), layoutId);
+        int shape = doit ? settingShapes[instSerial] : R.drawable.myshape;
+        mView.setInt(R.id.main_layout, "setBackgroundResource", shape);
+        appWidgetManager.updateAppWidget(widgetId, mView);
     }
 
     private void unregisterBroadcastReceivers() {
@@ -232,7 +230,10 @@ public class WidgetService extends Service {
         public void run(Context context, Intent intent) {
             //Log.d(TAG,"on/off fired");
             screenIsOn = intent.getAction().equals(Intent.ACTION_SCREEN_ON);
-            handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
+            //handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
+            if (screenIsOn) {
+                start();
+            }
         }
     }
 
@@ -304,14 +305,12 @@ public class WidgetService extends Service {
             return;
         }
 
-        String type = intent.getExtras().getString(FHEM_TYPE);
+        String type = intent.getExtras().getString(FHEM_TYPE, "");
 
         if (type.equals("intvalue")) {
             setNewValue(intent);
-        } else {
-
+        } else if (!type.equals("")) {
             String cmd = intent.getExtras().getString(FHEM_COMMAND);
-
             int actCol = 0;
             int position = -1;
             switch (type) {
@@ -338,7 +337,6 @@ public class WidgetService extends Service {
                 case "lightscene":
                     ConfigWorkBasket.data.get(instSerial).lightScenes.items.get(position).activ = true;
                     appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("lightscene").get(0));
-                    //handler.postDelayed(deactLightscene, 500);
                     break;
                 case "command":
                     ConfigWorkBasket.data.get(instSerial).commandsCols.get(actCol).get(position).activ = true;
@@ -416,7 +414,7 @@ public class WidgetService extends Service {
 
         ConfigDataIO configDataIO = new ConfigDataIO(mContext);
 
-        configDataCommon = configDataIO.readCommon(-1);
+        configDataCommon = configDataIO.readCommon();
         ConfigWorkBasket.fhemjsPW = configDataCommon.fhemjsPW;
 
         if (configDataCommon.suppressedVersions != null) {
@@ -691,22 +689,18 @@ public class WidgetService extends Service {
         }
     }
 
-    private void requestValues(String type) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "request values " + type);
+    private void requestValues() {
         try {
             mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getSwitchesList(), "once");
             mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getValuesList(), "once");
             mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getIntValuesList(), "once");
             mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getLightScenesList(), "once");
 
-            //if (type.equals("all")) {
             mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getSwitchesList(), "onChange");
             mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getValuesList(), "onChange");
             mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getIntValuesList(), "onChange");
             mySocket.requestValues(ConfigWorkBasket.data.get(instSerial).getLightScenesList(), "onChange");
-            //}
         } catch (NullPointerException e) {
-            Log.e(TAG, "request values has NullPointerException");
             start();
         }
     }
@@ -714,7 +708,6 @@ public class WidgetService extends Service {
     public Runnable checkSocketTimer = new Runnable() {
         @Override
         public void run() {
-            if (BuildConfig.DEBUG) Log.d(TAG, "checkSocketTimer fired");
             handler.removeCallbacks(checkSocketTimer);
             checkSocket();
             if (screenIsOn) {
@@ -733,7 +726,6 @@ public class WidgetService extends Service {
             }
         } else {
             if (mySocket != null) {
-                if (BuildConfig.DEBUG) Log.d(TAG, "sockets closed");
                 mySocket.destroy();
                 mySocket = null;
             }
@@ -750,13 +742,12 @@ public class WidgetService extends Service {
     private void defineSocketListeners() {
         // main run path: after auth resp -> request values from server
         mySocket.socket.on("authenticated", args -> {
-            requestValues("all");
+            requestValues();
             waitCheckSocket = settingWaitSocketLong;
             setVisibility(SOCKET_CONNECTED, "");
         });
 
         mySocket.socket.on(Socket.EVENT_DISCONNECT, args1 -> {
-            if (BuildConfig.DEBUG) Log.d(TAG, "socket disconnected");
             mySocket = null;
             waitCheckSocket = settingWaitSocketShort;
             setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn));
@@ -764,7 +755,6 @@ public class WidgetService extends Service {
                 handler.removeCallbacks(checkSocketTimer);
                 handler.postDelayed(checkSocketTimer, waitCheckSocket);
             }
-            ;
         });
 
         mySocket.socket.on(Socket.EVENT_RECONNECT_FAILED, args1 -> {
@@ -794,7 +784,7 @@ public class WidgetService extends Service {
                     e.printStackTrace();
                 }
 
-                Log.d(TAG, "new value: " + unit + ":" + value + " - widgetId: " + widgetId);
+                //Log.d(TAG, "new value: " + unit + ":" + value + " - widgetId: " + widgetId);
 
                 int actColSwitch = ConfigWorkBasket.data.get(instSerial).setSwitchIcon(unit, value);
                 if (actColSwitch > -1) {
@@ -902,13 +892,7 @@ public class WidgetService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return mBinder;
-    }
-
-    public class MyBinder extends Binder {
-        WidgetService getService() {
-            return WidgetService.this;
-        }
+        return null;
     }
 }
 

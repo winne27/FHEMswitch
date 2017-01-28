@@ -16,7 +16,6 @@ public class ConfigDataInstance implements java.io.Serializable {
     public int switchCols;
     public int valueCols;
     public int commandCols;
-    public int widgetId;
 
     public ConfigDataInstance() {
         switchRows = new ArrayList<>();
@@ -29,6 +28,5 @@ public class ConfigDataInstance implements java.io.Serializable {
         switchCols = 0;
         valueCols = 0;
         commandCols = 0;
-        widgetId = -1;
     }
 }

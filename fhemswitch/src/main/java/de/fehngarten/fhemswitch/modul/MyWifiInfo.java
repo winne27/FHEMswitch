@@ -26,7 +26,7 @@ public class MyWifiInfo {
     }
 
     public Boolean beAtHome(String bssId) {
-        return isWifi() && getWifiId().equals(bssId);
+        return bssId != null && isWifi() && getWifiId().equals(bssId);
     }
 }
 

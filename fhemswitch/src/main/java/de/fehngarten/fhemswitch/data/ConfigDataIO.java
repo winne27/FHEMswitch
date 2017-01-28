@@ -1,28 +1,24 @@
 package de.fehngarten.fhemswitch.data;
 
 import android.content.Context;
-import android.util.Log;
+//import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import de.fehngarten.fhemswitch.BuildConfig;
-
 import static de.fehngarten.fhemswitch.global.Settings.settingsConfigFileName;
 
 public class ConfigDataIO {
     private Context mContext;
-    private String[] types;
     private final String TAG = "ConfigDataIO";
-    
+
     public ConfigDataIO(Context context) {
         mContext = context;
     }
 
-    public ConfigDataCommon readCommon(int widgetId) {
+    public ConfigDataCommon readCommon() {
         ConfigDataCommon configDataCommon;
         Object obj;
         try {
@@ -33,25 +29,17 @@ public class ConfigDataIO {
             obj = obj_in.readObject();
             obj_in.close();
 
-            //if (BuildConfig.DEBUG) Log.d(TAG, "config common data found");
             if (obj instanceof ConfigDataCommon) {
                 configDataCommon = (ConfigDataCommon) obj;
-                configDataCommon.checkTypes(types);
             } else {
-                //if (BuildConfig.DEBUG) Log.d(TAG, "config data not correct ");
                 throw new Exception("config data corrupted");
             }
         } catch (Exception e) {
-            if (BuildConfig.DEBUG) Log.d(TAG, "config data with exception");
-            if (BuildConfig.DEBUG) Log.d(TAG, e.getMessage());
+            //if (BuildConfig.DEBUG) Log.d(TAG, "config data with exception, maybe migration from 2 to 3");
+            //if (BuildConfig.DEBUG) Log.d(TAG, e.getMessage());
 
-
-            ConfigDataMigrate configDataMigrate = new ConfigDataMigrate(mContext, this);
-            configDataCommon = configDataMigrate.doMigrate(widgetId);
-            if (configDataCommon == null) {
-                configDataCommon = new ConfigDataCommon();
-                configDataCommon.init();
-            }
+            configDataCommon = new ConfigDataCommon();
+            configDataCommon.init();
         }
 
         return configDataCommon;
@@ -134,13 +122,4 @@ public class ConfigDataIO {
         File f0 = new File(dir, filename);
         f0.delete();
     }
-/*
-    public void deleteCommon() {
-        Log.d(TAG, "deleteCommon started");
-        String dir = mContext.getFilesDir().getAbsolutePath();
-        String filename = settingsConfigFileName + "common";
-        File f0 = new File(dir, filename);
-        f0.delete();
-    }
-*/
 }

@@ -10,9 +10,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -27,6 +28,8 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.fehngarten.fhemswitch.BuildConfig;
 import de.fehngarten.fhemswitch.R;
@@ -42,20 +45,13 @@ import de.fehngarten.fhemswitch.modul.MyReceiveListener;
 import de.fehngarten.fhemswitch.modul.MySocket;
 import de.fehngarten.fhemswitch.modul.MyWifiInfo;
 import de.fehngarten.fhemswitch.modul.SendAlertMessage;
+import de.fehngarten.fhemswitch.widget.WidgetProvider;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
-import static de.fehngarten.fhemswitch.global.Consts.NEW_CONFIG;
-import static de.fehngarten.fhemswitch.global.Consts.SEND_DO_COLOR;
-import static de.fehngarten.fhemswitch.global.Consts.STOP_CONFIG;
-import static de.fehngarten.fhemswitch.global.Settings.settingHelpUrl;
-import static de.fehngarten.fhemswitch.global.Settings.settingHelpUrlHome;
-import static de.fehngarten.fhemswitch.global.Settings.settingPagerFirstItem;
-import static de.fehngarten.fhemswitch.global.Settings.settingServiceClasses;
-import static de.fehngarten.fhemswitch.global.Settings.settingTabs;
-import static de.fehngarten.fhemswitch.global.Settings.settingWidgetSel;
-import static de.fehngarten.fhemswitch.global.Settings.settingsMaxInst;
+import static de.fehngarten.fhemswitch.global.Consts.*;
+import static de.fehngarten.fhemswitch.global.Settings.*;
 
 //import android.util.Log;
 
@@ -70,8 +66,6 @@ public class ConfigMain extends Activity {
     public static ConfigDataInstance configDataInstance;
     public static MySocket mySocket;
 
-    public int lsCounter = 0;
-    public int lsSize = 0;
     public Context mContext;
     public Handler waitAuth = new Handler();
 
@@ -84,13 +78,9 @@ public class ConfigMain extends Activity {
     private ConfigPagerAdapter configPagerAdapter;
     private int lastPage;
 
-    public ConfigMain() {
-        Log.d(TAG, "class started");
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate fired");
+        //Log.d(TAG, "onCreate fired");
         super.onCreate(savedInstanceState);
 
         mContext = this;
@@ -100,14 +90,6 @@ public class ConfigMain extends Activity {
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
         float density = getResources().getDisplayMetrics().density;
         float dpWidth = screenWidth / density;
-/*
-        if (dpWidth < 600) {
-            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            screenWidth = getResources().getDisplayMetrics().widthPixels;
-            density = getResources().getDisplayMetrics().density;
-            dpWidth = screenWidth / density;
-        }
-*/
 
         if (dpWidth < 800) {
             setContentView(R.layout.config__s);
@@ -150,6 +132,7 @@ public class ConfigMain extends Activity {
         urljs = (EditText) findViewById(R.id.urljs);
         urlplLocal = (EditText) findViewById(R.id.urlpl_local);
         urljsLocal = (EditText) findViewById(R.id.urljs_local);
+
         isHomeNet = (CheckBox) findViewById(R.id.is_home_net);
         TextView isHomeNetLabel = (TextView) findViewById(R.id.is_home_net_label);
         connectionPW = (EditText) findViewById(R.id.connection_pw);
@@ -163,7 +146,7 @@ public class ConfigMain extends Activity {
         }
 
         configDataIO = new ConfigDataIO(mContext);
-        configDataCommon = configDataIO.readCommon(mAppWidgetId);
+        configDataCommon = configDataIO.readCommon();
 
         // Read object using ObjectInputStream
 
@@ -190,7 +173,6 @@ public class ConfigMain extends Activity {
             instSerial = configDataCommon.getFirstInstance();
         }
         ConfigWorkBasket.justMigrated = false;
-        //Log.d(TAG, "instSerial: " + instSerial);
 
         // Migration stuff to 3.0.0
         if (instSerial == 0 && configDataCommon.instances[0] == 0 && mAppWidgetId > 0 && configDataIO.configInstanceExists(0)) {
@@ -224,7 +206,8 @@ public class ConfigMain extends Activity {
                 }
 
                 if (configDataCommon.getWidgetCount() > 2 && dpWidth < 600) {
-                    ((RadioButton) radioGroup.getChildAt(i)).setText("W" + i);
+                    String w = "W" + i;
+                    ((RadioButton) radioGroup.getChildAt(i)).setText(w);
                 }
                 i++;
             }
@@ -251,6 +234,11 @@ public class ConfigMain extends Activity {
 
     @Override
     public void onDestroy() {
+
+        Intent intent = new Intent(mContext.getApplicationContext(), WidgetProvider.class);
+        intent.setAction(ACTION_APPWIDGET_UPDATE);
+        sendBroadcast(intent);
+
         //if (BuildConfig.DEBUG) Log.d(TAG, "onDestroy fired");
         if (mySocket != null) {
             mySocket.destroy();
@@ -258,20 +246,6 @@ public class ConfigMain extends Activity {
 
         for (BroadcastReceiver broadcastReceiver : broadcastReceivers) {
             unregisterReceiver(broadcastReceiver);
-        }
-
-        sendDoColor(false);
-
-        int widgetId;
-        for (int i = 0; i < configDataCommon.instances.length; i++) {
-            widgetId = configDataCommon.instances[i];
-            if (widgetId > 0) {
-                Intent intent = new Intent(mContext.getApplicationContext(), settingServiceClasses.get(i));
-                intent.setAction(ACTION_APPWIDGET_UPDATE);
-                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-                mContext.stopService(intent);
-                mContext.startService(intent);
-            }
         }
 
         super.onDestroy();
@@ -357,8 +331,9 @@ public class ConfigMain extends Activity {
     };
 
     private Button.OnClickListener getConfigButtonOnClickListener = arg0 -> {
-        saveConfigCommon();
-        showFHEMunits();
+        if (saveConfigCommon()) {
+            showFHEMunits();
+        }
     };
 
     private Button.OnClickListener callHelpOnClickListener = arg0 -> {
@@ -377,7 +352,7 @@ public class ConfigMain extends Activity {
     private Button.OnClickListener saveConfigButtonOnClickListener = arg0 -> saveConfig(true);
 
     private Button.OnClickListener refreshConfigButtonOnClickListener = arg0 -> {
-        Log.d(TAG, "refresh fired");
+        //Log.d(TAG, "refresh fired");
         doConnect(true);
         Toast.makeText(mContext, getResources().getString(R.string.serverRefresh), Toast.LENGTH_LONG).show();
     };
@@ -410,7 +385,7 @@ public class ConfigMain extends Activity {
     private Emitter.Listener authListenerRefresh = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            Log.d(TAG, "refresh connect fired");
+            //Log.d(TAG, "refresh connect fired");
             mySocket.refresh();
             mySocket.destroy();
         }
@@ -440,8 +415,8 @@ public class ConfigMain extends Activity {
         }
 
 
-        for (int i = 0; i < settingTabs.length; i++) {
-            findViewById(settingTabs[i]).setOnClickListener(tabOnClickListener);
+        for (int settingTab : settingTabs) {
+            findViewById(settingTab).setOnClickListener(tabOnClickListener);
         }
 
         myPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -456,7 +431,7 @@ public class ConfigMain extends Activity {
             }
 
             public void onPageSelected(int currentPage) {
-                Log.d(TAG, "currentPage: " + currentPage);
+                //Log.d(TAG, "currentPage: " + currentPage);
                 if (lastPage != currentPage) {
                     configPagerAdapter.saveItem(lastPage);
                     lastPage = currentPage;
@@ -468,8 +443,8 @@ public class ConfigMain extends Activity {
     }
 
     private void hilightTab(int pos) {
-        for (int i = 0; i < settingTabs.length; i++) {
-            TextView tabView = (TextView) findViewById(settingTabs[i]);
+        for (int settingTab : settingTabs) {
+            TextView tabView = (TextView) findViewById(settingTab);
             tabView.setBackgroundResource(R.drawable.config_shape_tabs);
             tabView.setTextColor(ContextCompat.getColor(mContext, R.color.text_hinweis));
         }
@@ -490,22 +465,34 @@ public class ConfigMain extends Activity {
         }
     }
 
-    private void saveConfigCommon() {
+    private boolean saveConfigCommon() {
 
-        // check syntax of url
-        String urlString = urljs.getText().toString();
-        try {
-            URL url = new URL(urlString);
-            url.toURI();
-        } catch (MalformedURLException | URISyntaxException e) {
-            new SendAlertMessage(mContext, getString(R.string.urlerr) + ":\n" + e.getMessage());
-            return;
+        String url;
+
+        url = urljs.getText().toString().trim();
+        if (!checkUrl(url, getString(R.string.url_fhem_js), true)) {
+            return false;
         }
+        configDataCommon.urlFhemjs = url;
 
-        configDataCommon.urlFhemjs = urljs.getText().toString();
-        configDataCommon.urlFhemjsLocal = urljsLocal.getText().toString();
-        configDataCommon.urlFhempl = urlpl.getText().toString();
-        configDataCommon.urlFhemplLocal = urlplLocal.getText().toString();
+        url = urljsLocal.getText().toString().trim();
+        if (!checkUrl(url, getString(R.string.url_fhem_js_local), false)) {
+            return false;
+        }
+        configDataCommon.urlFhemjsLocal = url;
+
+        url = urlpl.getText().toString().trim();
+        if (!checkUrl(url, getString(R.string.url_fhem_pl), false)) {
+            return false;
+        }
+        configDataCommon.urlFhempl = url;
+
+        url = urlplLocal.getText().toString().trim();
+        if (!checkUrl(url, getString(R.string.url_fhem_pl_local), false)) {
+            return false;
+        }
+        configDataCommon.urlFhemplLocal = url;
+
         configDataCommon.fhemjsPW = connectionPW.getText().toString();
 
         if (isHomeNet.isChecked()) {
@@ -514,5 +501,30 @@ public class ConfigMain extends Activity {
             configDataCommon.bssId = "";
         }
         configDataIO.saveCommon(configDataCommon);
+        return true;
+    }
+
+    private boolean checkUrl(String url, String fieldname, boolean mandatory) {
+
+        if (!mandatory && url.equals("")) {
+            return true;
+        }
+/*
+        Pattern p = Pattern.compile("@^https?://[^s/$.?#].[^s]*$@iS");
+        Matcher m;
+        m=p.matcher(url);
+        if (!m.matches()) {
+            new SendAlertMessage(mContext, fieldname + ": " + getString(R.string.urlerr));
+            return false;
+        }
+
+*/
+
+        if (!URLUtil.isHttpUrl(url) && !URLUtil.isHttpsUrl(url)) {
+            new SendAlertMessage(mContext, fieldname + ": " + getString(R.string.urlerr));
+            return false;
+        }
+
+        return true;
     }
 }

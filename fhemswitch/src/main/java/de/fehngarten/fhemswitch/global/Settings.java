@@ -29,15 +29,10 @@ public final class Settings {
     public static final int settingSocketsConnectionTimeout = 3000;
     public static final int settingDelaySocketCheck = 500;
 
-
     public static final int settingDelayDefineBroadcastReceivers = 5000;
-
-    public static final int settingDelayVersionCheck = 10000;
     public static final int settingIntervalVersionCheck = 3600000;
-
     public static final int settingDelayShowVersionCheck = 20000;
     public static final int settingIntervalShowVersionCheck = 600000;
-
     public static final int settingPagerFirstItem = 0;
 
     public static final String settingHelpUrl = "https://forum.fhem.de/index.php?topic=36824.0.html";

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
-//import android.util.Log;
 
 import de.fehngarten.fhemswitch.BuildConfig;
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
@@ -46,7 +45,7 @@ public class MySocket {
             });
 
         } catch (Exception e1) {
-            //Log.e("socket error", e1.toString());
+            Log.e("socket error", e1.toString());
         }
     }
 
@@ -70,7 +69,7 @@ public class MySocket {
     }
 
     public void doConnect() {
-        Log.d(TAG, "doConnect");
+        //Log.d(TAG, "doConnect");
         socket.connect();
     }
 
@@ -104,8 +103,6 @@ public class MySocket {
         socket.off("fhemError");
         socket.off("fhemConn");
     }
-
-
 
     public void refresh() {
         socket.emit("refreshValues");

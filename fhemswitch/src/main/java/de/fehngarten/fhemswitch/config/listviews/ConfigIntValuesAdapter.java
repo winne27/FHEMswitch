@@ -21,8 +21,6 @@ import de.fehngarten.fhemswitch.R;
 import de.fehngarten.fhemswitch.data.ConfigIntValueRow;
 import de.fehngarten.fhemswitch.data.MyIntValue;
 
-//import android.view.View.OnClickListener;
-
 public class ConfigIntValuesAdapter extends ConfigAdapter {
     Context mContext;
     //private int layoutResourceId;
@@ -117,9 +115,12 @@ public class ConfigIntValuesAdapter extends ConfigAdapter {
         setVisible(rowView, valueRow.enabled);
         //private method of your class
 
-        valueHolder.value_enabled.setOnClickListener(arg0 -> {
-            getItem(valueHolder.ref).enabled = valueHolder.value_enabled.isChecked();
-            notifyDataSetChanged();
+        valueHolder.value_enabled.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                ConfigIntValuesAdapter.this.getItem(valueHolder.ref).enabled = valueHolder.value_enabled.isChecked();
+                ConfigIntValuesAdapter.this.notifyDataSetChanged();
+            }
         });
 
         valueHolder.value_name.addTextChangedListener(new TextWatcher() {
@@ -269,7 +270,7 @@ public class ConfigIntValuesAdapter extends ConfigAdapter {
         }
     }
 
-    public static boolean isNumeric(String inputData) {
+    private static boolean isNumeric(String inputData) {
         return inputData.matches("[-+]?\\d+(\\.\\d+)?");
     }
 }

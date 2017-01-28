@@ -6,7 +6,6 @@ import android.support.v4.content.ContextCompat;
 //import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ScrollView;
 
 import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;
@@ -15,15 +14,21 @@ import de.fehngarten.fhemswitch.R;
 
 public class ConfigSwitchesController extends DragSortController {
 
-    ConfigSwitchesAdapter mAdapter;
+    private ConfigSwitchesAdapter mAdapter;
     Context mContext;
-    DragSortListView mDslv;
+    private DragSortListView mDslv;
 
     public ConfigSwitchesController(DragSortListView dslv, ConfigSwitchesAdapter adapter, Context context) {
         super(dslv, R.id.config_switch_unit, DragSortController.ON_DOWN, 0);
         mAdapter = adapter;
         mContext = context;
         mDslv = dslv;
+        DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
+            @Override
+            public void drop(int from, int to) {
+                mAdapter.changeItems(from, to);
+            }
+        };
         mDslv.setDropListener(onDrop);
         setRemoveEnabled(false);
     }
@@ -42,9 +47,6 @@ public class ConfigSwitchesController extends DragSortController {
     public View onCreateFloatView(int position) {
         View v = mAdapter.getView(position, null, mDslv);
         v.setBackgroundColor(ContextCompat.getColor(mContext, R.color.conf_bg_handle_pressed));
-        //ScrollView mainScrollView = (ScrollView) mDslv.findViewById(R.id.scrollView);
-        //mainScrollView.fullScroll(ScrollView.FOCUS_UP);
-        //mainScrollView.scrollTo(0, 0);
         return v;
     }
 
@@ -56,16 +58,6 @@ public class ConfigSwitchesController extends DragSortController {
     @Override
     public void onDestroyFloatView(View floatView) {
         //do nothing; block super from crashing
-        //if (BuildConfig.DEBUG) Log.d("ConfigSwitchesControl","******* destroyed");
-        //mAdapter.notifyDataSetChanged();
     }
 
-    private DragSortListView.DropListener onDrop = new DragSortListView.DropListener()
-    {
-        @Override
-        public void drop(int from, int to)
-        {
-            mAdapter.changeItems(from, to);
-        }
-    };
 }

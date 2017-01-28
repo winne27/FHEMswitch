@@ -15,26 +15,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import de.fehngarten.fhemswitch.data.MySwitch;
 import de.fehngarten.fhemswitch.R;
-import de.fehngarten.fhemswitch.config.ConfigMain;
 import de.fehngarten.fhemswitch.data.ConfigSwitchRow;
 
 public class ConfigSwitchesAdapter extends ConfigAdapter {
     Context mContext;
-    //private int layoutResourceId;
     private ArrayList<ConfigSwitchRow> switchRows = null;
 
     public ConfigSwitchesAdapter(Context mContext) {
-        //super(mContext, layoutResourceId, data);
-        //this.layoutResourceId = layoutResourceId;
         this.mContext = mContext;
         switchRows = new ArrayList<>();
     }
@@ -92,7 +86,6 @@ public class ConfigSwitchesAdapter extends ConfigAdapter {
         //if (BuildConfig.DEBUG) Log.d("switch pos",Integer.toString(position) + " from " + Integer.toString(getCount()));
 
         View rowView = convertView;
-
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         final SwitchHolder switchHolder;
@@ -113,14 +106,15 @@ public class ConfigSwitchesAdapter extends ConfigAdapter {
         switchHolder.switch_unit.setText(switchRow.unit);
         switchHolder.switch_name.setText(switchRow.name);
         switchHolder.switch_enabled.setChecked(switchRow.enabled);
-
-        //if (BuildConfig.DEBUG) Log.d("switchRow.cmd", switchRow.cmd + " in Pos " + getSpinnerIndex(switchHolder.switch_cmd, switchRow.cmd));
         switchHolder.switch_cmd.setSelection(getSpinnerIndex(switchHolder.switch_cmd, switchRow.cmd));
 
         //private method of your class
-
-        switchHolder.switch_enabled.setOnClickListener(arg0 -> getItem(switchHolder.ref).enabled = switchHolder.switch_enabled.isChecked());
-
+        switchHolder.switch_enabled.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                ConfigSwitchesAdapter.this.getItem(switchHolder.ref).enabled = switchHolder.switch_enabled.isChecked();
+            }
+        });
         switchHolder.switch_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {

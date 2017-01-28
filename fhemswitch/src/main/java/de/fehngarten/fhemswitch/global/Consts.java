@@ -1,7 +1,5 @@
 package de.fehngarten.fhemswitch.global;
 
-import java.util.ArrayList;
-
 public class Consts {
     public static final String OPEN_WEBPAGE = "de.fehngarten.fhemswitch.OPEN_WEBPAGE";
     public static final String NEW_CONFIG = "de.fehngarten.fhemswitch.NEW_CONFIG";

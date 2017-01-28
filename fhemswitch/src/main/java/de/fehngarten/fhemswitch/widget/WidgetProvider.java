@@ -2,57 +2,39 @@ package de.fehngarten.fhemswitch.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
+//import android.util.Log;
 
 import java.util.HashMap;
 
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
 import de.fehngarten.fhemswitch.data.ConfigDataIO;
-import de.fehngarten.fhemswitch.modul.MyBroadcastReceiver;
-import de.fehngarten.fhemswitch.modul.MyReceiveListener;
 
 import static de.fehngarten.fhemswitch.global.Consts.*;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
-import static de.fehngarten.fhemswitch.global.Settings.settingDelaySocketCheck;
 import static de.fehngarten.fhemswitch.global.Settings.settingServiceClasses;
 
 public class WidgetProvider extends AppWidgetProvider {
 
     private static final String TAG = "WidgetProvider";
-    private HashMap<Integer, MyService> serviceIntents;
-    private int[] widgetIds;
-
-    private class MyService {
-        private int serial;
-        private Intent intent;
-
-        private MyService(int serial, Intent intent) {
-            this.serial = serial;
-            this.intent = intent;
-        }
-    }
+    public HashMap<Integer, Intent> serviceIntents;
 
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        Log.d(TAG, "onReiceive startet by " + action);
+        //Log.d(TAG, "onReiceive startet by " + action);
 
         if (action == null) {
             action = "";
         }
         switch (action) {
             case ACTION_APPWIDGET_UPDATE:
-
                 checkWidgets(context, "INIT");
-                for (MyService myService : serviceIntents.values()) {
-                    //Log.d(TAG,"start service " + myService.serial);
-                    //context.stopService(myService.intent);
-                    context.startService(myService.intent);
+                for (Intent serviceIntent : serviceIntents.values()) {
+                    context.startService(serviceIntent);
                 }
                 break;
             case SEND_FHEM_COMMAND:
@@ -83,7 +65,7 @@ public class WidgetProvider extends AppWidgetProvider {
         //Log.d(TAG, "Deleting " + appWidgetIds.length + " widgets");
         int widgetId = appWidgetIds[0];
         ConfigDataIO configDataIO = new ConfigDataIO(context);
-        ConfigDataCommon configDataCommon = configDataIO.readCommon(-1);
+        ConfigDataCommon configDataCommon = configDataIO.readCommon();
         int serial = configDataCommon.delete(configDataIO, widgetId);
 
         if (serial > -1) {
@@ -111,22 +93,19 @@ public class WidgetProvider extends AppWidgetProvider {
     }
 
     private void checkWidgets(Context context, String action) {
-        widgetIds = getWidgetIds(context);
+        int[] widgetIds = getWidgetIds(context);
 
         //Log.d(TAG,"widgetIds: " + widgetIds.toString());
         ConfigDataIO configDataIO = new ConfigDataIO(context);
-        int curWidgetId = (widgetIds.length > 0) ? widgetIds[0] : -1;
-        //Log.d(TAG,"curWidgetId: " + curWidgetId);
-        ConfigDataCommon configDataCommon = configDataIO.readCommon(curWidgetId);
+        ConfigDataCommon configDataCommon = configDataIO.readCommon();
 
         serviceIntents = new HashMap<>();
 
         for (int widgetId : widgetIds) {
             int serial = configDataCommon.getInstByWidgetid(widgetId);
 
-            if (serial == -1) {
+            if (serial == -1) {  //shit happens
                 serial = 0;
-
             }
 
             if (serial > -1) {
@@ -141,6 +120,7 @@ public class WidgetProvider extends AppWidgetProvider {
         Intent intent = new Intent(context.getApplicationContext(), settingServiceClasses.get(serial));
         intent.setAction(action);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-        serviceIntents.put(widgetId, new MyService(serial, intent));
+
+        serviceIntents.put(widgetId, intent);
     }
 }

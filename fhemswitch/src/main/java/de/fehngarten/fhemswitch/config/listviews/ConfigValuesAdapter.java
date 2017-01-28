@@ -12,9 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-//import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,13 +23,9 @@ import de.fehngarten.fhemswitch.data.ConfigValueRow;
 
 public class ConfigValuesAdapter extends ConfigAdapter {
     Context mContext;
-    //private int layoutResourceId;
     private ArrayList<ConfigValueRow> valueRows = null;
 
     public ConfigValuesAdapter(Context mContext) {
-
-        //super(mContext, layoutResourceId, data);
-        //this.layoutResourceId = layoutResourceId;
         this.mContext = mContext;
         valueRows = new ArrayList<>();
     }
@@ -111,8 +105,19 @@ public class ConfigValuesAdapter extends ConfigAdapter {
 
         //private method of your class
 
-        valueHolder.value_enabled.setOnClickListener(arg0 -> getItem(valueHolder.ref).enabled = valueHolder.value_enabled.isChecked());
-        valueHolder.value_useicon.setOnClickListener(arg0 -> getItem(valueHolder.ref).useIcon = valueHolder.value_useicon.isChecked());
+        valueHolder.value_enabled.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                ConfigValuesAdapter.this.getItem(valueHolder.ref).enabled = valueHolder.value_enabled.isChecked();
+            }
+        });
+
+        valueHolder.value_useicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                ConfigValuesAdapter.this.getItem(valueHolder.ref).useIcon = valueHolder.value_useicon.isChecked();
+            }
+        });
 
         valueHolder.value_name.addTextChangedListener(new TextWatcher() {
             @Override

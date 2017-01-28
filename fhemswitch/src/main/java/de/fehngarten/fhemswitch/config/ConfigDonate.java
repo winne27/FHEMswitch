@@ -12,8 +12,6 @@ import android.widget.RadioGroup;
 import de.fehngarten.fhemswitch.BuildConfig;
 import de.fehngarten.fhemswitch.R;
 import util.IabHelper;
-import util.IabHelper.OnIabSetupFinishedListener;
-import util.IabResult;
 
 import static de.fehngarten.fhemswitch.global.Settings.settingLicenceKey;
 
@@ -42,14 +40,11 @@ public class ConfigDonate extends Activity {
 
         mHelper = new IabHelper(this, base64EncodedPublicKey);
 
-        mHelper.startSetup(new OnIabSetupFinishedListener() {
-            @Override
-            public void onIabSetupFinished(IabResult result) {
-                if (!result.isSuccess()) {
-                    if (BuildConfig.DEBUG) Log.d("x", "In-app Billing setup failed: " + result);
-                } else {
-                    if (BuildConfig.DEBUG) Log.d("x", "In-app Billing is set up OK");
-                }
+        mHelper.startSetup(result -> {
+            if (!result.isSuccess()) {
+                if (BuildConfig.DEBUG) Log.d("x", "In-app Billing setup failed: " + result);
+            } else {
+                if (BuildConfig.DEBUG) Log.d("x", "In-app Billing is set up OK");
             }
         });
     }

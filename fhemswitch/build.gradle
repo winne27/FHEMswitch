@@ -13,9 +13,9 @@ android {
     }
     defaultConfig {
         applicationId "de.fehngarten.fhemswitch"
-        versionCode 3100003
-        versionName "3.1.0"
-        minSdkVersion 14
+        versionCode 3101500
+        versionName "3.1.1"
+        minSdkVersion 15
         targetSdkVersion 25
         archivesBaseName = "fhemswitch-$versionName"
         jackOptions {

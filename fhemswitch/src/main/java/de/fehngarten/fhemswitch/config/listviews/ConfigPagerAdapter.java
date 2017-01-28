@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,27 +43,23 @@ import static de.fehngarten.fhemswitch.config.ConfigMain.configDataInstance;
 import static de.fehngarten.fhemswitch.global.Settings.settingConfigBlocks;
 import static de.fehngarten.fhemswitch.global.Settings.settingHelpIconUrl;
 import static de.fehngarten.fhemswitch.global.Settings.settingHelpIntvaluesUrl;
-import static de.fehngarten.fhemswitch.global.Settings.settingHelpUrlHome;
 
 public class ConfigPagerAdapter extends PagerAdapter {
     private final String TAG = "ConfigPagerAdapter";
     private Context mContext;
-    private RadioGroup radioLayoutLandscape;
-    private RadioGroup radioLayoutPortrait;
     private ConfigWorkInstance configWorkInstance;
     private MySocket mySocket;
 
-    public Spinner spinnerSwitchCols;
-    public Spinner spinnerValueCols;
-    public Spinner spinnerCommandCols;
-    public ConfigSwitchesAdapter configSwitchesAdapter;
-    public ConfigLightscenesAdapter configLightscenesAdapter;
-    public ConfigValuesAdapter configValuesAdapter;
-    public ConfigIntValuesAdapter configIntValuesAdapter;
-    public ConfigCommandsAdapter configCommandsAdapter;
+    private Spinner spinnerSwitchCols;
+    private Spinner spinnerValueCols;
+    private Spinner spinnerCommandCols;
+    private ConfigSwitchesAdapter configSwitchesAdapter;
+    private ConfigLightscenesAdapter configLightscenesAdapter;
+    private ConfigValuesAdapter configValuesAdapter;
+    private ConfigIntValuesAdapter configIntValuesAdapter;
+    private ConfigCommandsAdapter configCommandsAdapter;
 
-    public int lsCounter;
-    private int lastPos;
+    private int lsCounter;
     private View mView;
     private ArrayList<View> views;
 
@@ -86,9 +82,9 @@ public class ConfigPagerAdapter extends PagerAdapter {
         View view = views.get(position);
         switch (position) {
             case 0: //config_block_orient
-                radioLayoutLandscape = (RadioGroup) view.findViewById(R.id.layout_landscape);
+                RadioGroup radioLayoutLandscape = (RadioGroup) view.findViewById(R.id.layout_landscape);
                 radioLayoutLandscape.setOnCheckedChangeListener(landscapeSelectorChange);
-                radioLayoutPortrait = (RadioGroup) view.findViewById(R.id.layout_portrait);
+                RadioGroup radioLayoutPortrait = (RadioGroup) view.findViewById(R.id.layout_portrait);
                 radioLayoutPortrait.setOnCheckedChangeListener(portraitSelectorChange);
                 ((RadioButton) radioLayoutLandscape.getChildAt(configDataInstance.layoutLandscape)).setChecked(true);
                 ((RadioButton) radioLayoutPortrait.getChildAt(configDataInstance.layoutPortrait)).setChecked(true);
@@ -135,17 +131,8 @@ public class ConfigPagerAdapter extends PagerAdapter {
     }
 
     public Object instantiateItem(ViewGroup collection, int position) {
-        //LayoutInflater inflater = (LayoutInflater) collection.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        //int resId = settingConfigBlocks[position];
         View view = views.get(position);
-        ((ViewPager) collection).addView(view, 0);
-
-
-        //ScrollView mainScrollView = (ScrollView) view.findViewById(R.id.scrollView);
-        //mainScrollView.fullScroll(ScrollView.FOCUS_UP);
-        //mainScrollView.scrollTo(0, 0);
-
+        collection.addView(view, 0);
         return view;
     }
 
@@ -170,15 +157,10 @@ public class ConfigPagerAdapter extends PagerAdapter {
     };
 
     public void saveItem(int position) {
-        Log.d(TAG, position + " try to save");
+        //Log.d(TAG, position + " try to save");
         try {
             switch (position) {
                 case 0: //config_block_orient
-                    //int buttonId = radioLayoutPortrait.getCheckedRadioButtonId();
-                    //Log.d(TAG, "buttonId Port: " + buttonId);
-                    //Log.d(TAG, radioLayoutPortrait.getTag(buttonId).toString());
-                    //configDataInstance.layoutPortrait = Integer.valueOf(radioLayoutPortrait.getTag().toString());
-                    //configDataInstance.layoutLandscape = Integer.valueOf(radioLayoutLandscape.getTag().toString());
                     break;
                 case 1: //config_block_switches
                     configDataInstance.switchRows = configSwitchesAdapter.getData();
@@ -200,7 +182,7 @@ public class ConfigPagerAdapter extends PagerAdapter {
                     break;
             }
         } catch (Exception e) {
-            Log.e(TAG, position + " does not exist: " + e.getLocalizedMessage());
+            //Log.e(TAG, position + " does not exist: " + e.getLocalizedMessage());
         }
     }
 
