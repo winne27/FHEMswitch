@@ -7,8 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 //import android.util.Log;
-
-import java.util.HashMap;
+import android.util.SparseArray;
 
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
 import de.fehngarten.fhemswitch.data.ConfigDataIO;
@@ -21,7 +20,7 @@ import static de.fehngarten.fhemswitch.global.Settings.settingServiceClasses;
 public class WidgetProvider extends AppWidgetProvider {
 
     private static final String TAG = "WidgetProvider";
-    public HashMap<Integer, Intent> serviceIntents;
+    public SparseArray<Intent> serviceIntents;
 
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
@@ -32,9 +31,9 @@ public class WidgetProvider extends AppWidgetProvider {
         }
         switch (action) {
             case ACTION_APPWIDGET_UPDATE:
-                checkWidgets(context, "INIT");
-                for (Intent serviceIntent : serviceIntents.values()) {
-                    context.startService(serviceIntent);
+                checkWidgets(context);
+                for(int i = 0, nsize = serviceIntents.size(); i < nsize; i++) {
+                    context.startService(serviceIntents.valueAt(i));
                 }
                 break;
             case SEND_FHEM_COMMAND:
@@ -52,11 +51,6 @@ public class WidgetProvider extends AppWidgetProvider {
                 break;
         }
         super.onReceive(context, intent);
-    }
-
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        //Log.d(TAG, "onUpdate started");
     }
 
     @Override
@@ -80,26 +74,20 @@ public class WidgetProvider extends AppWidgetProvider {
         }
     }
 
-    @Override
-    public void onEnabled(Context context) {
-        //Log.d(TAG, "onEnabled started");
-        super.onEnabled(context);
-    }
-
     private int[] getWidgetIds(Context context) {
         ComponentName thisWidget = new ComponentName(context, this.getClass());
         AppWidgetManager mgr = AppWidgetManager.getInstance(context);
         return mgr.getAppWidgetIds(thisWidget);
     }
 
-    private void checkWidgets(Context context, String action) {
+    private void checkWidgets(Context context) {
         int[] widgetIds = getWidgetIds(context);
 
         //Log.d(TAG,"widgetIds: " + widgetIds.toString());
         ConfigDataIO configDataIO = new ConfigDataIO(context);
         ConfigDataCommon configDataCommon = configDataIO.readCommon();
 
-        serviceIntents = new HashMap<>();
+        serviceIntents = new SparseArray<>();
 
         for (int widgetId : widgetIds) {
             int serial = configDataCommon.getInstByWidgetid(widgetId);
@@ -109,16 +97,16 @@ public class WidgetProvider extends AppWidgetProvider {
             }
 
             if (serial > -1) {
-                addServiceIntent(serial, widgetId, context, action);
+                addServiceIntent(serial, widgetId, context);
             }
         }
 
         configDataCommon.removeUnused(configDataIO, widgetIds);
     }
 
-    private void addServiceIntent(int serial, int widgetId, Context context, String action) {
+    private void addServiceIntent(int serial, int widgetId, Context context) {
         Intent intent = new Intent(context.getApplicationContext(), settingServiceClasses.get(serial));
-        intent.setAction(action);
+        intent.setAction("INIT");
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
 
         serviceIntents.put(widgetId, intent);

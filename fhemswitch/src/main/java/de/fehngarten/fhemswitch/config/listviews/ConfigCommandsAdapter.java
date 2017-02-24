@@ -35,7 +35,7 @@ public class ConfigCommandsAdapter extends ConfigAdapter
 
    public void newLine()
    {
-      commandRows.add(new ConfigCommandRow("","",false));
+      commandRows.add(new ConfigCommandRow());
       notifyDataSetChanged();
    }
 

@@ -18,6 +18,7 @@ class ValuesFactory implements RemoteViewsFactory {
     private Context mContext = null;
     private int colnum;
     private int instSerial;
+    @SuppressWarnings("FieldCanBeLocal")
     private final String TAG;
 
     ValuesFactory(Context context, Intent intent, int colnum) {

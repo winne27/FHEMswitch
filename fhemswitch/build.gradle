@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
     signingConfigs {
         wetterstation {
-            storeFile file("C:\\Users\\Werner\\Documents\\Zertifikate\\app-keys\\android\\wetterstation.keystore")
+            storeFile file("C:/Users/Werner/Documents/Zertifikate/app-keys/android/wetterstation.keystore")
             storePassword "fehn10"
             keyAlias "wetterstation"
             keyPassword "fehn10"
@@ -13,11 +13,12 @@ android {
     }
     defaultConfig {
         applicationId "de.fehngarten.fhemswitch"
-        versionCode 3101500
-        versionName "3.1.1"
+        versionCode 3105500
+        versionName "3.1.5"
         minSdkVersion 15
         targetSdkVersion 25
         archivesBaseName = "fhemswitch-$versionName"
+        multiDexEnabled true
         jackOptions {
             enabled true
         }
@@ -31,7 +32,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.wetterstation
-        }
+         }
         debug {
             signingConfig signingConfigs.wetterstation
         }
@@ -54,17 +55,11 @@ android {
 }
 
 dependencies {
-    //compile 'com.android.support:appcompat-v7:24.2.1'
-    //compile 'com.android.support:support-v4:25.2.1'
-    //compile 'com.squareup.okio:okio:1.10.0'
-    //compile 'com.squareup.okhttp3:okhttp-ws:3.4.1'
     compile('io.socket:socket.io-client:0.8.1') {
         exclude group: 'org.json', module: 'json'
     }
     compile 'asia.ivity.android:drag-sort-listview:1.0'
     compile 'org.jsoup:jsoup:1.7.2'
     compile 'joda-time:joda-time:2.9.4'
-    //compile 'com.google.code.gson:gson:2.8.0'
-    //compile 'com.google.android.gms:play-services-appindexing:9.8.0'
-    compile 'com.android.support:support-v13:25.1.0'
+    compile 'com.android.support:support-v13:25.1.1'
 }

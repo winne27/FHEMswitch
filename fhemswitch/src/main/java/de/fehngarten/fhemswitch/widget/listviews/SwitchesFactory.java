@@ -13,6 +13,7 @@ import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
 import de.fehngarten.fhemswitch.global.Settings;
 
 class SwitchesFactory implements RemoteViewsFactory {
+    @SuppressWarnings("FieldCanBeLocal")
     private final String TAG;
     private Context mContext = null;
     private int colnum;

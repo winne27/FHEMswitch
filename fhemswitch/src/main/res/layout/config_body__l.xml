@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/configBody"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/config_shape_main"
@@ -16,10 +15,9 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp">
 
-        <include layout="@layout/config_version_installed"></include>
+        <include layout="@layout/config_version_installed" />
 
         <TextView
-            android:id="@+id/config_header_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.44"
@@ -30,13 +28,13 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <include layout="@layout/config_version_latest"></include>
+        <include layout="@layout/config_version_latest" />
     </LinearLayout>
 
-    <include layout="@layout/config_bodyblock_url"></include>
+    <include layout="@layout/config_bodyblock_url__l" />
 
-    <include layout="@layout/config_bodyblock_layout"></include>
+    <include layout="@layout/config_bodyblock_layout" />
 
-    <include layout="@layout/config_bodyblock_message"></include>
+    <include layout="@layout/config_bodyblock_message" />
 
 </LinearLayout>

@@ -60,10 +60,11 @@
                 android:resource="@xml/widget_info" />
         </receiver>
 
-        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService0" ></service>
-        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService1" ></service>
-        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService2" ></service>
-        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService3" ></service>
+        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService" />
+        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService0" />
+        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService1" />
+        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService2" />
+        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService3" />
         <service
             android:name="de.fehngarten.fhemswitch.widget.listviews.CommonListviewService"
             android:permission="android.permission.BIND_REMOTEVIEWS" >

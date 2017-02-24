@@ -1,13 +1,12 @@
 package de.fehngarten.fhemswitch.widget.listviews;
 
-import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.widget.RemoteViewsService;
 
 import static de.fehngarten.fhemswitch.global.Consts.ACTCOL;
 import static de.fehngarten.fhemswitch.global.Consts.FHEM_TYPE;
 
-import android.util.Log;
+//import android.util.Log;
 
 public class CommonListviewService extends RemoteViewsService {
     @Override

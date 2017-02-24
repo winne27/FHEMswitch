@@ -14,7 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -41,16 +42,13 @@
                     android:layout_marginLeft="5dp">
 
                     <RadioButton
-                        android:id="@+id/layout_portrait_0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
                         android:tag="@string/LAYOUT_HORIZONTAL"
                         android:text="@string/horizontal"
                         android:textSize="16sp" />
 
                     <RadioButton
-                        android:id="@+id/layout_portrait_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:tag="@string/LAYOUT_VERTICAL"
@@ -58,7 +56,6 @@
                         android:textSize="16sp" />
 
                     <RadioButton
-                        android:id="@+id/layout_portrait_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:tag="@string/LAYOUT_MIXED"
@@ -92,16 +89,13 @@
                     android:layout_marginLeft="5dp">
 
                     <RadioButton
-                        android:id="@+id/layout_landscape_0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
                         android:tag="@string/LAYOUT_HORIZONTAL"
                         android:text="@string/horizontal"
                         android:textSize="16sp" />
 
                     <RadioButton
-                        android:id="@+id/layout_landscape_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:tag="@string/LAYOUT_VERTICAL"
@@ -109,7 +103,6 @@
                         android:textSize="16sp" />
 
                     <RadioButton
-                        android:id="@+id/layout_landscape_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:tag="@string/LAYOUT_MIXED"

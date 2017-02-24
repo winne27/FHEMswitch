@@ -2,11 +2,10 @@
 
     <string name="widget_name" translatable="false">FHEMswitch</string>
     <string name="url_fhem_pl">URL FHEM webserver</string>
-    <string name="url_fhem_pl_local">... in local net</string>
-    <string name="url_fhem_js">* URL fhem.js server</string>
-    <string name="url_fhem_js_local">... in local net</string>
+    <string name="url_fhem_pl_local">URL FHEM in local net</string>
+    <string name="url_fhem_js">URL fhem.js server *</string>
+    <string name="url_fhem_js_local">URL fhem.js local net</string>
     <string name="conn_pw">fhem.js password</string>
-    <string name="ismand">* mandatory fields</string>
     <string name="is_home_net">Current WLAN (%1$s) is home net</string>
 
     <string name="ok" translatable="false">OK</string>
@@ -20,7 +19,6 @@
     <string name="lightscenes">Scenarios</string>
     <string name="values">Values</string>
     <string name="values2">Values</string>
-    <string name="sel">Sel</string>
     <string name="unit">Name - order by d&#038;d</string>
     <string name="name">Displayed Name</string>
     <string name="header">Header</string>
@@ -28,9 +26,8 @@
     <string name="noconn">No connection to FHEM server. Tip for reconnection attempt.</string>
     <string name="checkpw">Please check password</string>
     <string name="initruns">Initialising runs</string>
-    <string name="urlerr">The typed URL is invalid</string>
+    <string name="urlerr">the typed URL is invalid</string>
     <string name="urlcheck">please check URL</string>
-    <string name="fileerr">Error at saving configuration:</string>
     <string name="onlinecheck">is this server online</string>
 	<string name="commands">Custom commands</string>
     <string name="commands2">FHEM command</string>
@@ -83,10 +80,9 @@
     <string name="installed_version">installed version</string>
     <string name="latest_version">latest_version</string>
     <string name="cancel">Cancel</string>
-    <string name="widget_name2" translatable="false">FHEMswitch2</string>
     <string name="noWidgetMessage">First create widget by moving it to start screen.</string>
     <string name="maxWidgetMessage">Maximum of %1$s widgets reached</string>
-    <string name="noconnjs">No conection to fhem.js server possible:</string>
+    <string name="noconnjs">No connection to fhem.js server possible:</string>
     <string name="adjustable">Adjustable items</string>
     <string name="stepsize">Step size:</string>
     <string name="delay">Command delay in ms:</string>
@@ -100,4 +96,5 @@
     <string name="commandsShort">Commands</string>
     <string name="hint">Hint</string>
     <string name="hinttext">Navigate through config parts by horizontal wiping or by touch the tabs on top.</string>
+    <string name="control">Control Button</string>
 </resources>

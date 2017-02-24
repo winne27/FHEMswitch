@@ -19,9 +19,9 @@ public class MySwitch implements Comparable<MySwitch> {
         //Log.i("icon",icon);
         if (icon.equals("on") || icon.equals("off") || icon.equals("set_on") || icon.equals("set_off") || icon.equals("set_toggle")) {
             this.icon = icon;
-        } else {
+        } /*else { //ignore fucking else states like RSSI and so on
             this.icon = "undefined";
-        }
+        }*/
     }
 
     public String activateCmd() {

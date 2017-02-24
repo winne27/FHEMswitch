@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/value_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,7 +19,8 @@
         android:textAllCaps="false"
         android:textColor="@color/text_standard"
         android:textSize="15sp"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        tools:ignore="RelativeOverlap" />
 
     <TextView
         android:id="@+id/value_value"
@@ -58,5 +60,5 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/myshape_proz_up"
         android:contentDescription="@string/switchicon"
-        android:padding="3px" />
+        android:padding="1dp" />
 </RelativeLayout>

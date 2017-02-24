@@ -6,10 +6,10 @@ public class MyCommand
    public String command;
    public Boolean activ;
 
-   public MyCommand(String name, String command, Boolean activ)
+   public MyCommand(String name, String command)
    {
       this.name = name;
       this.command = command;
-      this.activ = activ;
+      this.activ = false;
    }
 }

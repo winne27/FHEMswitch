@@ -29,7 +29,6 @@
             android:layout_marginTop="10dp">
 
             <RadioButton
-                android:id="@+id/value1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
@@ -37,21 +36,18 @@
                 android:text="@string/account0" />
 
             <RadioButton
-                android:id="@+id/value2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="@string/value1"
                 android:text="@string/account1" />
 
             <RadioButton
-                android:id="@+id/value5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="@string/value2"
                 android:text="@string/account2" />
 
             <RadioButton
-                android:id="@+id/value10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="@string/value3"

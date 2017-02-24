@@ -8,12 +8,11 @@
     <TextView
         android:id="@+id/intvalue_name"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="6dp"
         android:layout_marginStart="6dp"
         android:layout_weight="1"
-        android:paddingBottom="5dp"
-        android:paddingTop="3dp"
+        android:gravity="center_vertical"
         android:textAllCaps="false"
         android:textColor="@color/text_standard"
         android:textSize="15sp"
@@ -25,8 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:background="@drawable/myshape_proz_down"
-        android:padding="5dp"
-        android:contentDescription="@string/switchicon"
+        android:padding="3dp"
+        android:contentDescription="@string/control"
         android:src="@drawable/arrow_left_double" />
 
     <ImageView
@@ -38,21 +37,21 @@
         android:layout_marginLeft="0dp"
         android:layout_marginRight="3dp"
         android:background="@drawable/myshape_proz_down"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="7dp"
+        android:contentDescription="@string/control"
         android:src="@drawable/arrow_left" />
 
     <TextView
         android:id="@+id/intvalue_value"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="3dp"
-        android:paddingTop="6dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
         android:textAllCaps="false"
         android:textColor="@color/text_standard"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="normal" />
 
     <ImageView
@@ -64,10 +63,11 @@
         android:layout_marginLeft="3dp"
         android:layout_marginRight="0dp"
         android:background="@drawable/myshape_proz_up"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="7dp"
+        android:paddingRight="6dp"
+        android:contentDescription="@string/control"
         android:src="@drawable/arrow_right" />
 
     <ImageView
@@ -76,6 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:background="@drawable/myshape_proz_up"
-        android:padding="5dp"
+        android:padding="3dp"
+        android:contentDescription="@string/control"
         android:src="@drawable/arrow_right_double" />
 </LinearLayout>

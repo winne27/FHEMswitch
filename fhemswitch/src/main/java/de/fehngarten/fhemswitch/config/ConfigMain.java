@@ -10,10 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-//import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,14 +20,11 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import de.fehngarten.fhemswitch.BuildConfig;
 import de.fehngarten.fhemswitch.R;
@@ -45,6 +40,7 @@ import de.fehngarten.fhemswitch.modul.MyReceiveListener;
 import de.fehngarten.fhemswitch.modul.MySocket;
 import de.fehngarten.fhemswitch.modul.MyWifiInfo;
 import de.fehngarten.fhemswitch.modul.SendAlertMessage;
+import de.fehngarten.fhemswitch.modul.SendStatusMessage;
 import de.fehngarten.fhemswitch.widget.WidgetProvider;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -91,7 +87,7 @@ public class ConfigMain extends Activity {
         float density = getResources().getDisplayMetrics().density;
         float dpWidth = screenWidth / density;
 
-        if (dpWidth < 800) {
+        if (dpWidth < 750) {
             setContentView(R.layout.config__s);
         } else {
             setContentView(R.layout.config__l);
@@ -218,14 +214,14 @@ public class ConfigMain extends Activity {
         handleButtons();
     }
 
-    private void sendDoColor(boolean setColor) {
+    private void sendDoColor() {
         int widgetId;
         for (int i = 0; i < configDataCommon.instances.length; i++) {
             widgetId = configDataCommon.instances[i];
             if (widgetId > 0) {
                 Intent intent = new Intent(mContext.getApplicationContext(), settingServiceClasses.get(i));
                 intent.setAction(SEND_DO_COLOR);
-                intent.putExtra("COLOR", setColor);
+                intent.putExtra("COLOR", true);
                 intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
                 mContext.startService(intent);
             }
@@ -254,7 +250,7 @@ public class ConfigMain extends Activity {
 
     private void showFHEMunits() {
         // hide soft keyboard
-        sendDoColor(true);
+        sendDoColor();
         configDataInstance = configDataIO.readInstance(instSerial);
 
         ((RadioButton) radioWidgetSelector.getChildAt(instSerial)).setChecked(true);
@@ -354,7 +350,7 @@ public class ConfigMain extends Activity {
     private Button.OnClickListener refreshConfigButtonOnClickListener = arg0 -> {
         //Log.d(TAG, "refresh fired");
         doConnect(true);
-        Toast.makeText(mContext, getResources().getString(R.string.serverRefresh), Toast.LENGTH_LONG).show();
+        new SendStatusMessage(mContext, getResources().getString(R.string.serverRefresh));
     };
 
     private Button.OnClickListener cancelConfigButtonOnClickListener = arg0 -> {
@@ -505,26 +501,46 @@ public class ConfigMain extends Activity {
     }
 
     private boolean checkUrl(String url, String fieldname, boolean mandatory) {
-
-        if (!mandatory && url.equals("")) {
+        if (checkUrl2(url, mandatory)) {
             return true;
-        }
-/*
-        Pattern p = Pattern.compile("@^https?://[^s/$.?#].[^s]*$@iS");
-        Matcher m;
-        m=p.matcher(url);
-        if (!m.matches()) {
-            new SendAlertMessage(mContext, fieldname + ": " + getString(R.string.urlerr));
+        } else {
+            new SendAlertMessage(mContext, fieldname + ':' + getResources().getString(R.string.urlerr));
             return false;
         }
+    }
 
-*/
+    private boolean checkUrl2(String url, boolean mandatory) {
 
-        if (!URLUtil.isHttpUrl(url) && !URLUtil.isHttpsUrl(url)) {
-            new SendAlertMessage(mContext, fieldname + ": " + getString(R.string.urlerr));
-            return false;
+        boolean rc = false;
+        if (!mandatory && url.equals("")) {
+            rc = true;
+        } else {
+
+            HashSet<String> protocols = new HashSet<>(Arrays.asList(new String[]{"http", "https"}));
+
+            int colon = url.indexOf(':');
+
+            if (colon < 3) return false;
+
+            String proto = url.substring(0, colon).toLowerCase();
+
+            if (!protocols.contains(proto)) return false;
+
+            try {
+
+                URI uri = new URI(url);
+                if (uri.getHost() == null) return false;
+
+                String path = uri.getPath();
+                if (path != null) {
+                    for (int i = path.length() - 1; i >= 0; i--) {
+                        if ("?<>:*|\"".indexOf(path.charAt(i)) > -1)
+                            return false;
+                    }
+                }
+                rc = true;
+            } catch (Exception ex) {}
         }
-
-        return true;
+        return rc;
     }
 }

@@ -6,9 +6,9 @@ public class ConfigCommandRow implements java.io.Serializable {
     public String command;
     public Boolean enabled;
 
-    public ConfigCommandRow(String name, String command, Boolean enabled) {
-        this.name = name;
-        this.command = command;
-        this.enabled = enabled;
+    public ConfigCommandRow() {
+        this.name = "";
+        this.command = "";
+        this.enabled = false;
     }
 }

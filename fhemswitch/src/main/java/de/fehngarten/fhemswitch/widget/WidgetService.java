@@ -81,6 +81,7 @@ public class WidgetService extends Service {
     private ArrayList<DoSendCommand> doSendCommands = new ArrayList<>();
     private Context mContext;
     private RemoteViews mView;
+    private MyWifiInfo myWifiInfo;
 
     private ConfigDataCommon configDataCommon;
     private ConfigDataInstance configDataInstance;
@@ -93,6 +94,7 @@ public class WidgetService extends Service {
     protected Integer instSerial;
     private boolean screenIsOn = true;
     private int waitCheckSocket = settingWaitSocketShort;
+    @SuppressWarnings("FieldCanBeLocal")
     private String TAG;
 
     public WidgetService() {
@@ -134,7 +136,7 @@ public class WidgetService extends Service {
             }
         }
         super.onStartCommand(intent, flags, startId);
-        return START_STICKY;
+        return START_REDELIVER_INTENT;
     }
 
     public void onCreate() {
@@ -144,6 +146,7 @@ public class WidgetService extends Service {
         appWidgetManager = AppWidgetManager.getInstance(mContext);
         handler = new Handler();
         myBroadcastReceivers = new ArrayList<>();
+        myWifiInfo = new MyWifiInfo(mContext);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -517,7 +520,7 @@ public class WidgetService extends Service {
         if (configDataInstance.commandRows != null) {
             for (ConfigCommandRow commandRow : configDataInstance.commandRows) {
                 if (commandRow.enabled) {
-                    ConfigWorkBasket.data.get(instSerial).commands.add(new MyCommand(commandRow.name, commandRow.command, false));
+                    ConfigWorkBasket.data.get(instSerial).commands.add(new MyCommand(commandRow.name, commandRow.command));
                 }
             }
         }
@@ -589,6 +592,13 @@ public class WidgetService extends Service {
                 actCol++;
             }
         }
+
+        Intent intentSync = new Intent(mContext, WidgetProvider.class);
+        intentSync.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE); //You need to specify the action for the intent. Right now that intent is doing nothing for there is no action to be broadcasted.
+        PendingIntent pendingSync = PendingIntent.getBroadcast(mContext,0, intentSync, PendingIntent.FLAG_UPDATE_CURRENT); //You need to specify a proper flag for the intent. Or else the intent will become deleted.
+        mView.setOnClickPendingIntent(R.id.mainshape,pendingSync);
+
+
         appWidgetManager.updateAppWidget(widgetId, mView);
     }
 
@@ -743,7 +753,7 @@ public class WidgetService extends Service {
         // main run path: after auth resp -> request values from server
         mySocket.socket.on("authenticated", args -> {
             requestValues();
-            waitCheckSocket = settingWaitSocketLong;
+            waitCheckSocket = myWifiInfo.isWifi() ? settingWaitSocketWifi : settingWaitSocketLong;
             setVisibility(SOCKET_CONNECTED, "");
         });
 
@@ -847,9 +857,6 @@ public class WidgetService extends Service {
     };
 
     private void checkVersion() {
-
-        MyWifiInfo myWifiInfo = new MyWifiInfo(mContext);
-
         if (myWifiInfo.isWifi()) {
             new GetStoreVersion(mContext, STORE_VERSION_WIDGET).execute();
         }

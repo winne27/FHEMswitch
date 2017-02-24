@@ -222,7 +222,9 @@ public class ConfigIntValuesAdapter extends ConfigAdapter {
     private void setVisible(View rowView, boolean show) {
         int visibility = show ? View.VISIBLE : View.GONE;
         rowView.findViewById(R.id.second_row).setVisibility(visibility);
+        rowView.findViewById(R.id.seconda_row).setVisibility(visibility);
         rowView.findViewById(R.id.third_row).setVisibility(visibility);
+        rowView.findViewById(R.id.thirda_row).setVisibility(visibility);
     }
 
     private class ValueHolder {

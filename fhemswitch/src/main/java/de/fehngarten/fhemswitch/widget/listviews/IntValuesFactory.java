@@ -4,15 +4,12 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import de.fehngarten.fhemswitch.R;
 import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
-import de.fehngarten.fhemswitch.global.Settings;
 
-import static de.fehngarten.fhemswitch.R.array.colnum;
 import static de.fehngarten.fhemswitch.global.Consts.*;
 
 //import android.util.Log;
@@ -21,6 +18,7 @@ class IntValuesFactory implements RemoteViewsFactory {
     //private static final String CLASSNAME = "ValuesFactory.";
     private Context mContext = null;
     private int instSerial;
+    @SuppressWarnings("FieldCanBeLocal")
     private final String TAG;
     private int widgetId;
 

@@ -1,11 +1,10 @@
 <resources>
     <string name="url_fhem_pl">URL FHEM Webserver</string>
-    <string name="url_fhem_pl_local">... im Heimnetz</string>
-    <string name="url_fhem_js">* URL fhem.js server</string>
-    <string name="url_fhem_js_local">... im Heimnetz</string>
+    <string name="url_fhem_pl_local">URL FHEM im Heimnetz</string>
+    <string name="url_fhem_js">URL fhem.js  *</string>
+    <string name="url_fhem_js_local">URL fhem.js im Heimnetz</string>
     <string name="conn_pw">fhem.js Passwort</string>
     <string name="is_home_net">Augenblickliches WLAN (%1$s) ist Heimnetz</string>
-    <string name="ismand">* mandatory fields</string>
 
     <string name="switchicon">Lampe</string>
     <string name="save">Speichern</string>
@@ -17,7 +16,6 @@
     <string name="lightscenes">Szenarios</string>
     <string name="values">Messwerte</string>
     <string name="values2">Werte</string>
-    <string name="sel">Aktiv</string>
     <string name="unit">Name - sortiere mit d&#038;d</string>
     <string name="name">Angezeigter Name</string>
     <string name="header">Header</string>
@@ -25,8 +23,7 @@
     <string name="noconn">Keine Verbindung zum FHEM Server. Antippen um Neuverbindung zu versuchen.</string>
     <string name="checkpw">Bitte Passwort prüfen</string>
     <string name="initruns">Initialisierung läuft</string>
-    <string name="urlerr">Die angegbene URL ist ungültig</string>
-    <string name="fileerr">Fehler beim Speichern der Konfiguration:</string>
+    <string name="urlerr">die angegebene URL ist ungültig</string>
     <string name="urlcheck">bitte URL prüfen</string>
     <string name="onlinecheck">ist dieser Server Online?</string>
 	<string name="commands">Befehle</string>
@@ -67,7 +64,7 @@
     <string name="cancel">Abbrechen</string>
     <string name="noWidgetMessage">Bitte erst ein neues Widget auf einem Startscreen platzieren.
                                    \n\nDabei startet die Konfiguration automatisch und die alten Konfigurationsdaten werden dabei übernommen, falls bereits eine Installation von FHEMswitch auf diesem Gerät vorhanden war.
-                                   \n\nWurden alte Daten erfolgreich übernommen und gespeichert(!), bleibt in der Regel ein Zombie-Widget der alten Version erhalten. Dies kann man einfach in den Papierkorb verschieben oder durch einen Neustart des Gerätes wird der Zombie auch eleminiert.
+                                   \n\nWurden alte Daten erfolgreich übernommen und gespeichert(!), bleibt in der Regel ein Zombie-Widget der alten Version erhalten. Dies kann man einfach in den Papierkorb verschieben oder durch einen Neustart des Gerätes wird der Zombie auch eliminiert.
     </string>
     <string name="maxWidgetMessage">Es sind nur maximal %1$s Widgets möglich</string>
     <string name="noconnjs">Keine Verbindung zum fhem.js Server möglich:</string>
@@ -81,4 +78,5 @@
     <string name="commandsShort">Befehle</string>
     <string name="hint">Hinweis</string>
     <string name="hinttext">Navigation durch die einzelnen Rubriken ist mit horizontalen Wischgesten oder durch Antippen der Reiter oberhalb möglich!</string>
+    <string name="control">Steuerfeld</string>
 </resources>

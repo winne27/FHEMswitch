@@ -73,14 +73,14 @@ public class ConfigDataIO {
         return configDataInstance;
     }
 
-    public boolean configInstanceExists(int instSerial) {
+    public boolean configInstanceExists(@SuppressWarnings("SameParameterValue") int instSerial) {
         String instSerialString = Integer.toString(instSerial);
         String filename = settingsConfigFileName + instSerialString;
         File file = new File(filename);
         return file.exists();
     }
 
-    public Boolean saveCommon(ConfigDataCommon configDataCommon) {
+    public void saveCommon(ConfigDataCommon configDataCommon) {
         try {
             String dir = mContext.getFilesDir().getAbsolutePath();
             String filename = settingsConfigFileName + "common";
@@ -91,13 +91,11 @@ public class ConfigDataIO {
             obj_out.writeObject(configDataCommon);
             obj_out.close();
             //if (BuildConfig.DEBUG) Log.d("config", "config data written, common");
-            return true;
         } catch (Exception e) {
-            return false;
         }
     }
 
-    public Boolean saveInstance(ConfigDataInstance configDataInstance, int instSerial) {
+    public void saveInstance(ConfigDataInstance configDataInstance, int instSerial) {
         try {
             String instSerialString = Integer.toString(instSerial);
             String dir = mContext.getFilesDir().getAbsolutePath();
@@ -109,9 +107,7 @@ public class ConfigDataIO {
             obj_out.writeObject(configDataInstance);
             obj_out.close();
             //if (BuildConfig.DEBUG) Log.d("config", "config data written: " + filename);
-            return true;
         } catch (Exception e) {
-            return false;
         }
     }
 

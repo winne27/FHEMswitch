@@ -42,9 +42,9 @@
     </LinearLayout>
 
     <!-- Block of widget seletor +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-    <include layout="@layout/config_block_widgetselect"></include>
+    <include layout="@layout/config_block_widgetselect" />
     <!-- Block of tabs +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-    <include layout="@layout/config_block_tabs"></include>
+    <include layout="@layout/config_block_tabs" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/configpager"

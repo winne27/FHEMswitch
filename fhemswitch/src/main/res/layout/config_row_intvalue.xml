@@ -19,10 +19,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.37"
+            android:paddingBottom="10dp"
             android:textAllCaps="false"
             android:textColor="#008"
             android:textSize="18sp"
-            android:paddingBottom="10dp"
             android:textStyle="bold" />
 
         <EditText
@@ -58,35 +58,46 @@
             android:maxLines="1"
             android:text="@string/stepsize"
             android:textAllCaps="false"
+            android:layout_marginTop="-8dp"
             android:textColor="#008"
-            android:textStyle="bold"
-            android:textSize="14sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/config_intvalue_stepsize"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text" />
+            android:layout_marginTop="-8dp"
+            android:ems="8"
+            android:inputType="numberDecimal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/seconda_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="-12dp"
             android:maxLines="1"
             android:text="@string/delay"
             android:textAllCaps="false"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="8dp"
             android:textColor="#008"
-            android:textStyle="bold"
-            android:textSize="14sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/config_intvalue_delay"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text" />
+            android:layout_marginTop="-12dp"
+            android:ems="8"
+            android:inputType="number" />
 
     </LinearLayout>
 
@@ -105,37 +116,52 @@
             android:text="@string/execcmd"
             android:textAllCaps="false"
             android:textColor="#008"
-            android:textStyle="bold"
-            android:textSize="14sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/thirda_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="8dp"
             android:maxLines="1"
             android:text="@string/set"
             android:textAllCaps="false"
+            android:layout_marginTop="-10dp"
             android:textColor="#008"
-            android:textStyle="italic"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="italic" />
 
         <EditText
             android:id="@+id/config_intvalue_cmd"
             android:layout_width="0dp"
-            android:layout_weight="0.95"
             android:layout_height="wrap_content"
+            android:maxWidth="250dp"
+            android:layout_weight="0.95"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            android:layout_marginTop="-10dp"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
+            android:paddingEnd="12dp"
+            android:paddingRight="12dp"
+            android:layout_marginTop="-10dp"
             android:text="@string/value"
             android:textAllCaps="false"
             android:textColor="#008"
-            android:textStyle="italic"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="italic" />
     </LinearLayout>
 
 </LinearLayout>
