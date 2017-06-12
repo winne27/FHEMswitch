@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="0dp"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_weight="0.33"
-    android:gravity="center_vertical|left"
+    android:gravity="center_vertical|left|start"
     android:textSize="14sp">
 
     <TextView
@@ -21,7 +21,7 @@
         android:layout_alignLeft="@id/installedLabel"
         android:layout_alignRight="@id/installedLabel"
         android:layout_below="@id/installedLabel"
-        android:gravity="center_vertical|center_horizontal"
+        android:gravity="center_horizontal"
         android:textColor="@color/conf_text_header_1"
         android:textSize="12sp" />
 

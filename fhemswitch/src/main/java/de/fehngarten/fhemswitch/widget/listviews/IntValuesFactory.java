@@ -9,6 +9,7 @@ import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import de.fehngarten.fhemswitch.R;
 import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
+import de.fehngarten.fhemswitch.widget.WidgetProvider;
 
 import static de.fehngarten.fhemswitch.global.Consts.*;
 
@@ -71,7 +72,11 @@ class IntValuesFactory implements RemoteViewsFactory {
     public RemoteViews getViewAt(int position) {
         //Log.i("values Position: " + position + " of " + values.size(),values.get(position).name);
         RemoteViews mView = new RemoteViews(mContext.getPackageName(), R.layout.intvalue_row);
-        if (position >= getCount()) {
+        int count = getCount();
+        if (position >= count || count <= 0 || ConfigWorkBasket.data.get(instSerial).intValues.size() == 0) {
+            Intent intent = new Intent(mContext.getApplicationContext(), WidgetProvider.class);
+            intent.setAction(NEW_CONFIG);
+            mContext.sendBroadcast(intent);
             return mView;
         }
 

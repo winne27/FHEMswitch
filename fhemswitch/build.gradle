@@ -13,8 +13,8 @@ android {
     }
     defaultConfig {
         applicationId "de.fehngarten.fhemswitch"
-        versionCode 3105500
-        versionName "3.1.5"
+        versionCode 3111500
+        versionName "3.1.11"
         minSdkVersion 15
         targetSdkVersion 25
         archivesBaseName = "fhemswitch-$versionName"
@@ -32,8 +32,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.wetterstation
-         }
+        }
         debug {
+            debuggable true
             signingConfig signingConfigs.wetterstation
         }
     }
@@ -44,6 +45,7 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        incremental false
     }
     lintOptions {
         abortOnError false
@@ -55,8 +57,10 @@ android {
 }
 
 dependencies {
-    compile('io.socket:socket.io-client:0.8.1') {
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
+    compile('io.socket:socket.io-client:0.8.3') {
         exclude group: 'org.json', module: 'json'
+        exclude group: 'com.squareup.okhttp3'
     }
     compile 'asia.ivity.android:drag-sort-listview:1.0'
     compile 'org.jsoup:jsoup:1.7.2'

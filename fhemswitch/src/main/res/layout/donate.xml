@@ -29,9 +29,9 @@
             android:layout_marginTop="10dp">
 
             <RadioButton
+                android:id="@+id/donate1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
                 android:tag="@string/value0"
                 android:text="@string/account0" />
 

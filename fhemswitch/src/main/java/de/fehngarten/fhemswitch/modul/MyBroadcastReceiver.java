@@ -12,6 +12,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     private Context mContext;
 
     public MyBroadcastReceiver(Context context, MyReceiveListener myReceiveListener, String[] actions) {
+
         mContext = context;
         this.myReceiveListener = myReceiveListener;
 

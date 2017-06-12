@@ -310,44 +310,48 @@ public class WidgetService extends Service {
 
         String type = intent.getExtras().getString(FHEM_TYPE, "");
 
-        if (type.equals("intvalue")) {
-            setNewValue(intent);
-        } else if (!type.equals("")) {
-            String cmd = intent.getExtras().getString(FHEM_COMMAND);
-            int actCol = 0;
-            int position = -1;
-            switch (type) {
-                case "switch":
-                    position = Integer.parseInt(intent.getExtras().getString(POS));
-                    actCol = Integer.parseInt(intent.getExtras().getString(COL));
-                    break;
-                case "lightscene":
-                    position = Integer.parseInt(intent.getExtras().getString(POS));
-                    break;
-                case "command":
-                    position = Integer.parseInt(intent.getExtras().getString(POS));
-                    actCol = Integer.parseInt(intent.getExtras().getString(COL));
-                    break;
-            }
+        try {
+            if (type.equals("intvalue")) {
+                setNewValue(intent);
+            } else if (!type.equals("")) {
+                String cmd = intent.getExtras().getString(FHEM_COMMAND);
+                int actCol = 0;
+                int position = -1;
+                switch (type) {
+                    case "switch":
+                        position = Integer.parseInt(intent.getExtras().getString(POS));
+                        actCol = Integer.parseInt(intent.getExtras().getString(COL));
+                        break;
+                    case "lightscene":
+                        position = Integer.parseInt(intent.getExtras().getString(POS));
+                        break;
+                    case "command":
+                        position = Integer.parseInt(intent.getExtras().getString(POS));
+                        actCol = Integer.parseInt(intent.getExtras().getString(COL));
+                        break;
+                }
 
-            mySocket.sendCommand(cmd);
+                mySocket.sendCommand(cmd);
 
-            switch (type) {
-                case "switch":
-                    ConfigWorkBasket.data.get(instSerial).switchesCols.get(actCol).get(position).setIcon("set_toggle");
-                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("switch").get(actCol));
-                    break;
-                case "lightscene":
-                    ConfigWorkBasket.data.get(instSerial).lightScenes.items.get(position).activ = true;
-                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("lightscene").get(0));
-                    break;
-                case "command":
-                    ConfigWorkBasket.data.get(instSerial).commandsCols.get(actCol).get(position).activ = true;
-                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("command").get(actCol));
-                    Runnable deactCommand = new DeactCommand(myLayout.layout.get("command").get(actCol), position, widgetId, instSerial, appWidgetManager);
-                    handler.postDelayed(deactCommand, 500);
-                    break;
+                switch (type) {
+                    case "switch":
+                        ConfigWorkBasket.data.get(instSerial).switchesCols.get(actCol).get(position).setIcon("set_toggle");
+                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("switch").get(actCol));
+                        break;
+                    case "lightscene":
+                        ConfigWorkBasket.data.get(instSerial).lightScenes.items.get(position).activ = true;
+                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("lightscene").get(0));
+                        break;
+                    case "command":
+                        ConfigWorkBasket.data.get(instSerial).commandsCols.get(actCol).get(position).activ = true;
+                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("command").get(actCol));
+                        Runnable deactCommand = new DeactCommand(myLayout.layout.get("command").get(actCol), position, widgetId, instSerial, appWidgetManager);
+                        handler.postDelayed(deactCommand, 500);
+                        break;
+                }
             }
+        } catch (Exception e) {
+            start();
         }
     }
 

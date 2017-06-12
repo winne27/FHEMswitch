@@ -18,11 +18,19 @@ public class MyWifiInfo {
     }
 
     public String getWifiName() {
-        return wifiInfo.getSSID();
+        String wifiName = wifiInfo.getSSID();
+        if (wifiName == null) {
+            wifiName = "";
+        }
+        return wifiName;
     }
 
     public String getWifiId() {
-        return wifiInfo.getBSSID();
+        String wifiId = wifiInfo.getBSSID();
+        if (wifiId == null) {
+            wifiId = "";
+        }
+        return wifiId;
     }
 
     public Boolean beAtHome(String bssId) {

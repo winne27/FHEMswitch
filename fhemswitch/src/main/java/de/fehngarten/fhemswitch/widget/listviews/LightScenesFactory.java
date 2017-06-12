@@ -13,6 +13,7 @@ import android.widget.RemoteViewsService;
 import de.fehngarten.fhemswitch.R;
 import static de.fehngarten.fhemswitch.global.Consts.*;
 import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
+import de.fehngarten.fhemswitch.widget.WidgetProvider;
 //import android.util.Log;
 
 class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
@@ -59,6 +60,7 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
         if (ConfigWorkBasket.data.get(instSerial).lightScenes == null) {
             return (0);
         } else {
+            ConfigWorkBasket.data.get(instSerial).lightScenes.itemsCount = ConfigWorkBasket.data.get(instSerial).lightScenes.items.size();
             return ConfigWorkBasket.data.get(instSerial).lightScenes.itemsCount;
         }
     }
@@ -67,7 +69,11 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
     public RemoteViews getViewAt(int position) {
         RemoteViews mView = new RemoteViews(mContext.getPackageName(), R.layout.lightscene_row);
         //Log.i("LightScene Position: " + position + " of " + ConfigDataCage.data.get(instSerial).lightScenes.items.size(),ConfigDataCage.data.get(instSerial).lightScenes.items.get(position).name + " " + ConfigDataCage.data.get(instSerial).lightScenes.items.get(position).unit);
-        if (position >= getCount()) {
+        int count = getCount();
+        if (position >= count || count <= 0 || ConfigWorkBasket.data.get(instSerial).lightScenes.items.size() == 0) {
+            Intent intent = new Intent(mContext.getApplicationContext(), WidgetProvider.class);
+            intent.setAction(NEW_CONFIG);
+            mContext.sendBroadcast(intent);
             return mView;
         }
         if (ConfigWorkBasket.data.get(instSerial).lightScenes.items.get(position).header) {

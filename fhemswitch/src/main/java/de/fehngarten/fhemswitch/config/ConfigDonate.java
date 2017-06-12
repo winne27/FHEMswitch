@@ -37,6 +37,8 @@ public class ConfigDonate extends Activity {
         backButton.setOnClickListener(cancelOnClickListener);
 
         String base64EncodedPublicKey = settingLicenceKey;
+        RadioButton rbu1 =(RadioButton)findViewById(R.id.donate1);
+        rbu1.setChecked(true);
 
         mHelper = new IabHelper(this, base64EncodedPublicKey);
 
@@ -55,7 +57,9 @@ public class ConfigDonate extends Activity {
         @Override
         public void onClick(View arg0) {
             String donateValue = getDonateValue();
-            mHelper.launchPurchaseFlow(activity, donateValue, 10001, mPurchaseFinishedListener);
+            if (donateValue != "") {
+                mHelper.launchPurchaseFlow(activity, donateValue, 10001, mPurchaseFinishedListener);
+            }
             //mHelper.launchPurchaseFlow(activity, donateValue, 10001, mPurchaseFinishedListener, "de.fehngarten.fhemswitch.inapp");
         }
     };
@@ -63,8 +67,11 @@ public class ConfigDonate extends Activity {
     private String getDonateValue() {
         RadioGroup valueGroup = (RadioGroup) findViewById(R.id.valueGroup);
         RadioButton valueGroupButton = (RadioButton) findViewById(valueGroup.getCheckedRadioButtonId());
-        //Log.i("value", valueGroupButton.getTag().toString());
-        return valueGroupButton.getTag().toString();
+        String value = "";
+        if (valueGroupButton.getTag() != null) {
+            value = valueGroupButton.getTag().toString();
+        }
+        return value;
     }
 
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = (result, purchase) -> {
