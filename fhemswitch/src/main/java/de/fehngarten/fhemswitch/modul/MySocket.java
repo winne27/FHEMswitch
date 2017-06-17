@@ -16,7 +16,7 @@ import static de.fehngarten.fhemswitch.global.Settings.*;
 
 public class MySocket {
     public Socket socket;
-    private final String TAG = "MySocket";
+    //private final String TAG = "MySocket";
 
     public MySocket(Context context, ConfigDataCommon configDataCommon, String type) {
         checkLocalWlan(configDataCommon, context);

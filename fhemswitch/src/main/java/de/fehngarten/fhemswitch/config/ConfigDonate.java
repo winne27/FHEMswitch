@@ -19,7 +19,7 @@ public class ConfigDonate extends Activity {
 
     IabHelper mHelper;
     Activity activity;
-    private final String TAG = "ConfigDonate";
+    //private final String TAG = "ConfigDonate";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +36,10 @@ public class ConfigDonate extends Activity {
         Button backButton = (Button) findViewById(R.id.backButton);
         backButton.setOnClickListener(cancelOnClickListener);
 
-        String base64EncodedPublicKey = settingLicenceKey;
         RadioButton rbu1 =(RadioButton)findViewById(R.id.donate1);
         rbu1.setChecked(true);
 
-        mHelper = new IabHelper(this, base64EncodedPublicKey);
+        mHelper = new IabHelper(this, settingLicenceKey);
 
         mHelper.startSetup(result -> {
             if (!result.isSuccess()) {
@@ -57,7 +56,7 @@ public class ConfigDonate extends Activity {
         @Override
         public void onClick(View arg0) {
             String donateValue = getDonateValue();
-            if (donateValue != "") {
+            if (!donateValue.equals("")) {
                 mHelper.launchPurchaseFlow(activity, donateValue, 10001, mPurchaseFinishedListener);
             }
             //mHelper.launchPurchaseFlow(activity, donateValue, 10001, mPurchaseFinishedListener, "de.fehngarten.fhemswitch.inapp");

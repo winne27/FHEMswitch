@@ -8,25 +8,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import de.fehngarten.fhemswitch.R;
 import de.fehngarten.fhemswitch.data.ConfigIntValueRow;
 import de.fehngarten.fhemswitch.data.MyIntValue;
 
-public class ConfigIntValuesAdapter extends ConfigAdapter {
+class ConfigIntValuesAdapter extends ConfigAdapter {
     Context mContext;
-    //private int layoutResourceId;
     private ArrayList<ConfigIntValueRow> valueRows = null;
 
-    public ConfigIntValuesAdapter(Context mContext) {
+    ConfigIntValuesAdapter(Context mContext) {
 
         //super(mContext, layoutResourceId, data);
         //this.layoutResourceId = layoutResourceId;
@@ -108,19 +112,25 @@ public class ConfigIntValuesAdapter extends ConfigAdapter {
         valueHolder.value_name.setText(valueRow.name);
         valueHolder.value_value.setText(valueRow.value);
         valueHolder.value_enabled.setChecked(valueRow.enabled);
-        valueHolder.value_stepSize.setText(valueRow.stepSize.toString());
-        valueHolder.value_commandExecDelay.setText(Integer.toString(valueRow.commandExecDelay));
-        valueHolder.value_setCommand.setText(valueRow.setCommand);
+        //valueHolder.value_stepSize.setText(valueRow.stepSize.toString());
+        valueHolder.value_stepSize.setText(String.format(Locale.getDefault(), "%s", valueRow.stepSize));
+        valueHolder.value_commandExecDelay.setText(String.format(Locale.getDefault(), "%d", valueRow.commandExecDelay));
+        String setCommandText;
+        if (valueRow.setCommand.equals("")) {
+            setCommandText = valueRow.unit;
+        } else {
+            setCommandText = valueRow.setCommand;
+        }
+        valueHolder.value_setCommand.setText(setCommandText);
 
-        setVisible(rowView, valueRow.enabled);
-        //private method of your class
+        setVisible(rowView, valueRow.enabled, !valueRow.isTime);
 
-        valueHolder.value_enabled.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                ConfigIntValuesAdapter.this.getItem(valueHolder.ref).enabled = valueHolder.value_enabled.isChecked();
-                ConfigIntValuesAdapter.this.notifyDataSetChanged();
-            }
+        valueHolder.value_enabled.setOnClickListener(view -> {
+            ConfigIntValueRow valueRow1 = getItem(valueHolder.ref);
+            valueRow1.enabled = valueHolder.value_enabled.isChecked();
+            View rootView = view.getRootView();
+            setListViewHeightBasedOnChildren((ListView) rootView.findViewById(R.id.intvalues));
+            notifyDataSetChanged();
         });
 
         valueHolder.value_name.addTextChangedListener(new TextWatcher() {
@@ -219,9 +229,13 @@ public class ConfigIntValuesAdapter extends ConfigAdapter {
         }
     }
 
-    private void setVisible(View rowView, boolean show) {
+    private void setVisible(View rowView, boolean show, boolean showStepsize) {
         int visibility = show ? View.VISIBLE : View.GONE;
-        rowView.findViewById(R.id.second_row).setVisibility(visibility);
+        if (showStepsize) {
+            rowView.findViewById(R.id.second_row).setVisibility(visibility);
+        } else {
+            rowView.findViewById(R.id.second_row).setVisibility(View.GONE);
+        }
         rowView.findViewById(R.id.seconda_row).setVisibility(visibility);
         rowView.findViewById(R.id.third_row).setVisibility(visibility);
         rowView.findViewById(R.id.thirda_row).setVisibility(visibility);
@@ -244,6 +258,7 @@ public class ConfigIntValuesAdapter extends ConfigAdapter {
         private FHEMvalues(JSONObject obj) {
             Iterator<String> iterator = obj.keys();
             String unit;
+            DateFormat df = new SimpleDateFormat( "H:m", Locale.GERMAN);
             while (iterator.hasNext()) {
                 unit = iterator.next();
                 String value;
@@ -251,6 +266,12 @@ public class ConfigIntValuesAdapter extends ConfigAdapter {
                     value = obj.getString(unit);
                     if (isNumeric(value)) {
                         valueRows.add(new ConfigIntValueRow(unit, unit, value, "", (float) 1.0, 1000, false));
+                    } else {
+                        try {
+                            df.parse(value);
+                            valueRows.add(new ConfigIntValueRow(unit, unit, value, "", (float) 0, 1000, false));
+                        } catch ( ParseException ignored) {
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

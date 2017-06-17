@@ -44,7 +44,7 @@ import static de.fehngarten.fhemswitch.global.Settings.settingHelpIconUrl;
 import static de.fehngarten.fhemswitch.global.Settings.settingHelpIntvaluesUrl;
 
 public class ConfigPagerAdapter extends PagerAdapter {
-    private final String TAG = "ConfigPagerAdapter";
+    //private final String TAG = "ConfigPagerAdapter";
     private Context mContext;
     private ConfigWorkInstance configWorkInstance;
     private MySocket mySocket;
@@ -111,6 +111,7 @@ public class ConfigPagerAdapter extends PagerAdapter {
             case 4: //config_block_intvalues
                 view.findViewById(R.id.help_intvalues).setOnClickListener(helpIntvaluesOnClickListener);
                 setupIntValues(view);
+                mView = view;
                 break;
             case 5: //config_block_commands
                 spinnerCommandCols = (Spinner) view.findViewById(R.id.config_command_cols);
@@ -141,19 +142,9 @@ public class ConfigPagerAdapter extends PagerAdapter {
         collection.removeView((View) view);
     }
 
-    private RadioGroup.OnCheckedChangeListener landscapeSelectorChange = new RadioGroup.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            configDataInstance.layoutLandscape = Integer.valueOf(group.findViewById(checkedId).getTag().toString());
-        }
-    };
+    private RadioGroup.OnCheckedChangeListener landscapeSelectorChange = (group, checkedId) -> configDataInstance.layoutLandscape = Integer.valueOf(group.findViewById(checkedId).getTag().toString());
 
-    private RadioGroup.OnCheckedChangeListener portraitSelectorChange = new RadioGroup.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            configDataInstance.layoutPortrait = Integer.valueOf(group.findViewById(checkedId).getTag().toString());
-        }
-    };
+    private RadioGroup.OnCheckedChangeListener portraitSelectorChange = (group, checkedId) -> configDataInstance.layoutPortrait = Integer.valueOf(group.findViewById(checkedId).getTag().toString());
 
     public void saveItem(int position) {
         //Log.d(TAG, position + " try to save");
@@ -252,7 +243,9 @@ public class ConfigPagerAdapter extends PagerAdapter {
                 if (lightsceneRow.isHeader) {
                     newLightScene = configWorkInstance.lightScenes.newLightScene(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.showHeader);
                 } else {
-                    newLightScene.addMember(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.enabled);
+                    if (newLightScene != null) {
+                        newLightScene.addMember(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.enabled);
+                    }
                 }
             }
         }
@@ -281,7 +274,7 @@ public class ConfigPagerAdapter extends PagerAdapter {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            if (!member.equals("") && !member.equals("Bye...")) {
+                            if (member != null && !member.equals("") && !member.equals("Bye...")) {
                                 lightsceneRowsTemp.add(new ConfigLightsceneRow(member, member, false, false, false));
                             }
                         }

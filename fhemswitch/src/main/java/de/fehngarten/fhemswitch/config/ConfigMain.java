@@ -52,7 +52,7 @@ import static de.fehngarten.fhemswitch.global.Settings.*;
 //import android.util.Log;
 
 public class ConfigMain extends Activity {
-    private final String TAG = "ConfigMain";
+    //private final String TAG = "ConfigMain";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private EditText urlpl, urljs, connectionPW, urlplLocal, urljsLocal;
     private CheckBox isHomeNet;
@@ -278,9 +278,7 @@ public class ConfigMain extends Activity {
             new SendAlertMessage(mContext, getString(R.string.noconnjs) + ":\n- " + getString(R.string.urlcheck) + ".\n- " + getString(R.string.onlinecheck) + "?");
         }));
 
-        mySocket.socket.on("unauthorized", args -> runOnUiThread(() -> {
-            new SendAlertMessage(mContext, getString(R.string.checkpw));
-        }));
+        mySocket.socket.on("unauthorized", args -> runOnUiThread(() -> new SendAlertMessage(mContext, getString(R.string.checkpw))));
 
         mySocket.doConnect();
     }
@@ -374,9 +372,7 @@ public class ConfigMain extends Activity {
         }
     };
 
-    private Emitter.Listener authListener = args -> {
-        runOnUiThread(this::buildOutput);
-    };
+    private Emitter.Listener authListener = args -> runOnUiThread(this::buildOutput);
 
     private Emitter.Listener authListenerRefresh = new Emitter.Listener() {
         @Override
@@ -539,7 +535,7 @@ public class ConfigMain extends Activity {
                     }
                 }
                 rc = true;
-            } catch (Exception ex) {}
+            } catch (Exception ignored) {}
         }
         return rc;
     }

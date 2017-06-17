@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginLeft="6dp"
     android:layout_marginRight="6dp"
     android:orientation="vertical">
@@ -15,9 +15,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:paddingLeft="40dp"
+            android:paddingStart="40dp"
             android:paddingRight="10dp"
+            android:paddingEnd="10dp"
             android:paddingTop="3dp"
             android:text="@string/adjustable"
             android:textColor="@color/conf_text_header_1"
@@ -34,7 +36,7 @@
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,7 +72,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.37"
+                    android:paddingRight="0dp"
+                    android:paddingEnd="0dp"
                     android:paddingLeft="3dp"
+                    android:paddingStart="3dp"
                     android:text="@string/name"
                     android:textColor="@color/conf_text_header_2"
                     android:textSize="16sp"

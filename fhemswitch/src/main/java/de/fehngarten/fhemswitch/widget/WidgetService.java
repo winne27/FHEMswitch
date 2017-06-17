@@ -2,6 +2,7 @@ package de.fehngarten.fhemswitch.widget;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 import java.util.Map.Entry;
@@ -9,7 +10,6 @@ import java.util.Map.Entry;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -94,8 +94,7 @@ public class WidgetService extends Service {
     protected Integer instSerial;
     private boolean screenIsOn = true;
     private int waitCheckSocket = settingWaitSocketShort;
-    @SuppressWarnings("FieldCanBeLocal")
-    private String TAG;
+    //private String TAG;
 
     public WidgetService() {
         //TAG = "WidgetService-" + instSerial;
@@ -140,7 +139,7 @@ public class WidgetService extends Service {
     }
 
     public void onCreate() {
-        TAG = "WidgetService-" + instSerial;
+        //TAG = "WidgetService-" + instSerial;
 
         mContext = getApplicationContext();
         appWidgetManager = AppWidgetManager.getInstance(mContext);
@@ -229,7 +228,7 @@ public class WidgetService extends Service {
         }
     };
 
-    class OnScreenOnOff implements MyReceiveListener {
+    private class OnScreenOnOff implements MyReceiveListener {
         public void run(Context context, Intent intent) {
             //Log.d(TAG,"on/off fired");
             screenIsOn = intent.getAction().equals(Intent.ACTION_SCREEN_ON);
@@ -240,20 +239,20 @@ public class WidgetService extends Service {
         }
     }
 
-    class OnConfigChange implements MyReceiveListener {
+    private class OnConfigChange implements MyReceiveListener {
         public void run(Context context, Intent intent) {
             //Log.d(TAG, "config change fired");
             start();
         }
     }
 
-    class OnStoreVersion implements MyReceiveListener {
+    private class OnStoreVersion implements MyReceiveListener {
         public void run(Context context, Intent intent) {
             versionChecks.setVersions(VERSION_APP, BuildConfig.VERSION_NAME, intent.getExtras().getString(GetStoreVersion.LATEST));
         }
     }
 
-    class OnUserIntent implements MyReceiveListener {
+    private class OnUserIntent implements MyReceiveListener {
         public void run(Context context, Intent intent) {
             switch (intent.getAction()) {
                 case NEW_VERSION_STORE:
@@ -283,7 +282,7 @@ public class WidgetService extends Service {
         }
     }
 
-    class OnConnectionChange implements MyReceiveListener {
+    private class OnConnectionChange implements MyReceiveListener {
         public void run(Context context, Intent intent) {
             //Log.d(TAG,"connection change fired");
 
@@ -356,11 +355,18 @@ public class WidgetService extends Service {
     }
 
     private void setNewValue(Intent intent) {
+        //Log.i(TAG,intent.getStringExtra(SUBACTION));
         int pos = intent.getIntExtra(POS, -1);
         MyIntValue myIntValue = ConfigWorkBasket.data.get(instSerial).intValues.get(pos);
-        Float delta = myIntValue.stepSize * settingMultiplier.get(intent.getStringExtra(SUBACTION));
-        Float newValue = Float.valueOf(myIntValue.value) + delta;
-        String newValueString = newValue.toString();
+        String newValueString;
+        if (myIntValue.isTime) {
+            newValueString = calcNewTime(myIntValue.value, intent.getStringExtra(SUBACTION));
+        } else {
+            Float delta = myIntValue.stepSize * settingMultiplier.get(intent.getStringExtra(SUBACTION));
+            Float newValue = Float.valueOf(myIntValue.value) + delta;
+            newValueString = newValue.toString();
+        }
+        //Log.i(TAG,newValueString);
         String cmd = "set " + myIntValue.setCommand + " " + newValueString;
 
         ConfigWorkBasket.data.get(instSerial).intValues.get(pos).setValue(newValueString);
@@ -368,7 +374,43 @@ public class WidgetService extends Service {
         doSendCommands.get(pos).fire(cmd, myIntValue.commandExecDelay);
     }
 
-    public class DoSendCommand implements Runnable {
+    private String calcNewTime(String value, String subaction) {
+        String hour = value.substring(0,2);
+        String min = value.substring(3,5);
+        int minInt = Integer.parseInt(min);
+        int hourInt = Integer.parseInt(hour);
+        switch (subaction) {
+            case DOWN:
+                minInt = minInt - 1;
+                if (minInt == 0) {
+                    minInt = 59;
+                }
+                break;
+            case UP:
+                minInt = minInt + 1;
+                if (minInt == 60) {
+                    minInt = 0;
+                }
+                break;
+            case DOWNFAST:
+                hourInt = hourInt - 1;
+                if (hourInt == -1) {
+                    hourInt = 23;
+                }
+                break;
+            case UPFAST:
+                hourInt = hourInt + 1;
+                if (hourInt == 24) {
+                    hourInt = 0;
+                }
+                break;
+        }
+        hour = String.format(Locale.getDefault(),"%02d", hourInt);
+        min = String.format(Locale.getDefault(),"%02d", minInt);
+        return hour + ":" + min;
+    }
+
+    private class DoSendCommand implements Runnable {
         String cmd;
         Handler handler;
 
@@ -394,7 +436,7 @@ public class WidgetService extends Service {
     }
 
     // after touch command button is for 500ms pride
-    public static class DeactCommand implements Runnable {
+    private static class DeactCommand implements Runnable {
         int actPos;
         int widgetId;
         int viewId;
@@ -612,7 +654,7 @@ public class WidgetService extends Service {
         PendingIntent onClickPendingIntent = PendingIntent.getBroadcast(mContext, 0, onItemClick, PendingIntent.FLAG_UPDATE_CURRENT);
         mView.setPendingIntentTemplate(listviewId, onClickPendingIntent);
 
-        Class serviceClass = CommonListviewService.class;
+        Class<?> serviceClass = CommonListviewService.class;
         Intent myIntent = new Intent(mContext, serviceClass);
         myIntent.putExtra(ACTCOL, actCol);
         myIntent.putExtra(FHEM_TYPE, type);
@@ -635,17 +677,22 @@ public class WidgetService extends Service {
 
     @SuppressWarnings("deprecation")
     public boolean isScreenOnOld() {
-        PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-        return pm.isScreenOn();
+        boolean screenOn = false;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT_WATCH) {
+            PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+            screenOn = pm.isScreenOn();
+        }
+        return screenOn;
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
     public boolean isScreenOnNew() {
-        DisplayManager dm = (DisplayManager) mContext.getSystemService(Context.DISPLAY_SERVICE);
         boolean screenOn = false;
-        for (Display display : dm.getDisplays()) {
-            if (display.getState() != Display.STATE_OFF) {
-                screenOn = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            DisplayManager dm = (DisplayManager) mContext.getSystemService(Context.DISPLAY_SERVICE);
+            for (Display display : dm.getDisplays()) {
+                if (display.getState() != Display.STATE_OFF) {
+                    screenOn = true;
+                }
             }
         }
         return screenOn;

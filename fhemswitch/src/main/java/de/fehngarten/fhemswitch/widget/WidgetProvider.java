@@ -19,7 +19,7 @@ import static de.fehngarten.fhemswitch.global.Settings.settingServiceClasses;
 
 public class WidgetProvider extends AppWidgetProvider {
 
-    private static final String TAG = "WidgetProvider";
+    //private static final String TAG = "WidgetProvider";
     public SparseArray<Intent> serviceIntents;
 
     public void onReceive(Context context, Intent intent) {

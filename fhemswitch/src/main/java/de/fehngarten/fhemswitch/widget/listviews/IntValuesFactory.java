@@ -19,15 +19,14 @@ class IntValuesFactory implements RemoteViewsFactory {
     //private static final String CLASSNAME = "ValuesFactory.";
     private Context mContext = null;
     private int instSerial;
-    @SuppressWarnings("FieldCanBeLocal")
-    private final String TAG;
+    //private final String TAG;
     private int widgetId;
 
     IntValuesFactory(Context context, Intent intent) {
         //if (BuildConfig.DEBUG) Log.d(CLASSNAME, "started");
         mContext = context;
         instSerial = intent.getIntExtra(INSTSERIAL, -1);
-        TAG = "IntValuesFactory-" + instSerial;
+        //TAG = "IntValuesFactory-" + instSerial;
         widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
     }
 

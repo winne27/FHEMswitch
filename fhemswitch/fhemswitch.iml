@@ -81,7 +81,6 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-safeguard" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jack" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/multi-dex" />
@@ -96,6 +95,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 25 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" scope="TEST" name="multidex-instrumentation-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="drag-sort-listview-1.0" level="project" />
     <orderEntry type="library" exported="" name="jsoup-1.7.2" level="project" />
     <orderEntry type="library" exported="" name="engine.io-client-0.8.3" level="project" />
@@ -103,15 +103,14 @@
     <orderEntry type="library" exported="" name="joda-time-2.9.4" level="project" />
     <orderEntry type="library" exported="" name="socket.io-client-0.8.3" level="project" />
     <orderEntry type="library" exported="" name="okhttp-3.8.0" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-25.1.1" level="project" />
-    <orderEntry type="library" exported="" name="support-compat-25.1.1" level="project" />
+    <orderEntry type="library" exported="" name="support-core-ui-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="multidex-1.0.1" level="project" />
-    <orderEntry type="library" exported="" name="support-media-compat-25.1.1" level="project" />
-    <orderEntry type="library" exported="" name="support-core-ui-25.1.1" level="project" />
-    <orderEntry type="library" exported="" name="support-v13-25.1.1" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-25.1.1" level="project" />
-    <orderEntry type="library" exported="" name="support-core-utils-25.1.1" level="project" />
-    <orderEntry type="library" exported="" name="support-fragment-25.1.1" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="multidex-instrumentation-1.0.1" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-media-compat-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-v13-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-compat-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-core-utils-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-fragment-25.3.1" level="project" />
   </component>
 </module>

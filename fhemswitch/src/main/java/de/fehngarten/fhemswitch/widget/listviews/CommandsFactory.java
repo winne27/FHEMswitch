@@ -6,11 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-
 import de.fehngarten.fhemswitch.R;
 
 import static de.fehngarten.fhemswitch.global.Consts.*;
@@ -22,7 +18,7 @@ import de.fehngarten.fhemswitch.widget.WidgetProvider;
 
 //import android.util.Log;
 class CommandsFactory implements RemoteViewsFactory {
-    private static final String TAG = "CommandsFactory.";
+    //private static final String TAG = "CommandsFactory.";
     private Context mContext = null;
     private int colnum;
     private int instSerial;
@@ -60,7 +56,7 @@ class CommandsFactory implements RemoteViewsFactory {
     @Override
     public int getCount() {
         //if (BuildConfig.DEBUG) Log.d(TAG, "values size: " + Integer.toString(values.size()));
-        if (curInstance.commandsCols == null || curInstance.commandsCols.size() <= colnum) {
+        if (curInstance.commandsCols == null || curInstance.commandsCols.size() == 0 || curInstance.commandsCols.size() <= colnum) {
             return (0);
         } else {
             return curInstance.commandsCols.get(colnum).size();

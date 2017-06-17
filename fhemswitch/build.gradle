@@ -13,8 +13,8 @@ android {
     }
     defaultConfig {
         applicationId "de.fehngarten.fhemswitch"
-        versionCode 3111500
-        versionName "3.1.11"
+        versionCode 3201500
+        versionName "3.2.1"
         minSdkVersion 15
         targetSdkVersion 25
         archivesBaseName = "fhemswitch-$versionName"
@@ -65,5 +65,5 @@ dependencies {
     compile 'asia.ivity.android:drag-sort-listview:1.0'
     compile 'org.jsoup:jsoup:1.7.2'
     compile 'joda-time:joda-time:2.9.4'
-    compile 'com.android.support:support-v13:25.1.1'
+    compile 'com.android.support:support-v13:25.3.1'
 }

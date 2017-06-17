@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import de.fehngarten.fhemswitch.R;
 
-import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 import static de.fehngarten.fhemswitch.global.Consts.*;
 
 import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
@@ -18,7 +17,6 @@ import de.fehngarten.fhemswitch.data.ConfigWorkInstance;
 import de.fehngarten.fhemswitch.data.MyValue;
 import de.fehngarten.fhemswitch.global.Settings;
 import de.fehngarten.fhemswitch.widget.WidgetProvider;
-import de.fehngarten.fhemswitch.widget.WidgetService;
 
 //import android.util.Log;
 
@@ -27,8 +25,7 @@ class ValuesFactory implements RemoteViewsFactory {
     private Context mContext = null;
     private int colnum;
     private int instSerial;
-    @SuppressWarnings("FieldCanBeLocal")
-    private final String TAG;
+    //private final String TAG;
     private ConfigWorkInstance curInstance;
 
     ValuesFactory(Context context, Intent intent, int colnum) {
@@ -37,7 +34,7 @@ class ValuesFactory implements RemoteViewsFactory {
         this.colnum = colnum;
         instSerial = intent.getIntExtra(INSTSERIAL, -1);
         curInstance = ConfigWorkBasket.data.get(instSerial);
-        TAG = "ValuesFactory-" + instSerial;
+        //TAG = "ValuesFactory-" + instSerial;
     }
 
     public void initData() {
@@ -70,7 +67,7 @@ class ValuesFactory implements RemoteViewsFactory {
         //String methodname = "getCount";
         //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "values size: " + Integer.toString(values.size()));
 
-        if (curInstance.valuesCols == null || curInstance.valuesCols.size() <= colnum) {
+        if (curInstance.valuesCols == null || curInstance.valuesCols.size() == 0 || curInstance.valuesCols.size() <= colnum) {
             return (0);
         } else {
             return curInstance.valuesCols.get(colnum).size();

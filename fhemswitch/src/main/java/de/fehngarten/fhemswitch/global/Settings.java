@@ -43,7 +43,7 @@ public final class Settings {
     public static final String settingGoogleStoreUrl = "https://play.google.com/store/apps/details?id=de.fehngarten.fhemswitch";
     public static final String settingLicenceKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh7D+DlsyIr/qs/nzYQHHITVBXoDn8eSsFKGUgjvlJhINvjFUTwiHBmwrTKBIXye6WozJ4QM7Ov3cUXqeDlIz4m8bHCibXzQsra2kWSZagRhHLcrBwVBy1a3JXB74E1VQO0LbPPgnfeL2Uzv4IIS3QvyAJ2Uo5lHJBoTA+jxUIe/YFPovNvhWhZna2oHZlptc07rNydcTShdMzk/Ujv881jJB0GJMUol5OM5/WG+dHpfyplxlolpS/AXX9312VeU7LkRdOUikQ+bPQMT5gbYyWPXoDAKRkJiU6F5LR+xQqxHxNyedy3yZnlkmXDq0l7u1HYkJaY3Pr2hxOo3hAjX2pQIDAQAB";
     public static final Map<String, Integer> settingIcons = new HashMap<>();
-    public static final ArrayList<Class> settingServiceClasses = new ArrayList<>(settingsMaxInst);
+    public static final ArrayList<Class<?>> settingServiceClasses = new ArrayList<>(settingsMaxInst);
     public static final int[] settingWidgetSel = new int[settingsMaxInst];
     public static final int[] settingShapes = new int[settingsMaxInst];
     public static final int[] settingLayouts = new int[3];

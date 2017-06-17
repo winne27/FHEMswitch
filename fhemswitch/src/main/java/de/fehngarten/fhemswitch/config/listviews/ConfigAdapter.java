@@ -5,14 +5,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
-public abstract class ConfigAdapter extends BaseAdapter {
+abstract class ConfigAdapter extends BaseAdapter {
 
-    public void dataComplete(ListView listView) {
+    void dataComplete(ListView listView) {
         this.notifyDataSetChanged();
         setListViewHeightBasedOnChildren(listView);
     }
 
-    public void setListViewHeightBasedOnChildren(ListView listView) {
+    void setListViewHeightBasedOnChildren(ListView listView) {
 
         int totalHeight = listView.getPaddingTop() + listView.getPaddingBottom();
         for (int i = 0; i < getCount(); i++) {

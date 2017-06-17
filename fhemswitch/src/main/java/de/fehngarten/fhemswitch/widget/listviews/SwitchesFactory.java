@@ -13,14 +13,12 @@ import de.fehngarten.fhemswitch.R;
 import static de.fehngarten.fhemswitch.global.Consts.*;
 import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
 import de.fehngarten.fhemswitch.data.ConfigWorkInstance;
-import de.fehngarten.fhemswitch.data.MyCommand;
 import de.fehngarten.fhemswitch.data.MySwitch;
 import de.fehngarten.fhemswitch.global.Settings;
 import de.fehngarten.fhemswitch.widget.WidgetProvider;
 
 class SwitchesFactory implements RemoteViewsFactory {
-    @SuppressWarnings("FieldCanBeLocal")
-    private final String TAG;
+    //private final String TAG;
     private Context mContext = null;
     private int colnum;
     private int instSerial;
@@ -33,7 +31,7 @@ class SwitchesFactory implements RemoteViewsFactory {
         instSerial = intent.getIntExtra(INSTSERIAL, -1);
         curInstance = ConfigWorkBasket.data.get(instSerial);
         widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-        TAG = "SwitchesFactory-" + instSerial;
+        //TAG = "SwitchesFactory-" + instSerial;
     }
 
     public void initData() {
@@ -65,7 +63,7 @@ class SwitchesFactory implements RemoteViewsFactory {
         //String methodname = "getCount";
         //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "switches size: " + Integer.toString(switches.size()));
 
-        if (curInstance == null || curInstance.switchesCols == null || curInstance.switchesCols.size() <= colnum) {
+        if (curInstance == null || curInstance.switchesCols == null || curInstance.switchesCols.size() == 0 || curInstance.switchesCols.size() <= colnum) {
             return (0);
         } else {
             return curInstance.switchesCols.get(colnum).size();

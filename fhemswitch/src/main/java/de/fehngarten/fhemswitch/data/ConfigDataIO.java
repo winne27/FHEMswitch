@@ -12,7 +12,7 @@ import static de.fehngarten.fhemswitch.global.Settings.settingsConfigFileName;
 
 public class ConfigDataIO {
     private Context mContext;
-    private final String TAG = "ConfigDataIO";
+    //private final String TAG = "ConfigDataIO";
 
     public ConfigDataIO(Context context) {
         mContext = context;
@@ -73,7 +73,7 @@ public class ConfigDataIO {
         return configDataInstance;
     }
 
-    public boolean configInstanceExists(@SuppressWarnings("SameParameterValue") int instSerial) {
+    public boolean configInstanceExists(int instSerial) {
         String instSerialString = Integer.toString(instSerial);
         String filename = settingsConfigFileName + instSerialString;
         File file = new File(filename);
@@ -85,13 +85,14 @@ public class ConfigDataIO {
             String dir = mContext.getFilesDir().getAbsolutePath();
             String filename = settingsConfigFileName + "common";
             File f0 = new File(dir, filename);
+            //noinspection ResultOfMethodCallIgnored
             f0.delete();
             FileOutputStream f_out = mContext.openFileOutput(filename, Context.MODE_PRIVATE);
             ObjectOutputStream obj_out = new ObjectOutputStream(f_out);
             obj_out.writeObject(configDataCommon);
             obj_out.close();
             //if (BuildConfig.DEBUG) Log.d("config", "config data written, common");
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -107,7 +108,7 @@ public class ConfigDataIO {
             obj_out.writeObject(configDataInstance);
             obj_out.close();
             //if (BuildConfig.DEBUG) Log.d("config", "config data written: " + filename);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 

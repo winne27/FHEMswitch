@@ -1,5 +1,7 @@
 package de.fehngarten.fhemswitch.data;
 
+import android.support.annotation.NonNull;
+
 public class MyIntValue implements Comparable<MyIntValue> {
 
     public String name;
@@ -8,6 +10,7 @@ public class MyIntValue implements Comparable<MyIntValue> {
     public String setCommand;
     public Float stepSize;
     public int commandExecDelay;
+    public boolean isTime;
 
     public void transfer(ConfigIntValueRow configIntValueRow) {
         name = configIntValueRow.name;
@@ -15,6 +18,11 @@ public class MyIntValue implements Comparable<MyIntValue> {
         value = configIntValueRow.value;
         setCommand = configIntValueRow.setCommand;
         stepSize = configIntValueRow.stepSize;
+        if (configIntValueRow.isTime == null) {
+            isTime = false;
+        } else {
+            isTime = configIntValueRow.isTime;
+        }
         commandExecDelay = configIntValueRow.commandExecDelay;
     }
 
@@ -23,7 +31,7 @@ public class MyIntValue implements Comparable<MyIntValue> {
     }
 
     @Override
-    public int compareTo(MyIntValue compSwitch) {
+    public int compareTo(@NonNull MyIntValue compSwitch) {
         return this.unit.compareToIgnoreCase(compSwitch.unit);
     }
 }
