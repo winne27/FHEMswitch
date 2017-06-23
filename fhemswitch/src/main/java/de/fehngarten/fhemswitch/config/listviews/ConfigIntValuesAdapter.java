@@ -28,18 +28,18 @@ import de.fehngarten.fhemswitch.data.MyIntValue;
 
 class ConfigIntValuesAdapter extends ConfigAdapter {
     Context mContext;
-    private ArrayList<ConfigIntValueRow> valueRows = null;
+    private ArrayList<ConfigIntValueRow> intValueRows = null;
 
     ConfigIntValuesAdapter(Context mContext) {
 
         //super(mContext, layoutResourceId, data);
         //this.layoutResourceId = layoutResourceId;
         this.mContext = mContext;
-        valueRows = new ArrayList<>();
+        intValueRows = new ArrayList<>();
     }
 
     public void initData(JSONObject obj, List<MyIntValue> values, List<MyIntValue> valuesDisabled) {
-        valueRows = new ArrayList<>();
+        intValueRows = new ArrayList<>();
         FHEMvalues mFHEMvalues = new FHEMvalues(obj);
         ArrayList<String> valuesConfig = new ArrayList<>();
         ArrayList<String> allUnits = new ArrayList<>();
@@ -47,8 +47,8 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
         for (MyIntValue myIntValue : values) {
 
             ConfigIntValueRow FHEMrow = mFHEMvalues.getValue(myIntValue.unit);
-            if (FHEMrow != null && !allUnits.contains(myIntValue.unit)) {
-                valueRows.add(new ConfigIntValueRow(myIntValue.unit, myIntValue.name, FHEMrow.value, myIntValue.setCommand, myIntValue.stepSize, myIntValue.commandExecDelay, true));
+            if ((FHEMrow != null && !allUnits.contains(myIntValue.unit)) || myIntValue.unit.equals("")) {
+                intValueRows.add(new ConfigIntValueRow(myIntValue.unit, myIntValue.name, FHEMrow.value, myIntValue.setCommand, myIntValue.stepSize, myIntValue.commandExecDelay, true));
                 valuesConfig.add(myIntValue.unit);
                 allUnits.add(myIntValue.unit);
             }
@@ -56,39 +56,56 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
 
         for (MyIntValue myIntValue : valuesDisabled) {
             ConfigIntValueRow FHEMrow = mFHEMvalues.getValue(myIntValue.unit);
-            if (FHEMrow != null && !allUnits.contains(myIntValue.unit)) {
-                valueRows.add(new ConfigIntValueRow(myIntValue.unit, myIntValue.name, FHEMrow.value, myIntValue.setCommand, myIntValue.stepSize, myIntValue.commandExecDelay, false));
+            if ((FHEMrow != null && !allUnits.contains(myIntValue.unit)) || myIntValue.unit.equals("")) {
+                intValueRows.add(new ConfigIntValueRow(myIntValue.unit, myIntValue.name, FHEMrow.value, myIntValue.setCommand, myIntValue.stepSize, myIntValue.commandExecDelay, false));
                 valuesConfig.add(myIntValue.unit);
                 allUnits.add(myIntValue.unit);
             }
         }
         for (ConfigIntValueRow FHEMrow : mFHEMvalues.getAllValues()) {
             if (!valuesConfig.contains(FHEMrow.unit) && !allUnits.contains(FHEMrow.unit)) {
-                valueRows.add(FHEMrow);
+                intValueRows.add(FHEMrow);
                 allUnits.add(FHEMrow.unit);
             }
         }
     }
 
     public ArrayList<ConfigIntValueRow> getData() {
-        return valueRows;
+        return intValueRows;
     }
 
     public int getCount() {
-        return valueRows.size();
+        return intValueRows.size();
     }
 
     public ConfigIntValueRow getItem(int position) {
-        return valueRows.get(position);
+        return intValueRows.get(position);
     }
 
     public long getItemId(int position) {
         return (long) position;
     }
 
+    public void newLine(ListView listView)
+    {
+        ArrayList<ConfigIntValueRow> tempIntValueRows = new ArrayList<>();
+        tempIntValueRows.add(new ConfigIntValueRow("", "", "", "", (float) 0, 0, false));
+        for (ConfigIntValueRow intValueRow : intValueRows) {
+            tempIntValueRows.add(intValueRow);
+        }
+        intValueRows.clear();
+        notifyDataSetChanged();
+
+        for (ConfigIntValueRow intValueRow : tempIntValueRows) {
+            intValueRows.add(intValueRow);
+        }
+        notifyDataSetChanged();
+        setListViewHeightBasedOnChildren(listView);
+    }
+    
     public View getView(int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
-        ConfigIntValueRow valueRow = getItem(position);
+        ConfigIntValueRow intValueRow = getItem(position);
         final ValueHolder valueHolder;
 
         if (rowView == null) {
@@ -108,26 +125,34 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
         }
 
         valueHolder.ref = position;
-        valueHolder.value_unit.setText(valueRow.unit);
-        valueHolder.value_name.setText(valueRow.name);
-        valueHolder.value_value.setText(valueRow.value);
-        valueHolder.value_enabled.setChecked(valueRow.enabled);
-        //valueHolder.value_stepSize.setText(valueRow.stepSize.toString());
-        valueHolder.value_stepSize.setText(String.format(Locale.getDefault(), "%s", valueRow.stepSize));
-        valueHolder.value_commandExecDelay.setText(String.format(Locale.getDefault(), "%d", valueRow.commandExecDelay));
+        valueHolder.value_unit.setText(intValueRow.unit);
+        valueHolder.value_name.setText(intValueRow.name);
+        valueHolder.value_value.setText(intValueRow.value);
+        valueHolder.value_enabled.setChecked(intValueRow.enabled);
+        //valueHolder.value_stepSize.setText(intValueRow.stepSize.toString());
+        valueHolder.value_stepSize.setText(String.format(Locale.getDefault(), "%s", intValueRow.stepSize));
+        valueHolder.value_commandExecDelay.setText(String.format(Locale.getDefault(), "%d", intValueRow.commandExecDelay));
         String setCommandText;
-        if (valueRow.setCommand.equals("")) {
-            setCommandText = valueRow.unit;
+        if (intValueRow.setCommand.equals("")) {
+            setCommandText = intValueRow.unit;
         } else {
-            setCommandText = valueRow.setCommand;
+            setCommandText = intValueRow.setCommand;
         }
         valueHolder.value_setCommand.setText(setCommandText);
 
-        setVisible(rowView, valueRow.enabled, !valueRow.isTime);
+        if (intValueRow.unit.equals("")) {
+            rowView.findViewById(R.id.config_intvalue_unit).setVisibility(View.GONE);
+            rowView.findViewById(R.id.config_intvalue_cmd).setVisibility(View.GONE);
+            setVisible(rowView, false, false);
+        } else {
+            rowView.findViewById(R.id.config_intvalue_unit).setVisibility(View.VISIBLE);
+            rowView.findViewById(R.id.config_intvalue_cmd).setVisibility(View.VISIBLE);
+            setVisible(rowView, intValueRow.enabled, !intValueRow.isTime);
+        }
 
         valueHolder.value_enabled.setOnClickListener(view -> {
-            ConfigIntValueRow valueRow1 = getItem(valueHolder.ref);
-            valueRow1.enabled = valueHolder.value_enabled.isChecked();
+            ConfigIntValueRow intValueRow1 = getItem(valueHolder.ref);
+            intValueRow1.enabled = valueHolder.value_enabled.isChecked();
             View rootView = view.getRootView();
             setListViewHeightBasedOnChildren((ListView) rootView.findViewById(R.id.intvalues));
             notifyDataSetChanged();
@@ -197,34 +222,34 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
     }
 
     void changeItems(int from, int to) {
-        final ArrayList<ConfigIntValueRow> valueRowsTemp = new ArrayList<>();
+        final ArrayList<ConfigIntValueRow> intValueRowsTemp = new ArrayList<>();
         if (from > to) {
-            for (int i = 0; i < valueRows.size(); i++) {
+            for (int i = 0; i < intValueRows.size(); i++) {
                 if (i < to) {
-                    valueRowsTemp.add(valueRows.get(i));
+                    intValueRowsTemp.add(intValueRows.get(i));
                 } else if (i == to) {
-                    valueRowsTemp.add(valueRows.get(from));
+                    intValueRowsTemp.add(intValueRows.get(from));
                 } else if (i <= from) {
-                    valueRowsTemp.add(valueRows.get(i - 1));
+                    intValueRowsTemp.add(intValueRows.get(i - 1));
                 } else {
-                    valueRowsTemp.add(valueRows.get(i));
+                    intValueRowsTemp.add(intValueRows.get(i));
                 }
             }
         } else if (from < to) {
-            for (int i = 0; i < valueRows.size(); i++) {
+            for (int i = 0; i < intValueRows.size(); i++) {
                 if (i < from) {
-                    valueRowsTemp.add(valueRows.get(i));
+                    intValueRowsTemp.add(intValueRows.get(i));
                 } else if (i < to) {
-                    valueRowsTemp.add(valueRows.get(i + 1));
+                    intValueRowsTemp.add(intValueRows.get(i + 1));
                 } else if (i == to) {
-                    valueRowsTemp.add(valueRows.get(from));
+                    intValueRowsTemp.add(intValueRows.get(from));
                 } else {
-                    valueRowsTemp.add(valueRows.get(i));
+                    intValueRowsTemp.add(intValueRows.get(i));
                 }
             }
         }
         if (from != to) {
-            valueRows = valueRowsTemp;
+            intValueRows = intValueRowsTemp;
             notifyDataSetChanged();
         }
     }
@@ -253,7 +278,7 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
     }
 
     private class FHEMvalues {
-        private ArrayList<ConfigIntValueRow> valueRows = new ArrayList<>();
+        private ArrayList<ConfigIntValueRow> intValueRows = new ArrayList<>();
 
         private FHEMvalues(JSONObject obj) {
             Iterator<String> iterator = obj.keys();
@@ -265,11 +290,11 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
                 try {
                     value = obj.getString(unit);
                     if (isNumeric(value)) {
-                        valueRows.add(new ConfigIntValueRow(unit, unit, value, "", (float) 1.0, 1000, false));
+                        intValueRows.add(new ConfigIntValueRow(unit, unit, value, "", (float) 1.0, 1000, false));
                     } else {
                         try {
                             df.parse(value);
-                            valueRows.add(new ConfigIntValueRow(unit, unit, value, "", (float) 0, 1000, false));
+                            intValueRows.add(new ConfigIntValueRow(unit, unit, value, "", (float) 0, 1000, false));
                         } catch ( ParseException ignored) {
                         }
                     }
@@ -280,7 +305,7 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
         }
 
         ConfigIntValueRow getValue(String unit) {
-            for (ConfigIntValueRow configValue : valueRows) {
+            for (ConfigIntValueRow configValue : intValueRows) {
                 if (configValue.unit.equals(unit)) {
                     return configValue;
                 }
@@ -289,7 +314,7 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
         }
 
         ArrayList<ConfigIntValueRow> getAllValues() {
-            return valueRows;
+            return intValueRows;
         }
     }
 

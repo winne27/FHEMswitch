@@ -10,6 +10,12 @@ import de.fehngarten.fhemswitch.widget.WidgetService1;
 import de.fehngarten.fhemswitch.widget.WidgetService2;
 import de.fehngarten.fhemswitch.widget.WidgetService3;
 
+import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_COMMANDS;
+import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_INTVALUES;
+import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_LIGHTSCENES;
+import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_ORIENT;
+import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_SWITCHES;
+import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_VALUES;
 import static de.fehngarten.fhemswitch.global.Consts.DOWN;
 import static de.fehngarten.fhemswitch.global.Consts.DOWNFAST;
 import static de.fehngarten.fhemswitch.global.Consts.LAYOUT_HORIZONTAL;
@@ -102,18 +108,18 @@ public final class Settings {
         settingMultiplier.put(UP, (float) 1);
         settingMultiplier.put(UPFAST, (float) 3);
 
-        settingConfigBlocks[0] = R.layout.config_block_orient;
-        settingConfigBlocks[1] = R.layout.config_block_switches;
-        settingConfigBlocks[2] = R.layout.config_block_lightscenes;
-        settingConfigBlocks[3] = R.layout.config_block_values;
-        settingConfigBlocks[4] = R.layout.config_block_intvalues;
-        settingConfigBlocks[5] = R.layout.config_block_commands;
+        settingConfigBlocks[CONFIG_BLOCK_ORIENT] = R.layout.config_block_orient;
+        settingConfigBlocks[CONFIG_BLOCK_SWITCHES] = R.layout.config_block_switches;
+        settingConfigBlocks[CONFIG_BLOCK_LIGHTSCENES] = R.layout.config_block_lightscenes;
+        settingConfigBlocks[CONFIG_BLOCK_VALUES] = R.layout.config_block_values;
+        settingConfigBlocks[CONFIG_BLOCK_INTVALUES] = R.layout.config_block_intvalues;
+        settingConfigBlocks[CONFIG_BLOCK_COMMANDS] = R.layout.config_block_commands;
 
-        settingTabs[0] = R.id.tab0;
-        settingTabs[1] = R.id.tab1;
-        settingTabs[2] = R.id.tab2;
-        settingTabs[3] = R.id.tab3;
-        settingTabs[4] = R.id.tab4;
-        settingTabs[5] = R.id.tab5;
+        settingTabs[CONFIG_BLOCK_ORIENT] = R.id.tab0;
+        settingTabs[CONFIG_BLOCK_SWITCHES] = R.id.tab1;
+        settingTabs[CONFIG_BLOCK_LIGHTSCENES] = R.id.tab2;
+        settingTabs[CONFIG_BLOCK_VALUES] = R.id.tab3;
+        settingTabs[CONFIG_BLOCK_INTVALUES] = R.id.tab4;
+        settingTabs[CONFIG_BLOCK_COMMANDS] = R.id.tab5;
     }
 }

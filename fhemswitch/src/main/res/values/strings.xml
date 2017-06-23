@@ -97,4 +97,6 @@
     <string name="hint">Hint</string>
     <string name="hinttext">Navigate through config parts by horizontal wiping or by touch the tabs on top.</string>
     <string name="control">Control Button</string>
+    <string name="new_header">create new header or seperation line</string>
+    <string name="removeline" translatable="false">-</string>
 </resources>

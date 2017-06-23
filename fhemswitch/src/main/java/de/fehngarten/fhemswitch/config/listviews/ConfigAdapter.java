@@ -14,7 +14,8 @@ abstract class ConfigAdapter extends BaseAdapter {
 
     void setListViewHeightBasedOnChildren(ListView listView) {
 
-        int totalHeight = listView.getPaddingTop() + listView.getPaddingBottom();
+        Integer totalHeight = listView.getPaddingTop() + listView.getPaddingBottom();
+        Integer count = getCount();
         for (int i = 0; i < getCount(); i++) {
             View listItem = getView(i, null, listView);
             if (listItem instanceof ViewGroup)

@@ -34,7 +34,18 @@
     <Spinner
         android:id="@+id/config_switch_cmd"
         android:layout_height="wrap_content"
-        android:layout_width="80dp"
+        android:layout_width="110dp"
         android:entries="@array/commands" />
 
+    <Button
+        android:id="@+id/config_switch_remove"
+        android:layout_width="50dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_height="wrap_content"
+        android:text="@string/removeline"
+        android:textSize="28sp"
+        android:textStyle="bold" />
 </LinearLayout>

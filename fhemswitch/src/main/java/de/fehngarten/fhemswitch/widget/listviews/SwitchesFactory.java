@@ -73,32 +73,42 @@ class SwitchesFactory implements RemoteViewsFactory {
     @Override
     public RemoteViews getViewAt(int position) {
         //Log.i("switches Position: " + position + " in col " + String.valueOf(colnum),WidgetService.configData.switchesCols.get(colnum).get(position).name);
-        RemoteViews mView = new RemoteViews(mContext.getPackageName(), R.layout.switch_row);
         int count = getCount();
+        RemoteViews mView;
         if (position >= count || count <= 0) {
+            mView = new RemoteViews(mContext.getPackageName(), R.layout.switch_row);
             Intent intent = new Intent(mContext.getApplicationContext(), WidgetProvider.class);
             intent.setAction(NEW_CONFIG);
             mContext.sendBroadcast(intent);
-            return mView;
         } else {
             ArrayList<MySwitch> mySwitchesCols = curInstance.switchesCols.get(colnum);
             MySwitch curSwitch = mySwitchesCols.get(position);
 
-            mView.setTextViewText(R.id.switch_name, curSwitch.name);
-            mView.setImageViewResource(R.id.switch_icon, Settings.settingIcons.get(curSwitch.icon));
+            if (curSwitch.unit.equals("")) {
+                if (curSwitch.name.equals("")) {
+                    mView = new RemoteViews(mContext.getPackageName(), R.layout.seperator);
+                } else {
+                    mView = new RemoteViews(mContext.getPackageName(), R.layout.header);
+                    mView.setTextViewText(R.id.header_name, curSwitch.name);
+                }
+            } else {
+                mView = new RemoteViews(mContext.getPackageName(), R.layout.switch_row);
+                mView.setTextViewText(R.id.switch_name, curSwitch.name);
+                mView.setImageViewResource(R.id.switch_icon, Settings.settingIcons.get(curSwitch.icon));
 
-            final Bundle bundle = new Bundle();
-            bundle.putString(FHEM_COMMAND, curSwitch.activateCmd());
-            bundle.putString(FHEM_TYPE, "switch");
-            bundle.putString(POS, Integer.toString(position));
-            bundle.putString(COL, Integer.toString(colnum));
-            bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-            bundle.putInt(INSTSERIAL, instSerial);
+                final Bundle bundle = new Bundle();
+                bundle.putString(FHEM_COMMAND, curSwitch.activateCmd());
+                bundle.putString(FHEM_TYPE, "switch");
+                bundle.putString(POS, Integer.toString(position));
+                bundle.putString(COL, Integer.toString(colnum));
+                bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+                bundle.putInt(INSTSERIAL, instSerial);
 
-            final Intent fillInIntent = new Intent();
-            fillInIntent.setAction(SEND_FHEM_COMMAND);
-            fillInIntent.putExtras(bundle);
-            mView.setOnClickFillInIntent(R.id.switch_row, fillInIntent);
+                final Intent fillInIntent = new Intent();
+                fillInIntent.setAction(SEND_FHEM_COMMAND);
+                fillInIntent.putExtras(bundle);
+                mView.setOnClickFillInIntent(R.id.switch_row, fillInIntent);
+            }
         }
         return mView;
     }

@@ -39,6 +39,12 @@ import de.fehngarten.fhemswitch.modul.MySocket;
 import io.socket.client.Ack;
 
 import static de.fehngarten.fhemswitch.config.ConfigMain.configDataInstance;
+import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_COMMANDS;
+import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_INTVALUES;
+import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_LIGHTSCENES;
+import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_ORIENT;
+import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_SWITCHES;
+import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_VALUES;
 import static de.fehngarten.fhemswitch.global.Settings.settingConfigBlocks;
 import static de.fehngarten.fhemswitch.global.Settings.settingHelpIconUrl;
 import static de.fehngarten.fhemswitch.global.Settings.settingHelpIntvaluesUrl;
@@ -59,7 +65,6 @@ public class ConfigPagerAdapter extends PagerAdapter {
     private ConfigCommandsAdapter configCommandsAdapter;
 
     private int lsCounter;
-    private View mView;
     private ArrayList<View> views;
 
     public ConfigPagerAdapter(Context context, MySocket mySocket) {
@@ -80,7 +85,7 @@ public class ConfigPagerAdapter extends PagerAdapter {
     private void initView(int position) {
         View view = views.get(position);
         switch (position) {
-            case 0: //config_block_orient
+            case CONFIG_BLOCK_ORIENT:
                 RadioGroup radioLayoutLandscape = (RadioGroup) view.findViewById(R.id.layout_landscape);
                 radioLayoutLandscape.setOnCheckedChangeListener(landscapeSelectorChange);
                 RadioGroup radioLayoutPortrait = (RadioGroup) view.findViewById(R.id.layout_portrait);
@@ -88,7 +93,7 @@ public class ConfigPagerAdapter extends PagerAdapter {
                 ((RadioButton) radioLayoutLandscape.getChildAt(configDataInstance.layoutLandscape)).setChecked(true);
                 ((RadioButton) radioLayoutPortrait.getChildAt(configDataInstance.layoutPortrait)).setChecked(true);
                 break;
-            case 1: //config_block_switches
+            case CONFIG_BLOCK_SWITCHES:
                 spinnerSwitchCols = (Spinner) view.findViewById(R.id.config_switch_cols);
                 ArrayAdapter<CharSequence> adapterSwitchCols = ArrayAdapter.createFromResource(mContext, R.array.colnum, R.layout.spinner_item);
                 adapterSwitchCols.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -96,10 +101,10 @@ public class ConfigPagerAdapter extends PagerAdapter {
                 spinnerSwitchCols.setSelection(configDataInstance.switchCols);
                 setupSwitches(view);
                 break;
-            case 2: //config_block_lightscenes
+            case CONFIG_BLOCK_LIGHTSCENES:
                 setupLightscenes(view);
                 break;
-            case 3: //config_block_values
+            case CONFIG_BLOCK_VALUES:
                 view.findViewById(R.id.help_icon).setOnClickListener(helpIconOnClickListener);
                 spinnerValueCols = (Spinner) view.findViewById(R.id.config_value_cols);
                 ArrayAdapter<CharSequence> adapterValueCols = ArrayAdapter.createFromResource(mContext, R.array.colnum, R.layout.spinner_item);
@@ -108,18 +113,16 @@ public class ConfigPagerAdapter extends PagerAdapter {
                 spinnerValueCols.setSelection(configDataInstance.valueCols);
                 setupValues(view);
                 break;
-            case 4: //config_block_intvalues
+            case CONFIG_BLOCK_INTVALUES:
                 view.findViewById(R.id.help_intvalues).setOnClickListener(helpIntvaluesOnClickListener);
                 setupIntValues(view);
-                mView = view;
                 break;
-            case 5: //config_block_commands
+            case CONFIG_BLOCK_COMMANDS:
                 spinnerCommandCols = (Spinner) view.findViewById(R.id.config_command_cols);
                 ArrayAdapter<CharSequence> adapterCommandCols = ArrayAdapter.createFromResource(mContext, R.array.colnum, R.layout.spinner_item);
                 adapterCommandCols.setDropDownViewResource(R.layout.spinner_dropdown_item);
                 spinnerCommandCols.setAdapter(adapterCommandCols);
                 spinnerCommandCols.setSelection(configDataInstance.commandCols);
-                mView = view;
                 setupCommands(view);
                 break;
         }
@@ -150,23 +153,23 @@ public class ConfigPagerAdapter extends PagerAdapter {
         //Log.d(TAG, position + " try to save");
         try {
             switch (position) {
-                case 0: //config_block_orient
+                case CONFIG_BLOCK_ORIENT:
                     break;
-                case 1: //config_block_switches
+                case CONFIG_BLOCK_SWITCHES:
                     configDataInstance.switchRows = configSwitchesAdapter.getData();
                     configDataInstance.switchCols = spinnerSwitchCols.getSelectedItemPosition();
                     break;
-                case 2: //config_block_lightscenes
+                case CONFIG_BLOCK_LIGHTSCENES:
                     configDataInstance.lightsceneRows = configLightscenesAdapter.getData();
                     break;
-                case 3: //config_block_values
+                case CONFIG_BLOCK_VALUES:
                     configDataInstance.valueRows = configValuesAdapter.getData();
                     configDataInstance.valueCols = spinnerValueCols.getSelectedItemPosition();
                     break;
-                case 4: //config_block_intvalues
+                case CONFIG_BLOCK_INTVALUES:
                     configDataInstance.intValueRows = configIntValuesAdapter.getData();
                     break;
-                case 5: //config_block_commands
+                case CONFIG_BLOCK_COMMANDS:
                     configDataInstance.commandRows = configCommandsAdapter.getData();
                     configDataInstance.commandCols = spinnerCommandCols.getSelectedItemPosition();
                     break;
@@ -197,7 +200,29 @@ public class ConfigPagerAdapter extends PagerAdapter {
         @Override
         public void onClick(View view) {
             configCommandsAdapter.newLine();
-            configCommandsAdapter.setListViewHeightBasedOnChildren((ListView) mView.findViewById(R.id.commands));
+            configCommandsAdapter.setListViewHeightBasedOnChildren((ListView) views.get(CONFIG_BLOCK_COMMANDS).findViewById(R.id.commands));
+        }
+    };
+
+    private Button.OnClickListener newValuesHeaderButtonOnClickListener = new Button.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            ListView curView = (ListView) views.get(CONFIG_BLOCK_VALUES).findViewById(R.id.values);
+            configValuesAdapter.newLine(curView);
+        }
+    };
+    private Button.OnClickListener newIntValuesHeaderButtonOnClickListener = new Button.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            ListView curView = (ListView) views.get(CONFIG_BLOCK_INTVALUES).findViewById(R.id.intvalues);
+            configIntValuesAdapter.newLine(curView);
+        }
+    };
+    private Button.OnClickListener newSwitchesHeaderButtonOnClickListener = new Button.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            ListView curView = (ListView) views.get(CONFIG_BLOCK_SWITCHES).findViewById(R.id.switches);
+            configSwitchesAdapter.newLine(curView);
         }
     };
 
@@ -233,6 +258,9 @@ public class ConfigPagerAdapter extends PagerAdapter {
                 });
             }
         });
+
+        Button newSwitchesHeaderButton = (Button) view.findViewById(R.id.newSwitchesHeaderButton);
+        newSwitchesHeaderButton.setOnClickListener(newSwitchesHeaderButtonOnClickListener);
     }
 
     private void setupLightscenes(View view) {
@@ -327,6 +355,8 @@ public class ConfigPagerAdapter extends PagerAdapter {
             }
         });
 
+        Button newValuesHeaderButton = (Button) view.findViewById(R.id.newValuesHeaderButton);
+        newValuesHeaderButton.setOnClickListener(newValuesHeaderButtonOnClickListener);
     }
 
     private void setupIntValues(View view) {
@@ -358,6 +388,9 @@ public class ConfigPagerAdapter extends PagerAdapter {
                 });
             }
         });
+
+        Button newIntValuesHeaderButton = (Button) view.findViewById(R.id.newIntValuesHeaderButton);
+        newIntValuesHeaderButton.setOnClickListener(newIntValuesHeaderButtonOnClickListener);
     }
 
     private void setupCommands(View view) {

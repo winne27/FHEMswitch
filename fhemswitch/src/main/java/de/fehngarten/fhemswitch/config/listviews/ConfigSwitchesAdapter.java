@@ -15,8 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ import de.fehngarten.fhemswitch.data.ConfigSwitchRow;
 public class ConfigSwitchesAdapter extends ConfigAdapter {
     Context mContext;
     private ArrayList<ConfigSwitchRow> switchRows = null;
+    private String headerSeperator = "Header-Seperator:";
 
     public ConfigSwitchesAdapter(Context mContext) {
         this.mContext = mContext;
@@ -45,14 +48,14 @@ public class ConfigSwitchesAdapter extends ConfigAdapter {
 
         //switchRows.add(new ConfigSwitchRow(mContext.getString(R.string.unit), mContext.getString(R.string.name), false, mContext.getString(R.string.command)));
         for (MySwitch mySwitch : switches) {
-            if (switchesFHEM.contains(mySwitch.unit) && !allUnits.contains(mySwitch.unit)) {
+            if ((switchesFHEM.contains(mySwitch.unit) && !allUnits.contains(mySwitch.unit)) || mySwitch.unit.equals("")) {
                 switchRows.add(new ConfigSwitchRow(mySwitch.unit, mySwitch.name, true, mySwitch.cmd));
                 switchesConfig.add(mySwitch.unit);
                 allUnits.add(mySwitch.unit);
             }
         }
         for (MySwitch mySwitch : switchesDisabled) {
-            if (switchesFHEM.contains(mySwitch.unit) && !allUnits.contains(mySwitch.unit)) {
+            if ((switchesFHEM.contains(mySwitch.unit) && !allUnits.contains(mySwitch.unit)) || mySwitch.unit.equals("")) {
                 switchRows.add(new ConfigSwitchRow(mySwitch.unit, mySwitch.name, false, mySwitch.cmd));
                 switchesConfig.add(mySwitch.unit);
                 allUnits.add(mySwitch.unit);
@@ -67,11 +70,51 @@ public class ConfigSwitchesAdapter extends ConfigAdapter {
     }
 
     public ArrayList<ConfigSwitchRow> getData() {
+        ArrayList<ConfigSwitchRow> tempSwitchRows =  new ArrayList<>();
+        for (ConfigSwitchRow switchRow : switchRows) {
+            if (!switchRow.equals(headerSeperator)) {
+
+            }
+        }
         return switchRows;
     }
 
     public int getCount() {
         return switchRows.size();
+    }
+
+    public void newLine(ListView listView)
+    {
+        ArrayList<ConfigSwitchRow> tempSwitchRows = new ArrayList<>();
+        tempSwitchRows.add(new ConfigSwitchRow("", "", false, ""));
+        for (ConfigSwitchRow switchRow : switchRows) {
+            tempSwitchRows.add(switchRow);
+        }
+        switchRows.clear();
+        notifyDataSetChanged();
+
+        for (ConfigSwitchRow switchRow : tempSwitchRows) {
+            switchRows.add(switchRow);
+        }
+        notifyDataSetChanged();
+        setListViewHeightBasedOnChildren(listView);
+    }
+
+    public void removeItem(int pos)
+    {
+        ArrayList<ConfigSwitchRow> tempSwitchRows = new ArrayList<>();
+        for (ConfigSwitchRow switchRow : switchRows) {
+            tempSwitchRows.add(switchRow);
+        }
+        tempSwitchRows.remove(pos);
+        switchRows.clear();
+        notifyDataSetChanged();
+
+        for (ConfigSwitchRow switchRow : tempSwitchRows) {
+            switchRows.add(switchRow);
+        }
+        notifyDataSetChanged();
+        //setListViewHeightBasedOnChildren(listView);
     }
 
     public ConfigSwitchRow getItem(int position) {
@@ -98,23 +141,42 @@ public class ConfigSwitchesAdapter extends ConfigAdapter {
             switchHolder.switch_name = (EditText) rowView.findViewById(R.id.config_switch_name);
             switchHolder.switch_enabled = (CheckBox) rowView.findViewById(R.id.config_switch_enabled);
             switchHolder.switch_cmd = (Spinner) rowView.findViewById(R.id.config_switch_cmd);
+            switchHolder.switch_remove_button = (Button) rowView.findViewById(R.id.config_switch_remove);
         } else {
             switchHolder = (SwitchHolder) rowView.getTag();
         }
 
         switchHolder.ref = position;
-        switchHolder.switch_unit.setText(switchRow.unit);
+        if (switchRow.unit.equals("")) {
+            //rowView.findViewById(R.id.config_switch_unit).setVisibility(View.GONE);
+            rowView.findViewById(R.id.config_switch_cmd).setVisibility(View.GONE);
+            rowView.findViewById(R.id.config_switch_remove).setVisibility(View.VISIBLE);
+            switchHolder.switch_unit.setText(headerSeperator);
+
+            switchHolder.switch_remove_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    removeItem(switchHolder.ref);
+                }
+            });
+        } else {
+            //rowView.findViewById(R.id.config_switch_unit).setVisibility(View.VISIBLE);
+            rowView.findViewById(R.id.config_switch_cmd).setVisibility(View.VISIBLE);
+            rowView.findViewById(R.id.config_switch_remove).setVisibility(View.GONE);
+            switchHolder.switch_unit.setText(switchRow.unit);
+        }
+
         switchHolder.switch_name.setText(switchRow.name);
         switchHolder.switch_enabled.setChecked(switchRow.enabled);
         switchHolder.switch_cmd.setSelection(getSpinnerIndex(switchHolder.switch_cmd, switchRow.cmd));
 
-        //private method of your class
         switchHolder.switch_enabled.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 ConfigSwitchesAdapter.this.getItem(switchHolder.ref).enabled = switchHolder.switch_enabled.isChecked();
             }
         });
+
         switchHolder.switch_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
@@ -203,5 +265,6 @@ public class ConfigSwitchesAdapter extends ConfigAdapter {
         EditText switch_name;
         Spinner switch_cmd;
         int ref;
+        Button switch_remove_button;
     }
 }

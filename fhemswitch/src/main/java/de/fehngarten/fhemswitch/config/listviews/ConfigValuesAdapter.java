@@ -10,11 +10,13 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import de.fehngarten.fhemswitch.data.MyValue;
@@ -38,7 +40,7 @@ public class ConfigValuesAdapter extends ConfigAdapter {
 
         for (MyValue myValue : values) {
             ConfigValueRow FHEMrow = mFHEMvalues.getValue(myValue.unit);
-            if (FHEMrow != null && !allUnits.contains(myValue.unit)) {
+            if ((FHEMrow != null && !allUnits.contains(myValue.unit)) || myValue.unit.equals("")) {
                 valueRows.add(new ConfigValueRow(myValue.unit, myValue.name, FHEMrow.value, true, myValue.useIcon));
                 valuesConfig.add(myValue.unit);
                 allUnits.add(myValue.unit);
@@ -47,7 +49,7 @@ public class ConfigValuesAdapter extends ConfigAdapter {
 
         for (MyValue myValue : valuesDisabled) {
             ConfigValueRow FHEMrow = mFHEMvalues.getValue(myValue.unit);
-            if (FHEMrow != null && !allUnits.contains(myValue.unit)) {
+            if ((FHEMrow != null && !allUnits.contains(myValue.unit)) || myValue.unit.equals("")) {
                 valueRows.add(new ConfigValueRow(myValue.unit, myValue.name, FHEMrow.value, false, myValue.useIcon));
                 valuesConfig.add(myValue.unit);
                 allUnits.add(myValue.unit);
@@ -61,12 +63,30 @@ public class ConfigValuesAdapter extends ConfigAdapter {
         }
     }
 
+    public void newLine(ListView listView)
+    {
+        ArrayList<ConfigValueRow> tempValueRows = new ArrayList<>();
+        tempValueRows.add(new ConfigValueRow("", "", "", false, false));
+        for (ConfigValueRow valueRow : valueRows) {
+            tempValueRows.add(valueRow);
+        }
+        valueRows.clear();
+        notifyDataSetChanged();
+
+        for (ConfigValueRow valueRow : tempValueRows) {
+            valueRows.add(valueRow);
+        }
+        notifyDataSetChanged();
+        setListViewHeightBasedOnChildren(listView);
+    }
+
     public ArrayList<ConfigValueRow> getData() {
         return valueRows;
     }
 
     public int getCount() {
-        return valueRows.size();
+        Integer count = valueRows.size();
+        return count;
     }
 
     public ConfigValueRow getItem(int position) {
@@ -94,6 +114,16 @@ public class ConfigValuesAdapter extends ConfigAdapter {
             valueHolder.value_useicon = (CheckBox) rowView.findViewById(R.id.config_value_useicon);
         } else {
             valueHolder = (ValueHolder) rowView.getTag();
+        }
+
+        if (valueRow.unit.equals("")) {
+            rowView.findViewById(R.id.config_value_unit).setVisibility(View.GONE);
+            rowView.findViewById(R.id.config_value_value).setVisibility(View.GONE);
+            rowView.findViewById(R.id.config_value_useicon).setVisibility(View.GONE);
+        } else {
+            rowView.findViewById(R.id.config_value_unit).setVisibility(View.VISIBLE);
+            rowView.findViewById(R.id.config_value_value).setVisibility(View.VISIBLE);
+            rowView.findViewById(R.id.config_value_useicon).setVisibility(View.VISIBLE);
         }
 
         valueHolder.ref = position;

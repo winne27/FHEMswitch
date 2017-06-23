@@ -35,6 +35,11 @@ public class Consts {
     public static final int LAYOUT_HORIZONTAL = 0;
     public static final int LAYOUT_VERTICAL = 1;
     public static final int LAYOUT_MIXED = 2;
+
+    public static final int CONFIG_BLOCK_ORIENT = 0;
+    public static final int CONFIG_BLOCK_SWITCHES = 1;
+    public static final int CONFIG_BLOCK_LIGHTSCENES = 2;
+    public static final int CONFIG_BLOCK_VALUES = 3;
+    public static final int CONFIG_BLOCK_INTVALUES = 4;
+    public static final int CONFIG_BLOCK_COMMANDS = 5;
 }
-
-
