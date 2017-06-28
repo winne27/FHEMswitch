@@ -186,7 +186,7 @@ public class WidgetService extends Service {
 
     private void doColoring(boolean doit) {
         mView = new RemoteViews(mContext.getPackageName(), layoutId);
-        int shape = doit ? settingShapes[instSerial] : R.drawable.myshape;
+        int shape = doit ? settingShapes[instSerial] : R.drawable.widget_shape;
         mView.setInt(R.id.main_layout, "setBackgroundResource", shape);
         appWidgetManager.updateAppWidget(widgetId, mView);
     }
@@ -862,7 +862,9 @@ public class WidgetService extends Service {
                 }
 
                 if (ConfigWorkBasket.data.get(instSerial).setIntValue(unit, value)) {
-                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("intvalue").get(0));
+                    if (myLayout.layout.containsKey("intvalue")) {
+                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("intvalue").get(0));
+                    }
                 }
             }
         });

@@ -13,8 +13,8 @@ android {
     }
     defaultConfig {
         applicationId "de.fehngarten.fhemswitch"
-        versionCode 3201500
-        versionName "3.2.1"
+        versionCode 3300500
+        versionName "3.3.0"
         minSdkVersion 15
         targetSdkVersion 25
         archivesBaseName = "fhemswitch-$versionName"

@@ -49,6 +49,10 @@ public final class Settings {
     public static final String settingGoogleStoreUrl = "https://play.google.com/store/apps/details?id=de.fehngarten.fhemswitch";
     public static final String settingLicenceKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh7D+DlsyIr/qs/nzYQHHITVBXoDn8eSsFKGUgjvlJhINvjFUTwiHBmwrTKBIXye6WozJ4QM7Ov3cUXqeDlIz4m8bHCibXzQsra2kWSZagRhHLcrBwVBy1a3JXB74E1VQO0LbPPgnfeL2Uzv4IIS3QvyAJ2Uo5lHJBoTA+jxUIe/YFPovNvhWhZna2oHZlptc07rNydcTShdMzk/Ujv881jJB0GJMUol5OM5/WG+dHpfyplxlolpS/AXX9312VeU7LkRdOUikQ+bPQMT5gbYyWPXoDAKRkJiU6F5LR+xQqxHxNyedy3yZnlkmXDq0l7u1HYkJaY3Pr2hxOo3hAjX2pQIDAQAB";
     public static final Map<String, Integer> settingIcons = new HashMap<>();
+    public static final Map<String, Integer> settingHeaderShapes = new HashMap<>();
+    public static final Map<String, Integer> settingDefaultShapes = new HashMap<>();
+    public static final Map<String, Integer> settingActiveShapes = new HashMap<>();
+    public static final Map<String, Integer> settingInactiveShapes = new HashMap<>();
     public static final ArrayList<Class<?>> settingServiceClasses = new ArrayList<>(settingsMaxInst);
     public static final int[] settingWidgetSel = new int[settingsMaxInst];
     public static final int[] settingShapes = new int[settingsMaxInst];
@@ -56,7 +60,6 @@ public final class Settings {
     public static final int[] settingConfigBlocks = new int[6];
     public static final int[] settingTabs = new int[6];
     public static final HashMap<String, Float> settingMultiplier = new HashMap<>();
-
 
     static {
         settingIcons.put("v_on", R.drawable.v_on);
@@ -89,19 +92,19 @@ public final class Settings {
         settingServiceClasses.add(WidgetService2.class);
         settingServiceClasses.add(WidgetService3.class);
 
-        settingShapes[0] = R.drawable.config_shape_widget_0;
-        settingShapes[1] = R.drawable.config_shape_widget_1;
-        settingShapes[2] = R.drawable.config_shape_widget_2;
-        settingShapes[3] = R.drawable.config_shape_widget_3;
+        settingShapes[0] = R.drawable.widget_shape_0;
+        settingShapes[1] = R.drawable.widget_shape_1;
+        settingShapes[2] = R.drawable.widget_shape_2;
+        settingShapes[3] = R.drawable.widget_shape_3;
 
         settingWidgetSel[0] = R.id.widgetsel_0;
         settingWidgetSel[1] = R.id.widgetsel_1;
         settingWidgetSel[2] = R.id.widgetsel_2;
         settingWidgetSel[3] = R.id.widgetsel_3;
 
-        settingLayouts[LAYOUT_HORIZONTAL] = R.layout.main_layout_horizontal;
-        settingLayouts[LAYOUT_VERTICAL] = R.layout.main_layout_vertical;
-        settingLayouts[LAYOUT_MIXED] = R.layout.main_layout_mixed;
+        settingLayouts[LAYOUT_HORIZONTAL] = R.layout.widget_layout_horizontal;
+        settingLayouts[LAYOUT_VERTICAL] = R.layout.widget_layout_vertical;
+        settingLayouts[LAYOUT_MIXED] = R.layout.widget_layout_mixed;
 
         settingMultiplier.put(DOWNFAST, (float) -3);
         settingMultiplier.put(DOWN, (float) -1);
@@ -121,5 +124,25 @@ public final class Settings {
         settingTabs[CONFIG_BLOCK_VALUES] = R.id.tab3;
         settingTabs[CONFIG_BLOCK_INTVALUES] = R.id.tab4;
         settingTabs[CONFIG_BLOCK_COMMANDS] = R.id.tab5;
+
+        settingHeaderShapes.put("default", R.drawable.widget_shape_header);
+        settingHeaderShapes.put("first", R.drawable.widget_shape_header_first);
+        settingHeaderShapes.put("last", R.drawable.widget_shape_header_last);
+        settingHeaderShapes.put("both", R.drawable.widget_shape_header_both);
+
+        settingDefaultShapes.put("default", R.drawable.widget_shape_default);
+        settingDefaultShapes.put("first", R.drawable.widget_shape_default_first);
+        settingDefaultShapes.put("last", R.drawable.widget_shape_default_last);
+        settingDefaultShapes.put("both", R.drawable.widget_shape_default_both);
+
+        settingActiveShapes.put("default", R.drawable.widget_shape_active);
+        settingActiveShapes.put("first", R.drawable.widget_shape_active_first);
+        settingActiveShapes.put("last", R.drawable.widget_shape_active_last);
+        settingActiveShapes.put("both", R.drawable.widget_shape_active_both);
+
+        settingInactiveShapes.put("default", R.drawable.widget_shape_inactive);
+        settingInactiveShapes.put("first", R.drawable.widget_shape_inactive_first);
+        settingInactiveShapes.put("last", R.drawable.widget_shape_inactive_last);
+        settingInactiveShapes.put("both", R.drawable.widget_shape_inactive_both);
     }
 }

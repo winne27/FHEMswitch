@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import de.fehngarten.fhemswitch.R;
 
 import static de.fehngarten.fhemswitch.global.Consts.*;
+import static de.fehngarten.fhemswitch.global.Settings.settingDefaultShapes;
 
 import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
 import de.fehngarten.fhemswitch.data.ConfigWorkInstance;
@@ -66,7 +67,7 @@ class CommandsFactory implements RemoteViewsFactory {
     @Override
     public RemoteViews getViewAt(int position) {
         //Log.i("values Position: " + position + " of " + values.size(),values.get(position).name);
-        RemoteViews mView = new RemoteViews(mContext.getPackageName(), R.layout.command_row);
+        RemoteViews mView = new RemoteViews(mContext.getPackageName(), R.layout.widget_row_command);
         int count = getCount();
         if (position >= count || count <= 0 ) {
             Intent intent = new Intent(mContext.getApplicationContext(), WidgetProvider.class);
@@ -75,14 +76,18 @@ class CommandsFactory implements RemoteViewsFactory {
         } else {
             ArrayList<MyCommand> myCommandsCols = curInstance.commandsCols.get(colnum);
             MyCommand curCommand = myCommandsCols.get(position);
+            String type = checkPosition(myCommandsCols, position);
 
             mView.setTextViewText(R.id.command_name, curCommand.name);
 
+            mView.setInt(R.id.command_row, "setBackgroundResource", settingDefaultShapes.get(type));
+            /*
             if (curCommand.activ) {
-                mView.setInt(R.id.command_row, "setBackgroundResource", R.drawable.activecommand);
+                mView.setInt(R.id.command_row, "setBackgroundResource", R.drawable.widget_shape_active);
             } else {
-                mView.setInt(R.id.command_row, "setBackgroundResource", R.drawable.widget_shape_command);
+                mView.setInt(R.id.command_row, "setBackgroundResource", R.drawable.widget_shape_default);
             }
+            */
 
             Bundle bundle = new Bundle();
             bundle.putString(FHEM_COMMAND, curCommand.command);
@@ -124,4 +129,44 @@ class CommandsFactory implements RemoteViewsFactory {
         // TODO Auto-generated method stub
         return false;
     }
+
+    private String checkPosition(ArrayList<MyCommand> myCommandsCols, int position) {
+        String type = "default";
+        boolean isFirst = false;
+        boolean isLast = false;
+
+        if (position == 0) {
+            isFirst = true;
+        }
+
+        if (position == curInstance.commandsCols.get(colnum).size() - 1) {
+            isLast = true;
+        }
+
+        /*
+        if (!isLast) {
+            MyCommand nextValue = myCommandsCols.get(position + 1);
+            if (nextValue.unit.equals(HEADER_SEPERATOR) && nextValue.name.equals("")) {
+                isLast = true;
+            }
+        }
+
+        if (!isFirst) {
+            MyCommand prevValue = myCommandsCols.get(position - 1);
+            if (prevValue.unit.equals(HEADER_SEPERATOR) && prevValue.name.equals("")) {
+                isFirst = true;
+            }
+        }
+*/
+        if (isFirst && isLast) {
+            type = "both";
+        } else if (isFirst) {
+            type = "first";
+        } else if (isLast) {
+            type = "last";
+        }
+
+        return type;
+    }
+
 }

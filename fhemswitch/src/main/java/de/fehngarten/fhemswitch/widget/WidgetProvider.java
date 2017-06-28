@@ -6,7 +6,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-//import android.util.Log;
 import android.util.SparseArray;
 
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
@@ -24,7 +23,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        //Log.d(TAG, "onReiceive startet by " + action);
+        //Log.d(this.getClass().getSimpleName(), "onReiceive startet by " + action);
 
         if (action == null) {
             action = "";
@@ -38,6 +37,7 @@ public class WidgetProvider extends AppWidgetProvider {
                 break;
             case SEND_FHEM_COMMAND:
                 int instSerial = intent.getExtras().getInt(INSTSERIAL);
+                //Log.i(this.getClass().getSimpleName(),"instserial: " + Integer.toString(instSerial));
                 Intent commandIntent = new Intent(context.getApplicationContext(), settingServiceClasses.get(instSerial));
                 commandIntent.setAction(FHEM_COMMAND);
                 commandIntent.putExtras(intent.getExtras());

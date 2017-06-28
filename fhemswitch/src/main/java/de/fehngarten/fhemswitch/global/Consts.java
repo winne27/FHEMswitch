@@ -31,6 +31,7 @@ public class Consts {
     public static final String VERSION_CLOSE = "closeversion";
     public static final String SOCKET_CONNECTED = "connected";
     public static final String SOCKET_DISCONNECTED = "disconnected";
+    public static final String HEADER_SEPERATOR = "*** Header ***";
 
     public static final int LAYOUT_HORIZONTAL = 0;
     public static final int LAYOUT_VERTICAL = 1;

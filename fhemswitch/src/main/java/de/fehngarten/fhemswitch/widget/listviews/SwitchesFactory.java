@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 import de.fehngarten.fhemswitch.R;
 import static de.fehngarten.fhemswitch.global.Consts.*;
+import static de.fehngarten.fhemswitch.global.Settings.settingDefaultShapes;
+import static de.fehngarten.fhemswitch.global.Settings.settingHeaderShapes;
+
 import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
 import de.fehngarten.fhemswitch.data.ConfigWorkInstance;
 import de.fehngarten.fhemswitch.data.MySwitch;
@@ -59,6 +62,7 @@ class SwitchesFactory implements RemoteViewsFactory {
 
     }
 
+
     public int getCount() {
         //String methodname = "getCount";
         //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "switches size: " + Integer.toString(switches.size()));
@@ -72,27 +76,29 @@ class SwitchesFactory implements RemoteViewsFactory {
 
     @Override
     public RemoteViews getViewAt(int position) {
-        //Log.i("switches Position: " + position + " in col " + String.valueOf(colnum),WidgetService.configData.switchesCols.get(colnum).get(position).name);
-        int count = getCount();
         RemoteViews mView;
+        int count = getCount();
         if (position >= count || count <= 0) {
-            mView = new RemoteViews(mContext.getPackageName(), R.layout.switch_row);
+            mView = new RemoteViews(mContext.getPackageName(), R.layout.widget_row_switch);
             Intent intent = new Intent(mContext.getApplicationContext(), WidgetProvider.class);
             intent.setAction(NEW_CONFIG);
             mContext.sendBroadcast(intent);
         } else {
             ArrayList<MySwitch> mySwitchesCols = curInstance.switchesCols.get(colnum);
             MySwitch curSwitch = mySwitchesCols.get(position);
-
-            if (curSwitch.unit.equals("")) {
+            String type = checkPosition(mySwitchesCols, position);
+            if (curSwitch.unit.equals(HEADER_SEPERATOR)) {
                 if (curSwitch.name.equals("")) {
                     mView = new RemoteViews(mContext.getPackageName(), R.layout.seperator);
                 } else {
                     mView = new RemoteViews(mContext.getPackageName(), R.layout.header);
+                    mView.setInt(R.id.header, "setBackgroundResource", settingHeaderShapes.get(type));
                     mView.setTextViewText(R.id.header_name, curSwitch.name);
                 }
             } else {
-                mView = new RemoteViews(mContext.getPackageName(), R.layout.switch_row);
+                mView = new RemoteViews(mContext.getPackageName(), R.layout.widget_row_switch);
+                mView.setInt(R.id.switch_row, "setBackgroundResource", settingDefaultShapes.get(type));
+
                 mView.setTextViewText(R.id.switch_name, curSwitch.name);
                 mView.setImageViewResource(R.id.switch_icon, Settings.settingIcons.get(curSwitch.icon));
 
@@ -122,7 +128,7 @@ class SwitchesFactory implements RemoteViewsFactory {
     @Override
     public int getViewTypeCount() {
         // TODO Auto-generated method stub
-        return 1;
+        return 3;
     }
 
     @Override
@@ -135,5 +141,43 @@ class SwitchesFactory implements RemoteViewsFactory {
     public boolean hasStableIds() {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    private String checkPosition(ArrayList<MySwitch> mySwitchesCols, int position) {
+        String type = "default";
+        boolean isFirst = false;
+        boolean isLast = false;
+
+        if (position == 0) {
+            isFirst = true;
+        }
+
+        if (position == curInstance.switchesCols.get(colnum).size() - 1) {
+            isLast = true;
+        }
+
+        if (!isLast) {
+            MySwitch nextSwitch = mySwitchesCols.get(position + 1);
+            if (nextSwitch.unit.equals(HEADER_SEPERATOR) && nextSwitch.name.equals("")) {
+                isLast = true;
+            }
+        }
+
+        if (!isFirst) {
+            MySwitch prevSwitch = mySwitchesCols.get(position - 1);
+            if (prevSwitch.unit.equals(HEADER_SEPERATOR) && prevSwitch.name.equals("")) {
+                isFirst = true;
+            }
+        }
+
+        if (isFirst && isLast) {
+            type = "both";
+        } else if (isFirst) {
+            type = "first";
+        } else if (isLast) {
+            type = "last";
+        }
+
+        return type;
     }
 }

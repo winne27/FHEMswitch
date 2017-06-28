@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetBottom="@dimen/inset_bottom">
+
+    <shape android:shape="rectangle">
+        <stroke
+            android:width="@dimen/stroke_width_standard"
+            android:color="@color/widget_stroke_color" />
+
+        <solid
+            android:color="@color/widget_active_background" />
+
+        <corners
+            android:bottomLeftRadius="0dp"
+            android:bottomRightRadius="0dp"
+            android:topLeftRadius="@dimen/radius_standard"
+            android:topRightRadius="@dimen/radius_standard" />
+    </shape>
+
+</inset>

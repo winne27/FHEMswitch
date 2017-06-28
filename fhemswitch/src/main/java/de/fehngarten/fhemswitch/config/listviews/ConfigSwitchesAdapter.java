@@ -26,10 +26,11 @@ import de.fehngarten.fhemswitch.data.MySwitch;
 import de.fehngarten.fhemswitch.R;
 import de.fehngarten.fhemswitch.data.ConfigSwitchRow;
 
+import static de.fehngarten.fhemswitch.global.Consts.HEADER_SEPERATOR;
+
 public class ConfigSwitchesAdapter extends ConfigAdapter {
     Context mContext;
     private ArrayList<ConfigSwitchRow> switchRows = null;
-    private String headerSeperator = "Header-Seperator:";
 
     public ConfigSwitchesAdapter(Context mContext) {
         this.mContext = mContext;
@@ -48,14 +49,14 @@ public class ConfigSwitchesAdapter extends ConfigAdapter {
 
         //switchRows.add(new ConfigSwitchRow(mContext.getString(R.string.unit), mContext.getString(R.string.name), false, mContext.getString(R.string.command)));
         for (MySwitch mySwitch : switches) {
-            if ((switchesFHEM.contains(mySwitch.unit) && !allUnits.contains(mySwitch.unit)) || mySwitch.unit.equals("")) {
+            if ((switchesFHEM.contains(mySwitch.unit) && !allUnits.contains(mySwitch.unit)) || mySwitch.unit.equals(HEADER_SEPERATOR)) {
                 switchRows.add(new ConfigSwitchRow(mySwitch.unit, mySwitch.name, true, mySwitch.cmd));
                 switchesConfig.add(mySwitch.unit);
                 allUnits.add(mySwitch.unit);
             }
         }
         for (MySwitch mySwitch : switchesDisabled) {
-            if ((switchesFHEM.contains(mySwitch.unit) && !allUnits.contains(mySwitch.unit)) || mySwitch.unit.equals("")) {
+            if ((switchesFHEM.contains(mySwitch.unit) && !allUnits.contains(mySwitch.unit)) || mySwitch.unit.equals(HEADER_SEPERATOR)) {
                 switchRows.add(new ConfigSwitchRow(mySwitch.unit, mySwitch.name, false, mySwitch.cmd));
                 switchesConfig.add(mySwitch.unit);
                 allUnits.add(mySwitch.unit);
@@ -70,12 +71,6 @@ public class ConfigSwitchesAdapter extends ConfigAdapter {
     }
 
     public ArrayList<ConfigSwitchRow> getData() {
-        ArrayList<ConfigSwitchRow> tempSwitchRows =  new ArrayList<>();
-        for (ConfigSwitchRow switchRow : switchRows) {
-            if (!switchRow.equals(headerSeperator)) {
-
-            }
-        }
         return switchRows;
     }
 
@@ -86,7 +81,7 @@ public class ConfigSwitchesAdapter extends ConfigAdapter {
     public void newLine(ListView listView)
     {
         ArrayList<ConfigSwitchRow> tempSwitchRows = new ArrayList<>();
-        tempSwitchRows.add(new ConfigSwitchRow("", "", false, ""));
+        tempSwitchRows.add(new ConfigSwitchRow(HEADER_SEPERATOR, "", false, ""));
         for (ConfigSwitchRow switchRow : switchRows) {
             tempSwitchRows.add(switchRow);
         }
@@ -147,25 +142,17 @@ public class ConfigSwitchesAdapter extends ConfigAdapter {
         }
 
         switchHolder.ref = position;
-        if (switchRow.unit.equals("")) {
+        if (switchRow.unit.equals(HEADER_SEPERATOR)) {
             //rowView.findViewById(R.id.config_switch_unit).setVisibility(View.GONE);
             rowView.findViewById(R.id.config_switch_cmd).setVisibility(View.GONE);
             rowView.findViewById(R.id.config_switch_remove).setVisibility(View.VISIBLE);
-            switchHolder.switch_unit.setText(headerSeperator);
-
-            switchHolder.switch_remove_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View arg0) {
-                    removeItem(switchHolder.ref);
-                }
-            });
+            switchHolder.switch_remove_button.setOnClickListener(arg0 -> removeItem(switchHolder.ref));
         } else {
-            //rowView.findViewById(R.id.config_switch_unit).setVisibility(View.VISIBLE);
             rowView.findViewById(R.id.config_switch_cmd).setVisibility(View.VISIBLE);
             rowView.findViewById(R.id.config_switch_remove).setVisibility(View.GONE);
-            switchHolder.switch_unit.setText(switchRow.unit);
         }
 
+        switchHolder.switch_unit.setText(switchRow.unit);
         switchHolder.switch_name.setText(switchRow.name);
         switchHolder.switch_enabled.setChecked(switchRow.enabled);
         switchHolder.switch_cmd.setSelection(getSpinnerIndex(switchHolder.switch_cmd, switchRow.cmd));

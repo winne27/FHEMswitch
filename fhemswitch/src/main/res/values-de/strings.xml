@@ -79,5 +79,5 @@
     <string name="hint">Hinweis</string>
     <string name="hinttext">Navigation durch die einzelnen Rubriken ist mit horizontalen Wischgesten oder durch Antippen der Reiter oberhalb möglich!</string>
     <string name="control">Steuerfeld</string>
-    <string name="new_header">neue Überschrift oder Trennlinie</string>
+    <string name="new_header">neue Überschrift oder Absatz (falls kein Namen eingegben wird)</string>
 </resources>

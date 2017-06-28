@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.widget.RemoteViews;
@@ -67,7 +68,7 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public RemoteViews getViewAt(int position) {
-        RemoteViews mView = new RemoteViews(mContext.getPackageName(), R.layout.lightscene_row);
+        RemoteViews mView = new RemoteViews(mContext.getPackageName(), R.layout.widget_row_lightscene);
         //Log.i("LightScene Position: " + position + " of " + ConfigDataCage.data.get(instSerial).lightScenes.items.size(),ConfigDataCage.data.get(instSerial).lightScenes.items.get(position).name + " " + ConfigDataCage.data.get(instSerial).lightScenes.items.get(position).unit);
         int count = getCount();
         if (position >= count || count <= 0 || ConfigWorkBasket.data.get(instSerial).lightScenes.items.size() == 0) {
@@ -81,12 +82,13 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
             SpannableString s = new SpannableString(ConfigWorkBasket.data.get(instSerial).lightScenes.items.get(position).name);
             s.setSpan(new StyleSpan(Typeface.BOLD), 0, s.length(), 0);
             mView.setTextViewText(R.id.lightscene_name, s);
-            mView.setTextColor(R.id.lightscene_name, 0xFFCCCCCC);
-            mView.setFloat(R.id.lightscene_name, "setTextSize", 20);
+            mView.setTextColor(R.id.lightscene_name, ContextCompat.getColor(mContext, R.color.widget_header_color));
+            //mView.setFloat(R.id.lightscene_name, "setTextSize", 20);
             if (position == 0) {
-                mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.header);
+                //mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.widget_shape_header_first);
+                mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.widget_shape_header_first);
             } else {
-                mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.header2);
+                mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.widget_shape_header);
             }
 
             final Bundle bundle = new Bundle();
@@ -106,28 +108,29 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
 
             if (ConfigWorkBasket.data.get(instSerial).lightScenes.items.get(position).activ) {
                 if (ConfigWorkBasket.data.get(instSerial).lightScenes.itemsCount == 1) {
-                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.activeboth);
+                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.widget_shape_active_both);
                 } else if (position == 0) {
-                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.activefirst);
+                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.widget_shape_active_first);
                 } else if (position == ConfigWorkBasket.data.get(instSerial).lightScenes.itemsCount - 1) {
-                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.activelast);
+                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.widget_shape_active_last);
                 } else {
-                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.active);
+                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.widget_shape_active);
                 }
             } else {
                 if (ConfigWorkBasket.data.get(instSerial).lightScenes.itemsCount == 1) {
-                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.inactiveboth);
+                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.widget_shape_inactive_both);
                 } else if (position == 0) {
-                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.inactivefirst);
+                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.widget_shape_inactive_first);
                 } else if (position == ConfigWorkBasket.data.get(instSerial).lightScenes.itemsCount - 1) {
-                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.inactivelast);
+                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.widget_shape_inactive_last);
                 } else {
-                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.inactive);
+                    mView.setInt(R.id.lightscene_name, "setBackgroundResource", R.drawable.widget_shape_inactive);
                 }
                 final Bundle bundle = new Bundle();
                 bundle.putString(FHEM_COMMAND, ConfigWorkBasket.data.get(instSerial).lightScenes.activateCmd(position));
                 bundle.putString(FHEM_TYPE, "lightscene");
                 bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+                bundle.putInt(INSTSERIAL, instSerial);
                 bundle.putString(POS, Integer.toString(position));
 
                 final Intent fillInIntent = new Intent();

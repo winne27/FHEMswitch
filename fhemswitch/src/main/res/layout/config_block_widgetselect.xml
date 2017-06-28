@@ -30,8 +30,8 @@
             android:paddingRight="10dp"
             android:tag="0"
             android:text="@string/widget1"
-            android:buttonTint="@color/black"
-            android:background="@drawable/config_shape_widget_0"
+            android:buttonTint="@color/conf_radio_color"
+            android:background="@drawable/widget_shape_0"
             android:textSize="16sp" />
 
         <RadioButton
@@ -46,8 +46,8 @@
             android:paddingRight="10dp"
             android:tag="1"
             android:text="@string/widget2"
-            android:buttonTint="@color/black"
-            android:background="@drawable/config_shape_widget_1"
+            android:buttonTint="@color/conf_radio_color"
+            android:background="@drawable/widget_shape_1"
             android:textSize="16sp"
             tools:targetApi="lollipop" />
 
@@ -63,8 +63,8 @@
             android:paddingRight="10dp"
             android:tag="2"
             android:text="@string/widget3"
-            android:buttonTint="@color/black"
-            android:background="@drawable/config_shape_widget_2"
+            android:buttonTint="@color/conf_radio_color"
+            android:background="@drawable/widget_shape_2"
             android:textSize="16sp" />
 
         <RadioButton
@@ -79,8 +79,8 @@
             android:paddingRight="10dp"
             android:tag="3"
             android:text="@string/widget4"
-            android:buttonTint="@color/black"
-            android:background="@drawable/config_shape_widget_3"
+            android:buttonTint="@color/conf_radio_color"
+            android:background="@drawable/widget_shape_3"
             android:textSize="16sp" />
     </RadioGroup>
 

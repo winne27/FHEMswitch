@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/header_row"
+    android:id="@+id/header"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:background="@drawable/widget_shape_header"
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/header_name"
         android:layout_width="match_parent"
-        android:layout_height="26dp"
-        android:gravity="center"
-        android:textColor="@color/text_standard"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:textColor="@color/widget_header_color"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
         android:textSize="16sp"
-        android:text="" />
-
+        android:textStyle="bold" />
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -25,6 +26,8 @@ import java.util.Locale;
 import de.fehngarten.fhemswitch.R;
 import de.fehngarten.fhemswitch.data.ConfigIntValueRow;
 import de.fehngarten.fhemswitch.data.MyIntValue;
+
+import static de.fehngarten.fhemswitch.global.Consts.HEADER_SEPERATOR;
 
 class ConfigIntValuesAdapter extends ConfigAdapter {
     Context mContext;
@@ -47,8 +50,9 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
         for (MyIntValue myIntValue : values) {
 
             ConfigIntValueRow FHEMrow = mFHEMvalues.getValue(myIntValue.unit);
-            if ((FHEMrow != null && !allUnits.contains(myIntValue.unit)) || myIntValue.unit.equals("")) {
-                intValueRows.add(new ConfigIntValueRow(myIntValue.unit, myIntValue.name, FHEMrow.value, myIntValue.setCommand, myIntValue.stepSize, myIntValue.commandExecDelay, true));
+            if ((FHEMrow != null && !allUnits.contains(myIntValue.unit)) || myIntValue.unit.equals(HEADER_SEPERATOR)) {
+                String intValue = myIntValue.unit.equals(HEADER_SEPERATOR) ? "" : FHEMrow.value;
+                intValueRows.add(new ConfigIntValueRow(myIntValue.unit, myIntValue.name, intValue, myIntValue.setCommand, myIntValue.stepSize, myIntValue.commandExecDelay, true));
                 valuesConfig.add(myIntValue.unit);
                 allUnits.add(myIntValue.unit);
             }
@@ -56,8 +60,9 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
 
         for (MyIntValue myIntValue : valuesDisabled) {
             ConfigIntValueRow FHEMrow = mFHEMvalues.getValue(myIntValue.unit);
-            if ((FHEMrow != null && !allUnits.contains(myIntValue.unit)) || myIntValue.unit.equals("")) {
-                intValueRows.add(new ConfigIntValueRow(myIntValue.unit, myIntValue.name, FHEMrow.value, myIntValue.setCommand, myIntValue.stepSize, myIntValue.commandExecDelay, false));
+            if ((FHEMrow != null && !allUnits.contains(myIntValue.unit)) || myIntValue.unit.equals(HEADER_SEPERATOR)) {
+                String intValue = myIntValue.unit.equals(HEADER_SEPERATOR) ? "" : FHEMrow.value;
+                intValueRows.add(new ConfigIntValueRow(myIntValue.unit, myIntValue.name, intValue, myIntValue.setCommand, myIntValue.stepSize, myIntValue.commandExecDelay, false));
                 valuesConfig.add(myIntValue.unit);
                 allUnits.add(myIntValue.unit);
             }
@@ -89,7 +94,7 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
     public void newLine(ListView listView)
     {
         ArrayList<ConfigIntValueRow> tempIntValueRows = new ArrayList<>();
-        tempIntValueRows.add(new ConfigIntValueRow("", "", "", "", (float) 0, 0, false));
+        tempIntValueRows.add(new ConfigIntValueRow(HEADER_SEPERATOR, "", "", "", (float) 0, 0, false));
         for (ConfigIntValueRow intValueRow : intValueRows) {
             tempIntValueRows.add(intValueRow);
         }
@@ -102,63 +107,83 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
         notifyDataSetChanged();
         setListViewHeightBasedOnChildren(listView);
     }
+
+
+    public void removeItem(int pos)
+    {
+        ArrayList<ConfigIntValueRow> tempIntValueRows = new ArrayList<>();
+        for (ConfigIntValueRow intValueRow : intValueRows) {
+            tempIntValueRows.add(intValueRow);
+        }
+        tempIntValueRows.remove(pos);
+        intValueRows.clear();
+        notifyDataSetChanged();
+
+        for (ConfigIntValueRow intValueRow : tempIntValueRows) {
+            intValueRows.add(intValueRow);
+        }
+        notifyDataSetChanged();
+        //setListViewHeightBasedOnChildren(listView);
+    }
     
     public View getView(int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
         ConfigIntValueRow intValueRow = getItem(position);
-        final ValueHolder valueHolder;
+        final ValueHolder intValueHolder;
 
         if (rowView == null) {
-            valueHolder = new ValueHolder();
+            intValueHolder = new ValueHolder();
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.config_row_intvalue, parent, false);
-            rowView.setTag(valueHolder);
-            valueHolder.value_unit = (TextView) rowView.findViewById(R.id.config_intvalue_unit);
-            valueHolder.value_name = (EditText) rowView.findViewById(R.id.config_intvalue_name);
-            valueHolder.value_value = (TextView) rowView.findViewById(R.id.config_intvalue_value);
-            valueHolder.value_enabled = (CheckBox) rowView.findViewById(R.id.config_intvalue_enabled);
-            valueHolder.value_stepSize = (EditText) rowView.findViewById(R.id.config_intvalue_stepsize);
-            valueHolder.value_commandExecDelay = (EditText) rowView.findViewById(R.id.config_intvalue_delay);
-            valueHolder.value_setCommand = (EditText) rowView.findViewById(R.id.config_intvalue_cmd);
+            rowView.setTag(intValueHolder);
+            intValueHolder.value_unit = (TextView) rowView.findViewById(R.id.config_intvalue_unit);
+            intValueHolder.value_name = (EditText) rowView.findViewById(R.id.config_intvalue_name);
+            intValueHolder.value_value = (TextView) rowView.findViewById(R.id.config_intvalue_value);
+            intValueHolder.value_enabled = (CheckBox) rowView.findViewById(R.id.config_intvalue_enabled);
+            intValueHolder.value_stepSize = (EditText) rowView.findViewById(R.id.config_intvalue_stepsize);
+            intValueHolder.value_commandExecDelay = (EditText) rowView.findViewById(R.id.config_intvalue_delay);
+            intValueHolder.value_setCommand = (EditText) rowView.findViewById(R.id.config_intvalue_cmd);
+            intValueHolder.intvalue_remove_button = (Button) rowView.findViewById(R.id.config_intvalue_remove);
         } else {
-            valueHolder = (ValueHolder) rowView.getTag();
+            intValueHolder = (ValueHolder) rowView.getTag();
         }
 
-        valueHolder.ref = position;
-        valueHolder.value_unit.setText(intValueRow.unit);
-        valueHolder.value_name.setText(intValueRow.name);
-        valueHolder.value_value.setText(intValueRow.value);
-        valueHolder.value_enabled.setChecked(intValueRow.enabled);
-        //valueHolder.value_stepSize.setText(intValueRow.stepSize.toString());
-        valueHolder.value_stepSize.setText(String.format(Locale.getDefault(), "%s", intValueRow.stepSize));
-        valueHolder.value_commandExecDelay.setText(String.format(Locale.getDefault(), "%d", intValueRow.commandExecDelay));
+        intValueHolder.ref = position;
+        intValueHolder.value_unit.setText(intValueRow.unit);
+        intValueHolder.value_name.setText(intValueRow.name);
+        intValueHolder.value_value.setText(intValueRow.value);
+        intValueHolder.value_enabled.setChecked(intValueRow.enabled);
+        //intValueHolder.value_stepSize.setText(intValueRow.stepSize.toString());
+        intValueHolder.value_stepSize.setText(String.format(Locale.getDefault(), "%s", intValueRow.stepSize));
+        intValueHolder.value_commandExecDelay.setText(String.format(Locale.getDefault(), "%d", intValueRow.commandExecDelay));
         String setCommandText;
         if (intValueRow.setCommand.equals("")) {
             setCommandText = intValueRow.unit;
         } else {
             setCommandText = intValueRow.setCommand;
         }
-        valueHolder.value_setCommand.setText(setCommandText);
+        intValueHolder.value_setCommand.setText(setCommandText);
 
-        if (intValueRow.unit.equals("")) {
-            rowView.findViewById(R.id.config_intvalue_unit).setVisibility(View.GONE);
+        if (intValueRow.unit.equals(HEADER_SEPERATOR)) {
             rowView.findViewById(R.id.config_intvalue_cmd).setVisibility(View.GONE);
+            rowView.findViewById(R.id.config_intvalue_remove).setVisibility(View.VISIBLE);
+            intValueHolder.intvalue_remove_button.setOnClickListener(arg0 -> removeItem(intValueHolder.ref));
             setVisible(rowView, false, false);
         } else {
-            rowView.findViewById(R.id.config_intvalue_unit).setVisibility(View.VISIBLE);
             rowView.findViewById(R.id.config_intvalue_cmd).setVisibility(View.VISIBLE);
+            rowView.findViewById(R.id.config_intvalue_remove).setVisibility(View.GONE);
             setVisible(rowView, intValueRow.enabled, !intValueRow.isTime);
         }
 
-        valueHolder.value_enabled.setOnClickListener(view -> {
-            ConfigIntValueRow intValueRow1 = getItem(valueHolder.ref);
-            intValueRow1.enabled = valueHolder.value_enabled.isChecked();
+        intValueHolder.value_enabled.setOnClickListener(view -> {
+            ConfigIntValueRow intValueRow1 = getItem(intValueHolder.ref);
+            intValueRow1.enabled = intValueHolder.value_enabled.isChecked();
             View rootView = view.getRootView();
             setListViewHeightBasedOnChildren((ListView) rootView.findViewById(R.id.intvalues));
             notifyDataSetChanged();
         });
 
-        valueHolder.value_name.addTextChangedListener(new TextWatcher() {
+        intValueHolder.value_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
             }
@@ -169,11 +194,11 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
 
             @Override
             public void afterTextChanged(Editable arg0) {
-                getItem(valueHolder.ref).name = arg0.toString();
+                getItem(intValueHolder.ref).name = arg0.toString();
             }
         });
 
-        valueHolder.value_setCommand.addTextChangedListener(new TextWatcher() {
+        intValueHolder.value_setCommand.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
             }
@@ -184,11 +209,11 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
 
             @Override
             public void afterTextChanged(Editable arg0) {
-                getItem(valueHolder.ref).setCommand = arg0.toString();
+                getItem(intValueHolder.ref).setCommand = arg0.toString();
             }
         });
 
-        valueHolder.value_stepSize.addTextChangedListener(new TextWatcher() {
+        intValueHolder.value_stepSize.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
             }
@@ -199,11 +224,11 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
 
             @Override
             public void afterTextChanged(Editable arg0) {
-                getItem(valueHolder.ref).stepSize = Float.parseFloat(arg0.toString());
+                getItem(intValueHolder.ref).stepSize = Float.parseFloat(arg0.toString());
             }
         });
 
-        valueHolder.value_commandExecDelay.addTextChangedListener(new TextWatcher() {
+        intValueHolder.value_commandExecDelay.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
             }
@@ -214,7 +239,7 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
 
             @Override
             public void afterTextChanged(Editable arg0) {
-                getItem(valueHolder.ref).commandExecDelay = Integer.valueOf(arg0.toString());
+                getItem(intValueHolder.ref).commandExecDelay = Integer.valueOf(arg0.toString());
             }
         });
 
@@ -275,6 +300,7 @@ class ConfigIntValuesAdapter extends ConfigAdapter {
         EditText value_commandExecDelay;
         EditText value_setCommand;
         int ref;
+        Button intvalue_remove_button;
     }
 
     private class FHEMvalues {

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="radius_standard">10dp</dimen>
+    <dimen name="stroke_width_standard">1dp</dimen>
+    <dimen name="inset_bottom">-2dp</dimen>
+    <dimen name="listview_bottom_margin">4dp</dimen>
+    <dimen name="listview_right_margin">4dp</dimen>
+</resources>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainshape"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/widget_shape"
+        android:orientation="vertical">
+
+        <include layout="@layout/noconn" />
+
+        <include layout="@layout/new_version" />
+
+
+        <LinearLayout
+
+            android:id="@+id/main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:padding="0dp">
+
+            <include
+                android:id="@+id/switches0"
+                layout="@layout/widget_listview_horizontal" />
+
+            <include
+                android:id="@+id/switches1"
+                layout="@layout/widget_listview_horizontal" />
+
+            <include
+                android:id="@+id/switches2"
+                layout="@layout/widget_listview_horizontal" />
+
+            <include
+                android:id="@+id/lightscenes"
+                layout="@layout/widget_listview_horizontal" />
+
+            <include
+                android:id="@+id/values0"
+                layout="@layout/widget_listview_horizontal" />
+
+            <include
+                android:id="@+id/values1"
+                layout="@layout/widget_listview_horizontal" />
+
+            <include
+                android:id="@+id/values2"
+                layout="@layout/widget_listview_horizontal" />
+
+            <include
+                android:id="@+id/intvalues"
+                layout="@layout/widget_listview_horizontal" />
+
+            <include
+                android:id="@+id/commands0"
+                layout="@layout/widget_listview_horizontal" />
+
+            <include
+                android:id="@+id/commands1"
+                layout="@layout/widget_listview_horizontal" />
+
+            <include
+                android:id="@+id/commands2"
+                layout="@layout/widget_listview_horizontal" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

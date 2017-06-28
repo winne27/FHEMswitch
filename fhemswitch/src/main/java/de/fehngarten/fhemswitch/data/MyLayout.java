@@ -1,5 +1,7 @@
 package de.fehngarten.fhemswitch.data;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -75,10 +77,10 @@ public class MyLayout {
 
     private void buildLayoutMixed(int switchCount, int lightsceneCount, int valueCount, int commandCount, int intValueCount) {
         ArrayList<MyCounter> counter = new ArrayList<>();
-        counter.add(new MyCounter("switch", switchCount * 10));
+        counter.add(new MyCounter("switch", switchCount * 9));
         counter.add(new MyCounter("lightscene", lightsceneCount * 8));
-        counter.add(new MyCounter("value", valueCount * 7));
-        counter.add(new MyCounter("command", commandCount * 10));
+        counter.add(new MyCounter("value", valueCount * 8));
+        counter.add(new MyCounter("command", commandCount * 8));
         counter.add(new MyCounter("intvalue", intValueCount * 11));
         Collections.sort(counter);
 
@@ -114,7 +116,7 @@ public class MyLayout {
 
             if (counter.get(4).count > 0) {
                 listViewIds = new ArrayList<>();
-                listViewIds.add(R.id.mixed12);
+                listViewIds.add(R.id.mixed13);
                 layout.put(counter.get(4).type, listViewIds);
             } else {
                 goneViews.add(R.id.mixed13);
@@ -123,39 +125,55 @@ public class MyLayout {
             listViewIds.add(R.id.mixed00);
             layout.put(counter.get(0).type, listViewIds);
 
-            if (counter.get(1).count > 0) {
+            int lastIndex = counter.size() - 1;
+            int curIndex = 1;
+            for (int i = lastIndex; i > 0; i--) {
+                if (counter.get(i).count > 0) {
+                    curIndex = i;
+                    break;
+                }
+            }
+
+            if (counter.get(curIndex).count > 0) {
                 listViewIds = new ArrayList<>();
                 listViewIds.add(R.id.mixed01);
-                layout.put(counter.get(1).type, listViewIds);
+                layout.put(counter.get(curIndex).type, listViewIds);
+                counter.get(curIndex).count = 0;
             } else {
                 goneViews.add(R.id.mixed01);
             }
 
-            if (counter.get(2).count > 0) {
+            if (counter.get(1).count > 0) {
                 listViewIds = new ArrayList<>();
                 listViewIds.add(R.id.mixed10);
-                layout.put(counter.get(3).type, listViewIds);
+                layout.put(counter.get(1).type, listViewIds);
             } else {
                 goneViews.add(R.id.mixed10);
             }
 
-            if (counter.get(3).count > 0) {
+            if (counter.get(2).count > 0) {
                 listViewIds = new ArrayList<>();
                 listViewIds.add(R.id.mixed11);
-                layout.put(counter.get(3).type, listViewIds);
+                layout.put(counter.get(2).type, listViewIds);
             } else {
                 goneViews.add(R.id.mixed11);
             }
 
-            if (counter.get(4).count > 0) {
+            if (counter.get(3).count > 0) {
                 listViewIds = new ArrayList<>();
                 listViewIds.add(R.id.mixed12);
-                layout.put(counter.get(4).type, listViewIds);
+                layout.put(counter.get(3).type, listViewIds);
             } else {
                 goneViews.add(R.id.mixed12);
             }
 
-            goneViews.add(R.id.mixed13);
+            if (counter.get(4).count > 0) {
+                listViewIds = new ArrayList<>();
+                listViewIds.add(R.id.mixed13);
+                layout.put(counter.get(4).type, listViewIds);
+            } else {
+                goneViews.add(R.id.mixed13);
+            }
         }
     }
 

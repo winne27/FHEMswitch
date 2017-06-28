@@ -1,6 +1,5 @@
 package de.fehngarten.fhemswitch.data;
 
-
 import java.util.ArrayList;
 
 public class ConfigDataInstance implements java.io.Serializable {

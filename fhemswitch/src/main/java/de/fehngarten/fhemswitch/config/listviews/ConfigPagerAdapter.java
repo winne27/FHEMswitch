@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 //import android.util.Log;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_LIGHTSCENES;
 import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_ORIENT;
 import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_SWITCHES;
 import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_VALUES;
+import static de.fehngarten.fhemswitch.global.Consts.LAYOUT_HORIZONTAL;
 import static de.fehngarten.fhemswitch.global.Settings.settingConfigBlocks;
 import static de.fehngarten.fhemswitch.global.Settings.settingHelpIconUrl;
 import static de.fehngarten.fhemswitch.global.Settings.settingHelpIntvaluesUrl;
@@ -75,11 +77,13 @@ public class ConfigPagerAdapter extends PagerAdapter {
         views = new ArrayList<>();
 
         LayoutInflater inflater = LayoutInflater.from(mContext); // 1
+
         for (int i = 0; i < getCount(); i++) {
             int resId = settingConfigBlocks[i];
             views.add(i, inflater.inflate(resId, null));
             initView(i);
         }
+        visibilityColSpinners();
     }
 
     private void initView(int position) {
@@ -126,11 +130,10 @@ public class ConfigPagerAdapter extends PagerAdapter {
                 setupCommands(view);
                 break;
         }
-
     }
 
     public int getCount() {
-        return 6;
+        return settingConfigBlocks.length;
     }
 
     public Object instantiateItem(ViewGroup collection, int position) {
@@ -145,9 +148,36 @@ public class ConfigPagerAdapter extends PagerAdapter {
         collection.removeView((View) view);
     }
 
-    private RadioGroup.OnCheckedChangeListener landscapeSelectorChange = (group, checkedId) -> configDataInstance.layoutLandscape = Integer.valueOf(group.findViewById(checkedId).getTag().toString());
+    private RadioGroup.OnCheckedChangeListener landscapeSelectorChange = (group, checkedId) -> {
+        configDataInstance.layoutLandscape = Integer.valueOf(group.findViewById(checkedId).getTag().toString());
+        Log.i("array length", Integer.toString(views.size()));
+        visibilityColSpinners();
+    };
 
-    private RadioGroup.OnCheckedChangeListener portraitSelectorChange = (group, checkedId) -> configDataInstance.layoutPortrait = Integer.valueOf(group.findViewById(checkedId).getTag().toString());
+    private RadioGroup.OnCheckedChangeListener portraitSelectorChange = (group, checkedId) -> {
+        configDataInstance.layoutPortrait = Integer.valueOf(group.findViewById(checkedId).getTag().toString());
+        visibilityColSpinners();
+    };
+
+    private void visibilityColSpinners () {
+        if (views.size() > 1) {
+            if (configDataInstance.layoutLandscape == LAYOUT_HORIZONTAL || configDataInstance.layoutPortrait == LAYOUT_HORIZONTAL) {
+                views.get(CONFIG_BLOCK_SWITCHES).findViewById(R.id.config_switch_cols).setVisibility(View.VISIBLE);
+                views.get(CONFIG_BLOCK_SWITCHES).findViewById(R.id.config_switch_cols_label).setVisibility(View.VISIBLE);
+                views.get(CONFIG_BLOCK_VALUES).findViewById(R.id.config_value_cols).setVisibility(View.VISIBLE);
+                views.get(CONFIG_BLOCK_VALUES).findViewById(R.id.config_value_cols_label).setVisibility(View.VISIBLE);
+                views.get(CONFIG_BLOCK_COMMANDS).findViewById(R.id.config_command_cols).setVisibility(View.VISIBLE);
+                views.get(CONFIG_BLOCK_COMMANDS).findViewById(R.id.config_command_cols_label).setVisibility(View.VISIBLE);
+            } else {
+                views.get(CONFIG_BLOCK_SWITCHES).findViewById(R.id.config_switch_cols).setVisibility(View.GONE);
+                views.get(CONFIG_BLOCK_SWITCHES).findViewById(R.id.config_switch_cols_label).setVisibility(View.GONE);
+                views.get(CONFIG_BLOCK_VALUES).findViewById(R.id.config_value_cols).setVisibility(View.GONE);
+                views.get(CONFIG_BLOCK_VALUES).findViewById(R.id.config_value_cols_label).setVisibility(View.GONE);
+                views.get(CONFIG_BLOCK_COMMANDS).findViewById(R.id.config_command_cols).setVisibility(View.GONE);
+                views.get(CONFIG_BLOCK_COMMANDS).findViewById(R.id.config_command_cols_label).setVisibility(View.GONE);
+            }
+        }
+    }
 
     public void saveItem(int position) {
         //Log.d(TAG, position + " try to save");

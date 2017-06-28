@@ -17,7 +17,7 @@
         android:layout_marginStart="6dp"
         android:layout_marginTop="2dp"
         android:textAllCaps="false"
-        android:textColor="@color/text_standard"
+        android:textColor="@color/widget_default_color"
         android:textSize="15sp"
         android:textStyle="normal"
         tools:ignore="RelativeOverlap" />
@@ -33,7 +33,7 @@
         android:layout_marginRight="6dp"
         android:layout_marginTop="2dp"
         android:textAllCaps="false"
-        android:textColor="@color/text_standard"
+        android:textColor="@color/widget_default_color"
         android:textSize="15sp"
         android:textStyle="normal" />
 

@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:textAllCaps="false"
-        android:textColor="@color/text_standard"
+        android:textColor="@color/widget_default_color"
         android:textSize="15sp"
         android:textStyle="normal" />
 
@@ -55,7 +55,7 @@
         android:layout_weight="0.4"
         android:gravity="center_vertical|center_horizontal"
         android:textAllCaps="false"
-        android:textColor="@color/text_standard"
+        android:textColor="@color/widget_default_color"
         android:textSize="16sp"
         android:textStyle="normal" />
 
