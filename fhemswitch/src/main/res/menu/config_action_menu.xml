@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/callRefreshServer"
+        android:icon="@drawable/ic_refresh_black_24dp"
+        android:title="@string/refresh" />
+
+    <item
+        android:id="@+id/callExport"
+        android:icon="@drawable/ic_file_upload_black_24dp"
+        android:title="@string/backup" />
+
+    <item
+        android:id="@+id/callImport"
+        android:icon="@drawable/ic_file_download_black_24dp"
+        android:title="@string/restore" />
+
+    <item
+        android:id="@+id/callHelp"
+        android:icon="@drawable/ic_help_black_24dp"
+        android:title="@string/help" />
+
+</menu>

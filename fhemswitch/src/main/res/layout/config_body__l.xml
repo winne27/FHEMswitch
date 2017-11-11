@@ -13,7 +13,7 @@
         android:orientation="horizontal"
         android:paddingBottom="2dp"
         android:paddingLeft="8dp"
-        android:paddingRight="8dp">
+        android:paddingRight="0dp">
 
         <include layout="@layout/config_version_installed" />
 
@@ -23,11 +23,21 @@
             android:layout_weight="0.44"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/config_header"
-            android:textColor="@color/conf_text_header_1"
+            android:textColor="@color/conf_text_header"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <include layout="@layout/config_version_latest" />
+
+        <ImageButton
+            android:id="@+id/actions_config"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="6px"
+            android:layout_marginRight="6px"
+            android:background="@drawable/ic_more_vert_white_24dp" />
+
     </LinearLayout>
 
     <include layout="@layout/config_bodyblock_url__l" />

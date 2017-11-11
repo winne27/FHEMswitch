@@ -1,2 +1,1 @@
--dontwarn com.squareup.**
--dontwarn okio.**
+-keep public class de.fehngarten.fhemswitch.modul.GetStoreVersion

@@ -6,7 +6,9 @@ import de.fehngarten.fhemswitch.R;
 public class SendAlertMessage extends SendMessage {
 
     public SendAlertMessage(Context context, String msg) {
+        super(context);
         header = context.getString(R.string.error_header);
-        doSendMessage(context, msg);
+        dialog.setNeutralButton(context.getString(R.string.ok), null);
+        doSendMessage(msg);
     }
 }

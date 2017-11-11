@@ -2,7 +2,9 @@ package de.fehngarten.fhemswitch.data;
 
 //import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static de.fehngarten.fhemswitch.global.Settings.settingVersionTypes;
 import static de.fehngarten.fhemswitch.global.Settings.settingsMaxInst;
@@ -17,8 +19,9 @@ public class ConfigDataCommon implements java.io.Serializable {
     public String bssId = "";
     public HashMap<String, String> suppressedVersions;
     public int[] instances = new int[settingsMaxInst];
+    public boolean writePermissionAsked = false;
 
-    public void init() {
+    void init() {
         suppressedVersions = new HashMap<>();
         for (String type : settingVersionTypes) {
             suppressedVersions.put(type, "");
@@ -95,5 +98,15 @@ public class ConfigDataCommon implements java.io.Serializable {
             }
         }
         return i;
+    }
+
+    public List<Integer> getAllInstSerials() {
+        List<Integer> instSerials = new ArrayList<>();
+        for (int j = 0; j < settingsMaxInst; j++) {
+            if (instances[j] > 0) {
+                instSerials.add(getInstByWidgetid(instances[j]));
+            }
+        }
+        return instSerials;
     }
 }

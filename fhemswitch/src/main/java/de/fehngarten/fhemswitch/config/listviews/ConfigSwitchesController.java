@@ -12,23 +12,18 @@ import com.mobeta.android.dslv.DragSortListView;
 
 import de.fehngarten.fhemswitch.R;
 
-public class ConfigSwitchesController extends DragSortController {
+class ConfigSwitchesController extends DragSortController {
 
     private ConfigSwitchesAdapter mAdapter;
     Context mContext;
     private DragSortListView mDslv;
 
-    public ConfigSwitchesController(DragSortListView dslv, ConfigSwitchesAdapter adapter, Context context) {
+    ConfigSwitchesController(DragSortListView dslv, ConfigSwitchesAdapter adapter, Context context) {
         super(dslv, R.id.config_switch_unit, DragSortController.ON_DOWN, 0);
         mAdapter = adapter;
         mContext = context;
         mDslv = dslv;
-        DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
-            @Override
-            public void drop(int from, int to) {
-                mAdapter.changeItems(from, to);
-            }
-        };
+        DragSortListView.DropListener onDrop = (from, to) -> mAdapter.changeItems(from, to);
         mDslv.setDropListener(onDrop);
         setRemoveEnabled(false);
     }

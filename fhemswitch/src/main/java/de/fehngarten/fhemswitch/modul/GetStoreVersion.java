@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
+//import org.jsoup.Jsoup;
 import org.jsoup.Jsoup;
+
 import static de.fehngarten.fhemswitch.global.Settings.*;
 
 public class GetStoreVersion extends AsyncTask<String, Void, String> {
@@ -23,10 +25,9 @@ public class GetStoreVersion extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        String url = settingGoogleStoreUrl;
         String latest = "";
         try {
-            latest = Jsoup.connect(url)
+            latest = Jsoup.connect(settingGoogleStoreUrl)
                     .timeout(30000)
                     .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                     .referrer("http://www.google.com")
@@ -42,7 +43,7 @@ public class GetStoreVersion extends AsyncTask<String, Void, String> {
 
     @Override
     public void onPostExecute(String latest) {
-        super.onPostExecute(latest);
+        //super.onPostExecute(latest);
 
         Intent intent = new Intent();
         intent.setAction(mAction);

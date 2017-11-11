@@ -2,6 +2,8 @@ package de.fehngarten.fhemswitch.data;
 
 import java.util.ArrayList;
 
+import static de.fehngarten.fhemswitch.global.Settings.settingsBlockOrder;
+
 public class ConfigDataInstance implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -15,8 +17,10 @@ public class ConfigDataInstance implements java.io.Serializable {
     public int switchCols;
     public int valueCols;
     public int commandCols;
+    public String[] blockOrder;
+    public String widgetName;
 
-    public ConfigDataInstance() {
+    ConfigDataInstance() {
         switchRows = new ArrayList<>();
         lightsceneRows = new ArrayList<>();
         valueRows = new ArrayList<>();
@@ -27,5 +31,7 @@ public class ConfigDataInstance implements java.io.Serializable {
         switchCols = 0;
         valueCols = 0;
         commandCols = 0;
+        blockOrder = settingsBlockOrder;
+        widgetName = "";
     }
 }

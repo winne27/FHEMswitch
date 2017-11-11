@@ -12,28 +12,22 @@ import com.mobeta.android.dslv.DragSortListView;
 
 import de.fehngarten.fhemswitch.R;
 
-public class ConfigLightscenesController extends DragSortController {
+class ConfigLightscenesController extends DragSortController {
     private int mPos;
     private Boolean curViewIsHeader = false;
     private DragSortListView mDslv;
     Context mContext;
     private ConfigLightscenesAdapter mAdapter;
 
-    public ConfigLightscenesController(DragSortListView dslv, ConfigLightscenesAdapter adapter, Context context) {
+    ConfigLightscenesController(DragSortListView dslv, ConfigLightscenesAdapter adapter, Context context) {
         super(dslv, R.id.config_lightscene_unit, DragSortController.ON_DOWN, 0);
         setRemoveEnabled(false);
         mDslv = dslv;
         mContext = context;
         mAdapter = adapter;
-        DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
-            @Override
-            public void drop(int from, int to) {
-                mAdapter.changeItems(from, to);
-            }
-        };
+        DragSortListView.DropListener onDrop = (from, to) -> mAdapter.changeItems(from, to);
         mDslv.setDropListener(onDrop);
         mAdapter = adapter;
-        //setDragHandleId(dslv);
     }
 
     @Override

@@ -3,31 +3,39 @@ package de.fehngarten.fhemswitch.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fehngarten.fhemswitch.modul.MyRoundedCorners;
+
 //import de.fehngarten.fhemswitch.MyLightScenes.MyLightScene;
 
 public class ConfigWorkInstance {
-    public List<MySwitch> switches;
-    public List<MySwitch> switchesDisabled;
-    public List<ArrayList<MySwitch>> switchesCols;
+    public List<RowSwitch> switches;
+    public List<RowSwitch> switchesDisabled;
+    public List<ArrayList<RowSwitch>> switchesCols;
 
-    public MyLightScenes lightScenes;
+    public RowLightScenes lightScenes;
 
-    public List<MyValue> values;
-    public List<MyValue> valuesDisabled;
-    public List<ArrayList<MyValue>> valuesCols;
+    public List<RowValue> values;
+    public List<RowValue> valuesDisabled;
+    public List<ArrayList<RowValue>> valuesCols;
 
-    public List<MyIntValue> intValues;
-    public List<MyIntValue> intValuesDisabled;
+    public List<RowIntValue> intValues;
+    public List<RowIntValue> intValuesDisabled;
 
-    public List<MyCommand> commands;
-    public List<ArrayList<MyCommand>> commandsCols;
+    public List<RowCommand> commands;
+    public List<ArrayList<RowCommand>> commandsCols;
+
+    public MyRoundedCorners myRoundedCorners;
+    public String[] blockOrder;
+    public String widgetName;
+
+    public int curLayout;
 
     public void init() {
         switches = new ArrayList<>();
         switchesDisabled = new ArrayList<>();
         switchesCols = new ArrayList<>();
 
-        lightScenes = new MyLightScenes();
+        lightScenes = new RowLightScenes();
 
         values = new ArrayList<>();
         valuesCols = new ArrayList<>();
@@ -42,9 +50,9 @@ public class ConfigWorkInstance {
 
     public int setSwitchIcon(String unit, String value) {
         for (int actCol = 0; actCol < switchesCols.size(); actCol++) {
-            for (MySwitch mySwitch : switchesCols.get(actCol)) {
-                if (mySwitch.unit.equals(unit)) {
-                    mySwitch.setIcon(value);
+            for (RowSwitch rowSwitch : switchesCols.get(actCol)) {
+                if (rowSwitch.unit.equals(unit)) {
+                    rowSwitch.setIcon(value);
                     return actCol;
                 }
             }
@@ -54,9 +62,9 @@ public class ConfigWorkInstance {
 
     public int setValue(String unit, String value) {
         for (int actCol = 0; actCol < valuesCols.size(); actCol++) {
-            for (MyValue myValue : valuesCols.get(actCol)) {
-                if (myValue.unit.equals(unit)) {
-                    myValue.setValue(value);
+            for (RowValue rowValue : valuesCols.get(actCol)) {
+                if (rowValue.unit.equals(unit)) {
+                    rowValue.setValue(value);
                     return actCol;
                 }
             }
@@ -65,9 +73,9 @@ public class ConfigWorkInstance {
     }
 
     public boolean setIntValue(String unit, String value) {
-        for (MyIntValue myIntValue : intValues) {
-            if (myIntValue.unit.equals(unit)) {
-                myIntValue.setValue(value);
+        for (RowIntValue rowIntValue : intValues) {
+            if (rowIntValue.unit.equals(unit)) {
+                rowIntValue.setValue(value);
                 return true;
             }
         }
@@ -80,24 +88,24 @@ public class ConfigWorkInstance {
 
     public ArrayList<String> getSwitchesList() {
         ArrayList<String> switchesList = new ArrayList<>();
-        for (MySwitch mySwitch : switches) {
-            switchesList.add(mySwitch.unit);
+        for (RowSwitch rowSwitch : switches) {
+            switchesList.add(rowSwitch.unit);
         }
         return switchesList;
     }
 
     public ArrayList<String> getValuesList() {
         ArrayList<String> valuesList = new ArrayList<>();
-        for (MyValue myValue : values) {
-            valuesList.add(myValue.unit);
+        for (RowValue rowValue : values) {
+            valuesList.add(rowValue.unit);
         }
         return valuesList;
     }
 
     public ArrayList<String> getIntValuesList() {
         ArrayList<String> intValuesList = new ArrayList<>();
-        for (MyIntValue myIntValue : intValues) {
-            intValuesList.add(myIntValue.unit);
+        for (RowIntValue rowIntValue : intValues) {
+            intValuesList.add(rowIntValue.unit);
         }
         return intValuesList;
     }
@@ -105,7 +113,7 @@ public class ConfigWorkInstance {
     public ArrayList<String> getLightScenesList()
     {
         ArrayList<String> lightScenesList = new ArrayList<>();
-        for (MyLightScenes.MyLightScene myLightScene : lightScenes.lightScenes)
+        for (RowLightScenes.MyLightScene myLightScene : lightScenes.lightScenes)
         {
             if (myLightScene.enabled)
             {

@@ -27,15 +27,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import de.fehngarten.fhemswitch.R;
+import de.fehngarten.fhemswitch.config.ConfigMain;
 import de.fehngarten.fhemswitch.data.ConfigIntValueRow;
 import de.fehngarten.fhemswitch.data.ConfigLightsceneRow;
 import de.fehngarten.fhemswitch.data.ConfigSwitchRow;
 import de.fehngarten.fhemswitch.data.ConfigValueRow;
 import de.fehngarten.fhemswitch.data.ConfigWorkInstance;
-import de.fehngarten.fhemswitch.data.MyIntValue;
-import de.fehngarten.fhemswitch.data.MyLightScenes;
-import de.fehngarten.fhemswitch.data.MySwitch;
-import de.fehngarten.fhemswitch.data.MyValue;
+import de.fehngarten.fhemswitch.data.RowIntValue;
+import de.fehngarten.fhemswitch.data.RowLightScenes;
+import de.fehngarten.fhemswitch.data.RowSwitch;
+import de.fehngarten.fhemswitch.data.RowValue;
 import de.fehngarten.fhemswitch.modul.MySocket;
 import io.socket.client.Ack;
 
@@ -65,11 +66,12 @@ public class ConfigPagerAdapter extends PagerAdapter {
     private ConfigValuesAdapter configValuesAdapter;
     private ConfigIntValuesAdapter configIntValuesAdapter;
     private ConfigCommandsAdapter configCommandsAdapter;
+    private ConfigBlockorderAdapter configBlockorderAdapter;
 
     private int lsCounter;
     private ArrayList<View> views;
 
-    public ConfigPagerAdapter(Context context, MySocket mySocket) {
+    public ConfigPagerAdapter(Context context, MySocket mySocket, ConfigMain config) {
         configWorkInstance = new ConfigWorkInstance();
         configWorkInstance.init();
         mContext = context;
@@ -78,57 +80,71 @@ public class ConfigPagerAdapter extends PagerAdapter {
 
         LayoutInflater inflater = LayoutInflater.from(mContext); // 1
 
+        boolean connectionLoss = false;
         for (int i = 0; i < getCount(); i++) {
             int resId = settingConfigBlocks[i];
             views.add(i, inflater.inflate(resId, null));
-            initView(i);
+            if (!initView(i)) {
+                connectionLoss = true;
+                break;
+            }
         }
-        visibilityColSpinners();
+        if (connectionLoss) {
+            config.finishCauseOfConnetionLoss();
+        } else {
+            visibilityColSpinners();
+        }
     }
 
-    private void initView(int position) {
-        View view = views.get(position);
-        switch (position) {
-            case CONFIG_BLOCK_ORIENT:
-                RadioGroup radioLayoutLandscape = (RadioGroup) view.findViewById(R.id.layout_landscape);
-                radioLayoutLandscape.setOnCheckedChangeListener(landscapeSelectorChange);
-                RadioGroup radioLayoutPortrait = (RadioGroup) view.findViewById(R.id.layout_portrait);
-                radioLayoutPortrait.setOnCheckedChangeListener(portraitSelectorChange);
-                ((RadioButton) radioLayoutLandscape.getChildAt(configDataInstance.layoutLandscape)).setChecked(true);
-                ((RadioButton) radioLayoutPortrait.getChildAt(configDataInstance.layoutPortrait)).setChecked(true);
-                break;
-            case CONFIG_BLOCK_SWITCHES:
-                spinnerSwitchCols = (Spinner) view.findViewById(R.id.config_switch_cols);
-                ArrayAdapter<CharSequence> adapterSwitchCols = ArrayAdapter.createFromResource(mContext, R.array.colnum, R.layout.spinner_item);
-                adapterSwitchCols.setDropDownViewResource(R.layout.spinner_dropdown_item);
-                spinnerSwitchCols.setAdapter(adapterSwitchCols);
-                spinnerSwitchCols.setSelection(configDataInstance.switchCols);
-                setupSwitches(view);
-                break;
-            case CONFIG_BLOCK_LIGHTSCENES:
-                setupLightscenes(view);
-                break;
-            case CONFIG_BLOCK_VALUES:
-                view.findViewById(R.id.help_icon).setOnClickListener(helpIconOnClickListener);
-                spinnerValueCols = (Spinner) view.findViewById(R.id.config_value_cols);
-                ArrayAdapter<CharSequence> adapterValueCols = ArrayAdapter.createFromResource(mContext, R.array.colnum, R.layout.spinner_item);
-                adapterValueCols.setDropDownViewResource(R.layout.spinner_dropdown_item);
-                spinnerValueCols.setAdapter(adapterValueCols);
-                spinnerValueCols.setSelection(configDataInstance.valueCols);
-                setupValues(view);
-                break;
-            case CONFIG_BLOCK_INTVALUES:
-                view.findViewById(R.id.help_intvalues).setOnClickListener(helpIntvaluesOnClickListener);
-                setupIntValues(view);
-                break;
-            case CONFIG_BLOCK_COMMANDS:
-                spinnerCommandCols = (Spinner) view.findViewById(R.id.config_command_cols);
-                ArrayAdapter<CharSequence> adapterCommandCols = ArrayAdapter.createFromResource(mContext, R.array.colnum, R.layout.spinner_item);
-                adapterCommandCols.setDropDownViewResource(R.layout.spinner_dropdown_item);
-                spinnerCommandCols.setAdapter(adapterCommandCols);
-                spinnerCommandCols.setSelection(configDataInstance.commandCols);
-                setupCommands(view);
-                break;
+    private boolean initView(int position) {
+        try {
+            View view = views.get(position);
+            switch (position) {
+                case CONFIG_BLOCK_ORIENT:
+                    RadioGroup radioLayoutLandscape = (RadioGroup) view.findViewById(R.id.layout_landscape);
+                    radioLayoutLandscape.setOnCheckedChangeListener(landscapeSelectorChange);
+                    RadioGroup radioLayoutPortrait = (RadioGroup) view.findViewById(R.id.layout_portrait);
+                    radioLayoutPortrait.setOnCheckedChangeListener(portraitSelectorChange);
+                    ((RadioButton) radioLayoutLandscape.getChildAt(configDataInstance.layoutLandscape)).setChecked(true);
+                    ((RadioButton) radioLayoutPortrait.getChildAt(configDataInstance.layoutPortrait)).setChecked(true);
+                    setupBlockorder(view);
+                    break;
+                case CONFIG_BLOCK_SWITCHES:
+                    spinnerSwitchCols = view.findViewById(R.id.config_switch_cols);
+                    ArrayAdapter<CharSequence> adapterSwitchCols = ArrayAdapter.createFromResource(mContext, R.array.colnum, R.layout.spinner_item);
+                    adapterSwitchCols.setDropDownViewResource(R.layout.spinner_dropdown_item);
+                    spinnerSwitchCols.setAdapter(adapterSwitchCols);
+                    spinnerSwitchCols.setSelection(configDataInstance.switchCols);
+                    setupSwitches(view);
+                    break;
+                case CONFIG_BLOCK_LIGHTSCENES:
+                    setupLightscenes(view);
+                    break;
+                case CONFIG_BLOCK_VALUES:
+                    view.findViewById(R.id.help_icon).setOnClickListener(helpIconOnClickListener);
+                    spinnerValueCols = view.findViewById(R.id.config_value_cols);
+                    ArrayAdapter<CharSequence> adapterValueCols = ArrayAdapter.createFromResource(mContext, R.array.colnum, R.layout.spinner_item);
+                    adapterValueCols.setDropDownViewResource(R.layout.spinner_dropdown_item);
+                    spinnerValueCols.setAdapter(adapterValueCols);
+                    spinnerValueCols.setSelection(configDataInstance.valueCols);
+                    setupValues(view);
+                    break;
+                case CONFIG_BLOCK_INTVALUES:
+                    view.findViewById(R.id.help_intvalues).setOnClickListener(helpIntvaluesOnClickListener);
+                    setupIntValues(view);
+                    break;
+                case CONFIG_BLOCK_COMMANDS:
+                    spinnerCommandCols = view.findViewById(R.id.config_command_cols);
+                    ArrayAdapter<CharSequence> adapterCommandCols = ArrayAdapter.createFromResource(mContext, R.array.colnum, R.layout.spinner_item);
+                    adapterCommandCols.setDropDownViewResource(R.layout.spinner_dropdown_item);
+                    spinnerCommandCols.setAdapter(adapterCommandCols);
+                    spinnerCommandCols.setSelection(configDataInstance.commandCols);
+                    setupCommands(view);
+                    break;
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 
@@ -159,7 +175,7 @@ public class ConfigPagerAdapter extends PagerAdapter {
         visibilityColSpinners();
     };
 
-    private void visibilityColSpinners () {
+    private void visibilityColSpinners() {
         if (views.size() > 1) {
             if (configDataInstance.layoutLandscape == LAYOUT_HORIZONTAL || configDataInstance.layoutPortrait == LAYOUT_HORIZONTAL) {
                 views.get(CONFIG_BLOCK_SWITCHES).findViewById(R.id.config_switch_cols).setVisibility(View.VISIBLE);
@@ -184,10 +200,11 @@ public class ConfigPagerAdapter extends PagerAdapter {
         try {
             switch (position) {
                 case CONFIG_BLOCK_ORIENT:
+                    configDataInstance.blockOrder = configBlockorderAdapter.getData();
                     break;
                 case CONFIG_BLOCK_SWITCHES:
-                    configDataInstance.switchRows = configSwitchesAdapter.getData();
                     configDataInstance.switchCols = spinnerSwitchCols.getSelectedItemPosition();
+                    configDataInstance.switchRows = configSwitchesAdapter.getData();
                     break;
                 case CONFIG_BLOCK_LIGHTSCENES:
                     configDataInstance.lightsceneRows = configLightscenesAdapter.getData();
@@ -260,9 +277,9 @@ public class ConfigPagerAdapter extends PagerAdapter {
         if (configDataInstance.switchRows != null) {
             for (ConfigSwitchRow switchRow : configDataInstance.switchRows) {
                 if (switchRow.enabled) {
-                    configWorkInstance.switches.add(new MySwitch(switchRow.name, switchRow.unit, switchRow.cmd));
+                    configWorkInstance.switches.add(new RowSwitch(switchRow.name, switchRow.unit, switchRow.cmd));
                 } else {
-                    configWorkInstance.switchesDisabled.add(new MySwitch(switchRow.name, switchRow.unit, switchRow.cmd));
+                    configWorkInstance.switchesDisabled.add(new RowSwitch(switchRow.name, switchRow.unit, switchRow.cmd));
                 }
             }
             Collections.sort(configWorkInstance.switchesDisabled);
@@ -277,8 +294,10 @@ public class ConfigPagerAdapter extends PagerAdapter {
                     switchesDSLV.setAdapter(configSwitchesAdapter);
                     ConfigSwitchesController c = new ConfigSwitchesController(switchesDSLV, configSwitchesAdapter, mContext);
                     switchesDSLV.setFloatViewManager(c);
-                    switchesDSLV.setOnTouchListener(c);
+                    //switchesDSLV.setOnTouchListener(c);
                     switchesDSLV.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+                    switchesDSLV.setDivider(null);
+                    switchesDSLV.setDividerHeight(0);
                     try {
                         configSwitchesAdapter.initData((JSONArray) args[0], configWorkInstance.switches, configWorkInstance.switchesDisabled);
                     } catch (JSONException e) {
@@ -293,8 +312,22 @@ public class ConfigPagerAdapter extends PagerAdapter {
         newSwitchesHeaderButton.setOnClickListener(newSwitchesHeaderButtonOnClickListener);
     }
 
+    private void setupBlockorder(View view) {
+        DragSortListView blockorderDSLV = (DragSortListView) view.findViewById(R.id.blockorder);
+        configBlockorderAdapter = new ConfigBlockorderAdapter(mContext);
+        blockorderDSLV.setAdapter(configBlockorderAdapter);
+        ConfigBlockorderController c = new ConfigBlockorderController(blockorderDSLV, configBlockorderAdapter, mContext);
+        blockorderDSLV.setFloatViewManager(c);
+        //blockorderDSLV.setOnTouchListener(c);
+        blockorderDSLV.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        blockorderDSLV.setDivider(null);
+        blockorderDSLV.setDividerHeight(0);
+        configBlockorderAdapter.initData(configDataInstance.blockOrder);
+        configBlockorderAdapter.dataComplete((ListView) view.findViewById(R.id.blockorder));
+    }
+
     private void setupLightscenes(View view) {
-        MyLightScenes.MyLightScene newLightScene = null;
+        RowLightScenes.MyLightScene newLightScene = null;
         if (configDataInstance.lightsceneRows != null) {
             for (ConfigLightsceneRow lightsceneRow : configDataInstance.lightsceneRows) {
                 //Log.i("lightscene row",lightsceneRow.isHeader.toString());
@@ -359,9 +392,9 @@ public class ConfigPagerAdapter extends PagerAdapter {
                     useIcon = valueRow.useIcon;
                 }
                 if (valueRow.enabled) {
-                    configWorkInstance.values.add(new MyValue(valueRow.name, valueRow.unit, useIcon));
+                    configWorkInstance.values.add(new RowValue(valueRow.name, valueRow.unit, useIcon));
                 } else {
-                    configWorkInstance.valuesDisabled.add(new MyValue(valueRow.name, valueRow.unit, useIcon));
+                    configWorkInstance.valuesDisabled.add(new RowValue(valueRow.name, valueRow.unit, useIcon));
                 }
             }
             Collections.sort(configWorkInstance.valuesDisabled);
@@ -373,6 +406,8 @@ public class ConfigPagerAdapter extends PagerAdapter {
         ConfigValuesController c = new ConfigValuesController(l, configValuesAdapter, mContext);
         l.setFloatViewManager(c);
         l.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        l.setDivider(null);
+        l.setDividerHeight(0);
 
         mySocket.socket.emit("getAllValues", new Ack() {
             @Override
@@ -392,12 +427,12 @@ public class ConfigPagerAdapter extends PagerAdapter {
     private void setupIntValues(View view) {
         if (configDataInstance.intValueRows != null) {
             for (ConfigIntValueRow configIntValueRow : configDataInstance.intValueRows) {
-                MyIntValue myIntValue = new MyIntValue();
-                myIntValue.transfer(configIntValueRow);
+                RowIntValue rowIntValue = new RowIntValue();
+                rowIntValue.transfer(configIntValueRow);
                 if (configIntValueRow.enabled) {
-                    configWorkInstance.intValues.add(myIntValue);
+                    configWorkInstance.intValues.add(rowIntValue);
                 } else {
-                    configWorkInstance.intValuesDisabled.add(myIntValue);
+                    configWorkInstance.intValuesDisabled.add(rowIntValue);
                 }
             }
             Collections.sort(configWorkInstance.intValuesDisabled);
@@ -408,6 +443,8 @@ public class ConfigPagerAdapter extends PagerAdapter {
         ConfigIntValuesController c = new ConfigIntValuesController(l, configIntValuesAdapter, mContext);
         l.setFloatViewManager(c);
         l.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        l.setDivider(null);
+        l.setDividerHeight(0);
         mySocket.socket.emit("getAllValues", new Ack() {
             @Override
             public void call(Object... args) {
@@ -429,14 +466,14 @@ public class ConfigPagerAdapter extends PagerAdapter {
         l.setAdapter(configCommandsAdapter);
         ConfigCommandsController c = new ConfigCommandsController(l, configCommandsAdapter, mContext);
         l.setFloatViewManager(c);
-        l.setOnTouchListener(c);
+        //l.setOnTouchListener(c);
         l.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
+        l.setDivider(null);
+        l.setDividerHeight(0);
         configCommandsAdapter.initData(configDataInstance.commandRows);
         configCommandsAdapter.dataComplete((ListView) view.findViewById(R.id.commands));
 
         Button newCommandButton = (Button) view.findViewById(R.id.newcommandline);
         newCommandButton.setOnClickListener(newCommandButtonOnClickListener);
-
     }
 }

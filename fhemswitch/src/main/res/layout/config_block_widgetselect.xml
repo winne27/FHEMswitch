@@ -7,6 +7,7 @@
     android:layout_gravity="center_horizontal"
     android:background="@drawable/config_shape_header_3"
     android:gravity="center_horizontal"
+    android:paddingTop="3dp"
     android:orientation="horizontal">
 
     <RadioGroup
@@ -26,8 +27,6 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="6dp"
             android:textStyle="bold"
-            android:paddingLeft="5dp"
-            android:paddingRight="10dp"
             android:tag="0"
             android:text="@string/widget1"
             android:buttonTint="@color/conf_radio_color"
@@ -42,8 +41,6 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="6dp"
             android:textStyle="bold"
-            android:paddingLeft="5dp"
-            android:paddingRight="10dp"
             android:tag="1"
             android:text="@string/widget2"
             android:buttonTint="@color/conf_radio_color"
@@ -59,8 +56,6 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="6dp"
             android:textStyle="bold"
-            android:paddingLeft="5dp"
-            android:paddingRight="10dp"
             android:tag="2"
             android:text="@string/widget3"
             android:buttonTint="@color/conf_radio_color"
@@ -75,8 +70,6 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="6dp"
             android:textStyle="bold"
-            android:paddingLeft="5dp"
-            android:paddingRight="10dp"
             android:tag="3"
             android:text="@string/widget4"
             android:buttonTint="@color/conf_radio_color"

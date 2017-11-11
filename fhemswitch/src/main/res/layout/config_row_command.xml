@@ -24,4 +24,14 @@
         android:layout_weight="0.65"
         android:ems="10"
         android:inputType="text" />
+
+    <TextView
+        android:id="@+id/config_command_drag"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/bullet"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:visibility="visible"/>
 </LinearLayout>

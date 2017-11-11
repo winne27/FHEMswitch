@@ -185,25 +185,9 @@
             android:layout_marginTop="6dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/callDonateButton"
-                style="@style/Config.Button"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/donate_string_call" />
-
-            <Button
-                android:id="@+id/refresh_config"
-                style="@style/Config.Button"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/refresh" />
-
             <Button
                 android:id="@+id/cancel2_config"
                 style="@style/Config.Button"
-                android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:text="@string/cancel" />
 
@@ -211,15 +195,8 @@
                 android:id="@+id/get_config"
                 style="@style/Config.Button"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:text="@string/getConfig" />
 
-            <Button
-                android:id="@+id/help_url"
-                style="@style/Config.Button.Help"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:text="\?" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

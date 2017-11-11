@@ -3,7 +3,7 @@ package de.fehngarten.fhemswitch.config.listviews;
 import java.util.ArrayList;
 
 import de.fehngarten.fhemswitch.data.ConfigWorkInstance;
-import de.fehngarten.fhemswitch.data.MyLightScenes.MyLightScene;
+import de.fehngarten.fhemswitch.data.RowLightScenes.MyLightScene;
 import de.fehngarten.fhemswitch.R;
 import de.fehngarten.fhemswitch.data.ConfigLightsceneRow;
 
@@ -19,11 +19,11 @@ import android.widget.TextView;
 
 import android.util.Log;
 
-public class ConfigLightscenesAdapter extends ConfigAdapter {
+class ConfigLightscenesAdapter extends ConfigAdapter {
     Context mContext;
     private static ArrayList<ConfigLightsceneRow> lightsceneRows;
 
-    public ConfigLightscenesAdapter(Context mContext) {
+    ConfigLightscenesAdapter(Context mContext) {
         //super(mContext, layoutResourceId, data);
         this.mContext = mContext;
         lightsceneRows = new ArrayList<>();
@@ -149,7 +149,6 @@ public class ConfigLightscenesAdapter extends ConfigAdapter {
             //rowView.setBackgroundColor(mContext.getResources().getColor(R.color.conf_bg_header_3));
             //rowView.setBackgroundDrawable(R.drawable.config_shape_header_3);
             rowView.setBackgroundResource(R.drawable.config_shape_header_3);
-
         } else {
             lightsceneHolder.lightscene_enabled.setChecked(lightsceneRow.enabled);
         }

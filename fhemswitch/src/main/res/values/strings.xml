@@ -3,7 +3,7 @@
     <string name="widget_name" translatable="false">FHEMswitch</string>
     <string name="url_fhem_pl">URL FHEM webserver</string>
     <string name="url_fhem_pl_local">URL FHEM in local net</string>
-    <string name="url_fhem_js">URL fhem.js server *</string>
+    <string name="url_fhem_js">URL fhem.js server</string>
     <string name="url_fhem_js_local">URL fhem.js local net</string>
     <string name="conn_pw">fhem.js password</string>
     <string name="is_home_net">Current WLAN (%1$s) is home net</string>
@@ -12,15 +12,15 @@
     <string name="switchicon">Lamp</string>
     <string name="save">Save</string>
     <string name="error_header">An error has occurred</string>
-    <string name="getConfig">get FHEM units</string>
+    <string name="getConfig">read FHEM</string>
 
     <string name="switches">Switches</string>
     <string name="columns">Columns:</string>
     <string name="lightscenes">Scenarios</string>
     <string name="values">Values</string>
-    <string name="values2">Values</string>
-    <string name="unit">Name - order by d&#038;d</string>
-    <string name="name">Displayed Name</string>
+    <string name="values2">Reading</string>
+    <string name="unit">Name (sort)</string>
+    <string name="name">Display</string>
     <string name="header">Header</string>
     <string name="command">Command</string>
     <string name="noconn">No connection to FHEM server. Tip for reconnection attempt.</string>
@@ -62,14 +62,7 @@
     <string name="widget2" translatable="false">Widget 2</string>
     <string name="widget3" translatable="false">Widget 3</string>
     <string name="widget4" translatable="false">Widget 4</string>
-    <string name="value0" translatable="false">1</string>
-    <string name="value1" translatable="false">2</string>
-    <string name="value2" translatable="false">5</string>
-    <string name="value3" translatable="false">10</string>
-    <string name="account0" translatable="false">1 Euro</string>
-    <string name="account1" translatable="false">2 Euro</string>
-    <string name="account2" translatable="false">5 Euro</string>
-    <string name="account3" translatable="false">10 Euro</string>
+    <string name="widget_refresh" translatable="false">FHEMswitch</string>
     <string name="donate_back">Go</string>
     <string name="openstore">Open Play Store</string>
     <string name="donotshow">Don\'t show again</string>
@@ -88,15 +81,35 @@
     <string name="delay">Command delay in ms:</string>
     <string name="execcmd">FHEM Command for setting value:</string>
     <string name="set">set</string>
-    <string name="help" translatable="false">\?</string>
     <string name="value">value</string>
     <string name="refresh" translatable="false">Server refresh</string>
-    <string name="serverRefresh">Data on server fhem.js refreshed</string>
+    <string name="serverRefresh">Data on server fhem.js refreshed from fhem-server</string>
     <string name="orient" translatable="false">Orient</string>
+    <string name="draganddrop" translatable="false">d&amp;d</string>
     <string name="commandsShort">Commands</string>
     <string name="hint">Hint</string>
     <string name="hinttext">Navigate through config parts by horizontal wiping or by touch the tabs on top.</string>
     <string name="control">Control Button</string>
     <string name="new_header">create new header or seperation line</string>
     <string name="removeline" translatable="false">-</string>
+    <string name="bullet" translatable="false">\u2022</string>
+    <string name="blockheader">Block sequence (order by drag &amp; drop)</string>
+    <string name="header_label" translatable="false">*** Header ***</string>
+    <string name="seperator_label" translatable="false">*** Seperator ***</string>
+    <string name="empty_widget">Empty Widget</string>
+    <string name="werteregler">Slider</string>
+    <string name="backup" translatable="false">Export</string>
+    <string name="restore" translatable="false">Import</string>
+    <string name="export_hint">Export of whole configuration (without password) to path %1$s. An existing Backup will be overwritten.</string>
+    <string name="import_hint_urls">Import URLs from path %1$s. Widgets must be imported seperatly each.</string>
+    <string name="import_hint_widget">Import Widget data from path %1$s.</string>
+    <string name="actions">Actions</string>
+    <string name="help">Help</string>
+    <string name="export_success">Successfully exported configuration to path %1$s</string>
+    <string name="export_error">Export was not successful.</string>
+    <string name="import_error">Import was not successful. Maybe file is missing or content is corrupted.</string>
+    <string name="import_success">The Import of config was successful.</string>
+    <string name="select_widget">Select widget to import.:</string>
+    <string name="noCommandsAllowed">During configuration running, send commands is not possible</string>
+
 </resources>

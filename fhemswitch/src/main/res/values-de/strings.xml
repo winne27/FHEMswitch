@@ -1,7 +1,7 @@
 <resources>
     <string name="url_fhem_pl">URL FHEM Webserver</string>
     <string name="url_fhem_pl_local">URL FHEM im Heimnetz</string>
-    <string name="url_fhem_js">URL fhem.js  *</string>
+    <string name="url_fhem_js">URL fhem.js</string>
     <string name="url_fhem_js_local">URL fhem.js im Heimnetz</string>
     <string name="conn_pw">fhem.js Passwort</string>
     <string name="is_home_net">Augenblickliches WLAN (%1$s) ist Heimnetz</string>
@@ -9,15 +9,15 @@
     <string name="switchicon">Lampe</string>
     <string name="save">Speichern</string>
     <string name="error_header">Es ist ein Fehler aufgetreten</string>
-    <string name="getConfig">FHEM units einlesen</string>
+    <string name="getConfig">FHEM einlesen</string>
 
     <string name="switches">Schalter</string>
     <string name="columns">Spalten:</string>
     <string name="lightscenes">Szenarios</string>
-    <string name="values">Messwerte</string>
-    <string name="values2">Werte</string>
-    <string name="unit">Name - sortiere mit d&#038;d</string>
-    <string name="name">Angezeigter Name</string>
+    <string name="values">Werte</string>
+    <string name="values2">Wert</string>
+    <string name="unit">Name (sort)</string>
+    <string name="name">Anzeige</string>
     <string name="header">Header</string>
     <string name="command">Befehl</string>
     <string name="noconn">Keine Verbindung zum FHEM Server. Antippen um Neuverbindung zu versuchen.</string>
@@ -62,10 +62,7 @@
     <string name="installed_version">installierte Version</string>
     <string name="latest_version">neueste Version</string>
     <string name="cancel">Abbrechen</string>
-    <string name="noWidgetMessage">Bitte erst ein neues Widget auf einem Startscreen platzieren.
-                                   \n\nDabei startet die Konfiguration automatisch und die alten Konfigurationsdaten werden dabei übernommen, falls bereits eine Installation von FHEMswitch auf diesem Gerät vorhanden war.
-                                   \n\nWurden alte Daten erfolgreich übernommen und gespeichert(!), bleibt in der Regel ein Zombie-Widget der alten Version erhalten. Dies kann man einfach in den Papierkorb verschieben oder durch einen Neustart des Gerätes wird der Zombie auch eliminiert.
-    </string>
+    <string name="noWidgetMessage">Bitte erst ein FHEMswitch Widget auf einem Startscreen platzieren. Die Konfiguration wird dadurch dann automatisch gestartet.</string>
     <string name="maxWidgetMessage">Es sind nur maximal %1$s Widgets möglich</string>
     <string name="noconnjs">Keine Verbindung zum fhem.js Server möglich:</string>
     <string name="adjustable">numerische Werte setzen</string>
@@ -74,10 +71,24 @@
     <string name="value">value</string>
     <string name="set">set</string>
     <string name="execcmd">FHEM-Befehl um Wert zu setzen:</string>
-    <string name="serverRefresh">Strukturelle Daten auf dem fhem.js Server wurden aktualisiert.</string>
+    <string name="serverRefresh">Der fhem.js-Server hat alle Daten vom Fhem Server neu geladen.</string>
     <string name="commandsShort">Befehle</string>
     <string name="hint">Hinweis</string>
     <string name="hinttext">Navigation durch die einzelnen Rubriken ist mit horizontalen Wischgesten oder durch Antippen der Reiter oberhalb möglich!</string>
     <string name="control">Steuerfeld</string>
-    <string name="new_header">neue Überschrift oder Absatz (falls kein Namen eingegben wird)</string>
+    <string name="new_header">neue Überschrift oder Absatz (falls kein Name eingegeben wird)</string>
+    <string name="blockheader">Reihemfolge der Blocks</string>
+    <string name="empty_widget">Leeres Widget</string>
+    <string name="werteregler">Regler</string>
+    <string name="export_hint">Export der gesamten Konfiguration (ohne Passwort) in das Verzeichnis %1$s. Ein bereits dort existierender Export wird ersetzt.\"</string>
+    <string name="actions">Aktionen</string>
+    <string name="help">Hilfe</string>
+    <string name="import_hint_urls">Importiere URLs aus dem Verzeichnis %1$s. Jedes Widget muss seperat importiert werden.</string>
+    <string name="import_hint_widget">Importiere Widget aus dem Verzeichnis %1$s.</string>
+    <string name="export_success">Der Export der Konfiguration in das Verzeichnis %1$s war erfolgreich.</string>
+    <string name="export_error">Der Export war nicht erfolgreich. Warum auch immer, sorry!</string>
+    <string name="import_error">Der Import war nicht erfolgreich. Entweder fehlt die Datei und der der Inhalt ist nicht korrekt.</string>
+    <string name="import_success">Der Import war erfolgreich!</string>
+    <string name="select_widget">Wähle Widget für den Import:</string>
+    <string name="noCommandsAllowed">Während einer Konfigurationssitzung können keine FHEM-Befehle abgesetzt werden.</string>
 </resources>

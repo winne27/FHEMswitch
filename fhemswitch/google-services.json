@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "564260976226",
+    "firebase_url": "https://fhemswitch.firebaseio.com",
+    "project_id": "fhemswitch",
+    "storage_bucket": "fhemswitch.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:564260976226:android:f54b3a97c18295d9",
+        "android_client_info": {
+          "package_name": "de.fehngarten.fhemswitch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "564260976226-0ingv0ob2r05lpcrhachqk06o4ldbdjl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.fehngarten.fhemswitch",
+            "certificate_hash": "456069f0ce2133916cab63ab9b9470fd2c5ad946"
+          }
+        },
+        {
+          "client_id": "564260976226-37s4eums9mi9r0m2rs5h6trpo443f2rn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKBJ26LFUhvsbn0w2bgLdQeaOdUHkBWc8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "564260976226-37s4eums9mi9r0m2rs5h6trpo443f2rn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

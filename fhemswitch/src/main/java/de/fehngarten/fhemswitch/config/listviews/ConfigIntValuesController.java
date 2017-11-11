@@ -17,7 +17,7 @@ class ConfigIntValuesController extends DragSortController {
     private DragSortListView mDslv;
 
     ConfigIntValuesController(DragSortListView dslv, ConfigIntValuesAdapter adapter, Context context) {
-        super(dslv, R.id.config_switch_unit, DragSortController.ON_DOWN, 0);
+        super(dslv, R.id.config_intvalue_unit, DragSortController.ON_DOWN, 0);
         mAdapter = adapter;
         mContext = context;
         mDslv = dslv;

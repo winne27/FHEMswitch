@@ -1,13 +1,13 @@
 package de.fehngarten.fhemswitch.widget;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
 import java.util.Map.Entry;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.PendingIntent;
@@ -24,10 +24,14 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.StrictMode;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Display;
 import android.hardware.display.DisplayManager;
 import android.widget.RemoteViews;
+import android.widget.Toast;
+
+import com.google.firebase.crash.FirebaseCrash;
 
 import de.fehngarten.fhemswitch.BuildConfig;
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
@@ -35,18 +39,20 @@ import de.fehngarten.fhemswitch.data.ConfigDataIO;
 import de.fehngarten.fhemswitch.data.ConfigDataInstance;
 import de.fehngarten.fhemswitch.data.ConfigIntValueRow;
 import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
-import de.fehngarten.fhemswitch.data.MyIntValue;
+import de.fehngarten.fhemswitch.data.ConfigWorkInstance;
+import de.fehngarten.fhemswitch.data.RowIntValue;
+import de.fehngarten.fhemswitch.modul.MyRoundedCorners;
 import de.fehngarten.fhemswitch.modul.MyBroadcastReceiver;
 import de.fehngarten.fhemswitch.modul.MyReceiveListener;
 import de.fehngarten.fhemswitch.modul.MySetOnClickPendingIntent;
 import de.fehngarten.fhemswitch.modul.MyWifiInfo;
 import de.fehngarten.fhemswitch.modul.VersionChecks;
 import de.fehngarten.fhemswitch.modul.GetStoreVersion;
-import de.fehngarten.fhemswitch.data.MyCommand;
-import de.fehngarten.fhemswitch.data.MyLayout;
+import de.fehngarten.fhemswitch.data.RowCommand;
+import de.fehngarten.fhemswitch.modul.MyLayout;
 import de.fehngarten.fhemswitch.modul.MySocket;
-import de.fehngarten.fhemswitch.data.MySwitch;
-import de.fehngarten.fhemswitch.data.MyValue;
+import de.fehngarten.fhemswitch.data.RowSwitch;
+import de.fehngarten.fhemswitch.data.RowValue;
 import de.fehngarten.fhemswitch.R;
 import de.fehngarten.fhemswitch.widget.listviews.CommonListviewService;
 import de.fehngarten.fhemswitch.data.ConfigCommandRow;
@@ -54,10 +60,7 @@ import de.fehngarten.fhemswitch.data.ConfigLightsceneRow;
 import de.fehngarten.fhemswitch.data.ConfigSwitchRow;
 import de.fehngarten.fhemswitch.data.ConfigValueRow;
 import io.socket.client.Socket;
-
-import de.fehngarten.fhemswitch.data.MyLightScenes.MyLightScene;
-
-//import android.util.Log;
+import de.fehngarten.fhemswitch.data.RowLightScenes.MyLightScene;
 
 import static de.fehngarten.fhemswitch.global.Consts.*;
 import static de.fehngarten.fhemswitch.global.Settings.*;
@@ -66,16 +69,12 @@ public class WidgetService extends Service {
     private VersionChecks versionChecks;
     private MySocket mySocket = null;
 
-    private int switchCols;
-    private int valueCols;
-    private int commandCols;
-
     private int layoutId;
     private int iLayout;
     private MyLayout myLayout;
+    private Map<String, Integer> blockCols = new HashMap<>();
 
     private AppWidgetManager appWidgetManager;
-
     private Handler handler;
     private ArrayList<MyBroadcastReceiver> myBroadcastReceivers;
     private ArrayList<DoSendCommand> doSendCommands = new ArrayList<>();
@@ -93,22 +92,21 @@ public class WidgetService extends Service {
 
     protected Integer instSerial;
     private boolean screenIsOn = true;
+    private boolean keepDisconnected = false;
     private int waitCheckSocket = settingWaitSocketShort;
-    //private String TAG;
 
     public WidgetService() {
-        //TAG = "WidgetService-" + instSerial;
-        //Log.d(TAG, "loaded");
         versionChecks = new VersionChecks();
         myBroadcastReceivers = new ArrayList<>();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        //FirebaseCrash.log("Activity created");
+
         if (intent != null) {
             String action = intent.getAction();
             widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-            //if (BuildConfig.DEBUG) Log.d(TAG, "onStartCommand with " + action + " and widgetId: " + widgetId);
             switch (action) {
                 case FHEM_COMMAND:
                     if (configDataCommon == null || configDataCommon.urlFhemjsLocal == null) {
@@ -140,7 +138,6 @@ public class WidgetService extends Service {
 
     public void onCreate() {
         //TAG = "WidgetService-" + instSerial;
-
         mContext = getApplicationContext();
         appWidgetManager = AppWidgetManager.getInstance(mContext);
         handler = new Handler();
@@ -161,7 +158,6 @@ public class WidgetService extends Service {
         readConfig();
         setOrientation();
         doStart();
-        handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
     }
 
     @Override
@@ -189,6 +185,16 @@ public class WidgetService extends Service {
         int shape = doit ? settingShapes[instSerial] : R.drawable.widget_shape;
         mView.setInt(R.id.main_layout, "setBackgroundResource", shape);
         appWidgetManager.updateAppWidget(widgetId, mView);
+
+        if (doit) {
+            if (mySocket != null) {
+                mySocket.destroy();
+            }
+            keepDisconnected = true;
+        } else {
+            keepDisconnected = false;
+            checkSocket();
+        }
     }
 
     private void unregisterBroadcastReceivers() {
@@ -231,10 +237,14 @@ public class WidgetService extends Service {
     private class OnScreenOnOff implements MyReceiveListener {
         public void run(Context context, Intent intent) {
             //Log.d(TAG,"on/off fired");
-            screenIsOn = intent.getAction().equals(Intent.ACTION_SCREEN_ON);
-            //handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
-            if (screenIsOn) {
-                start();
+            try {
+                screenIsOn = intent.getAction().equals(Intent.ACTION_SCREEN_ON);
+                //handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
+                if (screenIsOn) {
+                    start();
+                }
+            } catch (Exception e) {
+                // do nothing
             }
         }
     }
@@ -266,16 +276,16 @@ public class WidgetService extends Service {
                         storeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(storeIntent);
                     }
-                    setVisibility(VERSION_CLOSE, null);
+                    setVisibility("", VERSION_CLOSE, null);
                     versionChecks.setDateShown(currentVersionType);
                     break;
                 case NEW_VERSION_SUPPRESS:
-                    setVisibility(VERSION_CLOSE, null);
+                    setVisibility("", VERSION_CLOSE, null);
                     versionChecks.setSuppressedToLatest(currentVersionType);
                     saveSuppressedVersions(currentVersionType);
                     break;
                 case NEW_VERSION_REMEMBER:
-                    setVisibility(VERSION_CLOSE, null);
+                    setVisibility("", VERSION_CLOSE, null);
                     versionChecks.setDateShown(currentVersionType);
                     break;
             }
@@ -291,8 +301,6 @@ public class WidgetService extends Service {
                 NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
                 if (networkInfo != null && networkInfo.isConnected() && screenIsOn) {
                     start();
-                    //doStart();
-                    //checkSocket();
                 }
             } else {
                 listenConnChange = true;
@@ -301,6 +309,13 @@ public class WidgetService extends Service {
     }
 
     public void sendCommand(Intent intent) {
+
+        if (keepDisconnected) {
+            Toast toast = Toast.makeText(mContext, getString(R.string.noCommandsAllowed), Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
+            return;
+        }
 
         if (mySocket == null) {
             checkSocket();
@@ -357,26 +372,26 @@ public class WidgetService extends Service {
     private void setNewValue(Intent intent) {
         //Log.i(TAG,intent.getStringExtra(SUBACTION));
         int pos = intent.getIntExtra(POS, -1);
-        MyIntValue myIntValue = ConfigWorkBasket.data.get(instSerial).intValues.get(pos);
+        RowIntValue rowIntValue = ConfigWorkBasket.data.get(instSerial).intValues.get(pos);
         String newValueString;
-        if (myIntValue.isTime) {
-            newValueString = calcNewTime(myIntValue.value, intent.getStringExtra(SUBACTION));
+        if (rowIntValue.isTime) {
+            newValueString = calcNewTime(rowIntValue.value, intent.getStringExtra(SUBACTION));
         } else {
-            Float delta = myIntValue.stepSize * settingMultiplier.get(intent.getStringExtra(SUBACTION));
-            Float newValue = Float.valueOf(myIntValue.value) + delta;
+            Float delta = rowIntValue.stepSize * settingMultiplier.get(intent.getStringExtra(SUBACTION));
+            Float newValue = Float.valueOf(rowIntValue.value) + delta;
             newValueString = newValue.toString();
         }
         //Log.i(TAG,newValueString);
-        String cmd = "set " + myIntValue.setCommand + " " + newValueString;
+        String cmd = "set " + rowIntValue.setCommand + " " + newValueString;
 
         ConfigWorkBasket.data.get(instSerial).intValues.get(pos).setValue(newValueString);
         appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("intvalue").get(0));
-        doSendCommands.get(pos).fire(cmd, myIntValue.commandExecDelay);
+        doSendCommands.get(pos).fire(cmd, rowIntValue.commandExecDelay);
     }
 
     private String calcNewTime(String value, String subaction) {
-        String hour = value.substring(0,2);
-        String min = value.substring(3,5);
+        String hour = value.substring(0, 2);
+        String min = value.substring(3, 5);
         int minInt = Integer.parseInt(min);
         int hourInt = Integer.parseInt(hour);
         switch (subaction) {
@@ -405,8 +420,8 @@ public class WidgetService extends Service {
                 }
                 break;
         }
-        hour = String.format(Locale.getDefault(),"%02d", hourInt);
-        min = String.format(Locale.getDefault(),"%02d", minInt);
+        hour = String.format(Locale.getDefault(), "%02d", hourInt);
+        min = String.format(Locale.getDefault(), "%02d", minInt);
         return hour + ":" + min;
     }
 
@@ -430,7 +445,9 @@ public class WidgetService extends Service {
 
         public void run() {
             //Log.d(TAG, "cmd: " + cmd);
-            mySocket.sendCommand(cmd);
+            if (cmd != null && mySocket != null) {
+                mySocket.sendCommand(cmd);
+            }
         }
 
     }
@@ -473,12 +490,8 @@ public class WidgetService extends Service {
                 versionChecks.setSuppressedVersion(type, suppressedVersion);
             }
         }
-
+        //Log.d("Instanz lesen widget", Integer.toString(instSerial));
         configDataInstance = configDataIO.readInstance(instSerial);
-
-        switchCols = configDataInstance.switchCols;
-        valueCols = configDataInstance.valueCols;
-        commandCols = configDataInstance.commandCols;
     }
 
     public void setOrientation() {
@@ -490,160 +503,200 @@ public class WidgetService extends Service {
             iLayout = configDataInstance.layoutPortrait;
         }
 
-        if (iLayout > 0) {
-            switchCols = 0;
-            valueCols = 0;
-            commandCols = 0;
+        blockCols = new HashMap<>();
+
+        blockCols.put(LIGHTSCENES, 0);
+        blockCols.put(INTVALUES, 0);
+
+        if (iLayout == LAYOUT_HORIZONTAL) {
+            blockCols.put(SWITCHES, configDataInstance.switchCols);
+            blockCols.put(VALUES, configDataInstance.valueCols);
+            blockCols.put(COMMANDS, configDataInstance.commandCols);
+        } else {
+            blockCols.put(SWITCHES, 0);
+            blockCols.put(VALUES, 0);
+            blockCols.put(COMMANDS, 0);
         }
     }
 
     public void doStart() {
-        //if (BuildConfig.DEBUG) //Log.d(TAG, "doStart started with " + Integer.toString(nr));
+        Map<String, Integer> blockCounts = new HashMap<>();
+        try {
 
-        layoutId = settingLayouts[iLayout];
-        mView = new RemoteViews(mContext.getPackageName(), layoutId);
-
-        if (myLayout != null) {
-            for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
-                for (int listviewId : entry.getValue()) {
-                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, listviewId);
-                }
-            }
-        }
-
-        ConfigWorkBasket.data.get(instSerial).init();
-        //-- control switches  ------------------------------------------------------------------
-        if (configDataInstance.switchRows != null) {
-            for (ConfigSwitchRow switchRow : configDataInstance.switchRows) {
-                if (switchRow.enabled) {
-                    //if (BuildConfig.DEBUG) //Log.d(TAG,"unit: " + switchRow.unit + " cmd: " + switchRow.cmd);
-                    ConfigWorkBasket.data.get(instSerial).switches.add(new MySwitch(switchRow.name, switchRow.unit, switchRow.cmd));
-                }
-            }
-        }
-        int switchCount = ConfigWorkBasket.data.get(instSerial).switches.size();
-
-        //-- control lightscenes  ------------------------------------------------------------------
-        MyLightScene newLightScene = null;
-        if (configDataInstance.lightsceneRows != null) {
-            for (ConfigLightsceneRow lightsceneRow : configDataInstance.lightsceneRows) {
-                if (lightsceneRow.isHeader) {
-                    newLightScene = ConfigWorkBasket.data.get(instSerial).lightScenes.newLightScene(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.showHeader);
-                } else {
-                    if (newLightScene != null) {
-                        newLightScene.addMember(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.enabled);
+            if (myLayout != null) {
+                for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
+                    for (int listviewId : entry.getValue()) {
+                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, listviewId);
                     }
                 }
             }
-        }
-        int lightsceneCount = ConfigWorkBasket.data.get(instSerial).lightScenes.itemsCount;
 
-        //-- control values  ------------------------------------------------------------------
-        if (configDataInstance.valueRows != null) {
-            for (ConfigValueRow valueRow : configDataInstance.valueRows) {
-                if (valueRow.enabled) {
-                    ConfigWorkBasket.data.get(instSerial).values.add(new MyValue(valueRow.name, valueRow.unit, valueRow.useIcon));
+            ConfigWorkBasket.data.get(instSerial).init();
+
+            if (configDataInstance.blockOrder == null) {
+                ConfigWorkBasket.data.get(instSerial).blockOrder = settingsBlockOrder;
+            } else {
+                ConfigWorkBasket.data.get(instSerial).blockOrder = configDataInstance.blockOrder;
+            }
+
+            //-- control switches  ------------------------------------------------------------------
+            if (configDataInstance.switchRows != null) {
+                for (ConfigSwitchRow switchRow : configDataInstance.switchRows) {
+                    if (switchRow.enabled) {
+                        ConfigWorkBasket.data.get(instSerial).switches.add(new RowSwitch(switchRow.name, switchRow.unit, switchRow.cmd));
+                    }
                 }
             }
-        }
-        int valueCount = ConfigWorkBasket.data.get(instSerial).values.size();
+            blockCounts.put(SWITCHES, ConfigWorkBasket.data.get(instSerial).switches.size());
 
-        //-- control intvalues  ------------------------------------------------------------------
-        if (configDataInstance.intValueRows != null) {
-            doSendCommands = new ArrayList<>();
-            for (ConfigIntValueRow configIntValueRow : configDataInstance.intValueRows) {
-                if (configIntValueRow.enabled) {
-                    MyIntValue myIntValue = new MyIntValue();
-                    myIntValue.transfer(configIntValueRow);
-                    ConfigWorkBasket.data.get(instSerial).intValues.add(myIntValue);
-                    doSendCommands.add(new DoSendCommand(handler));
+            //-- control lightscenes  ------------------------------------------------------------------
+            MyLightScene newLightScene = null;
+            if (configDataInstance.lightsceneRows != null) {
+                for (ConfigLightsceneRow lightsceneRow : configDataInstance.lightsceneRows) {
+                    if (lightsceneRow.isHeader) {
+                        newLightScene = ConfigWorkBasket.data.get(instSerial).lightScenes.newLightScene(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.showHeader);
+                    } else {
+                        if (newLightScene != null) {
+                            newLightScene.addMember(lightsceneRow.name, lightsceneRow.unit, lightsceneRow.enabled);
+                        }
+                    }
                 }
             }
-        }
-        int intValueCount = ConfigWorkBasket.data.get(instSerial).intValues.size();
+            blockCounts.put(LIGHTSCENES, ConfigWorkBasket.data.get(instSerial).lightScenes.itemsCount);
 
-        //-- control commands  ------------------------------------------------------------------
-        if (configDataInstance.commandRows != null) {
-            for (ConfigCommandRow commandRow : configDataInstance.commandRows) {
-                if (commandRow.enabled) {
-                    ConfigWorkBasket.data.get(instSerial).commands.add(new MyCommand(commandRow.name, commandRow.command));
+            //-- control values  ------------------------------------------------------------------
+            if (configDataInstance.valueRows != null) {
+                for (ConfigValueRow valueRow : configDataInstance.valueRows) {
+                    if (valueRow.enabled) {
+                        ConfigWorkBasket.data.get(instSerial).values.add(new RowValue(valueRow.name, valueRow.unit, valueRow.useIcon));
+                    }
                 }
             }
-        }
-        int commandCount = ConfigWorkBasket.data.get(instSerial).commands.size();
-        myLayout = new MyLayout(iLayout, switchCols, valueCols, commandCols, switchCount, lightsceneCount, valueCount, commandCount, intValueCount);
+            blockCounts.put(VALUES, ConfigWorkBasket.data.get(instSerial).values.size());
 
-        //-- control switches  ------------------------------------------------------------------
-        for (int i = 0; i <= switchCols; i++) {
-            ConfigWorkBasket.data.get(instSerial).switchesCols.add(new ArrayList<>());
-        }
-
-        int rownum = 0;
-        int colnum = 0;
-        for (MySwitch switchRow : ConfigWorkBasket.data.get(instSerial).switches) {
-            rownum = rownum + 1;
-            ConfigWorkBasket.data.get(instSerial).switchesCols.get(colnum).add(switchRow);
-            if (rownum % myLayout.rowsPerCol.get("switch") == 0) {
-                colnum++;
+            //-- control intvalues  ------------------------------------------------------------------
+            if (configDataInstance.intValueRows != null) {
+                doSendCommands = new ArrayList<>();
+                for (ConfigIntValueRow configIntValueRow : configDataInstance.intValueRows) {
+                    if (configIntValueRow.enabled) {
+                        RowIntValue rowIntValue = new RowIntValue();
+                        rowIntValue.transfer(configIntValueRow);
+                        ConfigWorkBasket.data.get(instSerial).intValues.add(rowIntValue);
+                        doSendCommands.add(new DoSendCommand(handler));
+                    }
+                }
             }
-        }
+            blockCounts.put(INTVALUES, ConfigWorkBasket.data.get(instSerial).intValues.size());
 
-        //-- control values  ------------------------------------------------------------------
-        for (int i = 0; i <= valueCols; i++) {
-            ConfigWorkBasket.data.get(instSerial).valuesCols.add(new ArrayList<>());
-        }
-        rownum = 0;
-        colnum = 0;
-        for (MyValue valueRow : ConfigWorkBasket.data.get(instSerial).values) {
-            rownum = rownum + 1;
-            ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).add(valueRow);
-            if (rownum % myLayout.rowsPerCol.get("value") == 0) {
-                colnum++;
+            //-- control commands  ------------------------------------------------------------------
+            if (configDataInstance.commandRows != null) {
+                for (ConfigCommandRow commandRow : configDataInstance.commandRows) {
+                    if (commandRow.enabled) {
+                        ConfigWorkBasket.data.get(instSerial).commands.add(new RowCommand(commandRow.name, commandRow.command));
+                    }
+                }
             }
-        }
+            blockCounts.put(COMMANDS, ConfigWorkBasket.data.get(instSerial).commands.size());
 
-        //-- control commands  ------------------------------------------------------------------
-        for (int i = 0; i <= commandCols; i++) {
-            ConfigWorkBasket.data.get(instSerial).commandsCols.add(new ArrayList<>());
-        }
-        rownum = 0;
-        colnum = 0;
-        for (MyCommand commandRow : ConfigWorkBasket.data.get(instSerial).commands) {
-            rownum = rownum + 1;
-            ConfigWorkBasket.data.get(instSerial).commandsCols.get(colnum).add(commandRow);
-            if (rownum % myLayout.rowsPerCol.get("command") == 0) {
-                colnum++;
+            int sumCounts = 0;
+            Integer numBlocks = 0;
+            for (Map.Entry<String, Integer> entry : blockCounts.entrySet()) {
+                sumCounts += entry.getValue();
+                if (entry.getValue() > 0) {
+                    numBlocks++;
+                }
             }
+
+            if (sumCounts == 0) {
+                throw new NoFuckingEntries("sum of block entries is null");
+            }
+
+            if (iLayout == LAYOUT_MIXED && numBlocks <= 1) {
+                iLayout = LAYOUT_HORIZONTAL;
+            }
+            layoutId = settingLayouts[iLayout];
+            mView = new RemoteViews(mContext.getPackageName(), layoutId);
+            myLayout = new MyLayout(iLayout, blockCols, blockCounts, ConfigWorkBasket.data.get(instSerial).blockOrder);
+
+            //-- control switches  ------------------------------------------------------------------
+            for (int i = 0; i <= blockCols.get(SWITCHES); i++) {
+                ConfigWorkBasket.data.get(instSerial).switchesCols.add(new ArrayList<>());
+            }
+
+            int rownum = 0;
+            int colnum = 0;
+
+            for (RowSwitch switchRow : ConfigWorkBasket.data.get(instSerial).switches) {
+                rownum = rownum + 1;
+                ConfigWorkBasket.data.get(instSerial).switchesCols.get(colnum).add(switchRow);
+                if (rownum % myLayout.rowsPerCol.get(SWITCHES) == 0) {
+                    colnum++;
+                }
+            }
+
+            //-- control values  ------------------------------------------------------------------
+            for (int i = 0; i <= blockCols.get(VALUES); i++) {
+                ConfigWorkBasket.data.get(instSerial).valuesCols.add(new ArrayList<>());
+            }
+            rownum = 0;
+            colnum = 0;
+            for (RowValue valueRow : ConfigWorkBasket.data.get(instSerial).values) {
+                rownum = rownum + 1;
+                ConfigWorkBasket.data.get(instSerial).valuesCols.get(colnum).add(valueRow);
+                if (rownum % myLayout.rowsPerCol.get(VALUES) == 0) {
+                    colnum++;
+                }
+            }
+
+            //-- control commands  ------------------------------------------------------------------
+            for (int i = 0; i <= blockCols.get(COMMANDS); i++) {
+                ConfigWorkBasket.data.get(instSerial).commandsCols.add(new ArrayList<>());
+            }
+            rownum = 0;
+            colnum = 0;
+            for (RowCommand commandRow : ConfigWorkBasket.data.get(instSerial).commands) {
+                rownum = rownum + 1;
+                ConfigWorkBasket.data.get(instSerial).commandsCols.get(colnum).add(commandRow);
+                if (rownum % myLayout.rowsPerCol.get(COMMANDS) == 0) {
+                    colnum++;
+                }
+            }
+            // -------------------------------------------------------------------------------
+
+            ConfigWorkBasket.data.get(instSerial).curLayout = iLayout;
+            ConfigWorkBasket.data.get(instSerial).myRoundedCorners = new MyRoundedCorners(ConfigWorkBasket.data.get(instSerial), blockCounts, myLayout.mixedLayout);
+
+            initListviews();
+            handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
+        } catch (NoFuckingEntries e) {
+            layoutId = settingLayouts[LAYOUT_HORIZONTAL];
+            mView = new RemoteViews(mContext.getPackageName(), layoutId);
+            setVisibility("NoFuckingEntries", EMPTY_WIDGET, getString(R.string.empty_widget));
         }
-        // -------------------------------------------------------------------------------
-        initListviews();
     }
 
     private void initListviews() {
         //if (BuildConfig.DEBUG) //Log.d(TAG, "initListviews started");
         mView = new RemoteViews(mContext.getPackageName(), layoutId);
 
-        mView.setViewVisibility(R.id.noconn, View.GONE);
+        mView.setViewVisibility(R.id.message, View.GONE);
         mView.setViewVisibility(R.id.new_version, View.GONE);
-        for (int viewId : myLayout.goneViews) {
-            mView.setViewVisibility(viewId, View.GONE);
-        }
 
         for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
             String type = entry.getKey();
             int actCol = 0;
             for (int listviewId : entry.getValue()) {
-                initListview(listviewId, actCol, type);
-                mView.setViewVisibility(listviewId, View.VISIBLE);
+                if (colTypeIsValid(actCol, type)) {
+                    initListview(listviewId, actCol, type);
+                }
                 actCol++;
             }
         }
 
         Intent intentSync = new Intent(mContext, WidgetProvider.class);
-        intentSync.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE); //You need to specify the action for the intent. Right now that intent is doing nothing for there is no action to be broadcasted.
-        PendingIntent pendingSync = PendingIntent.getBroadcast(mContext,0, intentSync, PendingIntent.FLAG_UPDATE_CURRENT); //You need to specify a proper flag for the intent. Or else the intent will become deleted.
-        mView.setOnClickPendingIntent(R.id.mainshape,pendingSync);
-
+        intentSync.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        PendingIntent pendingSync = PendingIntent.getBroadcast(mContext, 0, intentSync, PendingIntent.FLAG_UPDATE_CURRENT);
+        mView.setOnClickPendingIntent(R.id.mainshape, pendingSync);
 
         appWidgetManager.updateAppWidget(widgetId, mView);
     }
@@ -698,10 +751,7 @@ public class WidgetService extends Service {
         return screenOn;
     }
 
-    private void setVisibility(String type, String text) {
-        //Log.i("type of setVisibility",type);
-        //AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
-
+    private void setVisibility(String reason, String type, String text) {
         switch (type) {
             case VERSION_APP:
                 mView.setTextViewText(R.id.new_version_text, text);
@@ -721,7 +771,7 @@ public class WidgetService extends Service {
                 setVisibilityListViews(View.GONE);
                 break;
             case SOCKET_CONNECTED:
-                mView.setViewVisibility(R.id.noconn, View.GONE);
+                mView.setViewVisibility(R.id.message, View.GONE);
                 mView.setViewVisibility(R.id.new_version, View.GONE);
                 setVisibilityListViews(View.VISIBLE);
                 break;
@@ -729,20 +779,33 @@ public class WidgetService extends Service {
                 mView.setViewVisibility(R.id.new_version, View.GONE);
                 setVisibilityListViews(View.VISIBLE);
                 break;
+            case EMPTY_WIDGET:
+                mView.setTextViewText(R.id.message, text);
+                mView.setViewVisibility(R.id.message, View.VISIBLE);
+                //new MySetOnClickPendingIntent(mContext, mView, NEW_CONFIG, R.id.message);
+                //setVisibilityListViews(View.GONE);
+                break;
             case SOCKET_DISCONNECTED:
                 if (screenIsOn) {
-                    mView.setTextViewText(R.id.noconn, text);
-                    mView.setViewVisibility(R.id.noconn, View.VISIBLE);
-                    new MySetOnClickPendingIntent(mContext, mView, NEW_CONFIG, R.id.noconn);
+                    mView.setTextViewText(R.id.message, text);
+                    mView.setViewVisibility(R.id.message, View.VISIBLE);
+                    new MySetOnClickPendingIntent(mContext, mView, NEW_CONFIG, R.id.message);
                     setVisibilityListViews(View.GONE);
                 }
                 break;
         }
-
-        appWidgetManager.updateAppWidget(widgetId, mView);
+        try {
+            appWidgetManager.updateAppWidget(widgetId, mView);
+        } catch (Exception e) {
+            FirebaseCrash.log(reason + " " + type + " " + text);
+            FirebaseCrash.report(e);
+        }
     }
 
     private void setVisibilityListViews(int action) {
+        if (myLayout == null) {
+            return;
+        }
         for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
             for (int listviewId : entry.getValue()) {
                 mView.setViewVisibility(listviewId, action);
@@ -781,7 +844,7 @@ public class WidgetService extends Service {
         if (screenIsOn) {
             if (mySocket == null) {
                 initSocket();
-            } else if (!mySocket.socket.connected()) {
+            } else if (mySocket.socket == null || !mySocket.socket.connected()) {
                 mySocket.destroy();
                 initSocket();
             }
@@ -795,94 +858,112 @@ public class WidgetService extends Service {
 
     private void initSocket() {
         //if (BuildConfig.DEBUG) Log.d(TAG, "initSocket started");
-        mySocket = new MySocket(mContext, configDataCommon, "Widget");
-        defineSocketListeners();
-        mySocket.doConnect();
+        if (!keepDisconnected) {
+            try {
+                mySocket = new MySocket(mContext, configDataCommon, "Widget");
+                defineSocketListeners();
+                mySocket.doConnect();
+            } catch (Exception e) {
+                setVisibility("connectError", SOCKET_DISCONNECTED, getString(R.string.noconn));
+            }
+        }
     }
 
     private void defineSocketListeners() {
-        // main run path: after auth resp -> request values from server
+        if (mySocket == null || mySocket.socket == null) {
+            return;
+        }
         mySocket.socket.on("authenticated", args -> {
             requestValues();
             waitCheckSocket = myWifiInfo.isWifi() ? settingWaitSocketWifi : settingWaitSocketLong;
-            setVisibility(SOCKET_CONNECTED, "");
+            setVisibility("authenticated", SOCKET_CONNECTED, "");
         });
 
         mySocket.socket.on(Socket.EVENT_DISCONNECT, args1 -> {
             mySocket = null;
             waitCheckSocket = settingWaitSocketShort;
-            setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn));
+            setVisibility("EVENT_DISCONNECT", SOCKET_DISCONNECTED, getString(R.string.noconn));
             if (screenIsOn) {
-                handler.removeCallbacks(checkSocketTimer);
                 handler.postDelayed(checkSocketTimer, waitCheckSocket);
             }
         });
 
         mySocket.socket.on(Socket.EVENT_RECONNECT_FAILED, args1 -> {
-            mySocket = null;
-            setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn));
+            if (mySocket != null) {
+                mySocket.destroy();
+                mySocket = null;
+            }
+            //setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn));
         });
+
 
         mySocket.socket.on(Socket.EVENT_CONNECT_ERROR, args1 -> {
             if (mySocket != null) {
-                mySocket.socket.close();
-                mySocket.socket.off();
+                mySocket.destroy();
                 mySocket = null;
             }
-            setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn));
+            setVisibility("EVENT_CONNECT_ERROR", SOCKET_DISCONNECTED, getString(R.string.noconn));
         });
 
         mySocket.socket.on("value", args1 -> {
-            JSONObject obj = (JSONObject) args1[0];
-            Iterator<String> iterator = obj.keys();
-            String unit = null;
-            while (iterator.hasNext()) {
-                unit = iterator.next();
-                String value = null;
-                try {
-                    value = obj.getString(unit);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            try {
+                if (args1 == null) return;
+                JSONObject obj = (JSONObject) args1[0];
+                Iterator<String> iterator = obj.keys();
+                String unit;
+                while (iterator.hasNext()) {
+                    unit = iterator.next();
+                    String value = null;
+                    try {
+                        value = obj.getString(unit);
+                    } catch (Exception e) {
+                        FirebaseCrash.log("value from fhem: " + args1[0]);
+                        FirebaseCrash.report(e);
+                    }
 
-                //Log.d(TAG, "new value: " + unit + ":" + value + " - widgetId: " + widgetId);
+                    //Log.d(TAG, "new value: " + unit + ":" + value + " - widgetId: " + widgetId);
+                    int actColSwitch = ConfigWorkBasket.data.get(instSerial).setSwitchIcon(unit, value);
+                    if (actColSwitch > -1) {
+                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("switch").get(actColSwitch));
+                    }
 
-                int actColSwitch = ConfigWorkBasket.data.get(instSerial).setSwitchIcon(unit, value);
-                if (actColSwitch > -1) {
-                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("switch").get(actColSwitch));
-                }
+                    int actColValue = ConfigWorkBasket.data.get(instSerial).setValue(unit, value);
+                    if (actColValue > -1) {
+                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("value").get(actColValue));
+                    }
 
-                int actColValue = ConfigWorkBasket.data.get(instSerial).setValue(unit, value);
-                if (actColValue > -1) {
-                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("value").get(actColValue));
-                }
+                    if (ConfigWorkBasket.data.get(instSerial).setLightscene(unit, value)) {
+                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("lightscene").get(0));
+                    }
 
-                if (ConfigWorkBasket.data.get(instSerial).setLightscene(unit, value)) {
-                    appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("lightscene").get(0));
-                }
-
-                if (ConfigWorkBasket.data.get(instSerial).setIntValue(unit, value)) {
-                    if (myLayout.layout.containsKey("intvalue")) {
-                        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("intvalue").get(0));
+                    if (ConfigWorkBasket.data.get(instSerial).setIntValue(unit, value)) {
+                        if (myLayout.layout.containsKey("intvalue")) {
+                            appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, myLayout.layout.get("intvalue").get(0));
+                        }
                     }
                 }
+            } catch (Exception e) {
+                FirebaseCrash.log("value from fhem: " + args1[0]);
+                FirebaseCrash.report(e);
             }
         });
 
         mySocket.socket.on("version", args1 -> {
-            //if (BuildConfig.DEBUG) //Log.d("version", args1[0].toString());
-            JSONObject obj = (JSONObject) args1[0];
+            if (args1 == null) return;
             try {
-                versionChecks.setVersions(obj.getString("type"), obj.getString("installed"), obj.getString("latest"));
-            } catch (JSONException e) {
-                e.printStackTrace();
+                JSONObject obj = (JSONObject) args1[0];
+                String type = (obj.has("type")) ? obj.getString("type") : "fhemjs";
+                versionChecks.setVersions(type, obj.getString("installed"), obj.getString("latest"));
+            } catch (Exception e) {
+                FirebaseCrash.log("version from fhem: " + args1[0]);
+                FirebaseCrash.report(e);
             }
 
         });
 
-        mySocket.socket.on("fhemError", args1 -> setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn)));
+        mySocket.socket.on("fhemError", args1 -> setVisibility("fhemError", SOCKET_DISCONNECTED, getString(R.string.noconn)));
 
-        mySocket.socket.on("fhemConn", args1 -> setVisibility(SOCKET_CONNECTED, ""));
+        mySocket.socket.on("fhemConn", args1 -> setVisibility("fhemConn", SOCKET_CONNECTED, ""));
     }
 
     Runnable checkVersionTimer = new Runnable() {
@@ -938,7 +1019,7 @@ public class WidgetService extends Service {
                     break;
             }
 
-            setVisibility(type, hint);
+            setVisibility("", type, hint);
             currentVersionType = type;
             //if (BuildConfig.DEBUG) //Log.d(TAG, "show version hint " + type);
         }
@@ -948,6 +1029,50 @@ public class WidgetService extends Service {
         configDataCommon.suppressedVersions.put(type, versionChecks.getSuppressedVersion(type));
         ConfigDataIO configDataIO = new ConfigDataIO(mContext);
         configDataIO.saveCommon(configDataCommon);
+    }
+
+    private class NoFuckingEntries extends Exception {
+        NoFuckingEntries(String exc) {
+            super(exc);
+        }
+
+        public String getMessage() {
+            return super.getMessage();
+        }
+    }
+
+    private boolean colTypeIsValid(int col, String type) {
+        boolean isOK = false;
+        ConfigWorkInstance curInstance = ConfigWorkBasket.data.get(instSerial);
+        switch (type) {
+            case "switch":
+                if (curInstance.switchesCols.size() > col) {
+                    if (curInstance.switchesCols.get(col).size() > 0) {
+                        isOK = true;
+                    }
+                }
+            case "value":
+                if (curInstance.valuesCols.size() > col) {
+                    if (curInstance.valuesCols.get(col).size() > 0) {
+                        isOK = true;
+                    }
+                }
+            case "lightscene":
+                if (curInstance.lightScenes.items.size() > 0) {
+                    isOK = true;
+                }
+            case "command":
+                if (curInstance.commandsCols.size() > col) {
+                    if (curInstance.commandsCols.get(col).size() > 0) {
+                        isOK = true;
+                    }
+                }
+            case "intvalue":
+                if (curInstance.intValues.size() > 0) {
+                    isOK = true;
+                }
+        }
+        return isOK;
     }
 
     @Override

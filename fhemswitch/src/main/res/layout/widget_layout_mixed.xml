@@ -12,7 +12,7 @@
         android:background="@drawable/widget_shape"
         android:orientation="vertical">
 
-        <include layout="@layout/noconn" />
+        <include layout="@layout/message" />
 
         <include layout="@layout/new_version" />
 
@@ -30,21 +30,25 @@
 
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/listview_bottom_margin"
-                android:layout_marginRight="@dimen/listview_bottom_margin"
+                android:layout_marginEnd="@dimen/listview_right_margin"
+                android:layout_marginRight="@dimen/listview_right_margin"
                 android:layout_weight="0.5"
                 android:orientation="vertical">
 
                 <include
-                    android:id="@+id/mixed00"
+                    android:id="@+id/mixed_listview_0_0"
                     layout="@layout/widget_listview_default" />
 
                 <include
-                    android:id="@+id/mixed01"
+                    android:id="@+id/mixed_listview_0_1"
                     layout="@layout/widget_listview_default" />
 
                 <include
-                    android:id="@+id/mixed02"
+                    android:id="@+id/mixed_listview_0_2"
+                    layout="@layout/widget_listview_default" />
+
+               <include
+                    android:id="@+id/mixed_listview_0_3"
                     layout="@layout/widget_listview_default" />
 
             </LinearLayout>
@@ -57,19 +61,19 @@
                 android:orientation="vertical">
 
                 <include
-                    android:id="@+id/mixed10"
+                    android:id="@+id/mixed_listview_1_0"
                     layout="@layout/widget_listview_default" />
 
                 <include
-                    android:id="@+id/mixed11"
+                    android:id="@+id/mixed_listview_1_1"
                     layout="@layout/widget_listview_default" />
 
                 <include
-                    android:id="@+id/mixed12"
+                    android:id="@+id/mixed_listview_1_2"
                     layout="@layout/widget_listview_default" />
 
                 <include
-                    android:id="@+id/mixed13"
+                    android:id="@+id/mixed_listview_1_3"
                     layout="@layout/widget_listview_default" />
 
             </LinearLayout>

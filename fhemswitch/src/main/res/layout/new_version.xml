@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/new_version"
+    android:background="@drawable/widget_shape_inactive_both"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:padding="3dp"
     android:visibility="gone">
 
     <TextView
         android:id="@+id/new_version_text"
+        android:background="@drawable/widget_shape_inactive_both"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="@string/initruns"
         android:textColor="@color/text_hinweis"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:padding="3dp"
+        android:textSize="14sp"
+        android:textStyle="normal" />
 
     <Button
         android:id="@+id/new_version_store_button"
@@ -26,13 +29,13 @@
         android:text="@string/openstore" />
 
     <Button
-        android:id="@+id/new_version_remember_button"
-        style="@style/Widget.Button"
-        android:text="@string/rememberlater" />
-
-    <Button
         android:id="@+id/new_version_show_button"
         style="@style/Widget.Button"
         android:text="@string/donotshow" />
+
+    <Button
+        android:id="@+id/new_version_remember_button"
+        style="@style/Widget.Button"
+        android:text="@string/rememberlater" />
 
 </LinearLayout>

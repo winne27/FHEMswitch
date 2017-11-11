@@ -10,7 +10,7 @@ public class VersionChecks {
 
     private HashMap<String, VersionCheck> types = new HashMap<>();
 
-    public void newType(String type) {
+    private void newType(String type) {
         types.put(type, new VersionCheck());
     }
 
@@ -22,15 +22,30 @@ public class VersionChecks {
     }
 
     public void setSuppressedToLatest(String type) {
-        types.get(type).setSuppressedToLatest();
+        try {
+            types.get(type).setSuppressedToLatest();
+        } catch (Exception e) {
+            // fly Robin, fly
+            return;
+        }
     }
 
     public void setVersions (String type, String installedVersion, String latestVersion) {
-        types.get(type).setVersions (installedVersion, latestVersion);
+        try {
+            types.get(type).setVersions (installedVersion, latestVersion);
+        } catch (Exception e) {
+            // fly Robin, fly
+            return;
+        }
     }
 
     public void setDateShown(String type) {
-        types.get(type).setDateShown();
+        try {
+            types.get(type).setDateShown();
+        } catch (Exception e) {
+            // fly Robin, fly
+            return;
+        }
     }
 
     public String showVersionHint() {
@@ -41,13 +56,7 @@ public class VersionChecks {
         }
         return null;
     }
-/*
-    public String typesToString() {
-        Gson gson = new Gson();
-        String json = gson.toJson(types);
-        return json;
-    }
-*/
+
     public String getInstalledVersion(String type) {
         return types.get(type).installedVersion;
     }
@@ -61,8 +70,8 @@ public class VersionChecks {
     }
 
     private class VersionCheck {
-        public String installedVersion;
-        public String latestVersion;
+        String installedVersion;
+        String latestVersion;
         private String suppressedVersion;
         private LocalDate lastDateRemembered;
         private Boolean isSuppressed;
@@ -77,7 +86,7 @@ public class VersionChecks {
             isLatest = true;
         }
 
-        public void setVersions (String installedVersion, String latestVersion) {
+        void setVersions(String installedVersion, String latestVersion) {
             this.installedVersion = installedVersion;
             this.latestVersion = latestVersion;
             compareVersions();
@@ -87,26 +96,26 @@ public class VersionChecks {
             isSuppressed = latestVersion.equals(suppressedVersion);
         }
 
-        public void setSuppressedVersion(String version) {
+        void setSuppressedVersion(String version) {
             suppressedVersion = version;
             setIsSuppressed();
         }
 
-        public void setSuppressedToLatest() {
+        void setSuppressedToLatest() {
             suppressedVersion = latestVersion;
             setIsSuppressed();
         }
 
-        public void compareVersions() {
+        void compareVersions() {
             isLatest = latestVersion.equals(installedVersion);
             setIsSuppressed();
         }
 
-        public void setDateShown() {
+        void setDateShown() {
             lastDateRemembered = LocalDate.now();
         }
 
-        public boolean doShowVersionHint() {
+        boolean doShowVersionHint() {
             if (this.isLatest) return false;
             if (this.isSuppressed) return false;
             if (this.latestVersion.equals("")) return false;

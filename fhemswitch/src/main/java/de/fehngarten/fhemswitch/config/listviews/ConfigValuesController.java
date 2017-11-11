@@ -10,22 +10,19 @@ import com.mobeta.android.dslv.DragSortListView;
 
 import de.fehngarten.fhemswitch.R;
 
-public class ConfigValuesController extends DragSortController {
+class ConfigValuesController extends DragSortController {
 
     private ConfigValuesAdapter mAdapter;
     Context mContext;
     private DragSortListView mDslv;
 
-    public ConfigValuesController(DragSortListView dslv, ConfigValuesAdapter adapter, Context context) {
-        super(dslv, R.id.config_switch_unit, DragSortController.ON_DOWN, 0);
+    ConfigValuesController(DragSortListView dslv, ConfigValuesAdapter adapter, Context context) {
+        super(dslv, R.id.config_value_unit, DragSortController.ON_DOWN, 0);
         mAdapter = adapter;
         mContext = context;
         mDslv = dslv;
-        DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
-            @Override
-            public void drop(int from, int to) {
-                mAdapter.changeItems(from, to);
-            }
+        DragSortListView.DropListener onDrop = (from, to) -> {
+            mAdapter.changeItems(from, to);
         };
         mDslv.setDropListener(onDrop);
         setRemoveEnabled(false);

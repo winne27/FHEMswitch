@@ -15,12 +15,12 @@ import android.widget.EditText;
 import de.fehngarten.fhemswitch.R;
 import de.fehngarten.fhemswitch.data.ConfigCommandRow;
 
-public class ConfigCommandsAdapter extends ConfigAdapter
+class ConfigCommandsAdapter extends ConfigAdapter
 {
    private Context mContext;
    private ArrayList<ConfigCommandRow> commandRows = null;
 
-   public ConfigCommandsAdapter(Context mContext)
+   ConfigCommandsAdapter(Context mContext)
    {
       this.mContext = mContext;
       commandRows = new ArrayList<>();
@@ -33,7 +33,7 @@ public class ConfigCommandsAdapter extends ConfigAdapter
       notifyDataSetChanged();
    }
 
-   public void newLine()
+   void newLine()
    {
       commandRows.add(new ConfigCommandRow());
       notifyDataSetChanged();

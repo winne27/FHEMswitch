@@ -26,8 +26,7 @@
             style="@style/Widget.Button"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginTop="15dp"
-            android:text="@string/cancel" />
+            android:text="@string/ok" />
     </LinearLayout>
 </ScrollView>

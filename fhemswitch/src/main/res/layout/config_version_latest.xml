@@ -4,7 +4,7 @@ android:layout_width="0dp"
 android:layout_height="match_parent"
 android:layout_weight="0.33"
 android:gravity="center_vertical|right|end"
-android:textColor="@color/conf_text_header_1"
+android:textColor="@color/conf_text_header"
 android:textSize="14sp">
 
 <TextView
@@ -12,7 +12,7 @@ android:textSize="14sp">
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/latest_version"
-    android:textColor="@color/conf_text_header_1"
+    android:textColor="@color/conf_text_header"
     android:textSize="12sp" />
 
 <TextView
@@ -23,7 +23,7 @@ android:textSize="14sp">
     android:layout_alignRight="@id/latestLabel"
     android:layout_below="@id/latestLabel"
     android:gravity="center_horizontal"
-    android:textColor="@color/conf_text_header_1"
+    android:textColor="@color/conf_text_header"
     android:textSize="12sp" />
 
 </RelativeLayout>

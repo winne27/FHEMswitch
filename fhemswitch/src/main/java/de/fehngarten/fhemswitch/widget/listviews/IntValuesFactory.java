@@ -7,19 +7,17 @@ import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
-import java.util.List;
+import com.google.firebase.crash.FirebaseCrash;
 
 import de.fehngarten.fhemswitch.R;
 import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
 import de.fehngarten.fhemswitch.data.ConfigWorkInstance;
-import de.fehngarten.fhemswitch.data.MyIntValue;
-import de.fehngarten.fhemswitch.widget.WidgetProvider;
+import de.fehngarten.fhemswitch.data.RowIntValue;
 
+import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 import static de.fehngarten.fhemswitch.global.Consts.*;
 import static de.fehngarten.fhemswitch.global.Settings.settingDefaultShapes;
 import static de.fehngarten.fhemswitch.global.Settings.settingHeaderShapes;
-
-//import android.util.Log;
 
 class IntValuesFactory implements RemoteViewsFactory {
     //private static final String CLASSNAME = "ValuesFactory.";
@@ -65,87 +63,96 @@ class IntValuesFactory implements RemoteViewsFactory {
 
     @Override
     public int getCount() {
-        //String methodname = "getCount";
-        //if (BuildConfig.DEBUG) Log.d(CLASSNAME + methodname, "values size: " + Integer.toString(values.size()));
-
-        if (ConfigWorkBasket.data.get(instSerial).intValues == null) {
-            return (0);
-        } else {
-            return ConfigWorkBasket.data.get(instSerial).intValues.size();
+        int size;
+        try {
+            size = ConfigWorkBasket.data.get(instSerial).intValues.size();
+        } catch (Exception e) {
+            FirebaseCrash.report(e);
+            size = 0;
         }
+        return size;
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
         //Log.i("values Position: " + position + " of " + values.size(),values.get(position).name);
-        RemoteViews mView;
+        RemoteViews mView = null;
         int count = getCount();
-        if (position >= count || count <= 0 || ConfigWorkBasket.data.get(instSerial).intValues.size() == 0) {
-            mView = new RemoteViews(mContext.getPackageName(), R.layout.widget_row_intvalue);
-            Intent intent = new Intent(mContext.getApplicationContext(), WidgetProvider.class);
-            intent.setAction(NEW_CONFIG);
-            mContext.sendBroadcast(intent);
-        } else {
-            MyIntValue curIntValue = curInstance.intValues.get(position);
-            String type = checkPosition(curInstance.intValues, position);
-            if (curIntValue.unit.equals(HEADER_SEPERATOR)) {
-                if (curIntValue.name.equals("")) {
-                    mView = new RemoteViews(mContext.getPackageName(), R.layout.seperator);
-                } else {
-                    mView = new RemoteViews(mContext.getPackageName(), R.layout.header);
-                    mView.setTextViewText(R.id.header_name, curIntValue.name);
-                    mView.setInt(R.id.header, "setBackgroundResource", settingHeaderShapes.get(type));
-                }
+        try {
+            if (position >= count || count <= 0 || ConfigWorkBasket.data.get(instSerial).intValues.size() == 0) {
+                //mView = new RemoteViews(mContext.getPackageName(), R.layout.widget_row_intvalue);
+                //Intent intent = new Intent(mContext.getApplicationContext(), WidgetProvider.class);
+                //intent.setAction(NEW_CONFIG);
+                //mContext.sendBroadcast(intent);
             } else {
-                mView = new RemoteViews(mContext.getPackageName(), R.layout.widget_row_intvalue);
-                mView.setTextViewText(R.id.intvalue_name, curIntValue.name);
-                mView.setTextViewText(R.id.intvalue_value, curIntValue.value);
+                RowIntValue curIntValue = curInstance.intValues.get(position);
+                String type = ConfigWorkBasket.data.get(instSerial).myRoundedCorners.getType(INTVALUES, 0, position);
+                if (curIntValue.unit.equals(HEADER_SEPERATOR)) {
+                    if (curIntValue.name.equals("")) {
+                        mView = new RemoteViews(mContext.getPackageName(), R.layout.seperator);
+                    } else {
+                        mView = new RemoteViews(mContext.getPackageName(), R.layout.header);
+                        mView.setTextViewText(R.id.header_name, curIntValue.name);
+                        mView.setInt(R.id.header, "setBackgroundResource", settingHeaderShapes.get(type));
 
-                Bundle bundle = new Bundle();
-                bundle.putString(FHEM_TYPE, "intvalue");
-                bundle.putInt(POS, position);
-                bundle.putString(SUBACTION, DOWNFAST);
-                bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-                bundle.putInt(INSTSERIAL, instSerial);
-                Intent fillInIntent = new Intent();
-                fillInIntent.setAction(SEND_FHEM_COMMAND);
-                fillInIntent.putExtras(bundle);
-                mView.setOnClickFillInIntent(R.id.intvalue_down_fast, fillInIntent);
+                        final Intent fillInIntent = new Intent();
+                        fillInIntent.setAction(ACTION_APPWIDGET_UPDATE);
+                        mView.setOnClickFillInIntent(R.id.header, fillInIntent);
+                    }
+                } else {
+                    mView = new RemoteViews(mContext.getPackageName(), R.layout.widget_row_intvalue);
+                    mView.setTextViewText(R.id.intvalue_name, curIntValue.name);
+                    mView.setTextViewText(R.id.intvalue_value, curIntValue.value);
 
-                bundle = new Bundle();
-                bundle.putString(FHEM_TYPE, "intvalue");
-                bundle.putInt(POS, position);
-                bundle.putString(SUBACTION, DOWN);
-                bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-                bundle.putInt(INSTSERIAL, instSerial);
-                fillInIntent = new Intent();
-                fillInIntent.setAction(SEND_FHEM_COMMAND);
-                fillInIntent.putExtras(bundle);
-                mView.setOnClickFillInIntent(R.id.intvalue_down, fillInIntent);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FHEM_TYPE, "intvalue");
+                    bundle.putInt(POS, position);
+                    bundle.putString(SUBACTION, DOWNFAST);
+                    bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+                    bundle.putInt(INSTSERIAL, instSerial);
+                    Intent fillInIntent = new Intent();
+                    fillInIntent.setAction(SEND_FHEM_COMMAND);
+                    fillInIntent.putExtras(bundle);
+                    mView.setOnClickFillInIntent(R.id.intvalue_down_fast, fillInIntent);
 
-                bundle = new Bundle();
-                bundle.putString(FHEM_TYPE, "intvalue");
-                bundle.putInt(POS, position);
-                bundle.putString(SUBACTION, UP);
-                bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-                bundle.putInt(INSTSERIAL, instSerial);
-                fillInIntent = new Intent();
-                fillInIntent.setAction(SEND_FHEM_COMMAND);
-                fillInIntent.putExtras(bundle);
-                mView.setOnClickFillInIntent(R.id.intvalue_up, fillInIntent);
+                    bundle = new Bundle();
+                    bundle.putString(FHEM_TYPE, "intvalue");
+                    bundle.putInt(POS, position);
+                    bundle.putString(SUBACTION, DOWN);
+                    bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+                    bundle.putInt(INSTSERIAL, instSerial);
+                    fillInIntent = new Intent();
+                    fillInIntent.setAction(SEND_FHEM_COMMAND);
+                    fillInIntent.putExtras(bundle);
+                    mView.setOnClickFillInIntent(R.id.intvalue_down, fillInIntent);
 
-                bundle = new Bundle();
-                bundle.putString(FHEM_TYPE, "intvalue");
-                bundle.putInt(POS, position);
-                bundle.putString(SUBACTION, UPFAST);
-                bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-                bundle.putInt(INSTSERIAL, instSerial);
-                fillInIntent = new Intent();
-                fillInIntent.setAction(SEND_FHEM_COMMAND);
-                fillInIntent.putExtras(bundle);
-                mView.setOnClickFillInIntent(R.id.intvalue_up_fast, fillInIntent);
-                mView.setInt(R.id.intvalue_row, "setBackgroundResource", settingDefaultShapes.get(type));
+                    bundle = new Bundle();
+                    bundle.putString(FHEM_TYPE, "intvalue");
+                    bundle.putInt(POS, position);
+                    bundle.putString(SUBACTION, UP);
+                    bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+                    bundle.putInt(INSTSERIAL, instSerial);
+                    fillInIntent = new Intent();
+                    fillInIntent.setAction(SEND_FHEM_COMMAND);
+                    fillInIntent.putExtras(bundle);
+                    mView.setOnClickFillInIntent(R.id.intvalue_up, fillInIntent);
+
+                    bundle = new Bundle();
+                    bundle.putString(FHEM_TYPE, "intvalue");
+                    bundle.putInt(POS, position);
+                    bundle.putString(SUBACTION, UPFAST);
+                    bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+                    bundle.putInt(INSTSERIAL, instSerial);
+                    fillInIntent = new Intent();
+                    fillInIntent.setAction(SEND_FHEM_COMMAND);
+                    fillInIntent.putExtras(bundle);
+                    mView.setOnClickFillInIntent(R.id.intvalue_up_fast, fillInIntent);
+                    mView.setInt(R.id.intvalue_row, "setBackgroundResource", settingDefaultShapes.get(type));
+                }
             }
+        } catch (IndexOutOfBoundsException e) {
+            FirebaseCrash.log(curInstance.toString());
+            FirebaseCrash.report(e);
         }
         return mView;
     }
@@ -172,43 +179,5 @@ class IntValuesFactory implements RemoteViewsFactory {
     public boolean hasStableIds() {
         // TODO Auto-generated method stub
         return false;
-    }
-
-    private String checkPosition(List<MyIntValue> myIntValuesCols, int position) {
-        String type = "default";
-        boolean isFirst = false;
-        boolean isLast = false;
-
-        if (position == 0) {
-            isFirst = true;
-        }
-
-        if (position == curInstance.intValues.size() - 1) {
-            isLast = true;
-        }
-
-        if (!isLast) {
-            MyIntValue nextIntValue = myIntValuesCols.get(position + 1);
-            if (nextIntValue.unit.equals(HEADER_SEPERATOR) && nextIntValue.name.equals("")) {
-                isLast = true;
-            }
-        }
-
-        if (!isFirst) {
-            MyIntValue prevIntValue = myIntValuesCols.get(position - 1);
-            if (prevIntValue.unit.equals(HEADER_SEPERATOR) && prevIntValue.name.equals("")) {
-                isFirst = true;
-            }
-        }
-
-        if (isFirst && isLast) {
-            type = "both";
-        } else if (isFirst) {
-            type = "first";
-        } else if (isLast) {
-            type = "last";
-        }
-
-        return type;
     }
 }

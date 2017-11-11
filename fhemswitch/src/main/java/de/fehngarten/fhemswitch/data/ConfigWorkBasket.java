@@ -10,7 +10,6 @@ public class ConfigWorkBasket {
     public static String urlFhempl;
     public static String fhemjsPW = "";
     public static ArrayList<ConfigWorkInstance> data;
-    public static boolean justMigrated = false;
 
     static {
         data = new ArrayList<>(settingsMaxInst);

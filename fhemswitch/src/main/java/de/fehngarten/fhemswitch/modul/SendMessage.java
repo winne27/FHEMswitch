@@ -3,17 +3,24 @@ package de.fehngarten.fhemswitch.modul;
 import android.app.AlertDialog;
 import android.content.Context;
 
-import de.fehngarten.fhemswitch.R;
-
-public class SendMessage {
+class SendMessage {
 
     protected String header;
+    public AlertDialog.Builder dialog;
+    private Context mContext;
 
-    protected void doSendMessage(Context context, String msg) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setTitle(header);
-        dialog.setMessage(msg);
-        dialog.setNeutralButton(context.getString(R.string.ok), null);
-        dialog.create().show();
+    public SendMessage(Context context) {
+        mContext = context;
+        dialog = new AlertDialog.Builder(context);
+    }
+
+    void doSendMessage(String msg) {
+        try {
+            dialog.setTitle(header);
+            dialog.setMessage(msg);
+            dialog.create().show();
+        } catch (Exception e) {
+            // ignore
+        }
     }
 }

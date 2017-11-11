@@ -24,11 +24,20 @@
             android:gravity="center_vertical|center_horizontal"
             android:paddingTop="4dp"
             android:text="@string/widget_name"
-            android:textColor="@color/conf_text_header_1"
+            android:textColor="@color/conf_text_header"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <include layout="@layout/config_version_latest" />
+
+        <ImageButton
+            android:id="@+id/actions_config"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="4px"
+            android:layout_marginRight="4px"
+            android:background="@drawable/ic_more_vert_white_24dp" />
     </LinearLayout>
 
     <include layout="@layout/config_bodyblock_url__s" />

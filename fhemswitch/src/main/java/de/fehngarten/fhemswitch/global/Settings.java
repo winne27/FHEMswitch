@@ -10,6 +10,7 @@ import de.fehngarten.fhemswitch.widget.WidgetService1;
 import de.fehngarten.fhemswitch.widget.WidgetService2;
 import de.fehngarten.fhemswitch.widget.WidgetService3;
 
+import static de.fehngarten.fhemswitch.global.Consts.COMMANDS;
 import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_COMMANDS;
 import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_INTVALUES;
 import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_LIGHTSCENES;
@@ -18,11 +19,15 @@ import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_SWITCHES;
 import static de.fehngarten.fhemswitch.global.Consts.CONFIG_BLOCK_VALUES;
 import static de.fehngarten.fhemswitch.global.Consts.DOWN;
 import static de.fehngarten.fhemswitch.global.Consts.DOWNFAST;
+import static de.fehngarten.fhemswitch.global.Consts.INTVALUES;
 import static de.fehngarten.fhemswitch.global.Consts.LAYOUT_HORIZONTAL;
 import static de.fehngarten.fhemswitch.global.Consts.LAYOUT_MIXED;
 import static de.fehngarten.fhemswitch.global.Consts.LAYOUT_VERTICAL;
+import static de.fehngarten.fhemswitch.global.Consts.LIGHTSCENES;
+import static de.fehngarten.fhemswitch.global.Consts.SWITCHES;
 import static de.fehngarten.fhemswitch.global.Consts.UP;
 import static de.fehngarten.fhemswitch.global.Consts.UPFAST;
+import static de.fehngarten.fhemswitch.global.Consts.VALUES;
 
 public final class Settings {
 
@@ -52,14 +57,19 @@ public final class Settings {
     public static final Map<String, Integer> settingHeaderShapes = new HashMap<>();
     public static final Map<String, Integer> settingDefaultShapes = new HashMap<>();
     public static final Map<String, Integer> settingActiveShapes = new HashMap<>();
-    public static final Map<String, Integer> settingInactiveShapes = new HashMap<>();
     public static final ArrayList<Class<?>> settingServiceClasses = new ArrayList<>(settingsMaxInst);
     public static final int[] settingWidgetSel = new int[settingsMaxInst];
     public static final int[] settingShapes = new int[settingsMaxInst];
+    public static final int[] settingShapesSelected = new int[settingsMaxInst];
     public static final int[] settingLayouts = new int[3];
     public static final int[] settingConfigBlocks = new int[6];
     public static final int[] settingTabs = new int[6];
+    public static final int[] settingHorizontalListViews = new int[11];
+    public static final int[] settingVerticalListViews = new int[5];
+    public static final int[][] settingMixedListViews = new int[2][4];
     public static final HashMap<String, Float> settingMultiplier = new HashMap<>();
+    public static final HashMap<String, String> settingBlockNames = new HashMap<>();
+    public static final String[] settingsBlockOrder;
 
     static {
         settingIcons.put("v_on", R.drawable.v_on);
@@ -97,6 +107,11 @@ public final class Settings {
         settingShapes[2] = R.drawable.widget_shape_2;
         settingShapes[3] = R.drawable.widget_shape_3;
 
+        settingShapesSelected[0] = R.drawable.widget_shape_0_selected;
+        settingShapesSelected[1] = R.drawable.widget_shape_1_selected;
+        settingShapesSelected[2] = R.drawable.widget_shape_2_selected;
+        settingShapesSelected[3] = R.drawable.widget_shape_3_selected;
+
         settingWidgetSel[0] = R.id.widgetsel_0;
         settingWidgetSel[1] = R.id.widgetsel_1;
         settingWidgetSel[2] = R.id.widgetsel_2;
@@ -105,6 +120,33 @@ public final class Settings {
         settingLayouts[LAYOUT_HORIZONTAL] = R.layout.widget_layout_horizontal;
         settingLayouts[LAYOUT_VERTICAL] = R.layout.widget_layout_vertical;
         settingLayouts[LAYOUT_MIXED] = R.layout.widget_layout_mixed;
+
+        settingVerticalListViews[0] = R.id.vertical_listview_0;
+        settingVerticalListViews[1] = R.id.vertical_listview_1;
+        settingVerticalListViews[2] = R.id.vertical_listview_2;
+        settingVerticalListViews[3] = R.id.vertical_listview_3;
+        settingVerticalListViews[4] = R.id.vertical_listview_4;
+
+        settingHorizontalListViews[0] = R.id.horizontal_listview_0;
+        settingHorizontalListViews[1] = R.id.horizontal_listview_1;
+        settingHorizontalListViews[2] = R.id.horizontal_listview_2;
+        settingHorizontalListViews[3] = R.id.horizontal_listview_3;
+        settingHorizontalListViews[4] = R.id.horizontal_listview_4;
+        settingHorizontalListViews[5] = R.id.horizontal_listview_5;
+        settingHorizontalListViews[6] = R.id.horizontal_listview_6;
+        settingHorizontalListViews[7] = R.id.horizontal_listview_7;
+        settingHorizontalListViews[8] = R.id.horizontal_listview_8;
+        settingHorizontalListViews[9] = R.id.horizontal_listview_9;
+        settingHorizontalListViews[10] = R.id.horizontal_listview_10;
+
+        settingMixedListViews[0][0] = R.id.mixed_listview_0_0;
+        settingMixedListViews[0][1] = R.id.mixed_listview_0_1;
+        settingMixedListViews[0][2] = R.id.mixed_listview_0_2;
+        settingMixedListViews[0][3] = R.id.mixed_listview_0_3;
+        settingMixedListViews[1][0] = R.id.mixed_listview_1_0;
+        settingMixedListViews[1][1] = R.id.mixed_listview_1_1;
+        settingMixedListViews[1][2] = R.id.mixed_listview_1_2;
+        settingMixedListViews[1][3] = R.id.mixed_listview_1_3;
 
         settingMultiplier.put(DOWNFAST, (float) -3);
         settingMultiplier.put(DOWN, (float) -1);
@@ -140,9 +182,6 @@ public final class Settings {
         settingActiveShapes.put("last", R.drawable.widget_shape_active_last);
         settingActiveShapes.put("both", R.drawable.widget_shape_active_both);
 
-        settingInactiveShapes.put("default", R.drawable.widget_shape_inactive);
-        settingInactiveShapes.put("first", R.drawable.widget_shape_inactive_first);
-        settingInactiveShapes.put("last", R.drawable.widget_shape_inactive_last);
-        settingInactiveShapes.put("both", R.drawable.widget_shape_inactive_both);
+        settingsBlockOrder = new  String[] {SWITCHES, LIGHTSCENES, VALUES, INTVALUES, COMMANDS };
     }
 }

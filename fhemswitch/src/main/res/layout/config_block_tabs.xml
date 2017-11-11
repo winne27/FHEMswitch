@@ -37,7 +37,7 @@
         style="@style/Tabs"
         android:id="@+id/tab4"
         android:tag="4"
-        android:text="@string/values2" />
+        android:text="@string/werteregler" />
 
     <TextView
         style="@style/Tabs"

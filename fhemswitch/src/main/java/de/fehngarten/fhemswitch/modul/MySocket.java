@@ -12,6 +12,7 @@ import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 
+import static de.fehngarten.fhemswitch.global.Consts.HEADER_SEPERATOR;
 import static de.fehngarten.fhemswitch.global.Settings.*;
 
 public class MySocket {
@@ -26,22 +27,22 @@ public class MySocket {
             //Log.d(TAG, "URL: " + url);
             IO.Options options = new IO.Options();
             if (type.equals("Config")) {
-                options.reconnection = false;
+                options.reconnection = true;
+                options.reconnectionDelay = 1000;
+                options.reconnectionDelayMax = 3000;
+                options.reconnectionAttempts = 3;
             } else {
                 options.reconnection = false;
-                //options.reconnectionDelay = 1000;
-                //options.reconnectionDelayMax = 30000;
-            }
+             }
 
+            //options.forceNew = true;
             options.timeout = settingSocketsConnectionTimeout;
             options.query = "client=" + type + "&platform=Android&version=" + Build.VERSION.RELEASE + "&model=" + Build.MODEL + "&appver=" + BuildConfig.VERSION_NAME;
             socket = IO.socket(url, options);
 
             socket.on(Socket.EVENT_CONNECT, args -> {
                 String pw = ConfigWorkBasket.fhemjsPW;
-                if (!pw.equals("")) {
-                    socket.emit("authentication", pw);
-                }
+                socket.emit("authentication", pw);
             });
 
         } catch (Exception e1) {
@@ -75,11 +76,13 @@ public class MySocket {
 
     public void requestValues(ArrayList<String> unitsList, String type) {
         for (String unit : unitsList) {
-            if (type.equals("once")) {
-                socket.emit("getValueOnce", unit);
-            } else {
-                //Log.d(TAG,"getValueOnChange: " + unit);
-                socket.emit("getValueOnChange", unit);
+            if (!unit.equals(HEADER_SEPERATOR)) {
+                if (type.equals("once")) {
+                    socket.emit("getValueOnce", unit);
+                } else {
+                    //Log.d(TAG,"getValueOnChange: " + unit);
+                    socket.emit("getValueOnChange", unit);
+                }
             }
         }
     }
@@ -92,8 +95,6 @@ public class MySocket {
     }
 
     public void destroy() {
-        socket.disconnect();
-        socket.close();
         socket.off("authenticated");
         socket.off(Socket.EVENT_DISCONNECT);
         socket.off(Socket.EVENT_RECONNECT_FAILED);
@@ -102,6 +103,8 @@ public class MySocket {
         socket.off("version");
         socket.off("fhemError");
         socket.off("fhemConn");
+        socket.disconnect();
+        socket.close();
     }
 
     public void refresh() {

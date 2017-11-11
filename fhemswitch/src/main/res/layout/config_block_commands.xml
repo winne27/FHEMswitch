@@ -20,7 +20,7 @@
             android:paddingLeft="40dp"
             android:paddingTop="3dp"
             android:text="@string/commands"
-            android:textColor="@color/conf_text_header_1"
+            android:textColor="@color/conf_text_header"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
             android:gravity="right"
             android:paddingTop="9dp"
             android:text="@string/columns"
-            android:textColor="@color/conf_text_header_1"
+            android:textColor="@color/conf_text_header"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -63,7 +63,7 @@
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:textColor="@color/conf_text_header_2"
+                    android:textColor="@color/conf_text_header"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.35"
                     android:text="@string/name"
-                    android:textColor="@color/conf_text_header_2"
+                    android:textColor="@color/conf_text_header"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -81,8 +81,17 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.65"
                     android:text="@string/commands2"
-                    android:textColor="@color/conf_text_header_2"
+                    android:textColor="@color/conf_text_header"
                     android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/draganddrop"
+                    android:textColor="@color/conf_text_header"
+                    android:textSize="16sp"
+                    android:gravity="center_horizontal"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -92,11 +101,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="0dp"
-                android:dividerHeight="1px"
+                android:dividerHeight="0dp"
                 android:padding="0dp"
                 dslv:collapsed_height="1px"
                 dslv:drag_enabled="true"
-                dslv:drag_handle_id="@+id/drag_handle"
                 dslv:drag_scroll_start="0.33"
                 dslv:drag_start_mode="onDown"
                 dslv:float_alpha="0.3"

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/noconn" />
+        <include layout="@layout/message" />
 
         <include layout="@layout/new_version" />
 
@@ -18,27 +18,26 @@
             android:id="@+id/main_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="0dp">
+            android:orientation="vertical">
 
             <include
-                android:id="@+id/switches0"
+                android:id="@+id/vertical_listview_0"
                 layout="@layout/widget_listview_default" />
 
             <include
-                android:id="@+id/lightscenes"
+                android:id="@+id/vertical_listview_1"
                 layout="@layout/widget_listview_default" />
 
             <include
-                android:id="@+id/values0"
+                android:id="@+id/vertical_listview_2"
                 layout="@layout/widget_listview_default" />
 
             <include
-                android:id="@+id/intvalues"
+                android:id="@+id/vertical_listview_3"
                 layout="@layout/widget_listview_default" />
 
             <include
-                android:id="@+id/commands0"
+                android:id="@+id/vertical_listview_4"
                 layout="@layout/widget_listview_default" />
 
         </LinearLayout>

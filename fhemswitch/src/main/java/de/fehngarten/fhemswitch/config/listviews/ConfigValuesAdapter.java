@@ -19,44 +19,44 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import de.fehngarten.fhemswitch.data.MyValue;
+import de.fehngarten.fhemswitch.data.RowValue;
 import de.fehngarten.fhemswitch.R;
 import de.fehngarten.fhemswitch.data.ConfigValueRow;
 
 import static de.fehngarten.fhemswitch.global.Consts.HEADER_SEPERATOR;
 
-public class ConfigValuesAdapter extends ConfigAdapter {
+class ConfigValuesAdapter extends ConfigAdapter {
     Context mContext;
     private ArrayList<ConfigValueRow> valueRows = null;
 
-    public ConfigValuesAdapter(Context mContext) {
+    ConfigValuesAdapter(Context mContext) {
         this.mContext = mContext;
         valueRows = new ArrayList<>();
     }
 
-    public void initData(JSONObject obj, List<MyValue> values, List<MyValue> valuesDisabled) {
+    public void initData(JSONObject obj, List<RowValue> values, List<RowValue> valuesDisabled) {
         valueRows = new ArrayList<>();
         FHEMvalues mFHEMvalues = new FHEMvalues(obj);
         ArrayList<String> valuesConfig = new ArrayList<>();
         ArrayList<String> allUnits = new ArrayList<>();
 
-        for (MyValue myValue : values) {
-            ConfigValueRow FHEMrow = mFHEMvalues.getValue(myValue.unit);
-            if ((FHEMrow != null && !allUnits.contains(myValue.unit)) || myValue.unit.equals(HEADER_SEPERATOR)) {
-                String value = myValue.unit.equals(HEADER_SEPERATOR) ? "" : FHEMrow.value;
-                valueRows.add(new ConfigValueRow(myValue.unit, myValue.name, value, true, myValue.useIcon));
-                valuesConfig.add(myValue.unit);
-                allUnits.add(myValue.unit);
+        for (RowValue rowValue : values) {
+            ConfigValueRow FHEMrow = mFHEMvalues.getValue(rowValue.unit);
+            if ((FHEMrow != null && !allUnits.contains(rowValue.unit)) || rowValue.unit.equals(HEADER_SEPERATOR)) {
+                String value = rowValue.unit.equals(HEADER_SEPERATOR) ? "" : FHEMrow.value;
+                valueRows.add(new ConfigValueRow(rowValue.unit, rowValue.name, value, true, rowValue.useIcon));
+                valuesConfig.add(rowValue.unit);
+                allUnits.add(rowValue.unit);
             }
         }
 
-        for (MyValue myValue : valuesDisabled) {
-            ConfigValueRow FHEMrow = mFHEMvalues.getValue(myValue.unit);
-            if ((FHEMrow != null && !allUnits.contains(myValue.unit)) || myValue.unit.equals(HEADER_SEPERATOR)) {
-                String value = myValue.unit.equals(HEADER_SEPERATOR) ? "" : FHEMrow.value;
-                valueRows.add(new ConfigValueRow(myValue.unit, myValue.name, value, false, myValue.useIcon));
-                valuesConfig.add(myValue.unit);
-                allUnits.add(myValue.unit);
+        for (RowValue rowValue : valuesDisabled) {
+            ConfigValueRow FHEMrow = mFHEMvalues.getValue(rowValue.unit);
+            if ((FHEMrow != null && !allUnits.contains(rowValue.unit)) || rowValue.unit.equals(HEADER_SEPERATOR)) {
+                String value = rowValue.unit.equals(HEADER_SEPERATOR) ? "" : FHEMrow.value;
+                valueRows.add(new ConfigValueRow(rowValue.unit, rowValue.name, value, false, rowValue.useIcon));
+                valuesConfig.add(rowValue.unit);
+                allUnits.add(rowValue.unit);
             }
         }
         for (ConfigValueRow FHEMrow : mFHEMvalues.getAllValues()) {
@@ -67,8 +67,7 @@ public class ConfigValuesAdapter extends ConfigAdapter {
         }
     }
 
-    public void newLine(ListView listView)
-    {
+    void newLine(ListView listView) {
         ArrayList<ConfigValueRow> tempValueRows = new ArrayList<>();
         tempValueRows.add(new ConfigValueRow(HEADER_SEPERATOR, "", "", false, false));
         for (ConfigValueRow valueRow : valueRows) {
@@ -84,8 +83,7 @@ public class ConfigValuesAdapter extends ConfigAdapter {
         setListViewHeightBasedOnChildren(listView);
     }
 
-    public void removeItem(int pos)
-    {
+    private void removeItem(int pos) {
         ArrayList<ConfigValueRow> tempValueRows = new ArrayList<>();
         for (ConfigValueRow valueRow : valueRows) {
             tempValueRows.add(valueRow);
@@ -100,14 +98,13 @@ public class ConfigValuesAdapter extends ConfigAdapter {
         notifyDataSetChanged();
         //setListViewHeightBasedOnChildren(listView);
     }
-    
+
     public ArrayList<ConfigValueRow> getData() {
         return valueRows;
     }
 
     public int getCount() {
-        Integer count = valueRows.size();
-        return count;
+        return valueRows.size();
     }
 
     public ConfigValueRow getItem(int position) {
@@ -119,61 +116,53 @@ public class ConfigValuesAdapter extends ConfigAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = convertView;
         ConfigValueRow valueRow = getItem(position);
         final ValueHolder valueHolder;
 
-        if (rowView == null) {
-            valueHolder = new ValueHolder();
-            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            rowView = inflater.inflate(R.layout.config_row_value, parent, false);
-            rowView.setTag(valueHolder);
-            valueHolder.value_unit = (TextView) rowView.findViewById(R.id.config_value_unit);
-            valueHolder.value_name = (EditText) rowView.findViewById(R.id.config_value_name);
-            valueHolder.value_value = (TextView) rowView.findViewById(R.id.config_value_value);
-            valueHolder.value_enabled = (CheckBox) rowView.findViewById(R.id.config_value_enabled);
-            valueHolder.value_useicon = (CheckBox) rowView.findViewById(R.id.config_value_useicon);
-            valueHolder.value_remove_button = (Button) rowView.findViewById(R.id.config_value_remove);
-        } else {
-            valueHolder = (ValueHolder) rowView.getTag();
-        }
+        valueHolder = new ValueHolder();
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View rowView = inflater.inflate(R.layout.config_row_value, parent, false);
+        rowView.setTag(valueHolder);
+        valueHolder.value_unit = (TextView) rowView.findViewById(R.id.config_value_unit);
+        valueHolder.value_name = (EditText) rowView.findViewById(R.id.config_value_name);
+        valueHolder.value_value = (TextView) rowView.findViewById(R.id.config_value_value);
+        valueHolder.value_enabled = (CheckBox) rowView.findViewById(R.id.config_value_enabled);
+        valueHolder.value_useicon = (CheckBox) rowView.findViewById(R.id.config_value_useicon);
+        valueHolder.value_remove_button = (Button) rowView.findViewById(R.id.config_value_remove);
 
         if (valueRow.unit.equals(HEADER_SEPERATOR)) {
-            //rowView.findViewById(R.id.config_value_unit).setVisibility(View.GONE);
-            //rowView.findViewById(R.id.config_value_unit).setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
             rowView.findViewById(R.id.config_value_value).setVisibility(View.VISIBLE);
             rowView.findViewById(R.id.config_value_useicon).setVisibility(View.GONE);
             rowView.findViewById(R.id.config_value_remove).setVisibility(View.VISIBLE);
             valueHolder.value_remove_button.setOnClickListener(arg0 -> removeItem(valueHolder.ref));
+            if (valueRow.name.equals("")) {
+                rowView.setBackgroundResource(R.drawable.config_shape_seperator);
+                valueHolder.value_unit.setText(R.string.seperator_label);
+            } else {
+                rowView.setBackgroundResource(R.drawable.config_shape_header);
+                valueHolder.value_unit.setText(R.string.header_label);
+            }
         } else {
-            //rowView.findViewById(R.id.config_value_unit).setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
             rowView.findViewById(R.id.config_value_unit).setVisibility(View.VISIBLE);
             rowView.findViewById(R.id.config_value_value).setVisibility(View.VISIBLE);
             rowView.findViewById(R.id.config_value_useicon).setVisibility(View.VISIBLE);
             rowView.findViewById(R.id.config_value_remove).setVisibility(View.GONE);
+            rowView.setBackgroundResource(R.drawable.config_shape_default);
+            valueHolder.value_unit.setText(valueRow.unit);
         }
 
         valueHolder.ref = position;
-        valueHolder.value_unit.setText(valueRow.unit);
         valueHolder.value_name.setText(valueRow.name);
         valueHolder.value_value.setText(valueRow.value);
         valueHolder.value_enabled.setChecked(valueRow.enabled);
         valueHolder.value_useicon.setChecked(valueRow.useIcon);
 
-        //private method of your class
-
-        valueHolder.value_enabled.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                ConfigValuesAdapter.this.getItem(valueHolder.ref).enabled = valueHolder.value_enabled.isChecked();
-            }
+        valueHolder.value_enabled.setOnClickListener(arg0 -> {
+            ConfigValuesAdapter.this.getItem(valueHolder.ref).enabled = valueHolder.value_enabled.isChecked();
         });
 
-        valueHolder.value_useicon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                ConfigValuesAdapter.this.getItem(valueHolder.ref).useIcon = valueHolder.value_useicon.isChecked();
-            }
+        valueHolder.value_useicon.setOnClickListener(arg0 -> {
+            ConfigValuesAdapter.this.getItem(valueHolder.ref).useIcon = valueHolder.value_useicon.isChecked();
         });
 
         valueHolder.value_name.addTextChangedListener(new TextWatcher() {
@@ -193,9 +182,21 @@ public class ConfigValuesAdapter extends ConfigAdapter {
             public void afterTextChanged(Editable arg0) {
                 // TODO Auto-generated method stub
                 getItem(valueHolder.ref).name = arg0.toString();
+
+                if (getItem(valueHolder.ref).unit.equals(HEADER_SEPERATOR)) {
+                    //rowView.findViewById(R.id.config_switch_unit).setVisibility(View.GONE);
+                    if (valueRow.name.equals("")) {
+                        valueHolder.rowView.setBackgroundResource(R.drawable.config_shape_seperator);
+                        valueHolder.value_unit.setText(R.string.seperator_label);
+                    } else {
+                        valueHolder.rowView.setBackgroundResource(R.drawable.config_shape_header);
+                        valueHolder.value_unit.setText(R.string.header_label);
+                    }
+                }
+
             }
         });
-
+        valueHolder.rowView = rowView;
         return rowView;
     }
 
@@ -240,6 +241,7 @@ public class ConfigValuesAdapter extends ConfigAdapter {
         TextView value_value;
         int ref;
         Button value_remove_button;
+        View rowView;
     }
 
     private class FHEMvalues {

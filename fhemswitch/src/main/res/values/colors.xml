@@ -5,22 +5,26 @@
     <color name="conf_bg_header_3">#FF99CC99</color>
     <color name="conf_bg_base">#FFFFF4BD</color>
 
-    <color name="conf_text_header_1">#ffdddddd</color>
-    <color name="conf_text_header_2">#ffdddddd</color>
+    <color name="conf_text_header">#ffdddddd</color>
     <color name="conf_stroke_1">#ff224422</color>
     <color name="conf_stroke_2">#ff668866</color>
     <color name="conf_bg_handle_pressed">#FFAEDEB1</color>
     <color name="conf_radio_color">#FF000000</color>
+    <color name="conf_seperator_color">#FFF8F8F8</color>
 
     <color name="widget_stroke_color">#ff777777</color>
     <color name="widget_default_color">#FF000088</color>
 
     <color name="widget_default_background">#FFFFDF9E</color>
-    <color name="widget_active_background">#FFFFDF9E</color>
+    <color name="widget_active_background">#ffef9f37</color>
     <color name="widget_inactive_background">#FFDFDFCC</color>
     <color name="widget_header_background">#ff444444</color>
     <color name="widget_header_color">#ffbbbbbb</color>
 
     <color name="text_hinweis">#224322</color>
+    <color name="error">#FF0000</color>
+
+    <color name="selected">#FFFFDF9E</color>
+    <color name="unselected">#ffdddddd</color>
 
 </resources>

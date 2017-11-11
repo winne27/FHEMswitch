@@ -16,17 +16,12 @@ public class ConfigCommandsController extends DragSortController {
     Context mContext;
     private DragSortListView mDslv;
 
-    public ConfigCommandsController(DragSortListView dslv, ConfigCommandsAdapter adapter, Context context) {
-        super(dslv, R.id.config_switch_unit, DragSortController.ON_DOWN, 0);
+    ConfigCommandsController(DragSortListView dslv, ConfigCommandsAdapter adapter, Context context) {
+        super(dslv, R.id.config_command_drag, DragSortController.ON_DOWN, 0);
         mAdapter = adapter;
         mContext = context;
         mDslv = dslv;
-        DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
-            @Override
-            public void drop(int from, int to) {
-                mAdapter.changeItems(from, to);
-            }
-        };
+        DragSortListView.DropListener onDrop = (from, to) -> mAdapter.changeItems(from, to);
         mDslv.setDropListener(onDrop);
         setRemoveEnabled(false);
     }

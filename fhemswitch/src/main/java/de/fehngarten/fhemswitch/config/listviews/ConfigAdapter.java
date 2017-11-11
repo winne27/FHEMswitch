@@ -15,19 +15,20 @@ abstract class ConfigAdapter extends BaseAdapter {
     void setListViewHeightBasedOnChildren(ListView listView) {
 
         Integer totalHeight = listView.getPaddingTop() + listView.getPaddingBottom();
-        Integer count = getCount();
+        //int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+        //Integer count = getCount();
         for (int i = 0; i < getCount(); i++) {
             View listItem = getView(i, null, listView);
-            if (listItem instanceof ViewGroup)
-                listItem.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+         //   if (listItem instanceof ViewGroup) {
+         //       listItem.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+         //   }
             listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
+            //listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += listItem.getMeasuredHeight() + 25;
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (getCount() - 1));
         listView.setLayoutParams(params);
     }
-
-
 }
