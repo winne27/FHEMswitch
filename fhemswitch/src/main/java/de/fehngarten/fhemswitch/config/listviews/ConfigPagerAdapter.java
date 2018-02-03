@@ -255,6 +255,7 @@ public class ConfigPagerAdapter extends PagerAdapter {
         @Override
         public void onClick(View view) {
             ListView curView = (ListView) views.get(CONFIG_BLOCK_VALUES).findViewById(R.id.values);
+            if (curView == null) return;
             configValuesAdapter.newLine(curView);
         }
     };
@@ -262,6 +263,7 @@ public class ConfigPagerAdapter extends PagerAdapter {
         @Override
         public void onClick(View view) {
             ListView curView = (ListView) views.get(CONFIG_BLOCK_INTVALUES).findViewById(R.id.intvalues);
+            if (curView == null) return;
             configIntValuesAdapter.newLine(curView);
         }
     };
@@ -269,6 +271,7 @@ public class ConfigPagerAdapter extends PagerAdapter {
         @Override
         public void onClick(View view) {
             ListView curView = (ListView) views.get(CONFIG_BLOCK_SWITCHES).findViewById(R.id.switches);
+            if (curView == null) return;
             configSwitchesAdapter.newLine(curView);
         }
     };

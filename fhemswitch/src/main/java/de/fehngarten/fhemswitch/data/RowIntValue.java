@@ -2,6 +2,8 @@ package de.fehngarten.fhemswitch.data;
 
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
+
 public class RowIntValue implements Comparable<RowIntValue> {
 
     public String name;

@@ -27,12 +27,14 @@ public class MySocket {
             //Log.d(TAG, "URL: " + url);
             IO.Options options = new IO.Options();
             if (type.equals("Config")) {
-                options.reconnection = true;
-                options.reconnectionDelay = 1000;
-                options.reconnectionDelayMax = 3000;
-                options.reconnectionAttempts = 3;
+                options.reconnection = false;
+                //options.reconnectionDelay = 1000;
+                //options.reconnectionDelayMax = 3000;
+                //options.reconnectionAttempts = 3;
             } else {
                 options.reconnection = false;
+                //options.reconnectionDelay = 2000;
+                //options.reconnectionAttempts = 2;
              }
 
             //options.forceNew = true;

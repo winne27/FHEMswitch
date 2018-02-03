@@ -6,7 +6,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.util.SparseArray;
+
+import com.google.firebase.crash.FirebaseCrash;
 
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
 import de.fehngarten.fhemswitch.data.ConfigDataIO;
@@ -32,8 +35,16 @@ public class WidgetProvider extends AppWidgetProvider {
             case ACTION_APPWIDGET_UPDATE:
                 checkWidgets(context);
                 for(int i = 0, nsize = serviceIntents.size(); i < nsize; i++) {
-                    context.startService(serviceIntents.valueAt(i));
-                }
+                    try {
+                        serviceIntents.valueAt(i).putExtra("ISFOREGROUND", false);
+                        context.startService(serviceIntents.valueAt(i));
+                    } catch (Exception e) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            serviceIntents.valueAt(i).putExtra("ISFOREGROUND", true);
+                            context.startForegroundService(serviceIntents.valueAt(i));
+                        }
+                    }
+                 }
                 break;
             case SEND_FHEM_COMMAND:
                 int instSerial = intent.getExtras().getInt(INSTSERIAL);
@@ -41,7 +52,17 @@ public class WidgetProvider extends AppWidgetProvider {
                 Intent commandIntent = new Intent(context.getApplicationContext(), settingServiceClasses.get(instSerial));
                 commandIntent.setAction(FHEM_COMMAND);
                 commandIntent.putExtras(intent.getExtras());
-                context.startService(commandIntent);
+                try {
+                    commandIntent.putExtra("ISFOREGROUND", false);
+                    context.startService(commandIntent);
+                } catch (Exception e) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        FirebaseCrash.log(SEND_FHEM_COMMAND + " for command " + intent.getExtras().getString(FHEM_COMMAND));
+                        FirebaseCrash.report(e);
+                        commandIntent.putExtra("ISFOREGROUND", true);
+                        context.startForegroundService(commandIntent);
+                    }
+                }
                 break;
             case OPEN_WEBPAGE:
                 String urlString = intent.getStringExtra(FHEM_URI);

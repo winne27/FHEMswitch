@@ -59,12 +59,13 @@ class CommandsFactory implements RemoteViewsFactory {
 
     @Override
     public int getCount() {
-        int size;
+        int size = 0;
         try {
-            ArrayList<RowCommand> myCommandsCols = curInstance.commandsCols.get(colnum);
-            size = myCommandsCols.size();
+            if (curInstance.commandsCols.size() > 0) {
+                ArrayList<RowCommand> myCommandsCols = curInstance.commandsCols.get(colnum);
+                size = myCommandsCols.size();
+            }
         } catch (Exception e) {
-            FirebaseCrash.report(e);
             size = 0;
         }
         return size;
@@ -74,13 +75,9 @@ class CommandsFactory implements RemoteViewsFactory {
     public RemoteViews getViewAt(int position) {
         //Log.i("values Position: " + position + " of " + values.size(),values.get(position).name);
         RemoteViews mView = null;
-        int count = getCount();
         try {
-            if (position >= count || count <= 0) {
-                //Intent intent = new Intent(mContext.getApplicationContext(), WidgetProvider.class);
-                //intent.setAction(NEW_CONFIG);
-                //mContext.sendBroadcast(intent);
-            } else {
+            int count = getCount();
+            if (position < count && count > 0) {
                 mView = new RemoteViews(mContext.getPackageName(), R.layout.widget_row_command);
                 ArrayList<RowCommand> myCommandsCols = curInstance.commandsCols.get(colnum);
                 RowCommand curCommand = myCommandsCols.get(position);

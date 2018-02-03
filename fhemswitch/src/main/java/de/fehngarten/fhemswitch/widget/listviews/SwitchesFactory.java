@@ -65,14 +65,14 @@ class SwitchesFactory implements RemoteViewsFactory {
 
     }
 
-
     public int getCount() {
-        int size;
+        int size = 0;
         try {
-            ArrayList<RowSwitch> rowSwitchesCols = curInstance.switchesCols.get(colnum);
-            size = rowSwitchesCols.size();
+            if (curInstance.switchesCols.size() > 0) {
+                ArrayList<RowSwitch> rowSwitchesCols = curInstance.switchesCols.get(colnum);
+                size = rowSwitchesCols.size();
+            }
         } catch (Exception e) {
-            FirebaseCrash.report(e);
             size = 0;
         }
         return size;
@@ -81,14 +81,9 @@ class SwitchesFactory implements RemoteViewsFactory {
     @Override
     public RemoteViews getViewAt(int position) {
         RemoteViews mView = null;
-        int count = getCount();
         try {
-            if (position >= count || count <= 0) {
-                //mView = new RemoteViews(mContext.getPackageName(), R.layout.widget_row_switch);
-                //Intent intent = new Intent(mContext.getApplicationContext(), WidgetProvider.class);
-                //intent.setAction(NEW_CONFIG);
-                //mContext.sendBroadcast(intent);
-            } else {
+            int count = getCount();
+            if (position < count && count > 0) {
                 ArrayList<RowSwitch> rowSwitchesCols = curInstance.switchesCols.get(colnum);
                 RowSwitch curSwitch = rowSwitchesCols.get(position);
                 //Log.i("instserial", Integer.toString(instSerial) + '-' + Integer.toString(colnum) + '-' + Integer.toString(position));
@@ -126,7 +121,7 @@ class SwitchesFactory implements RemoteViewsFactory {
                     mView.setOnClickFillInIntent(R.id.switch_row, fillInIntent);
                 }
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (Exception e) {
             FirebaseCrash.log(curInstance.toString());
             FirebaseCrash.report(e);
         }

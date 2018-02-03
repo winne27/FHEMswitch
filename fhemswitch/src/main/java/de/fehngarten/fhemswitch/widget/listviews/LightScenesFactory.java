@@ -62,7 +62,6 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
         try {
             size = curInstance.lightScenes.items.size();
         } catch (Exception e) {
-            FirebaseCrash.report(e);
             size = 0;
         }
         return size;
@@ -72,13 +71,9 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
     public RemoteViews getViewAt(int position) {
         RemoteViews mView = null;
         //Log.i("LightScene Position: " + position + " of " + ConfigDataCage.data.get(instSerial).lightScenes.items.size(),ConfigDataCage.data.get(instSerial).lightScenes.items.get(position).name + " " + ConfigDataCage.data.get(instSerial).lightScenes.items.get(position).unit);
-        int count = getCount();
         try {
-            if (position >= count || count <= 0 || curInstance.lightScenes.items.size() == 0) {
-                //Intent intent = new Intent(mContext.getApplicationContext(), WidgetProvider.class);
-                //intent.setAction(NEW_CONFIG);
-                //mContext.sendBroadcast(intent);
-            } else {
+            int count = getCount();
+            if (position < count && count > 0) {
                 mView = new RemoteViews(mContext.getPackageName(), R.layout.widget_row_lightscene);
                 String type = ConfigWorkBasket.data.get(instSerial).myRoundedCorners.getType(LIGHTSCENES, 0, position);
                 if (curInstance.lightScenes.items.get(position).header) {
@@ -115,7 +110,7 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
                     }
                 }
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (Exception e) {
             FirebaseCrash.log(curInstance.toString());
             FirebaseCrash.report(e);
         }

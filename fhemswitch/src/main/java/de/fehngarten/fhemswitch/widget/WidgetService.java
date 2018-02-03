@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 import org.json.JSONObject;
 
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -20,10 +21,12 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Display;
@@ -32,6 +35,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
+import com.google.gson.JsonArray;
 
 import de.fehngarten.fhemswitch.BuildConfig;
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
@@ -105,9 +109,15 @@ public class WidgetService extends Service {
         //FirebaseCrash.log("Activity created");
 
         if (intent != null) {
+
             String action = intent.getAction();
+            if (intent.getBooleanExtra("ISFOREGROUND", false)) {
+                startForeground(1, new Notification());
+                FirebaseCrash.log(action + " started startForeground");
+            }
+
             widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-            switch (action) {
+            switch (action != null ? action : "default") {
                 case FHEM_COMMAND:
                     if (configDataCommon == null || configDataCommon.urlFhemjsLocal == null) {
                         start();
@@ -122,6 +132,7 @@ public class WidgetService extends Service {
                     break;
                 default:
                     //Log.d(TAG, "action: " + action + " started instance " + instSerial + " with widgetId " + widgetId);
+                    startForeground(6, new Notification());
                     start();
                     doColoring(false);
                     setBroadcastReceivers();
@@ -152,6 +163,7 @@ public class WidgetService extends Service {
 
     private void start() {
         screenIsOn = isScreenOn();
+        setVisibility("start", SOCKET_DISCONNECTED, getString(R.string.noconn));
         if (mySocket != null) {
             mySocket.destroy();
         }
@@ -238,8 +250,8 @@ public class WidgetService extends Service {
         public void run(Context context, Intent intent) {
             //Log.d(TAG,"on/off fired");
             try {
-                screenIsOn = intent.getAction().equals(Intent.ACTION_SCREEN_ON);
-                //handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
+                String action = intent.getAction();
+                screenIsOn = action != null && action.equals(Intent.ACTION_SCREEN_ON);
                 if (screenIsOn) {
                     start();
                 }
@@ -258,13 +270,18 @@ public class WidgetService extends Service {
 
     private class OnStoreVersion implements MyReceiveListener {
         public void run(Context context, Intent intent) {
-            versionChecks.setVersions(VERSION_APP, BuildConfig.VERSION_NAME, intent.getExtras().getString(GetStoreVersion.LATEST));
+            Bundle extras = intent.getExtras();
+            String type = extras != null ? extras.getString(GetStoreVersion.LATEST, null) : null;
+            if (type != null) {
+                versionChecks.setVersions(VERSION_APP, BuildConfig.VERSION_NAME, type);
+            }
         }
     }
 
     private class OnUserIntent implements MyReceiveListener {
         public void run(Context context, Intent intent) {
-            switch (intent.getAction()) {
+            String action = intent.getAction();
+            switch (action != null ? action : "") {
                 case NEW_VERSION_STORE:
                     final String appPackageName = getPackageName();
                     try {
@@ -298,7 +315,10 @@ public class WidgetService extends Service {
 
             if (listenConnChange) {
                 ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                NetworkInfo networkInfo = null;
+                if (connectivityManager != null) {
+                    networkInfo = connectivityManager.getActiveNetworkInfo();
+                }
                 if (networkInfo != null && networkInfo.isConnected() && screenIsOn) {
                     start();
                 }
@@ -322,7 +342,8 @@ public class WidgetService extends Service {
             return;
         }
 
-        String type = intent.getExtras().getString(FHEM_TYPE, "");
+        Bundle extras = intent.getExtras();
+        String type = extras != null ? extras.getString(FHEM_TYPE, "") : "";
 
         try {
             if (type.equals("intvalue")) {
@@ -381,7 +402,11 @@ public class WidgetService extends Service {
             Float newValue = Float.valueOf(rowIntValue.value) + delta;
             newValueString = newValue.toString();
         }
-        //Log.i(TAG,newValueString);
+
+        if (rowIntValue.setCommand.equals("")) {
+            rowIntValue.setCommand = rowIntValue.unit;
+        }
+
         String cmd = "set " + rowIntValue.setCommand + " " + newValueString;
 
         ConfigWorkBasket.data.get(instSerial).intValues.get(pos).setValue(newValueString);
@@ -449,7 +474,6 @@ public class WidgetService extends Service {
                 mySocket.sendCommand(cmd);
             }
         }
-
     }
 
     // after touch command button is for 500ms pride
@@ -522,7 +546,7 @@ public class WidgetService extends Service {
     public void doStart() {
         Map<String, Integer> blockCounts = new HashMap<>();
         try {
-
+            ConfigWorkBasket.data.get(instSerial).init();
             if (myLayout != null) {
                 for (Entry<String, ArrayList<Integer>> entry : myLayout.layout.entrySet()) {
                     for (int listviewId : entry.getValue()) {
@@ -530,8 +554,6 @@ public class WidgetService extends Service {
                     }
                 }
             }
-
-            ConfigWorkBasket.data.get(instSerial).init();
 
             if (configDataInstance.blockOrder == null) {
                 ConfigWorkBasket.data.get(instSerial).blockOrder = settingsBlockOrder;
@@ -667,7 +689,9 @@ public class WidgetService extends Service {
             ConfigWorkBasket.data.get(instSerial).myRoundedCorners = new MyRoundedCorners(ConfigWorkBasket.data.get(instSerial), blockCounts, myLayout.mixedLayout);
 
             initListviews();
-            handler.postDelayed(checkSocketTimer, settingDelaySocketCheck);
+
+            waitCheckSocket = settingDelaySocketCheck;
+            handler.postDelayed(checkSocketTimer, waitCheckSocket);
         } catch (NoFuckingEntries e) {
             layoutId = settingLayouts[LAYOUT_HORIZONTAL];
             mView = new RemoteViews(mContext.getPackageName(), layoutId);
@@ -733,7 +757,7 @@ public class WidgetService extends Service {
         boolean screenOn = false;
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT_WATCH) {
             PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-            screenOn = pm.isScreenOn();
+            screenOn = pm != null && pm.isScreenOn();
         }
         return screenOn;
     }
@@ -742,9 +766,11 @@ public class WidgetService extends Service {
         boolean screenOn = false;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             DisplayManager dm = (DisplayManager) mContext.getSystemService(Context.DISPLAY_SERVICE);
-            for (Display display : dm.getDisplays()) {
-                if (display.getState() != Display.STATE_OFF) {
-                    screenOn = true;
+            if (dm != null) {
+                for (Display display : dm.getDisplays()) {
+                    if (display.getState() != Display.STATE_OFF) {
+                        screenOn = true;
+                    }
                 }
             }
         }
@@ -752,53 +778,54 @@ public class WidgetService extends Service {
     }
 
     private void setVisibility(String reason, String type, String text) {
-        switch (type) {
-            case VERSION_APP:
-                mView.setTextViewText(R.id.new_version_text, text);
-                mView.setViewVisibility(R.id.new_version_store_button, View.VISIBLE);
-                mView.setViewVisibility(R.id.new_version, View.VISIBLE);
-                new MySetOnClickPendingIntent(mContext, mView, NEW_VERSION_STORE, R.id.new_version_store_button);
-                new MySetOnClickPendingIntent(mContext, mView, NEW_VERSION_SUPPRESS, R.id.new_version_show_button);
-                new MySetOnClickPendingIntent(mContext, mView, NEW_VERSION_REMEMBER, R.id.new_version_remember_button);
-                setVisibilityListViews(View.GONE);
-                break;
-            case VERSION_FHEMJS:
-                mView.setTextViewText(R.id.new_version_text, text);
-                mView.setViewVisibility(R.id.new_version_store_button, View.GONE);
-                mView.setViewVisibility(R.id.new_version, View.VISIBLE);
-                new MySetOnClickPendingIntent(mContext, mView, NEW_VERSION_SUPPRESS, R.id.new_version_show_button);
-                new MySetOnClickPendingIntent(mContext, mView, NEW_VERSION_REMEMBER, R.id.new_version_remember_button);
-                setVisibilityListViews(View.GONE);
-                break;
-            case SOCKET_CONNECTED:
-                mView.setViewVisibility(R.id.message, View.GONE);
-                mView.setViewVisibility(R.id.new_version, View.GONE);
-                setVisibilityListViews(View.VISIBLE);
-                break;
-            case VERSION_CLOSE:
-                mView.setViewVisibility(R.id.new_version, View.GONE);
-                setVisibilityListViews(View.VISIBLE);
-                break;
-            case EMPTY_WIDGET:
-                mView.setTextViewText(R.id.message, text);
-                mView.setViewVisibility(R.id.message, View.VISIBLE);
-                //new MySetOnClickPendingIntent(mContext, mView, NEW_CONFIG, R.id.message);
-                //setVisibilityListViews(View.GONE);
-                break;
-            case SOCKET_DISCONNECTED:
-                if (screenIsOn) {
+        if (mView == null) return;
+        try {
+            switch (type) {
+                case VERSION_APP:
+                    mView.setTextViewText(R.id.new_version_text, text);
+                    mView.setViewVisibility(R.id.new_version_store_button, View.VISIBLE);
+                    mView.setViewVisibility(R.id.new_version, View.VISIBLE);
+                    new MySetOnClickPendingIntent(mContext, mView, NEW_VERSION_STORE, R.id.new_version_store_button);
+                    new MySetOnClickPendingIntent(mContext, mView, NEW_VERSION_SUPPRESS, R.id.new_version_show_button);
+                    new MySetOnClickPendingIntent(mContext, mView, NEW_VERSION_REMEMBER, R.id.new_version_remember_button);
+                    setVisibilityListViews(View.GONE);
+                    break;
+                case VERSION_FHEMJS:
+                    mView.setTextViewText(R.id.new_version_text, text);
+                    mView.setViewVisibility(R.id.new_version_store_button, View.GONE);
+                    mView.setViewVisibility(R.id.new_version, View.VISIBLE);
+                    new MySetOnClickPendingIntent(mContext, mView, NEW_VERSION_SUPPRESS, R.id.new_version_show_button);
+                    new MySetOnClickPendingIntent(mContext, mView, NEW_VERSION_REMEMBER, R.id.new_version_remember_button);
+                    setVisibilityListViews(View.GONE);
+                    break;
+                case SOCKET_CONNECTED:
+                    mView.setViewVisibility(R.id.message, View.GONE);
+                    mView.setViewVisibility(R.id.new_version, View.GONE);
+                    setVisibilityListViews(View.VISIBLE);
+                    break;
+                case VERSION_CLOSE:
+                    mView.setViewVisibility(R.id.new_version, View.GONE);
+                    setVisibilityListViews(View.VISIBLE);
+                    break;
+                case EMPTY_WIDGET:
                     mView.setTextViewText(R.id.message, text);
                     mView.setViewVisibility(R.id.message, View.VISIBLE);
-                    new MySetOnClickPendingIntent(mContext, mView, NEW_CONFIG, R.id.message);
-                    setVisibilityListViews(View.GONE);
-                }
-                break;
-        }
-        try {
+                    //new MySetOnClickPendingIntent(mContext, mView, NEW_CONFIG, R.id.message);
+                    //setVisibilityListViews(View.GONE);
+                    break;
+                case SOCKET_DISCONNECTED:
+                    if (screenIsOn) {
+                        mView.setTextViewText(R.id.message, text);
+                        mView.setViewVisibility(R.id.message, View.VISIBLE);
+                        new MySetOnClickPendingIntent(mContext, mView, NEW_CONFIG, R.id.message);
+                        setVisibilityListViews(View.GONE);
+                    }
+                    break;
+            }
+
             appWidgetManager.updateAppWidget(widgetId, mView);
         } catch (Exception e) {
-            FirebaseCrash.log(reason + " " + type + " " + text);
-            FirebaseCrash.report(e);
+            // ignore
         }
     }
 
@@ -835,6 +862,9 @@ public class WidgetService extends Service {
             handler.removeCallbacks(checkSocketTimer);
             checkSocket();
             if (screenIsOn) {
+                if (waitCheckSocket == settingDelaySocketCheck) {
+                    waitCheckSocket = settingWaitSocketShort;
+                }
                 handler.postDelayed(this, waitCheckSocket);
             }
         }
@@ -844,7 +874,9 @@ public class WidgetService extends Service {
         if (screenIsOn) {
             if (mySocket == null) {
                 initSocket();
-            } else if (mySocket.socket == null || !mySocket.socket.connected()) {
+            } else if (mySocket.socket == null) {
+                initSocket();
+            } else if (!mySocket.socket.connected()) {
                 mySocket.destroy();
                 initSocket();
             }
@@ -888,21 +920,16 @@ public class WidgetService extends Service {
             }
         });
 
-        mySocket.socket.on(Socket.EVENT_RECONNECT_FAILED, args1 -> {
-            if (mySocket != null) {
-                mySocket.destroy();
-                mySocket = null;
-            }
-            //setVisibility(SOCKET_DISCONNECTED, getString(R.string.noconn));
-        });
-
-
         mySocket.socket.on(Socket.EVENT_CONNECT_ERROR, args1 -> {
             if (mySocket != null) {
                 mySocket.destroy();
                 mySocket = null;
             }
-            setVisibility("EVENT_CONNECT_ERROR", SOCKET_DISCONNECTED, getString(R.string.noconn));
+            waitCheckSocket = settingWaitSocketShort;
+            setVisibility("EVENT_DISCONNECT", SOCKET_DISCONNECTED, getString(R.string.noconn));
+            if (screenIsOn) {
+                handler.postDelayed(checkSocketTimer, waitCheckSocket);
+            }
         });
 
         mySocket.socket.on("value", args1 -> {
@@ -1026,9 +1053,13 @@ public class WidgetService extends Service {
     }
 
     private void saveSuppressedVersions(String type) {
-        configDataCommon.suppressedVersions.put(type, versionChecks.getSuppressedVersion(type));
-        ConfigDataIO configDataIO = new ConfigDataIO(mContext);
-        configDataIO.saveCommon(configDataCommon);
+        try {
+            configDataCommon.suppressedVersions.put(type, versionChecks.getSuppressedVersion(type));
+            ConfigDataIO configDataIO = new ConfigDataIO(mContext);
+            configDataIO.saveCommon(configDataCommon);
+        } catch (Exception e) {
+            // ignore
+        }
     }
 
     private class NoFuckingEntries extends Exception {

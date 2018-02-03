@@ -37,9 +37,9 @@ public final class Settings {
     public static final int settingsMaxInst = 4;
     public static final int settingWaitSocketWifi = 60000;
     public static final int settingWaitSocketLong = 900000;
-    public static final int settingWaitSocketShort = 30000;
+    public static final int settingWaitSocketShort = 7000;
     public static final int settingSocketsConnectionTimeout = 3000;
-    public static final int settingDelaySocketCheck = 500;
+    public static final int settingDelaySocketCheck = 2000;
 
     public static final int settingDelayDefineBroadcastReceivers = 5000;
     public static final int settingIntervalVersionCheck = 3600000;

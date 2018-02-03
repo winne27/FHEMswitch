@@ -67,7 +67,6 @@ class IntValuesFactory implements RemoteViewsFactory {
         try {
             size = ConfigWorkBasket.data.get(instSerial).intValues.size();
         } catch (Exception e) {
-            FirebaseCrash.report(e);
             size = 0;
         }
         return size;
@@ -77,14 +76,9 @@ class IntValuesFactory implements RemoteViewsFactory {
     public RemoteViews getViewAt(int position) {
         //Log.i("values Position: " + position + " of " + values.size(),values.get(position).name);
         RemoteViews mView = null;
-        int count = getCount();
         try {
-            if (position >= count || count <= 0 || ConfigWorkBasket.data.get(instSerial).intValues.size() == 0) {
-                //mView = new RemoteViews(mContext.getPackageName(), R.layout.widget_row_intvalue);
-                //Intent intent = new Intent(mContext.getApplicationContext(), WidgetProvider.class);
-                //intent.setAction(NEW_CONFIG);
-                //mContext.sendBroadcast(intent);
-            } else {
+            int count = getCount();
+            if (position < count && count > 0) {
                 RowIntValue curIntValue = curInstance.intValues.get(position);
                 String type = ConfigWorkBasket.data.get(instSerial).myRoundedCorners.getType(INTVALUES, 0, position);
                 if (curIntValue.unit.equals(HEADER_SEPERATOR)) {
@@ -150,7 +144,7 @@ class IntValuesFactory implements RemoteViewsFactory {
                     mView.setInt(R.id.intvalue_row, "setBackgroundResource", settingDefaultShapes.get(type));
                 }
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (Exception e) {
             FirebaseCrash.log(curInstance.toString());
             FirebaseCrash.report(e);
         }

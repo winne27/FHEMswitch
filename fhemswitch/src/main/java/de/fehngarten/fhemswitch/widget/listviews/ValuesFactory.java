@@ -62,12 +62,13 @@ class ValuesFactory implements RemoteViewsFactory {
 
     @Override
     public int getCount() {
-        int size;
+        int size = 0;
         try {
-            ArrayList<RowValue> rowValuesCols = curInstance.valuesCols.get(colnum);
-            size = rowValuesCols.size();
+            if (curInstance.valuesCols.size() > 0) {
+                ArrayList<RowValue> rowValuesCols = curInstance.valuesCols.get(colnum);
+                size = rowValuesCols.size();
+            }
         } catch (Exception e) {
-            FirebaseCrash.report(e);
             size = 0;
         }
         return size;
@@ -77,14 +78,9 @@ class ValuesFactory implements RemoteViewsFactory {
     public RemoteViews getViewAt(int position) {
         //Log.i("values Position: " + position + " of " + values.size(),values.get(position).name);
         RemoteViews mView = null;
-        int count = getCount();
         try {
-            if (position >= count || count <= 0) {
-                //mView = new RemoteViews(mContext.getPackageName(), R.layout.widget_row_value);
-                //Intent intent = new Intent(mContext.getApplicationContext(), WidgetProvider.class);
-                //intent.setAction(NEW_CONFIG);
-                //mContext.sendBroadcast(intent);
-            } else {
+            int count = getCount();
+            if (position < count && count > 0) {
                 ArrayList<RowValue> rowValuesCols = curInstance.valuesCols.get(colnum);
                 RowValue curValue = rowValuesCols.get(position);
                 String type = ConfigWorkBasket.data.get(instSerial).myRoundedCorners.getType(VALUES, colnum, position);
@@ -106,8 +102,28 @@ class ValuesFactory implements RemoteViewsFactory {
                     String value = curValue.value;
                     boolean useIcon = curValue.useIcon;
 
-                    if (useIcon && value.length() > 0 && value.substring(value.length() - 1).equals("%")) {
-                        String value1 = value.substring(0, value.length() - 1);
+                    boolean valueIsProz = false;
+                    String lastSign = "";
+                    String value1 = "";
+                    if (value.length() > 0) {
+                        lastSign = value.substring(value.length() - 1);
+                        value1 = value.substring(0, value.length() - 1);
+
+                        if (lastSign.equals("%")) {
+                            try {
+                                Double proz = Double.parseDouble(value1);
+                                if (proz < 0 || proz > 100) {
+                                    valueIsProz = false;
+                                } else {
+                                    valueIsProz = true;
+                                }
+                            } catch (Exception e) {
+                                valueIsProz = false;
+                            }
+                        }
+                    }
+
+                    if (useIcon && valueIsProz) {
                         int val = Integer.parseInt(value1);
                         val = Math.round(val / 10);
                         mView.setImageViewResource(R.id.prozent_icon, Settings.settingIcons.get("p_" + Integer.toString(val)));
@@ -136,8 +152,7 @@ class ValuesFactory implements RemoteViewsFactory {
                 fillInIntent.putExtra(FHEM_URI, ConfigWorkBasket.urlFhempl + "?detail=" + curValue.unit);
                 mView.setOnClickFillInIntent(R.id.value_name, fillInIntent);
             }
-        } catch (IndexOutOfBoundsException e) {
-            //FirebaseCrash.log("count: " + count + ", pos: " + position + ", colnum: " + colnum);
+        } catch (Exception e) {
             FirebaseCrash.log(curInstance.toString());
             FirebaseCrash.report(e);
         }
