@@ -17,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.view.menu.MenuPopupHelper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -32,6 +33,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,6 +52,7 @@ import de.fehngarten.fhemswitch.modul.MySocket;
 import de.fehngarten.fhemswitch.modul.MyWifiInfo;
 import de.fehngarten.fhemswitch.modul.SendAlertMessage;
 import de.fehngarten.fhemswitch.widget.WidgetProvider;
+import io.socket.client.Ack;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
@@ -81,6 +84,7 @@ public class ConfigMain extends Activity {
     private ViewPager myPager;
     private ConfigPagerAdapter configPagerAdapter;
     private int lastPage;
+    private boolean withReadings = false;
     private boolean isFirstConfigPage = true;
 
     @Override
@@ -120,6 +124,8 @@ public class ConfigMain extends Activity {
                     latestView.setText(latest);
                 } catch (NullPointerException e) {
                     // ignore
+                } catch (Exception e) {
+                    Log.e("OnStoreVersion", e.getMessage());
                 }
             }
         }
@@ -240,7 +246,7 @@ public class ConfigMain extends Activity {
         sendDoColor();
         isFirstConfigPage = false;
         //Log.d("Instanz lesen config", Integer.toString(instSerial));
-        configDataInstance = configDataIO.readInstance(instSerial);
+        configDataInstance = configDataIO.readInstance(instSerial, true);
 
         ((RadioButton) radioWidgetSelector.getChildAt(instSerial)).setChecked(true);
         radioWidgetSelector.setOnCheckedChangeListener(widgetSelectorChange);
@@ -282,8 +288,39 @@ public class ConfigMain extends Activity {
         }
     }
 
-    public void buildOutput() {
+    Runnable checkVersionTimeout = new Runnable() {
+        @Override
+        public void run() {
+            if (!withReadings) {
+                ConfigMain.this.runOnUiThread(ConfigMain.this::doBuildOutput);
+            }
+        }
+    };
 
+    //public void buildOutputQ() {
+    public void buildOutput() {
+        if (configDataCommon.readingsMigrated) {
+            doBuildOutput();
+        } else {
+            new Handler().postDelayed(checkVersionTimeout, 2000);
+            mySocket.socket.emit("getVersion", new Ack() {
+                @Override
+                public void call(Object... args) {
+                    String version = (String) args[0];
+                    withReadings = true;
+                    migrateValuesToReadings();
+                    ConfigMain.this.runOnUiThread(ConfigMain.this::doBuildOutput);
+                }
+            });
+        }
+    }
+
+    private void migrateValuesToReadings() {
+        configDataCommon.readingsMigrated = true;
+        configDataIO.saveCommon(configDataCommon);
+    }
+
+    public void doBuildOutput() {
         configWorkInstance = new ConfigWorkInstance();
         configWorkInstance.init();
 

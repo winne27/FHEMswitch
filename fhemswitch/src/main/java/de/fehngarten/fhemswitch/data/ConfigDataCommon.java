@@ -20,6 +20,7 @@ public class ConfigDataCommon implements java.io.Serializable {
     public HashMap<String, String> suppressedVersions;
     public int[] instances = new int[settingsMaxInst];
     public boolean writePermissionAsked = false;
+    public boolean readingsMigrated = false;
 
     void init() {
         suppressedVersions = new HashMap<>();

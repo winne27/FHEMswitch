@@ -1,6 +1,6 @@
 package de.fehngarten.fhemswitch.modul;
 
-import com.google.firebase.crash.FirebaseCrash;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -56,23 +56,17 @@ public class MyLayout {
     }
 
     private void buildLayoutMixed(Map<String, Integer> blockCounts) {
-        Integer debugCount = 0;
         String trace = "";
         try {
             DescValueComparator bvc = new DescValueComparator(blockCounts);
             TreeMap<String, Integer> sortedBlockCounts = new TreeMap<>(bvc);
             sortedBlockCounts.putAll(blockCounts);
-            debugCount++;   //1
-            debugCount++;   //2
-            debugCount++;   //3
 
             ArrayList<String> leftCol = new ArrayList<>();
             ArrayList<String> rightCol = new ArrayList<>();
-            debugCount++;   //4
 
             int leftSum = 0;
             int rightSum = 0;
-            debugCount++;   //5
 
             // first
             Map.Entry<String, Integer> block;
@@ -81,11 +75,9 @@ public class MyLayout {
             
             leftCol.add(block.getKey());
             leftSum = leftSum + block.getValue();
-            debugCount++;   //6
 
             //second
             block = sortedBlockCounts.pollFirstEntry();
-            debugCount++;   //7
             if (block.getValue() > 0) {
                 trace += "a";
                 rightCol.add(block.getKey());
@@ -126,7 +118,6 @@ public class MyLayout {
             }
 
             // switch cols if right is taller when left
-            debugCount++;   //8
             if (rightSum > leftSum) {
                 trace += "e";
                 ArrayList<String> leftColTemp = new ArrayList<>();
@@ -145,7 +136,6 @@ public class MyLayout {
                     rightCol.add(blockname);
                 }
             }
-            debugCount++;   //9
             int curIndex = 0;
             mixedLayout = new LinkedHashMap<>();
 
@@ -157,7 +147,6 @@ public class MyLayout {
                 mixedLayout.put(blockname, 0);
                 curIndex++;
             }
-            debugCount++;   //10
 
             curIndex = 0;
             for (String blockname : rightCol) {
@@ -168,15 +157,7 @@ public class MyLayout {
                 curIndex++;
             }
         } catch (Exception e) {
-            FirebaseCrash.log(blockCounts.toString());
-            FirebaseCrash.log("debugCount-a: " + debugCount.toString());
-            FirebaseCrash.log("debugTrace-a: " + trace);
-            FirebaseCrash.report(e);
-        } catch (NoClassDefFoundError e) {
-            FirebaseCrash.log(blockCounts.toString());
-            FirebaseCrash.log("debugCount-b: " + debugCount.toString());
-            FirebaseCrash.log("debugTrace-b: " + trace);
-            FirebaseCrash.report(e);
+            Log.e("buildLayoutMixed", e.getMessage());
         }
     }
 

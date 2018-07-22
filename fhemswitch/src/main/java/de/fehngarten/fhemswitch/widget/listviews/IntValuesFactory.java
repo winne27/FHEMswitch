@@ -4,10 +4,9 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
-
-import com.google.firebase.crash.FirebaseCrash;
 
 import de.fehngarten.fhemswitch.R;
 import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
@@ -145,8 +144,7 @@ class IntValuesFactory implements RemoteViewsFactory {
                 }
             }
         } catch (Exception e) {
-            FirebaseCrash.log(curInstance.toString());
-            FirebaseCrash.report(e);
+            Log.e("getViewAt", e.getMessage());
         }
         return mView;
     }

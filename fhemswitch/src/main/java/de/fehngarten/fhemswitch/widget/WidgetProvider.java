@@ -9,8 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.SparseArray;
 
-import com.google.firebase.crash.FirebaseCrash;
-
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
 import de.fehngarten.fhemswitch.data.ConfigDataIO;
 
@@ -57,8 +55,6 @@ public class WidgetProvider extends AppWidgetProvider {
                     context.startService(commandIntent);
                 } catch (Exception e) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        FirebaseCrash.log(SEND_FHEM_COMMAND + " for command " + intent.getExtras().getString(FHEM_COMMAND));
-                        FirebaseCrash.report(e);
                         commandIntent.putExtra("ISFOREGROUND", true);
                         context.startForegroundService(commandIntent);
                     }

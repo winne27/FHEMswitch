@@ -2,11 +2,10 @@ package de.fehngarten.fhemswitch.widget.listviews;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
-
-import com.google.firebase.crash.FirebaseCrash;
 import java.util.ArrayList;
 
 import de.fehngarten.fhemswitch.R;
@@ -153,8 +152,7 @@ class ValuesFactory implements RemoteViewsFactory {
                 mView.setOnClickFillInIntent(R.id.value_name, fillInIntent);
             }
         } catch (Exception e) {
-            FirebaseCrash.log(curInstance.toString());
-            FirebaseCrash.report(e);
+            Log.e("getViewAt", e.getMessage());
         }
         return mView;
     }

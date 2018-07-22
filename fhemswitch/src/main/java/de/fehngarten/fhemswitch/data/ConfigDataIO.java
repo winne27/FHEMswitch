@@ -51,7 +51,7 @@ public class ConfigDataIO {
     // ---- instance config stuff
     // -----------------------------------------------
 
-    public ConfigDataInstance readInstance(int instSerial) {
+    public ConfigDataInstance readInstance(int instSerial, boolean checkMigrateReadings) {
         ConfigDataInstance configDataInstance;
         try {
             String instSerialString = Integer.toString(instSerial);
@@ -65,6 +65,11 @@ public class ConfigDataIO {
             if (configDataInstance.widgetName == null || configDataInstance.widgetName.equals("")) {
                 configDataInstance.widgetName = "Widget " + Integer.toString(instSerial + 1);
             }
+
+            if (checkMigrateReadings && !configDataInstance.readingsMigrated && configDataInstance.valueRows.size() > 0) {
+
+            }
+
         } catch (Exception e) {
             return null;
         }
@@ -137,7 +142,7 @@ public class ConfigDataIO {
 
     private void doExportInstance(Integer instSerial, File myDir) {
         try {
-            ConfigDataInstance configDataInstance = readInstance(instSerial);
+            ConfigDataInstance configDataInstance = readInstance(instSerial, false);
             if (configDataInstance != null) {
                 File file = new File(myDir, configDataInstance.widgetName.replace(" ", "_") + ".conf");
                 physicalWriteInstance(configDataInstance, file);

@@ -8,11 +8,9 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-
-import com.google.firebase.crash.FirebaseCrash;
-
 import de.fehngarten.fhemswitch.R;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
@@ -111,8 +109,7 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
                 }
             }
         } catch (Exception e) {
-            FirebaseCrash.log(curInstance.toString());
-            FirebaseCrash.report(e);
+            Log.e("getViewAt", e.getMessage());
         }
         return mView;
     }

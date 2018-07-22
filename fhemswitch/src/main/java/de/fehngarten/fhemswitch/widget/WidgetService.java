@@ -34,9 +34,6 @@ import android.hardware.display.DisplayManager;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.google.firebase.crash.FirebaseCrash;
-import com.google.gson.JsonArray;
-
 import de.fehngarten.fhemswitch.BuildConfig;
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
 import de.fehngarten.fhemswitch.data.ConfigDataIO;
@@ -106,14 +103,11 @@ public class WidgetService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //FirebaseCrash.log("Activity created");
-
         if (intent != null) {
 
             String action = intent.getAction();
             if (intent.getBooleanExtra("ISFOREGROUND", false)) {
                 startForeground(1, new Notification());
-                FirebaseCrash.log(action + " started startForeground");
             }
 
             widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
@@ -515,7 +509,7 @@ public class WidgetService extends Service {
             }
         }
         //Log.d("Instanz lesen widget", Integer.toString(instSerial));
-        configDataInstance = configDataIO.readInstance(instSerial);
+        configDataInstance = configDataIO.readInstance(instSerial, false);
     }
 
     public void setOrientation() {
@@ -944,8 +938,7 @@ public class WidgetService extends Service {
                     try {
                         value = obj.getString(unit);
                     } catch (Exception e) {
-                        FirebaseCrash.log("value from fhem: " + args1[0]);
-                        FirebaseCrash.report(e);
+                        Log.e("mySocket", e.getMessage());
                     }
 
                     //Log.d(TAG, "new value: " + unit + ":" + value + " - widgetId: " + widgetId);
@@ -970,8 +963,7 @@ public class WidgetService extends Service {
                     }
                 }
             } catch (Exception e) {
-                FirebaseCrash.log("value from fhem: " + args1[0]);
-                FirebaseCrash.report(e);
+                Log.e("mySocket2", e.getMessage());
             }
         });
 
@@ -982,8 +974,7 @@ public class WidgetService extends Service {
                 String type = (obj.has("type")) ? obj.getString("type") : "fhemjs";
                 versionChecks.setVersions(type, obj.getString("installed"), obj.getString("latest"));
             } catch (Exception e) {
-                FirebaseCrash.log("version from fhem: " + args1[0]);
-                FirebaseCrash.report(e);
+                Log.e("mySocket3", e.getMessage());
             }
 
         });

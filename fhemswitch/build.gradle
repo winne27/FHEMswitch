@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     signingConfigs {
         wetterstation {
             storeFile file("C:/Users/Werner/Documents/Zertifikate/app-keys/android/wetterstation.keystore")
@@ -12,10 +13,10 @@ android {
     }
     defaultConfig {
         applicationId "de.fehngarten.fhemswitch"
-        versionCode 3507500
-        versionName "3.5.7"
+        versionCode 3600500
+        versionName "3.6.0"
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 27
         archivesBaseName = "fhemswitch-$versionName"
         multiDexEnabled false
         dataBinding {
@@ -67,21 +68,18 @@ repositories {
 }
 
 dependencies {
-    //compile 'com.squareup.okhttp3:okhttp:3.8.0'
-    //compile('io.socket:socket.io-client:0.8.3') {
-    compile('io.socket:socket.io-client:1.0.0') {
+    implementation ('io.socket:socket.io-client:1.0.0') {
         exclude group: 'org.json', module: 'json'
         //exclude group: 'com.squareup.okhttp3'
     }
-    compile 'asia.ivity.android:drag-sort-listview:1.0'
-    compile 'org.jsoup:jsoup:1.10.3'
-    compile 'joda-time:joda-time:2.9.9'
-    compile 'com.android.support:support-v13:26.1.0'
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.google.code.gson:gson:2.8.2'
-    compile 'com.google.firebase:firebase-core:11.4.2'
-    compile 'com.google.firebase:firebase-crash:11.4.2'
-    //compile 'com.google.firebase:firebase-messaging:11.4.2'
+    implementation 'asia.ivity.android:drag-sort-listview:1.0'
+    implementation 'org.jsoup:jsoup:1.11.3'
+    implementation 'joda-time:joda-time:2.10'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:support-v13:27.1.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.3'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -1,6 +1,6 @@
 package de.fehngarten.fhemswitch.modul;
 
-import com.google.firebase.crash.FirebaseCrash;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,9 +42,7 @@ public class MyRoundedCorners {
             lastPos = new Pointer("", 0, 0);
             init(curInstance, blockCounts);
         } catch (Exception e) {
-            FirebaseCrash.log("blockCounts: " + blockCounts.toString());
-            FirebaseCrash.log("mixedLayout: " + mixedLayout.toString());
-            FirebaseCrash.report(e);
+            Log.e("MyRoundedCorners", e.getMessage());
         }
     }
 

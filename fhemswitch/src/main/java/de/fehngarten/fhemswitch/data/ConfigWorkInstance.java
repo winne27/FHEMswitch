@@ -18,6 +18,10 @@ public class ConfigWorkInstance {
     public List<RowValue> valuesDisabled;
     public List<ArrayList<RowValue>> valuesCols;
 
+    public List<RowReading> readings;
+    public List<RowReading> readingsDisabled;
+    public List<ArrayList<RowReading>> readingsCols;
+
     public List<RowIntValue> intValues;
     public List<RowIntValue> intValuesDisabled;
 

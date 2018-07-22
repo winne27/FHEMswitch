@@ -4,10 +4,9 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
-
-import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.ArrayList;
 import de.fehngarten.fhemswitch.R;
@@ -20,7 +19,6 @@ import de.fehngarten.fhemswitch.data.ConfigWorkBasket;
 import de.fehngarten.fhemswitch.data.ConfigWorkInstance;
 import de.fehngarten.fhemswitch.data.RowCommand;
 
-//import android.util.Log;
 class CommandsFactory implements RemoteViewsFactory {
     //private static final String TAG = "CommandsFactory.";
     private Context mContext = null;
@@ -105,8 +103,7 @@ class CommandsFactory implements RemoteViewsFactory {
                 mView.setOnClickFillInIntent(R.id.command_name, fillInIntent);
             }
         } catch (Exception e) {
-            FirebaseCrash.log(curInstance.toString());
-            FirebaseCrash.report(e);
+            Log.e("getViewAt", e.getMessage());
         }
         return mView;
     }

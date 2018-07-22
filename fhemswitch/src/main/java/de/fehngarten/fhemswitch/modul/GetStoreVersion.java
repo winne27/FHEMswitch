@@ -7,6 +7,9 @@ import android.util.Log;
 
 //import org.jsoup.Jsoup;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import static de.fehngarten.fhemswitch.global.Settings.*;
 
@@ -27,16 +30,11 @@ public class GetStoreVersion extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... params) {
         String latest = "";
         try {
-            latest = Jsoup.connect(settingGoogleStoreUrl)
-                    .timeout(30000)
-                    .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                    .referrer("http://www.google.com")
-                    .get()
-                    .select("div[itemprop=softwareVersion]")
-                    .first()
-                    .ownText();
+            Document doc = Jsoup.connect(settingGoogleStoreUrl).get();
+            Elements zwei = doc.selectFirst("div.xyOfqd").children();
+            latest = zwei.get(3).selectFirst("span").text();
         } catch (Exception e) {
-            Log.i(TAG, "read app version failed");
+            Log.d(TAG, "read app version failed: " + e);
         }
         return latest;
     }
@@ -44,7 +42,6 @@ public class GetStoreVersion extends AsyncTask<String, Void, String> {
     @Override
     public void onPostExecute(String latest) {
         //super.onPostExecute(latest);
-
         Intent intent = new Intent();
         intent.setAction(mAction);
         intent.putExtra(LATEST, latest);
