@@ -33,14 +33,10 @@ public class WidgetProvider extends AppWidgetProvider {
             case ACTION_APPWIDGET_UPDATE:
                 checkWidgets(context);
                 for(int i = 0, nsize = serviceIntents.size(); i < nsize; i++) {
-                    try {
-                        serviceIntents.valueAt(i).putExtra("ISFOREGROUND", false);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        context.startForegroundService(serviceIntents.valueAt(i));
+                    } else {
                         context.startService(serviceIntents.valueAt(i));
-                    } catch (Exception e) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            serviceIntents.valueAt(i).putExtra("ISFOREGROUND", true);
-                            context.startForegroundService(serviceIntents.valueAt(i));
-                        }
                     }
                  }
                 break;
@@ -50,15 +46,13 @@ public class WidgetProvider extends AppWidgetProvider {
                 Intent commandIntent = new Intent(context.getApplicationContext(), settingServiceClasses.get(instSerial));
                 commandIntent.setAction(FHEM_COMMAND);
                 commandIntent.putExtras(intent.getExtras());
-                try {
-                    commandIntent.putExtra("ISFOREGROUND", false);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(commandIntent);
+                } else {
                     context.startService(commandIntent);
-                } catch (Exception e) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        commandIntent.putExtra("ISFOREGROUND", true);
-                        context.startForegroundService(commandIntent);
-                    }
                 }
+
                 break;
             case OPEN_WEBPAGE:
                 String urlString = intent.getStringExtra(FHEM_URI);

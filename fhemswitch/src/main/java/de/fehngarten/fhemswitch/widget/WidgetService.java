@@ -11,6 +11,8 @@ import java.util.Map.Entry;
 import org.json.JSONObject;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -26,6 +28,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.StrictMode;
+import androidx.core.app.NotificationCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -35,6 +38,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import de.fehngarten.fhemswitch.BuildConfig;
+import de.fehngarten.fhemswitch.config.ConfigMain;
 import de.fehngarten.fhemswitch.data.ConfigDataCommon;
 import de.fehngarten.fhemswitch.data.ConfigDataIO;
 import de.fehngarten.fhemswitch.data.ConfigDataInstance;
@@ -106,9 +110,6 @@ public class WidgetService extends Service {
         if (intent != null) {
 
             String action = intent.getAction();
-            if (intent.getBooleanExtra("ISFOREGROUND", false)) {
-                startForeground(1, new Notification());
-            }
 
             widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
             switch (action != null ? action : "default") {
@@ -116,7 +117,27 @@ public class WidgetService extends Service {
                     if (configDataCommon == null || configDataCommon.urlFhemjsLocal == null) {
                         start();
                     }
-                    sendCommand(intent);
+
+                    Bundle extras = intent.getExtras();
+
+                    if (configDataInstance.confirmCommands && !extras.getBoolean("isConfirmed", false)) {
+                        ItemHolder itemHolder = getItemName(intent);
+                        if (itemHolder.name != "") {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("name", itemHolder.name);
+                            bundle.putString("icon", itemHolder.icon);
+                            bundle.putInt(INSTSERIAL, instSerial);
+                            bundle.putBundle("cmdBundle", intent.getExtras());
+
+                            Intent confirm = new Intent(mContext, DialogActivity.class);
+                            confirm.putExtras(bundle);
+                            mContext.startActivity(confirm);
+                        } else {
+                            sendCommand(intent);
+                        }
+                    } else {
+                        sendCommand(intent);
+                    }
                     break;
                 case SEND_DO_COLOR:
                     doColoring(intent.getBooleanExtra("COLOR", false));
@@ -125,8 +146,7 @@ public class WidgetService extends Service {
                     start();
                     break;
                 default:
-                    //Log.d(TAG, "action: " + action + " started instance " + instSerial + " with widgetId " + widgetId);
-                    startForeground(6, new Notification());
+                    startInForeground();
                     start();
                     doColoring(false);
                     setBroadcastReceivers();
@@ -139,6 +159,27 @@ public class WidgetService extends Service {
         }
         super.onStartCommand(intent, flags, startId);
         return START_REDELIVER_INTENT;
+    }
+
+    private void startInForeground() {
+        if (Build.VERSION_CODES.O <= Build.VERSION.SDK_INT) {
+
+            Intent notificationIntent = new Intent(this, ConfigMain.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, PRIMARY_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.set_on)
+                    .setContentTitle(CHANNEL_NAME)
+                    .setContentText(NOWAYNOTIFICATION)
+//                    .setTicker("TICKER")
+                    .setContentIntent(pendingIntent);
+            Notification notification = builder.build();
+
+            NotificationChannel channel = new NotificationChannel(PRIMARY_CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(CHANNEL_DESC);
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+            startForeground(1, notification);
+        }
     }
 
     public void onCreate() {
@@ -227,16 +268,22 @@ public class WidgetService extends Service {
     Runnable setBroadcastReceiversTimer = new Runnable() {
         @Override
         public void run() {
-            String[] actions = new String[]{ConnectivityManager.CONNECTIVITY_ACTION};
             listenConnChange = false;
-            myBroadcastReceivers.add(new MyBroadcastReceiver(mContext, new OnConnectionChange(), actions));
 
-            actions = new String[]{Intent.ACTION_CONFIGURATION_CHANGED, NEW_CONFIG};
+            String[] actions = new String[]{Intent.ACTION_CONFIGURATION_CHANGED, NEW_CONFIG};
             myBroadcastReceivers.add(new MyBroadcastReceiver(mContext, new OnConfigChange(), actions));
 
             actions = new String[]{Intent.ACTION_SCREEN_ON, Intent.ACTION_SCREEN_OFF};
             myBroadcastReceivers.add(new MyBroadcastReceiver(mContext, new OnScreenOnOff(), actions));
 
+            actions = new String[]{ConnectivityManager.CONNECTIVITY_ACTION};
+            myBroadcastReceivers.add(new MyBroadcastReceiver(mContext, new OnConnectionChange(), actions));
+/*
+            ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            connectivityManager.registerNetworkCallback(networkRequest , this);
+            actions = new String[]{connectivityManager.NetworkCallback};
+            myBroadcastReceivers.add(new MyBroadcastReceiver(mContext, new OnConnectionChange(), actions));
+ */
         }
     };
 
@@ -382,6 +429,49 @@ public class WidgetService extends Service {
         } catch (Exception e) {
             start();
         }
+    }
+
+    public ItemHolder getItemName(Intent intent) {
+
+        Bundle extras = intent.getExtras();
+        String type = extras != null ? extras.getString(FHEM_TYPE, "") : "";
+
+        String name = "";
+        String icon = "";
+        if (!type.equals("")) {
+            String cmd = intent.getExtras().getString(FHEM_COMMAND);
+            int actCol = 0;
+            int position = -1;
+            switch (type) {
+                case "switch":
+                    position = Integer.parseInt(intent.getExtras().getString(POS));
+                    actCol = Integer.parseInt(intent.getExtras().getString(COL));
+                    name = ConfigWorkBasket.data.get(instSerial).switchesCols.get(actCol).get(position).name;
+                    ConfigWorkInstance curInstance = ConfigWorkBasket.data.get(instSerial);
+                    icon = curInstance.switchesCols.get(actCol).get(position).icon;
+                    break;
+                case "lightscene":
+                    position = Integer.parseInt(intent.getExtras().getString(POS));
+                    name = ConfigWorkBasket.data.get(instSerial).lightScenes.items.get(position).name;
+                    icon = "lightscene";
+                    break;
+                case "command":
+                    position = Integer.parseInt(intent.getExtras().getString(POS));
+                    actCol = Integer.parseInt(intent.getExtras().getString(COL));
+                    name = ConfigWorkBasket.data.get(instSerial).commandsCols.get(actCol).get(position).name;
+                    icon = "command";
+                    break;
+            }
+        }
+        ItemHolder itemHolder = new ItemHolder();
+        itemHolder.name = name;
+        itemHolder.icon = icon;
+        return itemHolder;
+    }
+
+    private class ItemHolder {
+        String name;
+        String icon;
     }
 
     private void setNewValue(Intent intent) {
@@ -559,7 +649,7 @@ public class WidgetService extends Service {
             if (configDataInstance.switchRows != null) {
                 for (ConfigSwitchRow switchRow : configDataInstance.switchRows) {
                     if (switchRow.enabled) {
-                        ConfigWorkBasket.data.get(instSerial).switches.add(new RowSwitch(switchRow.name, switchRow.unit, switchRow.cmd));
+                        ConfigWorkBasket.data.get(instSerial).switches.add(new RowSwitch(switchRow.name, switchRow.unit, switchRow.cmd, switchRow.confirm));
                     }
                 }
             }

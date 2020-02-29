@@ -29,10 +29,10 @@
     <string name="urlerr">the typed URL is invalid</string>
     <string name="urlcheck">please check URL</string>
     <string name="onlinecheck">is this server online</string>
-	<string name="commands">Custom commands</string>
+    <string name="commands">Custom commands</string>
     <string name="commands2">FHEM command</string>
     <string name="newline" translatable="false">+</string>
-    
+
     <string name="landscape">Layout Landscape</string>
     <string name="portrait">Layout Portrait</string>
     <string name="horizontal">horizontal</string>
@@ -43,6 +43,13 @@
         <item>toggle</item>
         <item>on</item>
         <item>off</item>
+    </string-array>
+
+    <string-array name="confirmTypes">
+        <item>no</item>
+        <item>off only</item>
+        <item>on only</item>
+        <item>always</item>
     </string-array>
 
     <string-array name="colnum">
@@ -94,8 +101,8 @@
     <string name="removeline" translatable="false">-</string>
     <string name="bullet" translatable="false">\u2022</string>
     <string name="blockheader">Block sequence (order by drag &amp; drop)</string>
-    <string name="header_label" translatable="false">*** Header ***</string>
-    <string name="seperator_label" translatable="false">*** Seperator ***</string>
+    <string name="header_label" translatable="false">*Header</string>
+    <string name="seperator_label" translatable="false">*Seperator</string>
     <string name="empty_widget">Empty Widget</string>
     <string name="werteregler">Slider</string>
     <string name="backup" translatable="false">Export</string>
@@ -108,8 +115,21 @@
     <string name="export_success">Successfully exported configuration to path %1$s</string>
     <string name="export_error">Export was not successful.</string>
     <string name="import_error">Import was not successful. Maybe file is missing or content is corrupted.</string>
-    <string name="import_success">The Import of config was successful.</string>
+    <string name="import_success">The Import of the config was successful.</string>
     <string name="select_widget">Select widget to import.:</string>
-    <string name="noCommandsAllowed">During configuration running, send commands is not possible</string>
+    <string name="noCommandsAllowed">During configuration running, sending commands is not possible</string>
+    <string name="confirmtext">Force confirm of commands</string>
+    <string name="confirmText">Do it!</string>
+    <string name="ohnoText">Oh no!</string>
+    <string name="confirmQuest">Really execute?</string>
+    <string name="switchOn">switch on</string>
+    <string name="switchOff">switchOff</string>
+    <string name="fhemHome" translatable="false">FHEM Website</string>
+    <string name="switchScene">select</string>
+    <string name="switchCommand">execute</string>
+    <string name="commandsPrompt">Select action</string>
+    <string name="confirmsPrompt">Confirm switch of %1$s?</string>
+    <string name="cmdName" translatable="false">FHEMcmd</string>
+    <string name="title_activity_test" translatable="false">Test</string>
 
 </resources>

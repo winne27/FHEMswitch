@@ -1,38 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.fehngarten.fhemswitch">
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@drawable/icon2"
         android:label="@string/widget_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
-            android:name="de.fehngarten.fhemswitch.config.ConfigMain"
+            android:name=".config.ConfigMain"
             android:icon="@drawable/icon2"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:label="@string/widget_name" >
+            android:label="@string/widget_name"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <!-- ATTENTION: This intent was auto-generated. Follow instructions at
-            https://g.co/AppIndexing/AndroidStudio to publish your URLs. -->
+            <!--
+            ATTENTION: This intent was auto-generated. Follow instructions at
+            https://g.co/AppIndexing/AndroidStudio to publish your URLs.
+            -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- ATTENTION: This data URL was auto-generated. We recommend that you use the HTTP scheme.
-                  TODO: Change the host or pathPrefix as necessary. -->
+                <!--
+                  ATTENTION: This data URL was auto-generated. We recommend that you use the HTTP scheme.
+                  TODO: Change the host or pathPrefix as necessary.
+                -->
                 <data
                     android:host="github.com"
                     android:pathPrefix="/winne27/FHEMswitch"
@@ -41,20 +50,36 @@
         </activity>
 
         <activity
-            android:name="de.fehngarten.fhemswitch.widget.Refresh"
+            android:name=".widget.Refresh"
             android:icon="@drawable/refresh"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/widget_refresh" >
+            android:label="@string/widget_refresh"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".Test"
+            android:icon="@drawable/refresh"
+            android:label="@string/cmdName"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".widget.DialogActivity"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Dialog" />
+
         <receiver
-            android:name="de.fehngarten.fhemswitch.widget.WidgetProvider"
+            android:name=".widget.WidgetProvider"
             android:icon="@drawable/widget_icon"
-            android:label="@string/widget_name" >
+            android:label="@string/widget_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
@@ -65,19 +90,21 @@
                 android:resource="@xml/widget_info" />
         </receiver>
 
-        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService" />
-        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService0" />
-        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService1" />
-        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService2" />
-        <service android:name="de.fehngarten.fhemswitch.widget.WidgetService3" />
+        <service android:name=".widget.WidgetService" />
+        <service android:name=".widget.WidgetService0" />
+        <service android:name=".widget.WidgetService1" />
+        <service android:name=".widget.WidgetService2" />
+        <service android:name=".widget.WidgetService3" />
         <service
-            android:name="de.fehngarten.fhemswitch.widget.listviews.CommonListviewService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" >
-        </service><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+            android:name=".widget.listviews.CommonListviewService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"></service>
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />-->
+            android:value="@integer/google_play_services_version" />
+        -->
     </application>
 
 </manifest>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="lightimg">
+
+    <style name="lightimg">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:contentDescription">light</item>
-        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingStart">8dp</item>
         <item name="android:paddingTop">0dp</item>
     </style>
 

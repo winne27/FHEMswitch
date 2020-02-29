@@ -1,6 +1,8 @@
 package de.fehngarten.fhemswitch.data;
 
-import android.support.annotation.NonNull;
+//import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 
@@ -33,6 +35,7 @@ public class RowIntValue implements Comparable<RowIntValue> {
     }
 
     @Override
+    //public int compareTo(@NonNull RowIntValue compSwitch) {
     public int compareTo(@NonNull RowIntValue compSwitch) {
         return this.unit.compareToIgnoreCase(compSwitch.unit);
     }

@@ -31,7 +31,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/listview_right_margin"
-                android:layout_marginRight="@dimen/listview_right_margin"
                 android:layout_weight="0.5"
                 android:orientation="vertical">
 

@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="6dp"
-    android:layout_marginRight="6dp"
+    android:layout_marginStart="6dp"
+    android:layout_marginEnd="6dp"
     android:orientation="vertical">
 
     <!-- ++++++++++++++++++++ Header 1 -->
@@ -18,7 +18,7 @@
             android:layout_height="36dp"
             android:layout_weight="1"
             android:gravity="left"
-            android:paddingLeft="40dp"
+            android:paddingStart="40dp"
             android:paddingTop="3dp"
             android:text="@string/switches"
             android:textColor="@color/conf_text_header"
@@ -81,7 +81,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:paddingLeft="3dp"
+                    android:paddingStart="3dp"
                     android:text="@string/name"
                     android:textColor="@color/conf_text_header"
                     android:textSize="16sp"
@@ -116,7 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="left|center_vertical"
-                    android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
                     android:text="@string/new_header"
                     android:textSize="16sp" />
 

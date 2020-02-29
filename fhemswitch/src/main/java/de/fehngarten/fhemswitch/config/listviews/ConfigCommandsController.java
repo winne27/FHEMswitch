@@ -1,8 +1,8 @@
 package de.fehngarten.fhemswitch.config.listviews;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 
 import com.mobeta.android.dslv.DragSortController;

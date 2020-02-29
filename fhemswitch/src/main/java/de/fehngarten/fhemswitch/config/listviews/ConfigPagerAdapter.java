@@ -1,17 +1,18 @@
 package de.fehngarten.fhemswitch.config.listviews;
 
+import android.animation.PropertyValuesHolder;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.view.PagerAdapter;
-//import android.util.Log;
+import androidx.viewpager.widget.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -67,6 +68,7 @@ public class ConfigPagerAdapter extends PagerAdapter {
     private ConfigIntValuesAdapter configIntValuesAdapter;
     private ConfigCommandsAdapter configCommandsAdapter;
     private ConfigBlockorderAdapter configBlockorderAdapter;
+    private CheckBox confirmEnabled;
 
     private int lsCounter;
     private ArrayList<View> views;
@@ -107,6 +109,14 @@ public class ConfigPagerAdapter extends PagerAdapter {
                     radioLayoutPortrait.setOnCheckedChangeListener(portraitSelectorChange);
                     ((RadioButton) radioLayoutLandscape.getChildAt(configDataInstance.layoutLandscape)).setChecked(true);
                     ((RadioButton) radioLayoutPortrait.getChildAt(configDataInstance.layoutPortrait)).setChecked(true);
+
+                    confirmEnabled = (CheckBox) view.findViewById(R.id.config_confirm_enabled);
+                    confirmEnabled.setOnClickListener(confirmEnabledChanged);
+
+
+
+
+                    confirmEnabled.setChecked(configDataInstance.confirmCommands);
                     setupBlockorder(view);
                     break;
                 case CONFIG_BLOCK_SWITCHES:
@@ -166,13 +176,19 @@ public class ConfigPagerAdapter extends PagerAdapter {
 
     private RadioGroup.OnCheckedChangeListener landscapeSelectorChange = (group, checkedId) -> {
         configDataInstance.layoutLandscape = Integer.valueOf(group.findViewById(checkedId).getTag().toString());
-        Log.i("array length", Integer.toString(views.size()));
         visibilityColSpinners();
     };
 
     private RadioGroup.OnCheckedChangeListener portraitSelectorChange = (group, checkedId) -> {
         configDataInstance.layoutPortrait = Integer.valueOf(group.findViewById(checkedId).getTag().toString());
         visibilityColSpinners();
+    };
+
+    private CheckBox.OnClickListener confirmEnabledChanged = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            configDataInstance.confirmCommands = confirmEnabled.isChecked();
+        }
     };
 
     private void visibilityColSpinners() {
@@ -280,9 +296,9 @@ public class ConfigPagerAdapter extends PagerAdapter {
         if (configDataInstance.switchRows != null) {
             for (ConfigSwitchRow switchRow : configDataInstance.switchRows) {
                 if (switchRow.enabled) {
-                    configWorkInstance.switches.add(new RowSwitch(switchRow.name, switchRow.unit, switchRow.cmd));
+                    configWorkInstance.switches.add(new RowSwitch(switchRow.name, switchRow.unit, switchRow.cmd, switchRow.confirm));
                 } else {
-                    configWorkInstance.switchesDisabled.add(new RowSwitch(switchRow.name, switchRow.unit, switchRow.cmd));
+                    configWorkInstance.switchesDisabled.add(new RowSwitch(switchRow.name, switchRow.unit, switchRow.cmd, switchRow.confirm));
                 }
             }
             Collections.sort(configWorkInstance.switchesDisabled);

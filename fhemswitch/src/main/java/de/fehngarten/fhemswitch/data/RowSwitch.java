@@ -7,12 +7,14 @@ public class RowSwitch implements Comparable<RowSwitch> {
     public String unit;
     public String cmd;
     public String icon;
+    public Integer confirm;
 
-    public RowSwitch(String name, String unit, String cmd) {
+    public RowSwitch(String name, String unit, String cmd, Integer confirm) {
         this.name = name;
         this.unit = unit;
         this.cmd = cmd;
         icon = "off";
+        this.confirm = confirm;
     }
 
     public void setIcon(String icon) {

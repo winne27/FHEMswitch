@@ -23,8 +23,8 @@
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">26dp</item>
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
         <item name="android:layout_marginBottom">4dp</item>
         <item name="android:background">@drawable/config_shape_button</item>
         <item name="android:textColor">@color/text_hinweis</item>
@@ -37,8 +37,8 @@
         <item name="android:textStyle">bold</item>
         <item name="android:layout_height">32dp</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
         <item name="android:background">@drawable/config_shape_button</item>
         <item name="android:textColor">@color/text_hinweis</item>
         <item name="android:gravity">center_horizontal|center_vertical</item>
@@ -59,15 +59,14 @@
     <style name="Config.Button.Help" parent="Config.Button">
         <item name="android:textSize">17sp</item>
         <item name="android:layout_width">32dp</item>
-        <item name="android:paddingLeft">6dp</item>
-        <item name="android:paddingRight">6dp</item>
+        <item name="android:paddingStart">6dp</item>
+        <item name="android:paddingEnd">6dp</item>
     </style>
 
     <style name="Labelsmall">
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#111111</item>
-        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginStart">5dp</item>
     </style>
-
 </resources>

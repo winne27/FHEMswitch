@@ -5,10 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import de.fehngarten.fhemswitch.R;
@@ -105,6 +106,16 @@ class LightScenesFactory implements RemoteViewsService.RemoteViewsFactory {
                         fillInIntent.setAction(SEND_FHEM_COMMAND);
                         fillInIntent.putExtras(bundle);
                         mView.setOnClickFillInIntent(R.id.lightscene_name, fillInIntent);
+
+                        if (type.equals("first")) {
+                            final Intent fhemIntent = new Intent();
+                            fhemIntent.setAction(OPEN_WEBPAGE);
+                            fhemIntent.putExtra(FHEM_URI, ConfigWorkBasket.urlFhempl + "?room=all");
+                            mView.setOnClickFillInIntent(R.id.fhemhome, fhemIntent);
+                            mView.setViewVisibility(R.id.fhemhome, View.VISIBLE);
+                        } else {
+                            mView.setViewVisibility(R.id.fhemhome, View.GONE);
+                        }
                     }
                 }
             }

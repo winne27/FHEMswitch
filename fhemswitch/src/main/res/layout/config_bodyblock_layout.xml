@@ -20,15 +20,15 @@
         <Button
             android:id="@+id/cancel_config"
             style="@style/Config.Button"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="3dp"
             android:text="@string/cancel" />
 
         <Button
             android:id="@+id/save_config"
             style="@style/Config.Button"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="3dp"
             android:text="@string/save" />
 
@@ -42,7 +42,7 @@
         <!-- Block of tabs +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <include layout="@layout/config_block_tabs" />
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/configpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

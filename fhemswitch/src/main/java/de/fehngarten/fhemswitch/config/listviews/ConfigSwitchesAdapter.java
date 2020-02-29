@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -49,21 +50,21 @@ class ConfigSwitchesAdapter extends ConfigAdapter {
         //switchRows.add(new ConfigSwitchRow(mContext.getString(R.string.unit), mContext.getString(R.string.name), false, mContext.getString(R.string.command)));
         for (RowSwitch rowSwitch : switches) {
             if ((switchesFHEM.contains(rowSwitch.unit) && !allUnits.contains(rowSwitch.unit)) || rowSwitch.unit.equals(HEADER_SEPERATOR)) {
-                switchRows.add(new ConfigSwitchRow(rowSwitch.unit, rowSwitch.name, true, rowSwitch.cmd));
+                switchRows.add(new ConfigSwitchRow(rowSwitch.unit, rowSwitch.name, true, rowSwitch.cmd, rowSwitch.confirm));
                 switchesConfig.add(rowSwitch.unit);
                 allUnits.add(rowSwitch.unit);
             }
         }
         for (RowSwitch rowSwitch : switchesDisabled) {
             if ((switchesFHEM.contains(rowSwitch.unit) && !allUnits.contains(rowSwitch.unit)) || rowSwitch.unit.equals(HEADER_SEPERATOR)) {
-                switchRows.add(new ConfigSwitchRow(rowSwitch.unit, rowSwitch.name, false, rowSwitch.cmd));
+                switchRows.add(new ConfigSwitchRow(rowSwitch.unit, rowSwitch.name, false, rowSwitch.cmd, rowSwitch.confirm));
                 switchesConfig.add(rowSwitch.unit);
                 allUnits.add(rowSwitch.unit);
             }
         }
         for (String unit : switchesFHEM) {
             if (!switchesConfig.contains(unit) && !allUnits.contains(unit)) {
-                switchRows.add(new ConfigSwitchRow(unit, unit, false, "toggle"));
+                switchRows.add(new ConfigSwitchRow(unit, unit, false, "toggle", 0));
                 allUnits.add(unit);
             }
         }
@@ -79,7 +80,7 @@ class ConfigSwitchesAdapter extends ConfigAdapter {
 
     void newLine(ListView listView) {
         ArrayList<ConfigSwitchRow> tempSwitchRows = new ArrayList<>();
-        tempSwitchRows.add(new ConfigSwitchRow(HEADER_SEPERATOR, "", false, ""));
+        tempSwitchRows.add(new ConfigSwitchRow(HEADER_SEPERATOR, "", false, "", 0));
         for (ConfigSwitchRow switchRow : switchRows) {
             tempSwitchRows.add(switchRow);
         }
@@ -130,12 +131,19 @@ class ConfigSwitchesAdapter extends ConfigAdapter {
         switchHolder.switch_name = (EditText) rowView.findViewById(R.id.config_switch_name);
         switchHolder.switch_enabled = (CheckBox) rowView.findViewById(R.id.config_switch_enabled);
         switchHolder.switch_cmd = (Spinner) rowView.findViewById(R.id.config_switch_cmd);
+        switchHolder.switch_confirm = (Spinner) rowView.findViewById(R.id.config_switch_confirm);
         switchHolder.switch_remove_button = (Button) rowView.findViewById(R.id.config_switch_remove);
         switchHolder.ref = position;
+
+        String[] items = this.mContext.getResources().getStringArray(R.array.confirmTypes);
+        ConfigConfirmAdapter configConfirmSpinnerArrayAdapter = new ConfigConfirmAdapter(this.mContext, items, switchHolder.switch_confirm);
+        switchHolder.switch_confirm.setAdapter(configConfirmSpinnerArrayAdapter);
+
 
         if (switchRow.unit.equals(HEADER_SEPERATOR)) {
             //rowView.findViewById(R.id.config_switch_unit).setVisibility(View.GONE);
             rowView.findViewById(R.id.config_switch_cmd).setVisibility(View.GONE);
+            rowView.findViewById(R.id.config_switch_confirm).setVisibility(View.GONE);
             rowView.findViewById(R.id.config_switch_remove).setVisibility(View.VISIBLE);
             switchHolder.switch_remove_button.setOnClickListener(arg0 -> {
                 removeItem(switchHolder.ref);
@@ -152,12 +160,14 @@ class ConfigSwitchesAdapter extends ConfigAdapter {
             rowView.findViewById(R.id.config_switch_remove).setVisibility(View.GONE);
             rowView.setBackgroundResource(R.drawable.config_shape_default);
             switchHolder.switch_unit.setText(switchRow.unit);
+            switchHolder.switch_cmd.setSelection(getSpinnerIndex(switchHolder.switch_cmd, switchRow.cmd));
+            switchHolder.switch_confirm.setSelection(switchRow.confirm, true);
+            String prompt = mContext.getString(R.string.confirmsPrompt, switchRow.unit);
+            switchHolder.switch_confirm.setPrompt(prompt);
         }
-
 
         switchHolder.switch_name.setText(switchRow.name);
         switchHolder.switch_enabled.setChecked(switchRow.enabled);
-        switchHolder.switch_cmd.setSelection(getSpinnerIndex(switchHolder.switch_cmd, switchRow.cmd));
 
         switchHolder.switch_enabled.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,6 +211,19 @@ class ConfigSwitchesAdapter extends ConfigAdapter {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int selPos, long id) {
                 getItem(switchHolder.ref).cmd = parentView.getItemAtPosition(selPos).toString();
+                //((TextView) parentView.getChildAt(0)).setTextColor(Color.BLUE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
+        switchHolder.switch_confirm.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int selPos, long id) {
+                getItem(switchHolder.ref).confirm = selPos;
+                //((TextView) parentView.getChildAt(0)).setTextColor(Color.BLUE);
             }
 
             @Override
@@ -264,6 +287,7 @@ class ConfigSwitchesAdapter extends ConfigAdapter {
         TextView switch_unit;
         EditText switch_name;
         Spinner switch_cmd;
+        Spinner switch_confirm;
         int ref;
         Button switch_remove_button;
         View rowView;

@@ -41,6 +41,13 @@
         <item>off</item>
     </string-array>
 
+    <string-array name="confirmTypes">
+        <item>nein</item>
+        <item>nur ausschalten</item>
+        <item>nur einschalten</item>
+        <item>immer</item>
+    </string-array>
+
     <string-array name="colnum">
         <item>1</item>
         <item>2</item>
@@ -77,7 +84,7 @@
     <string name="hinttext">Navigation durch die einzelnen Rubriken ist mit horizontalen Wischgesten oder durch Antippen der Reiter oberhalb möglich!</string>
     <string name="control">Steuerfeld</string>
     <string name="new_header">neue Überschrift oder Absatz (falls kein Name eingegeben wird)</string>
-    <string name="blockheader">Reihemfolge der Blocks</string>
+    <string name="blockheader">Reihenfolge der Blocks</string>
     <string name="empty_widget">Leeres Widget</string>
     <string name="werteregler">Regler</string>
     <string name="export_hint">Export der gesamten Konfiguration (ohne Passwort) in das Verzeichnis %1$s. Ein bereits dort existierender Export wird ersetzt.\"</string>
@@ -91,4 +98,14 @@
     <string name="import_success">Der Import war erfolgreich!</string>
     <string name="select_widget">Wähle Widget für den Import:</string>
     <string name="noCommandsAllowed">Während einer Konfigurationssitzung können keine FHEM-Befehle abgesetzt werden.</string>
+    <string name="confirmtext">Befehle bestätigen</string>
+    <string name="confirmText">Mach es!</string>
+    <string name="ohnoText">Oh nein!</string>
+    <string name="confirmQuest">Wirklich ausführen?</string>
+    <string name="switchOn">einschalten</string>
+    <string name="switchOff">ausschalten</string>
+    <string name="switchScene">auswählen</string>
+    <string name="switchCommand">ausführen</string>
+    <string name="commandsPrompt">Wähle Aktion</string>
+    <string name="confirmsPrompt">Schalten von %1$s bestätigten?</string>
 </resources>

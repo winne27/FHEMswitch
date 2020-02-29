@@ -47,6 +47,11 @@ public class MySocket {
                 socket.emit("authentication", pw);
             });
 
+            socket.on(Socket.EVENT_CONNECT_ERROR, args -> {
+                Log.e("socket error", args[0].toString());
+            });
+
+
         } catch (Exception e1) {
             Log.e("socket error", e1.toString());
         }

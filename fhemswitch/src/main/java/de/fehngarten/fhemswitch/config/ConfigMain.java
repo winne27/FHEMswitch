@@ -8,15 +8,15 @@ import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v13.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.view.menu.MenuPopupHelper;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +27,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -169,7 +170,7 @@ public class ConfigMain extends Activity {
         configDataCommon = configDataIO.readCommon();
 
         if (Build.VERSION.SDK_INT >= 23 && !configDataCommon.writePermissionAsked) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            //ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             configDataCommon.writePermissionAsked = true;
         }
 
@@ -446,6 +447,13 @@ public class ConfigMain extends Activity {
             //PopupMenu popup = new PopupMenu(mContext, findViewById(R.id.actions_config));
             //popup.getMenuInflater().inflate(R.menu.config_action_menu, popup.getMenu());
 
+            if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                // Permission is not granted
+                Log.i("Popup", "keine Schreibrechte");
+
+
+            }
+
             MenuBuilder menuBuilder = new MenuBuilder(mContext);
             MenuInflater inflater = new MenuInflater(mContext);
             inflater.inflate(R.menu.config_action_menu, menuBuilder);
@@ -483,7 +491,8 @@ public class ConfigMain extends Activity {
             });
 
             // Display the menu
-            optionsMenu.show();
+            int x = 0;
+            optionsMenu.show(x, x);
         }
     };
 
@@ -737,6 +746,7 @@ public class ConfigMain extends Activity {
     private void doExport() {
         String popupText = mContext.getString(R.string.export_hint, configDataIO.getBackupPath());
         PopupHolder popupHolder = openPopupHint(popupText, true, false);
+
 
         if (popupHolder != null) {
             popupHolder.okButton.setOnClickListener(v -> {

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
@@ -91,6 +92,16 @@ class IntValuesFactory implements RemoteViewsFactory {
                         final Intent fillInIntent = new Intent();
                         fillInIntent.setAction(ACTION_APPWIDGET_UPDATE);
                         mView.setOnClickFillInIntent(R.id.header, fillInIntent);
+
+                        if (type.equals("first")) {
+                            final Intent fhemIntent = new Intent();
+                            fhemIntent.setAction(OPEN_WEBPAGE);
+                            fhemIntent.putExtra(FHEM_URI, ConfigWorkBasket.urlFhempl + "?room=all");
+                            mView.setOnClickFillInIntent(R.id.fhemhome, fhemIntent);
+                            mView.setViewVisibility(R.id.fhemhome, View.VISIBLE);
+                        } else {
+                            mView.setViewVisibility(R.id.fhemhome, View.GONE);
+                        }
                     }
                 } else {
                     mView = new RemoteViews(mContext.getPackageName(), R.layout.widget_row_intvalue);

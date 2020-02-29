@@ -21,6 +21,7 @@ public class ConfigDataInstance implements java.io.Serializable {
     public String[] blockOrder;
     public String widgetName;
     public boolean readingsMigrated = false;
+    public boolean confirmCommands = false;
 
     ConfigDataInstance() {
         switchRows = new ArrayList<>();

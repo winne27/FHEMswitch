@@ -191,7 +191,8 @@ public class ConfigDataIO {
     }
 
     public String getBackupPath() {
-        return Environment.getExternalStorageDirectory().toString() + "/fhemswitch";
+        return mContext.getExternalFilesDir(null).toString() + "/fhemswitch";
+        //return Environment.getExternalStorageDirectory().toString() + "/fhemswitch";
     }
 
     public CharSequence[] getAvailableInstanceFiles() {

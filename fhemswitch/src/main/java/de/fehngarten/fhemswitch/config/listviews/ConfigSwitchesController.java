@@ -2,8 +2,7 @@ package de.fehngarten.fhemswitch.config.listviews;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.support.v4.content.ContextCompat;
-//import android.util.Log;
+import androidx.core.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
 

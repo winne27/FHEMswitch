@@ -3,7 +3,7 @@
     android:layout_width="0dp"
     android:layout_height="match_parent"
     android:layout_weight="0.33"
-    android:gravity="center_vertical|left|start"
+    android:gravity="center_vertical|start"
     android:textSize="14sp">
 
     <TextView
@@ -18,8 +18,8 @@
         android:id="@+id/installedView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/installedLabel"
-        android:layout_alignRight="@id/installedLabel"
+        android:layout_alignStart="@id/installedLabel"
+        android:layout_alignEnd="@id/installedLabel"
         android:layout_below="@id/installedLabel"
         android:gravity="center_horizontal"
         android:textColor="@color/conf_text_header"

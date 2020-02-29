@@ -70,6 +70,10 @@ public final class Settings {
     public static final HashMap<String, Float> settingMultiplier = new HashMap<>();
     public static final HashMap<String, String> settingBlockNames = new HashMap<>();
     public static final String[] settingsBlockOrder;
+    public static final String PRIMARY_CHANNEL_ID = "de.fehngarten.fhemswitch.isamust";
+    public static final String CHANNEL_NAME = "fhemswitch";
+    public static final String CHANNEL_DESC = "fhemswitch";
+    public static final String NOWAYNOTIFICATION = "FHEMswitch funkt nur mit dieser Meldung, sorry";
 
     static {
         settingIcons.put("v_on", R.drawable.v_on);

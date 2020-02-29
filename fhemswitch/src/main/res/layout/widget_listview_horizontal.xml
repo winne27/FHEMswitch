@@ -3,7 +3,6 @@
     android:layout_weight="1"
     android:layout_width="0dp"
     android:layout_height="match_parent"
-    android:layout_marginRight="@dimen/listview_right_margin"
     android:layout_marginEnd="@dimen/listview_right_margin"
     android:divider="@null"
     android:visibility="gone" />

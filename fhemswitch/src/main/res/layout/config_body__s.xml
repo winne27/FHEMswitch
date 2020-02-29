@@ -12,8 +12,8 @@
         android:background="@drawable/config_shape_header_1"
         android:orientation="horizontal"
         android:paddingBottom="2dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
 
         <include layout="@layout/config_version_installed" />
 
@@ -35,8 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="4px"
-            android:layout_marginRight="4px"
+            android:layout_marginStart="4px"
+            android:layout_marginEnd="4px"
             android:background="@drawable/ic_more_vert_white_24dp" />
     </LinearLayout>
 
